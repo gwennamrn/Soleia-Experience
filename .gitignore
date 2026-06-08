@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Captures temporaires de vérification
+index-check.png
+shot-*.png
+**/.playwright-mcp/
+
+# Croquis original (photo perso, ~10 Mo) — décommente la ligne suivante pour l'inclure au repo
+Soleia.png
+Soleia_*.png
+
+# Divers
+node_modules/
+*.log
+
+# Artefacts de génération (sous-agents)
+soleia-*.png
+verify-*.png
+soleia-hero.html

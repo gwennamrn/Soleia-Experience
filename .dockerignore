@@ -1,0 +1,11 @@
+.git
+.gitignore
+.dockerignore
+README.md
+Soleia.png
+Soleia_*.png
+index-check.png
+shot-*.png
+proto/
+**/.playwright-mcp/
+.DS_Store
