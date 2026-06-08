@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Soleia — La pause créative qui fait du BIEN</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --rose:#fb6ba6;
+    --orange:#f8742f;
+    --rose-clair:#f8e6e6;
+    --creme:#fdf6ee;
+    --creme-2:#fbeede;
+    --ink:#3a2a2e;
+    --ink-soft:#6b5359;
+    --line:#e6cdba;
+    --max:1240px;
+    --pad-x:clamp(1.25rem,5vw,5.5rem);
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    font-family:"Newsreader",Georgia,serif;
+    color:var(--ink);
+    background:
+      radial-gradient(120% 90% at 88% -8%, rgba(248,116,47,.16), transparent 55%),
+      radial-gradient(95% 80% at 6% 108%, rgba(251,107,166,.14), transparent 60%),
+      linear-gradient(180deg,var(--creme) 0%, var(--creme-2) 100%);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* Paper grain overlay */
+  .grain{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:60;
+    opacity:.5;
+    mix-blend-mode:multiply;
+  }
+  .grain svg{width:100%;height:100%;}
+
+  a{color:inherit;text-decoration:none;}
+  :focus-visible{
+    outline:2.5px solid var(--orange);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .wrap{
+    max-width:var(--max);
+    margin-inline:auto;
+    padding-inline:var(--pad-x);
+  }
+
+  /* ===== NAV ===== */
+  .nav{
+    position:relative;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1.5rem;
+    padding-top:clamp(1.4rem,2.6vw,2.4rem);
+  }
+  .brand{
+    display:flex;
+    flex-direction:column;
+    line-height:.86;
+  }
+  .brand__name{
+    font-family:"Bodoni Moda",serif;
+    font-weight:600;
+    font-size:clamp(1.55rem,2.7vw,2.1rem);
+    letter-spacing:.16em;
+    text-transform:lowercase;
+    color:var(--ink);
+  }
+  .brand__sub{
+    font-family:"Newsreader",serif;
+    font-style:italic;
+    font-size:clamp(.62rem,1vw,.74rem);
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-top:.5rem;
+    padding-left:.22em;
+  }
+
+  .nav__links{
+    display:flex;
+    align-items:center;
+    gap:clamp(1.1rem,2.6vw,2.4rem);
+    list-style:none;
+    margin:0;padding:0;
+  }
+  .nav__links a{
+    font-size:.96rem;
+    letter-spacing:.015em;
+    color:var(--ink-soft);
+    position:relative;
+    padding-block:.3rem;
+    transition:color .35s ease;
+  }
+  .nav__links a::after{
+    content:"";
+    position:absolute;
+    left:0;right:100%;
+    bottom:-2px;
+    height:1.5px;
+    background:linear-gradient(90deg,var(--orange),var(--rose));
+    transition:right .4s cubic-bezier(.2,.7,.2,1);
+  }
+  .nav__links a:hover,.nav__links a:focus-visible{color:var(--ink);}
+  .nav__links a:hover::after,.nav__links a:focus-visible::after{right:0;}
+
+  .account{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:44px;height:44px;
+    border-radius:50%;
+    border:1.5px solid var(--line);
+    background:rgba(255,255,255,.5);
+    color:var(--ink);
+    flex:0 0 auto;
+    transition:transform .35s ease,border-color .35s ease,background .35s ease;
+  }
+  .account:hover,.account:focus-visible{
+    transform:translateY(-2px);
+    border-color:var(--orange);
+    background:#fff;
+  }
+  .account svg{width:20px;height:20px;}
+
+  .nav__toggle{display:none;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    z-index:10;
+    padding-top:clamp(2.2rem,5vw,4.2rem);
+    padding-bottom:clamp(1rem,3vw,2rem);
+  }
+  .hero__grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) clamp(260px,30vw,400px);
+    gap:clamp(1.5rem,4vw,3.5rem);
+    align-items:center;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:.7rem;
+    font-family:"Newsreader",serif;
+    font-style:italic;
+    font-size:clamp(.86rem,1.3vw,1rem);
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+    margin-bottom:clamp(1rem,2vw,1.6rem);
+  }
+  .eyebrow::before{
+    content:"";
+    width:42px;height:1.5px;
+    background:linear-gradient(90deg,var(--orange),var(--rose));
+  }
+
+  .title{
+    font-family:"Fraunces",serif;
+    font-weight:340;
+    font-optical-sizing:auto;
+    line-height:.92;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    margin:0;
+    font-size:clamp(3.6rem,11.5vw,9.4rem);
+  }
+  .title .ln{display:block;}
+  .title .ln--2{padding-left:.04em;}
+  .title .small{
+    font-weight:340;
+    font-style:italic;
+    font-size:.82em;
+  }
+  .title .qui{
+    font-style:italic;
+    font-weight:300;
+    color:var(--ink-soft);
+  }
+  .bien{
+    font-style:italic;
+    font-weight:600;
+    font-size:1.16em;
+    background:linear-gradient(96deg,var(--orange) 8%, #fa5e7e 52%, var(--rose) 96%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:var(--orange);
+    padding-inline:.04em;
+    position:relative;
+  }
+
+  .lede{
+    font-family:"Newsreader",serif;
+    font-style:italic;
+    font-size:clamp(1.05rem,1.7vw,1.35rem);
+    color:var(--ink-soft);
+    margin:clamp(1.4rem,3vw,2.1rem) 0 clamp(1.5rem,3vw,2.2rem);
+    max-width:36ch;
+  }
+
+  /* ===== BUTTONS ===== */
+  .actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.85rem 1rem;
+    align-items:center;
+  }
+  .pill{
+    --c:var(--ink);
+    display:inline-flex;
+    align-items:center;
+    gap:.55rem;
+    font-family:"Newsreader",serif;
+    font-size:1.02rem;
+    letter-spacing:.012em;
+    padding:.86em 1.55em;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    color:var(--c);
+    background:rgba(255,255,255,.42);
+    transition:transform .4s cubic-bezier(.2,.7,.2,1),border-color .4s,background .4s,color .4s,box-shadow .4s;
+    white-space:nowrap;
+  }
+  .pill:hover,.pill:focus-visible{
+    transform:translateY(-3px);
+    border-color:var(--orange);
+    background:#fff;
+  }
+  .pill--primary{
+    border:none;
+    color:#fff5ec;
+    background:linear-gradient(100deg,var(--orange),#fa5e7e 60%,var(--rose));
+    box-shadow:0 14px 30px -12px rgba(248,116,47,.6);
+    padding-inline:1.75em;
+    font-size:1.06rem;
+  }
+  .pill--primary:hover,.pill--primary:focus-visible{
+    color:#fff;
+    box-shadow:0 20px 40px -12px rgba(251,107,166,.7);
+  }
+  .pill--primary .star{display:inline-block;}
+
+  /* ===== VISUAL COLUMN ===== */
+  .visual{
+    position:relative;
+    aspect-ratio:3/3.7;
+    min-height:300px;
+  }
+  .placeholder{
+    position:absolute;
+    inset:6% 4% 8% 6%;
+    border-radius:46% 54% 50% 50% / 58% 56% 44% 42%;
+    background:
+      radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,.55), transparent 55%),
+      linear-gradient(150deg,var(--rose-clair),#f9d9c4 70%,#f7c6b1);
+    border:1.5px dashed rgba(58,42,46,.28);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    box-shadow:0 30px 60px -34px rgba(58,42,46,.45);
+    overflow:hidden;
+  }
+  .placeholder__label{
+    font-family:"Newsreader",serif;
+    font-style:italic;
+    font-size:.82rem;
+    letter-spacing:.05em;
+    color:rgba(58,42,46,.6);
+    padding:.6rem 1rem;
+    line-height:1.5;
+  }
+  .placeholder__label span{
+    display:block;
+    font-style:normal;
+    text-transform:uppercase;
+    letter-spacing:.28em;
+    font-size:.6rem;
+    margin-bottom:.5rem;
+    color:rgba(58,42,46,.45);
+  }
+
+  /* Stamp badge */
+  .stamp{
+    position:absolute;
+    top:-26px;left:-30px;
+    width:118px;height:118px;
+    z-index:4;
+    will-change:transform;
+  }
+  .stamp svg{width:100%;height:100%;overflow:visible;}
+  .stamp__rot{transform-origin:50% 50%;}
+
+  /* Sun (line art) top right of whole hero */
+  .sun{
+    position:absolute;
+    top:clamp(-30px,-2vw,-10px);
+    right:clamp(-50px,-2vw,-20px);
+    width:clamp(150px,20vw,260px);
+    height:clamp(150px,20vw,260px);
+    z-index:1;
+    pointer-events:none;
+  }
+  .sun svg{width:100%;height:100%;overflow:visible;}
+  .sun__rays{transform-origin:50% 50%;}
+
+  /* daisies + ribbons */
+  .daisy{position:absolute;pointer-events:none;z-index:2;}
+  .daisy svg{width:100%;height:100%;display:block;}
+  .daisy--a{width:58px;height:58px;left:-2%;top:30%;}
+  .daisy--b{width:38px;height:38px;right:14%;bottom:13%;}
+  .daisy--c{width:30px;height:30px;left:46%;top:-3%;}
+
+  .ribbon{
+    position:absolute;
+    left:-6%;right:-6%;
+    height:30px;
+    pointer-events:none;
+    opacity:.85;
+    z-index:1;
+  }
+  .ribbon svg{width:100%;height:100%;}
+  .ribbon--top{top:-2%;}
+
+  /* ===== QUOTE + FOOTER ===== */
+  .lower{
+    position:relative;
+    z-index:10;
+    margin-top:clamp(1.6rem,4vw,3rem);
+    border-top:1.5px solid var(--line);
+    padding-top:clamp(1.6rem,3vw,2.4rem);
+    padding-bottom:clamp(1.4rem,3vw,2.2rem);
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:2rem;
+    flex-wrap:wrap;
+  }
+  .quote{
+    font-family:"Fraunces",serif;
+    font-style:italic;
+    font-weight:340;
+    font-size:clamp(1.2rem,2.5vw,1.85rem);
+    line-height:1.32;
+    color:var(--ink);
+    max-width:30ch;
+    margin:0;
+    position:relative;
+  }
+  .quote::before{
+    content:"“";
+    position:absolute;
+    left:-.55em;top:-.12em;
+    font-size:1.5em;
+    color:var(--rose);
+    opacity:.6;
+  }
+  .quote cite{
+    display:block;
+    margin-top:.7rem;
+    font-style:normal;
+    font-family:"Newsreader",serif;
+    font-size:.95rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--orange);
+  }
+
+  .social{
+    display:flex;
+    align-items:center;
+    gap:.7rem;
+  }
+  .social a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:42px;height:42px;
+    border-radius:50%;
+    border:1.5px solid var(--line);
+    background:rgba(255,255,255,.45);
+    color:var(--ink-soft);
+    transition:transform .35s ease,color .35s,border-color .35s,background .35s;
+  }
+  .social a:hover,.social a:focus-visible{
+    transform:translateY(-3px) rotate(-6deg);
+    color:var(--orange);
+    border-color:var(--orange);
+    background:#fff;
+  }
+  .social svg{width:19px;height:19px;}
+
+  /* ===== reveal ===== */
+  .reveal{opacity:0;transform:translateY(18px);}
+  .is-in .reveal{
+    opacity:1;transform:none;
+    transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .is-in .reveal[data-d="1"]{transition-delay:.08s;}
+  .is-in .reveal[data-d="2"]{transition-delay:.16s;}
+  .is-in .reveal[data-d="3"]{transition-delay:.24s;}
+  .is-in .reveal[data-d="4"]{transition-delay:.34s;}
+  .is-in .reveal[data-d="5"]{transition-delay:.44s;}
+
+  /* ===== responsive ===== */
+  @media (max-width:900px){
+    .hero__grid{grid-template-columns:1fr;}
+    .visual{
+      order:-1;
+      aspect-ratio:16/9;
+      min-height:200px;
+      max-width:440px;
+    }
+    .nav__links{
+      gap:1rem;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+  }
+  @media (max-width:620px){
+    .nav__links li:not(.nav__links--acct){display:none;}
+    .lower{flex-direction:column;align-items:flex-start;}
+    .title{font-size:clamp(3.1rem,15vw,5rem);}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    .reveal{opacity:1!important;transform:none!important;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- paper grain -->
+  <div class="grain" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <filter id="paperGrain">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+        <feComponentTransfer><feFuncA type="linear" slope="0.045"/></feComponentTransfer>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#paperGrain)"/>
+    </svg>
+  </div>
+
+  <header class="wrap nav reveal" data-d="1">
+    <a href="#" class="brand" aria-label="Soleia, retour à l’accueil">
+      <span class="brand__name">soleia</span>
+      <span class="brand__sub">expérience</span>
+    </a>
+
+    <nav aria-label="Navigation principale">
+      <ul class="nav__links">
+        <li><a href="#ateliers">Ateliers</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#boutique">Boutique</a></li>
+        <li><a href="#histoire">À propos / Histoire</a></li>
+        <li class="nav__links--acct">
+          <a href="#compte" class="account" aria-label="Mon compte">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <circle cx="12" cy="8" r="3.4"/>
+              <path d="M5 19.2c1.4-3.2 4-4.6 7-4.6s5.6 1.4 7 4.6" stroke-linecap="round"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap hero" id="main">
+
+    <!-- sun line-art -->
+    <div class="sun" aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" stroke="var(--orange)" stroke-width="1.4">
+        <g class="sun__rays">
+          <circle cx="100" cy="100" r="48" stroke="var(--rose)" stroke-opacity=".55"/>
+          <circle cx="100" cy="100" r="58" stroke-dasharray="1.5 9" stroke-linecap="round"/>
+          <g stroke-linecap="round">
+            <!-- rays -->
+            <path d="M100 8v26"/><path d="M100 166v26"/>
+            <path d="M8 100h26"/><path d="M166 100h26"/>
+            <path d="M35 35l18 18"/><path d="M147 147l18 18"/>
+            <path d="M165 35l-18 18"/><path d="M53 147l-18 18"/>
+            <path d="M65 14l8 23" stroke-opacity=".8"/><path d="M135 186l-8-23" stroke-opacity=".8"/>
+            <path d="M14 135l23-8" stroke-opacity=".8"/><path d="M186 65l-23 8" stroke-opacity=".8"/>
+            <path d="M135 14l-8 23" stroke-opacity=".8"/><path d="M65 186l8-23" stroke-opacity=".8"/>
+            <path d="M14 65l23 8" stroke-opacity=".8"/><path d="M186 135l-23-8" stroke-opacity=".8"/>
+          </g>
+        </g>
+        <!-- smiling face -->
+        <g stroke-linecap="round">
+          <circle cx="86" cy="94" r="2.4" fill="var(--orange)" stroke="none"/>
+          <circle cx="114" cy="94" r="2.4" fill="var(--orange)" stroke="none"/>
+          <path d="M84 112c5 6 27 6 32 0" stroke="var(--orange)"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hero__grid">
+      <div class="hero__text">
+        <p class="eyebrow reveal" data-d="2">Soleia Expérience — moments de convivialité créative</p>
+
+        <h1 class="title reveal" data-d="2">
+          <span class="ln">La pause</span>
+          <span class="ln ln--2"><span class="qui">créative qui&nbsp;fait</span></span>
+          <span class="ln">du <span class="bien">BIEN.</span></span>
+        </h1>
+
+        <p class="lede reveal" data-d="3">Ici tu peux retrouver</p>
+
+        <div class="actions reveal" data-d="4">
+          <a href="#ateliers" class="pill pill--primary">
+            <span class="star" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.6c.6 3.9 1.8 5.5 5.9 6.4-4.1.9-5.3 2.5-5.9 6.4-.6-3.9-1.8-5.5-5.9-6.4 4.1-.9 5.3-2.5 5.9-6.4z"/></svg>
+            </span>
+            Les prochains ateliers
+          </a>
+          <a href="#boutique" class="pill">La boutique</a>
+          <a href="#histoire" class="pill">Notre histoire</a>
+          <a href="#faq" class="pill">F.A.Q</a>
+        </div>
+      </div>
+
+      <!-- visual / placeholder -->
+      <div class="visual reveal" data-d="5">
+        <!-- ribbon separator -->
+        <div class="ribbon ribbon--top" aria-hidden="true">
+          <svg viewBox="0 0 600 30" preserveAspectRatio="none" fill="none" stroke="var(--rose)" stroke-width="2.2">
+            <path d="M0 15 Q 37 0 75 15 T 150 15 T 225 15 T 300 15 T 375 15 T 450 15 T 525 15 T 600 15"/>
+          </svg>
+        </div>
+
+        <!-- stamp badge -->
+        <div class="stamp" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <defs>
+              <path id="stampArc" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/>
+            </defs>
+            <g class="stamp__rot">
+              <circle cx="60" cy="60" r="56" fill="#fff7ef" stroke="var(--orange)" stroke-width="1.4"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--rose)" stroke-width="1" stroke-dasharray="1.5 6"/>
+              <text font-family="Bodoni Moda, serif" font-size="9.4" letter-spacing="3.2" fill="var(--ink)">
+                <textPath href="#stampArc" startOffset="2%">SOLEIA · EXPÉRIENCE · SOLEIA · EXPÉRIENCE ·</textPath>
+              </text>
+            </g>
+            <!-- little smiling sun center -->
+            <g stroke="var(--orange)" stroke-width="1.3" stroke-linecap="round" fill="none">
+              <circle cx="60" cy="60" r="13" fill="#ffe7cf"/>
+              <g>
+                <path d="M60 38v6"/><path d="M60 76v6"/><path d="M38 60h6"/><path d="M76 60h6"/>
+                <path d="M44 44l4 4"/><path d="M72 72l4 4"/><path d="M76 44l-4 4"/><path d="M48 72l-4 4"/>
+              </g>
+              <circle cx="56" cy="58" r="1.1" fill="var(--orange)" stroke="none"/>
+              <circle cx="64" cy="58" r="1.1" fill="var(--orange)" stroke="none"/>
+              <path d="M55 63c2 2.6 8 2.6 10 0"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="placeholder">
+          <p class="placeholder__label">
+            <span>Emplacement photo</span>
+            Un instant Soleia<br/>à venir, signé Gwen
+          </p>
+        </div>
+
+        <!-- daisies -->
+        <div class="daisy daisy--a" aria-hidden="true">
+          <svg viewBox="0 0 60 60" fill="none">
+            <g fill="#fff" stroke="var(--rose)" stroke-width="1.3">
+              <ellipse cx="30" cy="12" rx="6.5" ry="11"/>
+              <ellipse cx="30" cy="48" rx="6.5" ry="11"/>
+              <ellipse cx="12" cy="30" rx="11" ry="6.5"/>
+              <ellipse cx="48" cy="30" rx="11" ry="6.5"/>
+              <ellipse cx="17" cy="17" rx="6.5" ry="11" transform="rotate(45 17 17)"/>
+              <ellipse cx="43" cy="43" rx="6.5" ry="11" transform="rotate(45 43 43)"/>
+              <ellipse cx="43" cy="17" rx="6.5" ry="11" transform="rotate(-45 43 17)"/>
+              <ellipse cx="17" cy="43" rx="6.5" ry="11" transform="rotate(-45 17 43)"/>
+            </g>
+            <circle cx="30" cy="30" r="7" fill="var(--orange)"/>
+          </svg>
+        </div>
+        <div class="daisy daisy--b" aria-hidden="true">
+          <svg viewBox="0 0 60 60" fill="none">
+            <g fill="#fff" stroke="var(--orange)" stroke-width="1.4">
+              <ellipse cx="30" cy="13" rx="6" ry="10"/><ellipse cx="30" cy="47" rx="6" ry="10"/>
+              <ellipse cx="13" cy="30" rx="10" ry="6"/><ellipse cx="47" cy="30" rx="10" ry="6"/>
+            </g>
+            <circle cx="30" cy="30" r="6.5" fill="var(--rose)"/>
+          </svg>
+        </div>
+        <div class="daisy daisy--c" aria-hidden="true">
+          <svg viewBox="0 0 60 60" fill="none">
+            <g fill="#fff" stroke="var(--rose)" stroke-width="1.6">
+              <ellipse cx="30" cy="14" rx="6" ry="10"/><ellipse cx="30" cy="46" rx="6" ry="10"/>
+              <ellipse cx="14" cy="30" rx="10" ry="6"/><ellipse cx="46" cy="30" rx="10" ry="6"/>
+            </g>
+            <circle cx="30" cy="30" r="6" fill="var(--orange)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- quote + footer -->
+    <div class="lower">
+      <blockquote class="quote reveal" data-d="2">
+        Parce que prendre du temps pour soi, c’est important &amp; ça fait du bien.
+        <cite>— Gwen</cite>
+      </blockquote>
+
+      <div class="social reveal" data-d="3" aria-label="Réseaux sociaux">
+        <a href="#" aria-label="Instagram de Soleia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5.2"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Pinterest de Soleia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M12 3a9 9 0 0 0-3.3 17.4c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.8 1.5 1.8 1.8 0 3-2.3 3-5 0-2-1.4-3.6-3.9-3.6a4.4 4.4 0 0 0-4.6 4.4c0 .9.3 1.5.7 2 .2.2.2.3.1.5l-.2.8c-.1.3-.3.4-.6.2-1.1-.5-1.7-1.9-1.7-3.1 0-2.5 2.1-5.5 6.3-5.5 3.4 0 5.6 2.4 5.6 5.1 0 3.4-1.9 6-4.7 6-1 0-1.9-.5-2.2-1.1l-.6 2.3c-.2.8-.7 1.7-1 2.3A9 9 0 1 0 12 3z" stroke="none" fill="currentColor"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="TikTok de Soleia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M14 4v8.6a3.4 3.4 0 1 1-3-3.4" stroke-linecap="round"/>
+            <path d="M14 4c.4 2.4 1.9 3.9 4.3 4.2" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // reveal
+  var root = document.body;
+  if ('IntersectionObserver' in window && !reduce){
+    requestAnimationFrame(function(){ root.classList.add('is-in'); });
+  } else {
+    root.classList.add('is-in');
+  }
+
+  if (reduce) return;
+
+  // slow sun rotation via Web Animations API (fallback: just static)
+  try {
+    var rays = document.querySelector('.sun__rays');
+    if (rays && rays.animate){
+      rays.animate(
+        [{transform:'rotate(0deg)'},{transform:'rotate(360deg)'}],
+        {duration:120000, iterations:Infinity, easing:'linear'}
+      );
+    }
+    var stamp = document.querySelector('.stamp__rot');
+    if (stamp && stamp.animate){
+      stamp.animate(
+        [{transform:'rotate(0deg)'},{transform:'rotate(-360deg)'}],
+        {duration:48000, iterations:Infinity, easing:'linear'}
+      );
+    }
+  } catch(e){ /* graceful: static SVG remains */ }
+
+  // gentle parallax on the placeholder (pointer only, very subtle)
+  var visual = document.querySelector('.visual');
+  var ph = document.querySelector('.placeholder');
+  if (visual && ph && window.matchMedia('(pointer:fine)').matches){
+    visual.addEventListener('pointermove', function(e){
+      var r = visual.getBoundingClientRect();
+      var x = (e.clientX - r.left)/r.width - .5;
+      var y = (e.clientY - r.top)/r.height - .5;
+      ph.style.transform = 'translate('+(x*8).toFixed(2)+'px,'+(y*8).toFixed(2)+'px)';
+    });
+    visual.addEventListener('pointerleave', function(){ ph.style.transform=''; });
+  }
+})();
+</script>
+</body>
+</html>

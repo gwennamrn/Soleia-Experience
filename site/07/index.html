@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Soleia Expérience — La pause créative qui fait du BIEN</title>
+<meta name="description" content="Soleia Expérience — des moments de convivialité créative, dans la bonne humeur. La pause créative qui fait du BIEN." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Shrikhand&family=Bagel+Fat+One&family=Instrument+Sans:ital,wght@0,400..600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --rose:       #fb6ba6;
+    --orange:     #f8742f;
+    --corail:     #ff8e6b;
+    --rose-clair: #f8e6e6;
+    --prune:      #3a2a2e;
+    --bordeaux:   #8a2e3b;
+    --creme:      #fff7ef;
+    --creme-2:    #fdeede;
+    --paper:      #fffaf4;
+    --ink-soft:   #6a5358;
+    --tape:       rgba(255, 244, 196, .62);
+    --tape-rose:  rgba(251, 107, 166, .34);
+    --ease:       cubic-bezier(.22, 1, .36, 1);
+    --ease-back:  cubic-bezier(.34, 1.56, .64, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Instrument Sans", system-ui, sans-serif;
+    color: var(--prune);
+    background:
+      radial-gradient(115% 75% at 88% -8%, rgba(248,116,47,.20) 0%, rgba(248,116,47,0) 46%),
+      radial-gradient(95% 70% at 6% 4%, rgba(251,107,166,.18) 0%, rgba(251,107,166,0) 48%),
+      linear-gradient(176deg, #fff4ec 0%, var(--creme-2) 54%, #fbe3e3 100%);
+    min-height: 100vh;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+  img, svg { display: block; }
+  ::selection { background: var(--rose); color: var(--creme); }
+
+  /* paper-grain texture overlaid on everything, super subtle */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: .5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  }
+
+  .shell {
+    position: relative;
+    z-index: 1;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 30px) clamp(16px, 4vw, 46px) clamp(28px, 4vw, 48px);
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ============================================================
+     NAV — pastilles multicolores
+     ============================================================ */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* logo "tampon" */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    transform: rotate(-3deg);
+  }
+  .stamp__seal {
+    position: relative;
+    width: 58px; height: 58px;
+    flex: none;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 42%, #fff8ef 0 36%, transparent 37%),
+      conic-gradient(from 0deg, var(--orange), var(--rose), var(--orange));
+    box-shadow: 0 6px 16px -8px rgba(138,46,59,.55), inset 0 0 0 2px rgba(255,255,255,.35);
+  }
+  .stamp__seal::after {
+    /* dashed inner ring like an ink stamp */
+    content: "";
+    position: absolute; inset: 6px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(138,46,59,.5);
+  }
+  .stamp__sun { width: 30px; height: 30px; position: relative; z-index: 2; }
+  .stamp__name {
+    display: flex; flex-direction: column; line-height: .92;
+  }
+  .stamp__name b {
+    font-family: "Shrikhand", serif;
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    letter-spacing: .005em;
+    color: var(--bordeaux);
+  }
+  .stamp__name span {
+    font-family: "Instrument Sans", sans-serif;
+    font-size: .58rem;
+    letter-spacing: .42em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 600;
+    padding-left: .18em;
+    margin-top: 3px;
+  }
+
+  /* pill navigation */
+  .pills {
+    display: flex;
+    align-items: center;
+    gap: clamp(6px, .8vw, 12px);
+    flex-wrap: wrap;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: .5rem 1.05rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .9rem;
+    letter-spacing: .01em;
+    color: var(--prune);
+    background: var(--paper);
+    border: 2px solid var(--prune);
+    box-shadow: 2.5px 3px 0 0 var(--prune);
+    transition: transform .25s var(--ease-back), box-shadow .25s var(--ease), background .25s var(--ease), color .2s var(--ease);
+  }
+  .pill:nth-child(1) { background: #ffe1ec; transform: rotate(-2deg); }
+  .pill:nth-child(2) { background: #ffe6cf; transform: rotate(1.5deg); }
+  .pill:nth-child(3) { background: #ffd9d0; transform: rotate(-1deg); }
+  .pill:nth-child(4) { background: var(--paper); transform: rotate(2deg); }
+  .pill:hover,
+  .pill:focus-visible {
+    transform: translateY(-3px) rotate(0deg);
+    box-shadow: 4px 6px 0 0 var(--prune);
+    outline: none;
+  }
+  .pill:focus-visible { box-shadow: 4px 6px 0 0 var(--prune), 0 0 0 4px rgba(248,116,47,.45); }
+
+  .account {
+    width: 48px; height: 48px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--rose);
+    border: 2px solid var(--prune);
+    box-shadow: 2.5px 3px 0 0 var(--prune);
+    display: grid; place-items: center;
+    color: var(--creme);
+    transition: transform .25s var(--ease-back), box-shadow .25s var(--ease);
+  }
+  .account:hover, .account:focus-visible {
+    transform: translateY(-3px) rotate(-6deg);
+    box-shadow: 4px 6px 0 0 var(--prune);
+    outline: none;
+  }
+  .account:focus-visible { box-shadow: 4px 6px 0 0 var(--prune), 0 0 0 4px rgba(248,116,47,.45); }
+  .account svg { width: 22px; height: 22px; }
+
+  /* ============================================================
+     HERO — collage stage
+     ============================================================ */
+  .stage {
+    position: relative;
+    flex: 1;
+    margin-top: clamp(14px, 2.4vw, 30px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr);
+    gap: clamp(20px, 3vw, 54px);
+    align-items: center;
+  }
+
+  /* --- left: headline column --- */
+  .lead { position: relative; z-index: 4; }
+
+  .ribbon {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .42rem .9rem;
+    border-radius: 999px;
+    background: var(--bordeaux);
+    color: var(--creme);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    transform: rotate(-1.5deg);
+    box-shadow: 2.5px 3px 0 0 rgba(58,42,46,.4);
+  }
+  .ribbon .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 0 3px rgba(248,116,47,.3);
+  }
+
+  .title {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6.6vw, 5.6rem);
+    line-height: .9;
+    letter-spacing: -.025em;
+    margin: clamp(16px, 2.5vw, 26px) 0 0;
+    color: var(--prune);
+    text-wrap: balance;
+  }
+  .title .l2 { display: block; }
+  .title .accent { color: var(--orange); }
+
+  /* "BIEN" sticker */
+  .bien {
+    position: relative;
+    display: inline-block;
+    font-family: "Bagel Fat One", system-ui, sans-serif;
+    font-weight: 400;
+    font-size: .92em;
+    line-height: 1;
+    letter-spacing: .005em;
+    color: var(--creme);
+    padding: .12em .34em .2em;
+    margin-left: .12em;
+    transform: rotate(-4.5deg);
+    border-radius: .26em;
+    background: linear-gradient(150deg, var(--rose) 0%, var(--orange) 100%);
+    /* sticker die-cut white border + drop */
+    box-shadow:
+      0 0 0 .11em var(--creme),
+      0 0 0 .145em rgba(58,42,46,.92),
+      .07em .14em 0 .145em rgba(58,42,46,.28),
+      .12em .22em .3em rgba(138,46,59,.35);
+    -webkit-text-stroke: 1px rgba(58,42,46,.18);
+  }
+  /* little shine on the sticker */
+  .bien::after {
+    content: "";
+    position: absolute;
+    top: .16em; left: .22em;
+    width: 42%; height: 28%;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0));
+    pointer-events: none;
+  }
+  /* sparkles flanking BIEN */
+  .bien .spark {
+    position: absolute;
+    width: .42em; height: .42em;
+    color: var(--orange);
+  }
+  .bien .spark.s1 { top: -.34em; right: -.18em; transform: rotate(8deg); }
+  .bien .spark.s2 { bottom: -.22em; left: -.26em; width: .3em; height: .3em; color: var(--rose); }
+
+  .lede-line {
+    margin-top: clamp(18px, 2.6vw, 30px);
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    color: var(--bordeaux);
+  }
+  .lede-line::before {
+    content: "✿";
+    color: var(--rose);
+    margin-right: .5rem;
+    font-size: .9em;
+  }
+
+  /* CTA pills row */
+  .actions {
+    margin-top: clamp(18px, 2.4vw, 28px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .82rem 1.4rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .98rem;
+    border: 2px solid var(--prune);
+    background: var(--paper);
+    color: var(--prune);
+    box-shadow: 3px 4px 0 0 var(--prune);
+    transition: transform .22s var(--ease-back), box-shadow .22s var(--ease), background .22s var(--ease);
+  }
+  .btn:hover, .btn:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 5px 7px 0 0 var(--prune);
+    outline: none;
+  }
+  .btn:focus-visible { box-shadow: 5px 7px 0 0 var(--prune), 0 0 0 4px rgba(248,116,47,.45); }
+  .btn:active { transform: translateY(0); box-shadow: 1px 1px 0 0 var(--prune); }
+  .btn--main {
+    background: linear-gradient(96deg, var(--orange), var(--rose));
+    color: var(--creme);
+    padding-inline: 1.6rem;
+    font-size: 1.04rem;
+    transform: rotate(-1.5deg);
+  }
+  .btn--main:hover, .btn--main:focus-visible { transform: translateY(-3px) rotate(-1.5deg); }
+  .btn--main .arr { transition: transform .3s var(--ease); }
+  .btn--main:hover .arr { transform: translateX(4px); }
+
+  /* --- right: collage of polaroids / stickers --- */
+  .collage {
+    position: relative;
+    align-self: stretch;
+    min-height: clamp(360px, 46vh, 480px);
+  }
+
+  .polaroid {
+    position: absolute;
+    background: var(--paper);
+    padding: 12px 12px 40px;
+    border-radius: 4px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 18px 34px -18px rgba(58,42,46,.55);
+  }
+  .polaroid .frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 2px;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,.25) 0 10px, rgba(255,255,255,0) 10px 20px),
+      linear-gradient(150deg, var(--rose-clair), #ffd9c9);
+  }
+  .polaroid .frame .ph-label {
+    position: relative;
+    z-index: 2;
+    font-size: .68rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--bordeaux);
+    font-weight: 600;
+    background: rgba(255,247,239,.78);
+    padding: .3rem .55rem;
+    border-radius: 999px;
+    border: 1.5px dashed rgba(138,46,59,.5);
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+  }
+  .polaroid .frame .ph-icon { width: 15px; height: 15px; opacity: .7; }
+  .polaroid .cap {
+    position: absolute;
+    left: 12px; right: 12px; bottom: 12px;
+    text-align: center;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 600;
+    font-size: .82rem;
+    color: var(--ink-soft);
+  }
+
+  .polaroid--1 {
+    width: clamp(170px, 17vw, 224px);
+    top: 8%; right: 2%;
+    transform: rotate(5deg);
+    z-index: 3;
+  }
+  .polaroid--2 {
+    width: clamp(146px, 15vw, 194px);
+    bottom: 2%; left: 1%;
+    transform: rotate(-7deg);
+    z-index: 2;
+  }
+
+  /* washi tape pieces */
+  .tape {
+    position: absolute;
+    width: 86px; height: 26px;
+    background: var(--tape);
+    box-shadow: 0 2px 6px -3px rgba(58,42,46,.4);
+    z-index: 6;
+    opacity: .92;
+  }
+  .tape::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, rgba(248,116,47,.0) 0 7px, rgba(248,116,47,.18) 7px 9px);
+  }
+  .tape--a { top: -2%; right: 22%; transform: rotate(-18deg); background: var(--tape-rose); }
+  .tape--b { bottom: 16%; left: 0; transform: rotate(12deg); width: 72px; }
+
+  /* sticker badge — stamp w/ smiling sun */
+  .badge-stamp {
+    position: absolute;
+    z-index: 7;
+    width: clamp(116px, 13vw, 152px);
+    aspect-ratio: 1;
+    top: -4%; left: 14%;
+    transform: rotate(-12deg);
+    filter: drop-shadow(0 12px 20px rgba(138,46,59,.32));
+  }
+  .badge-stamp text { font-family: "Instrument Sans", sans-serif; }
+
+  /* big daisy sticker */
+  .daisy-sticker {
+    position: absolute;
+    z-index: 1;
+    width: clamp(96px, 12vw, 150px);
+    bottom: -4%; right: 14%;
+    transform: rotate(10deg);
+    filter: drop-shadow(0 10px 16px rgba(58,42,46,.22));
+  }
+
+  /* small draggable stickers layer (spread across stage) */
+  .floaters { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+  .sticker {
+    position: absolute;
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    filter: drop-shadow(0 6px 10px rgba(58,42,46,.28));
+    transition: filter .2s var(--ease);
+    will-change: transform;
+  }
+  .sticker:hover { filter: drop-shadow(0 9px 14px rgba(248,116,47,.42)); }
+  .sticker.is-grabbing { cursor: grabbing; filter: drop-shadow(0 16px 22px rgba(58,42,46,.4)); }
+  .sticker:focus-visible { outline: 3px solid rgba(248,116,47,.6); outline-offset: 4px; border-radius: 50%; }
+  .sticker svg { width: 100%; height: 100%; display: block; pointer-events: none; }
+
+  .sticker--star  { width: 56px; height: 56px; left: 2%;  top: 30%; }
+  .sticker--heart { width: 50px; height: 50px; right: 1%; top: 56%; }
+  .sticker--flower{ width: 60px; height: 60px; left: 46%; top: -4%; }
+  .sticker--blob  { width: 62px; height: 62px; right: 36%; bottom: 2%; }
+
+  .drag-hint {
+    position: absolute;
+    bottom: -6px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 8;
+    font-size: .68rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: rgba(255,247,239,.8);
+    padding: .26rem .7rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(138,46,59,.25);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* ============================================================
+     QUOTE band
+     ============================================================ */
+  .quote {
+    position: relative;
+    z-index: 2;
+    margin-top: clamp(20px, 3vw, 36px);
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 22px);
+    flex-wrap: wrap;
+    padding: clamp(16px, 2vw, 22px) clamp(18px, 3vw, 30px);
+    background: var(--paper);
+    border: 2px solid var(--prune);
+    border-radius: 22px;
+    box-shadow: 4px 5px 0 0 var(--prune);
+    transform: rotate(-.6deg);
+  }
+  .quote .qmark {
+    font-family: "Shrikhand", serif;
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    line-height: .7;
+    color: var(--rose);
+    flex: none;
+    align-self: flex-start;
+  }
+  .quote blockquote {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.02rem, 1.9vw, 1.32rem);
+    line-height: 1.32;
+    color: var(--prune);
+    max-width: 60ch;
+  }
+  .quote cite {
+    display: inline-block;
+    margin-top: .35rem;
+    font-style: normal;
+    font-family: "Shrikhand", serif;
+    font-size: 1.04rem;
+    color: var(--orange);
+  }
+
+  /* ============================================================
+     FOOTER — socials
+     ============================================================ */
+  .foot {
+    margin-top: clamp(18px, 2.4vw, 26px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: .82rem;
+    color: var(--ink-soft);
+  }
+  .socials { display: flex; gap: 10px; }
+  .soc {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--paper);
+    border: 2px solid var(--prune);
+    box-shadow: 2px 3px 0 0 var(--prune);
+    color: var(--prune);
+    transition: transform .22s var(--ease-back), box-shadow .22s var(--ease), background .22s var(--ease), color .2s var(--ease);
+  }
+  .soc:hover, .soc:focus-visible {
+    transform: translateY(-3px) rotate(-6deg);
+    background: var(--rose);
+    color: var(--creme);
+    box-shadow: 4px 6px 0 0 var(--prune);
+    outline: none;
+  }
+  .soc:focus-visible { box-shadow: 4px 6px 0 0 var(--prune), 0 0 0 4px rgba(248,116,47,.45); }
+  .soc svg { width: 20px; height: 20px; }
+  .foot .meta { display: inline-flex; align-items: center; gap: .5rem; }
+  .foot .meta .swatch { width: 13px; height: 13px; border-radius: 50%; border: 1.5px solid rgba(58,42,46,.18); }
+
+  /* marquee subtle word band behind, between quote and stage on large screens */
+  .ticker {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    margin: clamp(8px,1.4vw,16px) calc(-1 * clamp(16px, 4vw, 46px)) 0;
+    border-block: 2px solid rgba(138,46,59,.18);
+    background: linear-gradient(90deg, rgba(251,107,166,.10), rgba(248,116,47,.10));
+  }
+  .ticker__track {
+    display: inline-flex;
+    gap: 2.4rem;
+    padding: .5rem 1.2rem;
+    white-space: nowrap;
+    font-family: "Shrikhand", serif;
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    color: var(--bordeaux);
+    animation: slide 26s linear infinite;
+  }
+  .ticker__track span .star { color: var(--orange); margin-inline: .2em; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1080px) {
+    .stage { grid-template-columns: 1fr; gap: clamp(28px, 6vw, 40px); }
+    .collage { min-height: 360px; order: 2; }
+    .lead { order: 1; }
+  }
+  @media (max-width: 620px) {
+    .topbar { gap: 12px; }
+    .pills { width: 100%; order: 3; justify-content: flex-start; }
+    .account { order: 2; }
+    .collage { min-height: 320px; }
+    .polaroid--1 { right: 4%; }
+    .polaroid--2 { left: 0; }
+    .drag-hint { display: none; }
+    .quote { transform: none; }
+  }
+
+  /* ============================================================
+     MOTION
+     ============================================================ */
+  @keyframes floaty { 0%,100% { transform: translateY(0) rotate(var(--r,0deg)); } 50% { transform: translateY(-7px) rotate(var(--r,0deg)); } }
+  .badge-stamp { animation: floaty 6s var(--ease) infinite; --r: -12deg; }
+  .daisy-sticker { animation: floaty 7s var(--ease) infinite; --r: 10deg; animation-delay: -2s; }
+
+  @keyframes pop-in { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
+  .js .lead > * { opacity: 0; animation: pop-in .7s var(--ease-back) forwards; }
+  .js .lead > *:nth-child(1) { animation-delay: .05s; }
+  .js .lead > *:nth-child(2) { animation-delay: .14s; }
+  .js .lead > *:nth-child(3) { animation-delay: .23s; }
+  .js .lead > *:nth-child(4) { animation-delay: .32s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+    .js .lead > * { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+  <div class="shell">
+
+    <!-- ===================== NAV ===================== -->
+    <header class="topbar">
+      <a class="stamp" href="#" aria-label="Soleia Expérience — accueil">
+        <span class="stamp__seal" aria-hidden="true">
+          <svg class="stamp__sun" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <g stroke="#fff7ef" stroke-width="5.5" stroke-linecap="round">
+              <line x1="32" y1="6"  x2="32" y2="15"/>
+              <line x1="32" y1="49" x2="32" y2="58"/>
+              <line x1="6"  y1="32" x2="15" y2="32"/>
+              <line x1="49" y1="32" x2="58" y2="32"/>
+              <line x1="13" y1="13" x2="19" y2="19"/>
+              <line x1="45" y1="45" x2="51" y2="51"/>
+              <line x1="13" y1="51" x2="19" y2="45"/>
+              <line x1="45" y1="19" x2="51" y2="13"/>
+            </g>
+            <circle cx="32" cy="32" r="12" fill="#fff7ef"/>
+            <g fill="#8a2e3b"><circle cx="28" cy="30" r="1.6"/><circle cx="36" cy="30" r="1.6"/></g>
+            <path d="M27 35 q5 4 10 0" fill="none" stroke="#8a2e3b" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="stamp__name">
+          <b>soleia</b>
+          <span>expérience</span>
+        </span>
+      </a>
+
+      <nav class="pills" aria-label="Navigation principale">
+        <a class="pill" href="#ateliers">Ateliers</a>
+        <a class="pill" href="#galerie">Galerie</a>
+        <a class="pill" href="#boutique">Boutique</a>
+        <a class="pill" href="#histoire">À propos · Histoire</a>
+      </nav>
+
+      <a class="account" href="#compte" aria-label="Mon compte">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="8" r="3.6" stroke="currentColor" stroke-width="2"/>
+          <path d="M5 19.5c1.4-3.3 4-5 7-5s5.6 1.7 7 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </header>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="stage" aria-labelledby="hero-title">
+
+      <!-- LEFT : headline -->
+      <div class="lead">
+        <span class="ribbon"><span class="dot" aria-hidden="true"></span>Soleia&#8239;Expérience</span>
+
+        <h1 class="title" id="hero-title">
+          <span class="l1">La pause créative</span>
+          <span class="l2">qui fait du
+            <span class="bien">BIEN.
+              <svg class="spark s1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0l2.4 7.6L22 10l-7.6 2.4L12 20l-2.4-7.6L2 10l7.6-2.4z"/></svg>
+              <svg class="spark s2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0l2.4 7.6L22 10l-7.6 2.4L12 20l-2.4-7.6L2 10l7.6-2.4z"/></svg>
+            </span>
+          </span>
+        </h1>
+
+        <p class="lede-line">Ici tu peux retrouver</p>
+
+        <div class="actions">
+          <a class="btn btn--main" href="#ateliers">Les prochains ateliers <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn" href="#boutique">La boutique</a>
+          <a class="btn" href="#histoire">Notre histoire</a>
+          <a class="btn" href="#faq">F.A.Q</a>
+        </div>
+      </div>
+
+      <!-- RIGHT : collage -->
+      <div class="collage" aria-label="Collage décoratif Soleia" role="img">
+
+        <!-- washi tapes -->
+        <span class="tape tape--a" aria-hidden="true"></span>
+        <span class="tape tape--b" aria-hidden="true"></span>
+
+        <!-- stamp badge (smiling sun) -->
+        <svg class="badge-stamp" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+          <defs>
+            <path id="circ" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
+          </defs>
+          <circle cx="100" cy="100" r="92" fill="#fff7ef" stroke="#8a2e3b" stroke-width="3"/>
+          <circle cx="100" cy="100" r="84" fill="none" stroke="#fb6ba6" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+          <text fill="#8a2e3b" font-size="13" font-weight="600" letter-spacing="3.6">
+            <textPath href="#circ" startOffset="0%">SOLEIA&#160;&#160;·&#160;&#160;BONNE&#160;HUMEUR&#160;&#160;·&#160;&#160;FAIT&#160;DU&#160;BIEN&#160;&#160;·&#160;&#160;</textPath>
+          </text>
+          <!-- sun -->
+          <g stroke="#f8742f" stroke-width="6" stroke-linecap="round">
+            <line x1="100" y1="48" x2="100" y2="60"/>
+            <line x1="100" y1="140" x2="100" y2="152"/>
+            <line x1="48" y1="100" x2="60" y2="100"/>
+            <line x1="140" y1="100" x2="152" y2="100"/>
+            <line x1="63" y1="63" x2="72" y2="72"/>
+            <line x1="128" y1="128" x2="137" y2="137"/>
+            <line x1="63" y1="137" x2="72" y2="128"/>
+            <line x1="128" y1="72" x2="137" y2="63"/>
+          </g>
+          <circle cx="100" cy="100" r="24" fill="#fb6ba6"/>
+          <g fill="#8a2e3b"><circle cx="93" cy="97" r="2.6"/><circle cx="107" cy="97" r="2.6"/></g>
+          <path d="M91 105 q9 7 18 0" fill="none" stroke="#8a2e3b" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+
+        <!-- polaroid 1 -->
+        <figure class="polaroid polaroid--1">
+          <div class="frame">
+            <span class="ph-label">
+              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#8a2e3b" stroke-width="2"/><circle cx="12" cy="12" r="3.4" stroke="#8a2e3b" stroke-width="2"/></svg>
+              Photo à venir
+            </span>
+          </div>
+          <figcaption class="cap">l’atelier ✿</figcaption>
+        </figure>
+
+        <!-- polaroid 2 -->
+        <figure class="polaroid polaroid--2">
+          <div class="frame">
+            <span class="ph-label">
+              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#8a2e3b" stroke-width="2"/><circle cx="12" cy="12" r="3.4" stroke="#8a2e3b" stroke-width="2"/></svg>
+              Photo à venir
+            </span>
+          </div>
+          <figcaption class="cap">bonne humeur ☀</figcaption>
+        </figure>
+
+        <!-- big daisy sticker -->
+        <svg class="daisy-sticker" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <g transform="translate(60 60)">
+            <g fill="#fb6ba6" stroke="#fff7ef" stroke-width="3">
+              <g id="petals">
+                <ellipse cx="0" cy="-34" rx="13" ry="22"/>
+              </g>
+              <use href="#petals" transform="rotate(72)"/>
+              <use href="#petals" transform="rotate(144)"/>
+              <use href="#petals" transform="rotate(216)"/>
+              <use href="#petals" transform="rotate(288)"/>
+            </g>
+            <circle r="17" fill="#f8742f" stroke="#fff7ef" stroke-width="3"/>
+          </g>
+        </svg>
+
+        <!-- draggable stickers -->
+        <div class="floaters" id="floaters">
+          <button class="sticker sticker--star" type="button" aria-label="Étoile autocollante — déplaçable">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 2l6.8 19.4L58 24l-15.6 13.4L46 58 32 47 18 58l3.6-20.6L6 24l19.2-2.6z" fill="#f8742f" stroke="#fff7ef" stroke-width="3"/></svg>
+          </button>
+          <button class="sticker sticker--heart" type="button" aria-label="Cœur autocollant — déplaçable">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 56S6 40 6 22C6 13 13 7 21 7c5 0 9 3 11 7 2-4 6-7 11-7 8 0 15 6 15 15 0 18-26 34-26 34z" fill="#fb6ba6" stroke="#fff7ef" stroke-width="3"/></svg>
+          </button>
+          <button class="sticker sticker--flower" type="button" aria-label="Marguerite autocollante — déplaçable">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><g transform="translate(32 32)"><g fill="#fff7ef" stroke="#f8742f" stroke-width="2.4"><g id="p2"><ellipse cx="0" cy="-18" rx="7.5" ry="12"/></g><use href="#p2" transform="rotate(72)"/><use href="#p2" transform="rotate(144)"/><use href="#p2" transform="rotate(216)"/><use href="#p2" transform="rotate(288)"/></g><circle r="9" fill="#f8742f"/></g></svg>
+          </button>
+          <button class="sticker sticker--blob" type="button" aria-label="Soleil autocollant — déplaçable">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <g stroke="#f8742f" stroke-width="4" stroke-linecap="round">
+                <line x1="32" y1="6" x2="32" y2="13"/><line x1="32" y1="51" x2="32" y2="58"/>
+                <line x1="6" y1="32" x2="13" y2="32"/><line x1="51" y1="32" x2="58" y2="32"/>
+                <line x1="14" y1="14" x2="19" y2="19"/><line x1="45" y1="45" x2="50" y2="50"/>
+                <line x1="14" y1="50" x2="19" y2="45"/><line x1="45" y1="19" x2="50" y2="14"/>
+              </g>
+              <circle cx="32" cy="32" r="13" fill="#fb6ba6" stroke="#fff7ef" stroke-width="2.5"/>
+              <g fill="#8a2e3b"><circle cx="28" cy="30" r="1.5"/><circle cx="36" cy="30" r="1.5"/></g>
+              <path d="M27 35 q5 4 10 0" fill="none" stroke="#8a2e3b" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <span class="drag-hint" id="dragHint" aria-hidden="true">déplace les stickers ✦</span>
+      </div>
+    </section>
+
+    <!-- ===================== MARQUEE ===================== -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span>créativité <span class="star">✦</span> convivialité <span class="star">✦</span> bonne humeur <span class="star">✦</span> ça fait du bien <span class="star">✦</span> </span>
+        <span>créativité <span class="star">✦</span> convivialité <span class="star">✦</span> bonne humeur <span class="star">✦</span> ça fait du bien <span class="star">✦</span> </span>
+      </div>
+    </div>
+
+    <!-- ===================== QUOTE ===================== -->
+    <div class="quote">
+      <span class="qmark" aria-hidden="true">“</span>
+      <blockquote>
+        Parce que prendre du temps pour soi, c’est important &amp; ça fait du bien.
+        <cite>— Gwen</cite>
+      </blockquote>
+    </div>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="foot">
+      <div class="socials">
+        <a class="soc" href="#" aria-label="Soleia sur Instagram">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg>
+        </a>
+        <a class="soc" href="#" aria-label="Soleia sur Pinterest">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.7 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.5 1.9-2.5.9 0 1.3.7 1.3 1.5 0 .9-.6 2.2-.9 3.5-.2 1 .5 1.9 1.6 1.9 1.9 0 3.2-2.4 3.2-5.3 0-2.2-1.5-3.8-4.1-3.8a4.7 4.7 0 0 0-4.9 4.7c0 .9.3 1.5.7 2 .2.2.2.3.1.6l-.2.9c-.1.3-.3.4-.6.2-1.2-.5-1.8-1.9-1.8-3.5C5.8 8 8 5.4 12.2 5.4c3.4 0 5.7 2.5 5.7 5.1 0 3.5-1.9 6.1-4.8 6.1-1 0-1.9-.5-2.2-1.1l-.6 2.4c-.2.8-.7 1.7-1 2.3A10 10 0 1 0 12 2z" fill="currentColor"/></svg>
+        </a>
+        <a class="soc" href="#" aria-label="Écrire à Soleia">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <span class="meta">
+        Soleia&#8239;Expérience · fait avec le cœur
+        <span class="swatch" style="background:#fb6ba6"></span>
+        <span class="swatch" style="background:#f8742f"></span>
+        <span class="swatch" style="background:#f8e6e6"></span>
+      </span>
+    </footer>
+
+  </div>
+
+  <!-- ===================== JS — progressive enhancement ===================== -->
+  <script>
+  (function () {
+    "use strict";
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var root = document.documentElement;
+
+    // mark JS available -> enables entrance animations (skipped if reduced motion)
+    if (!reduce) root.classList.add("js");
+
+    /* ---------- Draggable stickers ---------- */
+    var stickers = document.querySelectorAll(".sticker");
+    var hint = document.getElementById("dragHint");
+    var hintHidden = false;
+
+    stickers.forEach(function (el) {
+      var dx = 0, dy = 0;            // committed offset
+      var sx = 0, sy = 0;            // pointer start
+      var ox = 0, oy = 0;           // offset at grab
+      var dragging = false;
+      var pid = null;
+
+      function apply() { el.style.transform = "translate(" + dx + "px," + dy + "px)"; }
+
+      function down(e) {
+        dragging = true;
+        pid = e.pointerId;
+        sx = e.clientX; sy = e.clientY;
+        ox = dx; oy = dy;
+        el.classList.add("is-grabbing");
+        try { el.setPointerCapture(pid); } catch (err) {}
+        if (!hintHidden && hint) { hint.style.opacity = "0"; hintHidden = true; }
+        e.preventDefault();
+      }
+      function move(e) {
+        if (!dragging) return;
+        dx = ox + (e.clientX - sx);
+        dy = oy + (e.clientY - sy);
+        apply();
+      }
+      function up() {
+        if (!dragging) return;
+        dragging = false;
+        el.classList.remove("is-grabbing");
+        try { el.releasePointerCapture(pid); } catch (err) {}
+      }
+
+      el.addEventListener("pointerdown", down);
+      el.addEventListener("pointermove", move);
+      el.addEventListener("pointerup", up);
+      el.addEventListener("pointercancel", up);
+
+      // keyboard nudge (accessibility)
+      el.addEventListener("keydown", function (e) {
+        var step = e.shiftKey ? 24 : 8, used = true;
+        switch (e.key) {
+          case "ArrowLeft":  dx -= step; break;
+          case "ArrowRight": dx += step; break;
+          case "ArrowUp":    dy -= step; break;
+          case "ArrowDown":  dy += step; break;
+          case "Home": case "Escape": dx = 0; dy = 0; break;
+          default: used = false;
+        }
+        if (used) { e.preventDefault(); apply(); if (!hintHidden && hint) { hint.style.opacity = "0"; hintHidden = true; } }
+      });
+    });
+
+    /* ---------- Optional: gentle parallax on the collage (mouse only) ---------- */
+    if (!reduce && window.matchMedia("(pointer:fine)").matches) {
+      var stage = document.querySelector(".stage");
+      var layers = [
+        { el: document.querySelector(".badge-stamp"), d: 14 },
+        { el: document.querySelector(".daisy-sticker"), d: -10 },
+        { el: document.querySelector(".polaroid--1"), d: 7 },
+        { el: document.querySelector(".polaroid--2"), d: -6 }
+      ];
+      var raf = null, mx = 0, my = 0;
+
+      stage && stage.addEventListener("pointermove", function (e) {
+        var r = stage.getBoundingClientRect();
+        mx = (e.clientX - r.left) / r.width - 0.5;
+        my = (e.clientY - r.top) / r.height - 0.5;
+        if (!raf) raf = requestAnimationFrame(tick);
+      });
+      stage && stage.addEventListener("pointerleave", function () { mx = 0; my = 0; if (!raf) raf = requestAnimationFrame(tick); });
+
+      function tick() {
+        raf = null;
+        layers.forEach(function (l) {
+          if (!l.el) return;
+          // translate-only so it composes with CSS keyframe transforms
+          l.el.style.translate = (mx * l.d).toFixed(1) + "px " + (my * l.d).toFixed(1) + "px";
+        });
+      }
+    }
+  })();
+  </script>
+</body>
+</html>

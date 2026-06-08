@@ -18,3 +18,14 @@ node_modules/
 soleia-*.png
 verify-*.png
 soleia-hero.html
+
+# Images d'inspiration (screenshots d'autres sites, à la racine) — usage interne, non publié
+/IMG_*.JPG
+/IMG_*.jpg
+/IMG_*.jpeg
+/IMG_*.png
+
+# Artefacts de génération supplémentaires
+direction-*.html
+soleia-*.html
+/index-check.*
