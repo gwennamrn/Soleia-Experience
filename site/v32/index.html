@@ -7,7 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&family=Sacramento&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
 <style>
   :root {
     /* ===== PALETTE EXACTE SOLEIA ===== */
@@ -159,14 +159,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: clamp(0.5rem, 1.3vw, 1.1rem);
     text-decoration: none;
     justify-self: center;
-    line-height: 0;
+    line-height: 1;
   }
   .brand img {
     height: clamp(40px, 5.4vh, 60px);
     width: auto;
     display: block;
+  }
+  /* « Soleia » (gauche) et « Expérience » (droite) — même famille que « BIEN » */
+  .brand__word {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(1.05rem, 1.7vw, 1.5rem);
+    letter-spacing: 0.004em;
+    color: var(--ink);
+    line-height: 1;
+    white-space: nowrap;
   }
   /* repli si /logo.svg indisponible : emblème soleil bi-ton inline */
   .brand__fallback {
@@ -388,6 +399,7 @@
     align-items: flex-end;
     justify-content: center;
     padding-top: clamp(0.6rem, 1.4vh, 1.1rem);
+    padding-bottom: clamp(0.4rem, 1.6vh, 1.2rem); /* remonte légèrement la citation */
   }
   .quote {
     margin: 0;
@@ -406,12 +418,12 @@
   }
   .quote cite {
     display: block;
-    font-style: normal;
-    font-family: "Sacramento", "Brush Script MT", cursive;  /* signature, PAS Caveat */
-    font-weight: 400;
-    font-size: clamp(1.6rem, 2.6vw, 2.25rem);
-    line-height: 1;
-    letter-spacing: 0.01em;
+    font-family: "Fraunces", Georgia, serif;   /* police de la V30 */
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1rem, 1.5vw, 1.28rem);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
     color: var(--orange);
   }
 
@@ -471,7 +483,7 @@
 
   <!-- ===================== RAIL RÉSEAUX SOCIAUX — bord DROIT ===================== -->
   <aside class="social-rail" aria-label="Suivre Soleia sur les réseaux sociaux">
-    <span class="social-rail__label" aria-hidden="true">Suivre</span>
+    <span class="social-rail__label" aria-hidden="true">Par ici</span>
     <a class="icon-btn" href="#" aria-label="Instagram de Soleia">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
         <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
@@ -502,7 +514,8 @@
       </ul>
 
       <a class="brand" href="#" aria-label="Soleia Expérience, accueil">
-        <img src="/logo.svg" alt="Soleia Expérience" />
+        <span class="brand__word brand__word--left">Soleia</span>
+        <img src="/logo.svg" alt="" />
         <!-- repli si /logo.svg manquant : emblème soleil bi-ton rose/orange -->
         <svg class="brand__fallback" viewBox="0 0 64 64" role="img" aria-label="Soleia Expérience">
           <defs>
@@ -523,6 +536,7 @@
             <line x1="44" y1="20" x2="50.5" y2="13.5"/>
           </g>
         </svg>
+        <span class="brand__word brand__word--right">Expérience</span>
       </a>
 
       <div class="nav__col nav__col--right">
