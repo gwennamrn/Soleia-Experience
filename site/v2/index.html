@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Soleia Expérience — La pause créative qui fait du BIEN</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --amber: #ff9d2e;
+    --coral: #ff6a4d;
+    --apricot: #ffc98a;
+    --mauve: #c98aa8;
+    --plum: #6e4a63;
+    --creme: #fff4e6;
+    --ink: #3a2330;
+    --ink-soft: #6e5158;
+    --glass: rgba(255, 244, 230, 0.55);
+    --glass-strong: rgba(255, 244, 230, 0.72);
+    --fine: 0.06em;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--creme);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* ============ SUNSET BACKGROUND ============ */
+  .aurora {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: var(--creme);
+  }
+
+  /* CSS fallback: animated sunset mesh (works with no JS / no WebGL) */
+  .aurora__css {
+    position: absolute;
+    inset: -20%;
+    filter: blur(64px) saturate(1.08);
+    opacity: 0.95;
+    transition: opacity 0.8s ease;
+  }
+  .aurora__css::before,
+  .aurora__css::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-repeat: no-repeat;
+  }
+  .aurora__css::before {
+    background:
+      radial-gradient(48% 60% at 50% 108%, rgba(255, 106, 77, 0.95), transparent 70%),
+      radial-gradient(42% 52% at 20% 86%, rgba(255, 157, 46, 0.9), transparent 72%),
+      radial-gradient(46% 56% at 82% 80%, rgba(255, 201, 138, 0.85), transparent 74%),
+      radial-gradient(55% 60% at 50% 4%, rgba(201, 138, 168, 0.6), transparent 72%);
+    animation: drift1 24s ease-in-out infinite alternate;
+  }
+  .aurora__css::after {
+    background:
+      radial-gradient(40% 50% at 70% 30%, rgba(255, 157, 46, 0.5), transparent 70%),
+      radial-gradient(44% 54% at 14% 44%, rgba(201, 138, 168, 0.5), transparent 72%),
+      radial-gradient(52% 56% at 88% 96%, rgba(255, 106, 77, 0.7), transparent 74%);
+    animation: drift2 30s ease-in-out infinite alternate;
+    mix-blend-mode: screen;
+  }
+  @keyframes drift1 {
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+    100% { transform: translate(3%, -2%) scale(1.12) rotate(6deg); }
+  }
+  @keyframes drift2 {
+    0%   { transform: translate(0, 0) scale(1.05) rotate(0deg); }
+    100% { transform: translate(-4%, 3%) scale(1) rotate(-8deg); }
+  }
+
+  /* WebGL canvas sits on top of the CSS fallback once it's ready */
+  #gl {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .gl-ready #gl { opacity: 1; }
+  .gl-ready .aurora__css { opacity: 0; }
+
+  /* Cream veil — extra strong at top so the OUTLINE title reads clearly */
+  .aurora__veil {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(130% 80% at 50% 0%, rgba(255, 244, 230, 0.62) 0%, transparent 52%),
+      radial-gradient(90% 64% at 50% 44%, rgba(255, 244, 230, 0.34), transparent 64%);
+    pointer-events: none;
+  }
+  .aurora__grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ============ SHELL ============ */
+  .shell {
+    position: relative;
+    z-index: 2;
+    min-height: 100svh;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1rem, 2.2vw, 1.7rem) clamp(1.1rem, 4.5vw, 4rem);
+  }
+
+  /* ============ NAV — 3 columns ============ */
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1.2rem;
+    flex: 0 0 auto;
+  }
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.9rem, 2vw, 1.9rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav__links--left { justify-content: flex-end; }
+  .nav__links--right { justify-content: flex-start; }
+  .nav__links a {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 0.92rem;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding: 0.35rem 0.1rem;
+    white-space: nowrap;
+    transition: color 0.25s ease;
+  }
+  .nav__links a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0.05rem;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--coral), var(--amber));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav__links a:hover::after,
+  .nav__links a:focus-visible::after { transform: scaleX(1); }
+  .nav__links a:hover { color: var(--coral); }
+
+  /* centered logo */
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.9;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 0 0.4rem;
+  }
+  .brand__name {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.45rem, 2.5vw, 1.95rem);
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .brand__sub {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 300;
+    font-size: 0.6rem;
+    letter-spacing: 0.44em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 0.35rem;
+    margin-left: 0.12rem;
+  }
+
+  .nav__right-col {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  .nav__right-col .nav__links { display: flex; }
+  .account {
+    display: grid;
+    place-items: center;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(58, 35, 48, 0.18);
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--ink);
+    cursor: pointer;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .account:hover {
+    transform: translateY(-1px);
+    border-color: var(--coral);
+    box-shadow: 0 6px 18px rgba(255, 106, 77, 0.25);
+  }
+  .account svg { width: 19px; height: 19px; }
+
+  .nav__burger {
+    display: none;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(58, 35, 48, 0.18);
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--ink);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav__burger svg { width: 20px; height: 20px; }
+
+  /* ============ SOCIAL — vertical column, left edge ============ */
+  .social-rail {
+    position: fixed;
+    left: clamp(0.7rem, 2.4vw, 2rem);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .social-rail__label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: 0.64rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--plum);
+    margin-bottom: 0.3rem;
+    opacity: 0.85;
+  }
+  .social-rail__line {
+    width: 1.5px;
+    height: clamp(22px, 4vh, 40px);
+    background: linear-gradient(var(--coral), transparent);
+    border-radius: 2px;
+  }
+  .social {
+    display: grid;
+    place-items: center;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(58, 35, 48, 0.2);
+    background: var(--glass-strong);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--ink);
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(110, 74, 99, 0.12);
+    transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  }
+  .social:hover {
+    transform: translateX(3px) scale(1.06);
+    color: var(--creme);
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--coral), var(--amber));
+    box-shadow: 0 12px 26px rgba(255, 106, 77, 0.34);
+  }
+  .social svg { width: 20px; height: 20px; }
+
+  /* ============ HERO ============ */
+  .hero {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(0.5rem, 2vh, 2rem) 0;
+    position: relative;
+    min-height: 0;
+  }
+
+  /* OUTLINE TITLE */
+  .title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 420;
+    font-size: clamp(3rem, 10.6vw, 10.8rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin: 0;
+    max-width: 15ch;
+    font-variation-settings: "opsz" 144;
+    position: relative;
+    z-index: 1;
+  }
+  .title .line { display: block; }
+  .title .stroke {
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1.6px var(--ink);
+    text-stroke: 1.6px var(--ink);
+    /* faint inner fill keeps it legible over busy areas of the mesh */
+    paint-order: stroke fill;
+    text-shadow: 0 1px 0 rgba(255, 244, 230, 0.35);
+  }
+  .title em {
+    font-style: italic;
+    font-weight: 380;
+    font-variation-settings: "opsz" 144;
+  }
+
+  /* "BIEN" stays SOLID gradient — anchors contrast against the outline */
+  .bien {
+    position: relative;
+    display: inline-block;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    -webkit-text-stroke: 0;
+    text-stroke: 0;
+    background: linear-gradient(96deg, var(--coral) 0%, #ff7d2e 50%, var(--amber) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    padding-right: 0.06em;
+  }
+  .bien::after {
+    content: "BIEN.";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(96deg, var(--coral) 0%, var(--amber) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: blur(20px);
+    opacity: 0.7;
+    animation: glow 4.5s ease-in-out infinite;
+  }
+  @keyframes glow {
+    0%, 100% { opacity: 0.5; filter: blur(16px); }
+    50%      { opacity: 0.85; filter: blur(26px); }
+  }
+
+  /* ============ PILL BUTTONS — bigger + bold ============ */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    margin-top: clamp(1.6rem, 4vh, 2.8rem);
+    position: relative;
+    z-index: 1;
+  }
+  .pill {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 1.35vw, 1.14rem);
+    letter-spacing: 0.005em;
+    padding: clamp(1.05rem, 1.7vh, 1.35rem) clamp(1.8rem, 2.6vw, 2.5rem);
+    border-radius: 999px;
+    border: 1.8px solid rgba(58, 35, 48, 0.22);
+    background: var(--glass-strong);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.28s ease, border-color 0.28s ease, color 0.28s ease;
+    white-space: nowrap;
+  }
+  .pill:hover {
+    transform: translateY(-2px);
+    border-color: var(--coral);
+    color: var(--coral);
+    box-shadow: 0 12px 28px rgba(255, 106, 77, 0.22);
+  }
+  .pill--primary {
+    border: none;
+    color: var(--creme);
+    background: linear-gradient(96deg, var(--coral) 0%, var(--amber) 100%);
+    box-shadow: 0 12px 32px rgba(255, 157, 46, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .pill--primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(96deg, var(--amber) 0%, var(--coral) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .pill--primary span { position: relative; z-index: 1; }
+  .pill--primary:hover {
+    transform: translateY(-2px);
+    color: var(--creme);
+    box-shadow: 0 16px 42px rgba(255, 157, 46, 0.5);
+  }
+  .pill--primary:hover::before { opacity: 1; }
+
+  /* ============ QUOTE — one line, left aligned, Gwen below ============ */
+  .quote {
+    margin: clamp(1.8rem, 4.4vh, 3rem) 0 0;
+    max-width: 100%;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+  }
+  .quote p {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 340;
+    font-size: clamp(0.98rem, 1.7vw, 1.3rem);
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0 0 0.5rem;
+    white-space: nowrap;
+  }
+  .quote cite {
+    display: block;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 460;
+    font-size: clamp(1.05rem, 1.6vw, 1.32rem);
+    letter-spacing: 0.01em;
+    color: var(--coral);
+  }
+  .quote cite::before {
+    content: "— ";
+    color: var(--ink-soft);
+  }
+
+  /* ============ DRAGGABLE STICKERS ============ */
+  .stickers {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none; /* container transparent; children opt-in */
+  }
+  .sticker {
+    position: absolute;
+    pointer-events: auto;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    will-change: transform;
+    filter: drop-shadow(0 8px 16px rgba(110, 74, 99, 0.22));
+    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .sticker:hover { transform: scale(1.08) rotate(-3deg); }
+  .sticker.dragging {
+    cursor: grabbing;
+    transition: none;
+    filter: drop-shadow(0 16px 26px rgba(110, 74, 99, 0.34));
+    z-index: 9;
+  }
+  .sticker:focus-visible {
+    outline: 2.5px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 12px;
+  }
+  .sticker svg { display: block; }
+  .sticker--sun  { width: clamp(64px, 8vw, 104px); top: 16%; left: 9%; }
+  .sticker--s1   { width: clamp(30px, 3.6vw, 46px); top: 30%; right: 11%; }
+  .sticker--s2   { width: clamp(22px, 2.8vw, 34px); top: 64%; left: 18%; }
+  .sticker--s3   { width: clamp(26px, 3.2vw, 40px); bottom: 16%; right: 16%; }
+  .sticker--spin svg { animation: spin 38s linear infinite; transform-origin: 50% 50%; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .sticker--twinkle svg { animation: twinkle 4s ease-in-out infinite; }
+  .sticker--twinkle.s-b svg { animation-delay: 1.3s; }
+  .sticker--twinkle.s-c svg { animation-delay: 2.4s; }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.7; transform: scale(0.92); }
+    50%      { opacity: 1;   transform: scale(1.05); }
+  }
+
+  .drag-hint {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--plum);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--glass-strong);
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    transition: opacity 0.3s ease;
+  }
+  .sticker--sun .drag-hint { opacity: 0.92; animation: hintFade 6s ease-in-out 2s forwards; }
+  .sticker:hover .drag-hint { opacity: 0.92; animation: none; }
+  @keyframes hintFade { 0%, 70% { opacity: 0.92; } 100% { opacity: 0; } }
+
+  /* ============ FOCUS / A11Y ============ */
+  a:focus-visible, button:focus-visible {
+    outline: 2.5px solid var(--coral);
+    outline-offset: 3px;
+    border-radius: 999px;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 880px) {
+    .nav__links--left, .nav__links--right { display: none; }
+    .nav { grid-template-columns: auto 1fr auto; }
+    .brand { align-items: flex-start; }
+    .nav__burger { display: inline-flex; }
+    .social-rail { left: clamp(0.5rem, 2vw, 1rem); gap: 0.6rem; }
+    .social-rail__label { display: none; }
+    .social-rail__line { display: none; }
+    .social { width: 42px; height: 42px; }
+    .title { font-size: clamp(2.8rem, 13vw, 5.4rem); max-width: 12ch; }
+    .quote p { white-space: normal; font-size: clamp(0.95rem, 4.4vw, 1.18rem); }
+    .sticker--sun { left: auto; right: 6%; top: 11%; }
+    .sticker--s2 { left: 8%; }
+  }
+  @media (max-width: 600px) {
+    .quote p { white-space: normal; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    #gl { display: none; }
+    .aurora__css { opacity: 0.95 !important; }
+    .sticker { cursor: default; }
+    .drag-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+  <!-- ===================== SUNSET BACKGROUND ===================== -->
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora__css"></div>
+    <canvas id="gl"></canvas>
+    <div class="aurora__veil"></div>
+    <div class="aurora__grain"></div>
+  </div>
+
+  <!-- ===================== SOCIAL RAIL (visible, no scroll) ===================== -->
+  <nav class="social-rail" aria-label="Réseaux sociaux">
+    <span class="social-rail__label" aria-hidden="true">Suivre</span>
+    <a class="social" href="#" aria-label="Instagram de Soleia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+        <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <a class="social" href="#" aria-label="Pinterest de Soleia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+        <path d="M12 3.5a8.5 8.5 0 0 0-3.1 16.4c-.07-.7-.13-1.78.03-2.55.14-.66.92-4.2.92-4.2s-.24-.47-.24-1.17c0-1.1.64-1.92 1.43-1.92.67 0 1 .5 1 1.1 0 .68-.43 1.69-.65 2.63-.19.78.4 1.42 1.17 1.42 1.4 0 2.48-1.48 2.48-3.62 0-1.9-1.36-3.22-3.3-3.22a3.43 3.43 0 0 0-3.58 3.44c0 .68.26 1.42.59 1.81a.24.24 0 0 1 .05.23l-.22.9c-.04.15-.12.18-.27.11-1-.47-1.63-1.93-1.63-3.1 0-2.53 1.84-4.85 5.3-4.85 2.78 0 4.94 1.98 4.94 4.63 0 2.76-1.74 4.98-4.16 4.98-.81 0-1.57-.42-1.83-.92l-.5 1.9c-.18.7-.67 1.57-1 2.1A8.5 8.5 0 1 0 12 3.5Z" stroke-width="0.5" fill="currentColor"/>
+      </svg>
+    </a>
+    <a class="social" href="#" aria-label="Contacter Soleia par e-mail">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+        <rect x="3" y="5" width="18" height="14" rx="3"/>
+        <path d="m4 7 8 5.5L20 7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <span class="social-rail__line" aria-hidden="true"></span>
+  </nav>
+
+  <div class="shell">
+    <!-- ===================== NAV — 3 columns ===================== -->
+    <nav class="nav" aria-label="Navigation principale">
+      <ul class="nav__links nav__links--left">
+        <li><a href="#ateliers">Ateliers</a></li>
+        <li><a href="#boutique">Boutique</a></li>
+      </ul>
+
+      <a class="brand" href="#" aria-label="Soleia Expérience, accueil">
+        <span class="brand__name">soleia</span>
+        <span class="brand__sub">expérience</span>
+      </a>
+
+      <div class="nav__right-col">
+        <ul class="nav__links nav__links--right">
+          <li><a href="#histoire">Histoire</a></li>
+          <li><a href="#galerie">Galerie</a></li>
+        </ul>
+        <button class="account" aria-label="Mon compte">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.4"/>
+            <path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="nav__burger" aria-label="Ouvrir le menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ===================== HERO ===================== -->
+    <main class="hero">
+      <!-- Draggable stickers — gorgeous without interaction, never block reading -->
+      <div class="stickers" aria-hidden="true">
+        <div class="sticker sticker--sun sticker--spin" data-drag tabindex="0" role="img" aria-label="Petit soleil déplaçable">
+          <span class="drag-hint">déplace-moi</span>
+          <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <circle cx="50" cy="50" r="20" fill="#ff9d2e"/>
+            <circle cx="50" cy="50" r="20" fill="none" stroke="#ff6a4d" stroke-width="2.5"/>
+            <g stroke="#ff6a4d" stroke-width="4.5" stroke-linecap="round">
+              <line x1="50" y1="6"  x2="50" y2="20"/>
+              <line x1="50" y1="80" x2="50" y2="94"/>
+              <line x1="6"  y1="50" x2="20" y2="50"/>
+              <line x1="80" y1="50" x2="94" y2="50"/>
+              <line x1="19" y1="19" x2="29" y2="29"/>
+              <line x1="71" y1="71" x2="81" y2="81"/>
+              <line x1="19" y1="81" x2="29" y2="71"/>
+              <line x1="71" y1="29" x2="81" y2="19"/>
+            </g>
+          </svg>
+        </div>
+        <div class="sticker sticker--s1 sticker--twinkle" data-drag tabindex="0" role="img" aria-label="Étoile déplaçable">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 2c1.4 11 9 18.6 20 20-11 1.4-18.6 9-20 20-1.4-11-9-18.6-20-20 11-1.4 18.6-9 20-20Z" fill="#ff6a4d"/>
+          </svg>
+        </div>
+        <div class="sticker sticker--s2 sticker--twinkle s-b" data-drag tabindex="0" role="img" aria-label="Étoile déplaçable">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 2c1.4 11 9 18.6 20 20-11 1.4-18.6 9-20 20-1.4-11-9-18.6-20-20 11-1.4 18.6-9 20-20Z" fill="#c98aa8"/>
+          </svg>
+        </div>
+        <div class="sticker sticker--s3 sticker--twinkle s-c" data-drag tabindex="0" role="img" aria-label="Étoile déplaçable">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 2c1.4 11 9 18.6 20 20-11 1.4-18.6 9-20 20-1.4-11-9-18.6-20-20 11-1.4 18.6-9 20-20Z" fill="#ff9d2e"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="title">
+        <span class="line stroke">La pause créative</span>
+        <span class="line stroke">qui fait <em>du</em> <span class="bien">BIEN.</span></span>
+      </h1>
+
+      <div class="actions">
+        <a class="pill pill--primary" href="#ateliers"><span>Les prochains ateliers</span></a>
+        <a class="pill" href="#boutique">La boutique</a>
+        <a class="pill" href="#histoire">Notre histoire</a>
+        <a class="pill" href="#faq">F.A.Q</a>
+      </div>
+
+      <figure class="quote">
+        <p>«&#8239;Parce que prendre du temps pour soi, c’est important &amp; ça fait du bien.&#8239;»</p>
+        <cite>Gwen</cite>
+      </figure>
+    </main>
+  </div>
+
+  <!-- ===================== WebGL SUNSET SHADER (progressive enhancement) ===================== -->
+  <script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    var canvas = document.getElementById("gl");
+    if (!canvas) return;
+
+    var gl = canvas.getContext("webgl", { antialias: true, alpha: false, premultipliedAlpha: false })
+          || canvas.getContext("experimental-webgl");
+    if (!gl) return; // CSS fallback stays visible — graceful degradation.
+
+    var vertSrc =
+      "attribute vec2 p;" +
+      "void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
+
+    // Domain-warped fbm "sunset mesh" — amber / coral / apricot rising into a soft dusk mauve.
+    var fragSrc = [
+      "precision highp float;",
+      "uniform vec2 u_res;",
+      "uniform float u_time;",
+      "",
+      "vec3 AMBER  = vec3(1.000, 0.616, 0.180);", // #ff9d2e
+      "vec3 CORAL  = vec3(1.000, 0.416, 0.302);", // #ff6a4d
+      "vec3 APRI   = vec3(1.000, 0.788, 0.541);", // #ffc98a
+      "vec3 MAUVE  = vec3(0.788, 0.541, 0.659);", // #c98aa8
+      "vec3 CREAM  = vec3(1.000, 0.957, 0.902);", // #fff4e6
+      "",
+      "float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }",
+      "float noise(vec2 p){",
+      "  vec2 i = floor(p); vec2 f = fract(p);",
+      "  vec2 u = f*f*(3.0-2.0*f);",
+      "  return mix(mix(hash(i+vec2(0.0,0.0)), hash(i+vec2(1.0,0.0)), u.x),",
+      "             mix(hash(i+vec2(0.0,1.0)), hash(i+vec2(1.0,1.0)), u.x), u.y);",
+      "}",
+      "float fbm(vec2 p){",
+      "  float v = 0.0; float a = 0.5;",
+      "  for(int i=0;i<5;i++){ v += a*noise(p); p *= 2.0; a *= 0.5; }",
+      "  return v;",
+      "}",
+      "",
+      "void main(){",
+      "  vec2 uv = gl_FragCoord.xy / u_res.xy;",
+      "  vec2 p = uv;",
+      "  p.x *= u_res.x / u_res.y;",
+      "  float t = u_time * 0.04;",
+      "  // domain warp for the flowing sunset feel",
+      "  vec2 q = vec2(fbm(p + vec2(0.0, t)), fbm(p + vec2(5.2, -t)));",
+      "  vec2 r = vec2(fbm(p + 3.0*q + vec2(1.7, 9.2) + 0.15*t),",
+      "                fbm(p + 3.0*q + vec2(8.3, 2.8) - 0.12*t));",
+      "  float f = fbm(p + 2.4*r);",
+      "  // vertical sunset gradient: warm + glowing at the bottom, dusk at the top",
+      "  float band = uv.y;",
+      "  vec3 col = mix(CORAL, AMBER, smoothstep(0.0, 0.5, f));",
+      "  col = mix(col, APRI, smoothstep(0.35, 0.95, f + 0.25*r.x));",
+      "  // push warm tones to the lower half (the setting sun)",
+      "  col = mix(col, CORAL, smoothstep(0.5, -0.1, band) * 0.55);",
+      "  // soft dusk mauve drifting in the upper half",
+      "  col = mix(col, MAUVE, smoothstep(0.55, 1.05, band + 0.18*r.y) * 0.5);",
+      "  // lift toward cream near the very top so the OUTLINE title stays readable",
+      "  col = mix(col, CREAM, smoothstep(0.62, 1.0, band) * 0.5);",
+      "  // gentle cream vignette",
+      "  float d = distance(uv, vec2(0.5, 0.46));",
+      "  col = mix(col, CREAM, smoothstep(0.5, 1.0, d) * 0.3);",
+      "  gl_FragColor = vec4(col, 1.0);",
+      "}"
+    ].join("\n");
+
+    function compile(type, src) {
+      var s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        gl.deleteShader(s);
+        return null;
+      }
+      return s;
+    }
+
+    var vs = compile(gl.VERTEX_SHADER, vertSrc);
+    var fs = compile(gl.FRAGMENT_SHADER, fragSrc);
+    if (!vs || !fs) return; // fallback stays
+
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(prog, "p");
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+    var uRes = gl.getUniformLocation(prog, "u_res");
+    var uTime = gl.getUniformLocation(prog, "u_time");
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    function resize() {
+      var w = Math.floor(canvas.clientWidth * dpr);
+      var h = Math.floor(canvas.clientHeight * dpr);
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w; canvas.height = h;
+        gl.viewport(0, 0, w, h);
+      }
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    document.querySelector(".aurora").classList.add("gl-ready");
+    document.body.classList.add("gl-ready");
+
+    var start = performance.now();
+    var running = true;
+    var elapsed = 0;
+    document.addEventListener("visibilitychange", function () {
+      running = !document.hidden;
+      if (running) { start = performance.now() - elapsed; requestAnimationFrame(loop); }
+    });
+
+    function loop(now) {
+      if (!running) return;
+      resize();
+      elapsed = now - start;
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uTime, elapsed * 0.001);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  })();
+  </script>
+
+  <!-- ===================== DRAGGABLE STICKERS (progressive enhancement) ===================== -->
+  <script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return; // no drag in reduced-motion: the stickers stay put, still pretty
+
+    var items = document.querySelectorAll(".sticker[data-drag]");
+    items.forEach(function (el) {
+      var dx = 0, dy = 0, startX = 0, startY = 0, dragging = false, pointerId = null;
+
+      function down(e) {
+        dragging = true;
+        pointerId = e.pointerId;
+        startX = e.clientX; startY = e.clientY;
+        el.classList.add("dragging");
+        try { el.setPointerCapture(pointerId); } catch (err) {}
+        e.preventDefault();
+      }
+      function move(e) {
+        if (!dragging || e.pointerId !== pointerId) return;
+        var nx = dx + (e.clientX - startX);
+        var ny = dy + (e.clientY - startY);
+        el.style.transform = "translate(" + nx + "px," + ny + "px)";
+      }
+      function up(e) {
+        if (!dragging) return;
+        dragging = false;
+        dx += (e.clientX - startX);
+        dy += (e.clientY - startY);
+        el.classList.remove("dragging");
+        try { el.releasePointerCapture(pointerId); } catch (err) {}
+      }
+
+      el.addEventListener("pointerdown", down);
+      el.addEventListener("pointermove", move);
+      el.addEventListener("pointerup", up);
+      el.addEventListener("pointercancel", up);
+
+      // keyboard nudge for accessibility
+      el.addEventListener("keydown", function (e) {
+        var step = e.shiftKey ? 24 : 8, used = true;
+        if (e.key === "ArrowLeft") dx -= step;
+        else if (e.key === "ArrowRight") dx += step;
+        else if (e.key === "ArrowUp") dy -= step;
+        else if (e.key === "ArrowDown") dy += step;
+        else used = false;
+        if (used) {
+          el.style.transform = "translate(" + dx + "px," + dy + "px)";
+          e.preventDefault();
+        }
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
