@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Soleia — 5 itérations à partir de l’Aurora</title>
-<meta name="description" content="Cinq itérations du hero Soleia à partir de la direction Aurora, avec les retours de Gwen." />
+<title>Soleia — 10 itérations à partir de l’Aurora</title>
+<meta name="description" content="Dix itérations du hero Soleia à partir de la direction Aurora, avec les retours de Gwen." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,7 +24,7 @@
     min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; text-decoration: none; }
-  .wrap { max-width: 1280px; margin: 0 auto; padding: clamp(30px,5vw,64px) clamp(20px,5vw,56px) 64px; }
+  .wrap { max-width: 1320px; margin: 0 auto; padding: clamp(30px,5vw,64px) clamp(20px,5vw,56px) 64px; }
 
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand img { width: 34px; height: 34px; }
@@ -47,7 +47,7 @@
 
   .grid {
     margin-top: clamp(26px,4vw,40px);
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: clamp(16px,2vw,24px);
   }
   .card {
@@ -63,7 +63,7 @@
   .thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .6s var(--ease); }
   .card:hover .thumb img { transform: scale(1.045); }
   .badge {
-    position: absolute; top: 11px; left: 11px; min-width: 34px; height: 30px; padding: 0 10px;
+    position: absolute; top: 11px; left: 11px; min-width: 36px; height: 30px; padding: 0 10px;
     display: grid; place-items: center; border-radius: 30px;
     background: linear-gradient(96deg, var(--orange), var(--rose)); color: var(--creme);
     font-family: "Fraunces", serif; font-weight: 600; font-size: .9rem;
@@ -71,9 +71,9 @@
   }
   .body { padding: 15px 17px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
   .tag { font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--rose); font-weight: 600; }
-  .name { font-family: "Fraunces", serif; font-weight: 500; font-size: 1.18rem; letter-spacing: -.01em; }
-  .desc { font-size: .88rem; color: #6a5358; flex: 1; }
-  .go { margin-top: 4px; display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: .88rem; color: var(--orange); }
+  .name { font-family: "Fraunces", serif; font-weight: 500; font-size: 1.16rem; letter-spacing: -.01em; }
+  .desc { font-size: .87rem; color: #6a5358; flex: 1; }
+  .go { margin-top: 4px; display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: .87rem; color: var(--orange); }
   .go .arrow { transition: transform .35s var(--ease); }
   .card:hover .go .arrow { transform: translateX(5px); }
 
@@ -104,8 +104,8 @@
       </div>
       <div class="lede">
         <p class="eyebrow">Itérations · base Aurora (08)</p>
-        <h1>Cinq pistes à partir de l’<em>Aurora</em> que tu adores.</h1>
-        <p>Toutes partent de la direction que tu as préférée et intègrent tes retours. Elles se distinguent surtout par le fond, le traitement du titre (plein ou en contour), les éléments à déplacer et la place des réseaux. Ouvre chacune en plein écran.</p>
+        <h1>Dix pistes à partir de l’<em>Aurora</em> que tu adores.</h1>
+        <p>Toutes partent de la direction préférée et intègrent tes retours. Elles se distinguent surtout par le fond, le traitement du titre (plein ou en contour), les éléments à déplacer et la place des réseaux. Ouvre chacune en plein écran.</p>
         <div class="applied">
           <span>Logo centré, Ateliers &amp; Boutique / Histoire &amp; Galerie</span>
           <span>Sans le badge « Soleia Expérience »</span>
@@ -140,16 +140,26 @@
 
   <script>
     const ITER = [
-      { key:'v1', name:'Aurora signature', tag:'Fidèle · Doux', tech:'Shader WebGL',
+      { key:'v1', name:'Aurora signature', tag:'Fidèle · Doux',
         desc:'La 08 peaufinée : fond aurora adouci (plus de crème), titre plein, « BIEN » dégradé. La version sûre.' },
-      { key:'v2', name:'Contour', tag:'Outline · Orange', tech:'Shader WebGL',
-        desc:'Le titre entièrement en contour (sans fond), sur un fond orange coucher de soleil. Réseaux en colonne « Suivre ».' },
-      { key:'v3', name:'Menu contour & grain', tag:'Menu outline · Grain', tech:'Shader WebGL',
+      { key:'v2', name:'Contour', tag:'Outline · Orange',
+        desc:'Titre entièrement en contour (sans fond), sur un fond orange coucher de soleil. Réseaux en colonne « Suivre ».' },
+      { key:'v3', name:'Menu contour & grain', tag:'Menu outline · Grain',
         desc:'Le menu en lettres évidées, un fond rose poudré grainé (riso), des mots-stickers à déplacer.' },
-      { key:'v4', name:'Drag party', tag:'Interactif · Ludique', tech:'Shader WebGL',
-        desc:'Plein d’éléments à déplacer (soleil, fleurs, mots), « créative » en contour, réseaux bien en vue en haut.' },
-      { key:'v5', name:'Sunset bold', tag:'Bold · Sunset', tech:'Shader WebGL',
+      { key:'v4', name:'Drag party', tag:'Interactif · Ludique',
+        desc:'Plein d’éléments à déplacer (soleil, fleurs, mots), « créative » en contour, réseaux bien en vue.' },
+      { key:'v5', name:'Sunset bold', tag:'Bold · Sunset',
         desc:'Fond coucher de soleil saturé, titre crème affirmé, réseaux en pastilles libellées. La plus « waouh ».' },
+      { key:'v6', name:'Crème lumière', tag:'Clair · Luxe',
+        desc:'Luxe minimal et clair : fond crème très lumineux, titre plein raffiné, réseaux libellés. Beaucoup de respiration.' },
+      { key:'v7', name:'Outline coloré', tag:'Outline · Graphique',
+        desc:'Titre tout en contour coloré (rose/orange) sur un fond cotton-candy rose/crème. Le contour, version graphique.' },
+      { key:'v8', name:'Liquide', tag:'Gooey · Fluide',
+        desc:'Un fond de blobs liquides qui fusionnent (gooey/metaballs), hypnotique. Des blobs à déplacer.' },
+      { key:'v9', name:'Éditorial aurora', tag:'Magazine · Structuré',
+        desc:'Mise en page magazine asymétrique : titre à gauche, index numéroté, « créative » en contour.' },
+      { key:'v10', name:'Particules solaires', tag:'Particules · Magique',
+        desc:'Fond doré + des particules de lumière qui dérivent, vivant et magique. Plein d’éléments à déplacer.' },
     ];
     document.getElementById('grid').innerHTML = ITER.map(d => `
       <article class="card">
