@@ -138,6 +138,12 @@
     </div>
     <main class="grid" id="grid2"></main>
 
+    <div class="section-head">
+      <h2>Tests de police</h2>
+      <span class="meta">la V32 retenue, avec d’autres polices — Montserrat &amp; League Spartan (demandées) + 3 alternatives</span>
+    </div>
+    <main class="grid" id="grid3"></main>
+
     <div class="ref">
       <p><strong>Pour comparer&#8239;:</strong> la v30 d’origine (et la v27 que tu aimais) restent accessibles.</p>
       <span class="links">
@@ -197,8 +203,21 @@
           </div>
         </article>`).join('');
     }
+    const FONTS = [
+      { key:'v41', name:'Montserrat', tag:'★ Demandée',
+        desc:'Géométrique humaniste, net et moderne. Police demandée par Gwennaëlle.' },
+      { key:'v42', name:'League Spartan', tag:'★ Demandée',
+        desc:'Géométrique fort et graphique, très affirmé. Police demandée par Gwennaëlle.' },
+      { key:'v43', name:'Poppins', tag:'Alternative',
+        desc:'Géométrique arrondi, doux et chaleureux — dans l’esprit Montserrat, en plus tendre.' },
+      { key:'v44', name:'Outfit', tag:'Alternative',
+        desc:'Géométrique épuré, neutre et chic. Très propre à grande taille.' },
+      { key:'v45', name:'Bricolage Grotesque', tag:'Alternative',
+        desc:'Grotesque contemporain, avec du caractère — un peu plus éditorial.' },
+    ];
     render(FID, 'grid1');
     render(CRE, 'grid2');
+    render(FONTS, 'grid3');
   </script>
 </body>
 </html>
