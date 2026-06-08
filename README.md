@@ -1,7 +1,7 @@
 # Soleia — Prototypes de la page d'accueil
 
-Trois directions visuelles pour la partie haute (hero) de la page d'accueil de
-**Soleia Expérience**, à partir du croquis original et de la charte couleur.
+Dix directions visuelles pour la partie haute (hero) de la page d'accueil de
+**Soleia Expérience**, à partir de la version A validée, du moodboard et de la charte couleur.
 
 > _« La pause créative qui fait du BIEN. »_
 
@@ -17,17 +17,26 @@ Trois directions visuelles pour la partie haute (hero) de la page d'accueil de
 
 ```
 site/
-  index.html        → page de sélection (les 3 directions)
+  index.html        → page de sélection (les 10 directions)
   favicon.svg       → icône « soleil »
   previews/         → aperçus utilisés sur la page de sélection
-  a/index.html      → A · Éditorial solaire
-  b/index.html      → B · Pop joyeux
-  c/index.html      → C · Carnet artisanal
+  01/index.html     → Solaire éditorial      (CSS pur)
+  02/index.html     → Soleil 3D              (Three.js / WebGL)
+  03/index.html     → Groovy bloom           (GSAP)
+  04/index.html     → Pétales                (Canvas)
+  05/index.html     → Marquee magazine       (GSAP)
+  06/index.html     → Blob morphing          (SVG morph)
+  07/index.html     → Sticker collage        (drag JS)
+  08/index.html     → Aurora gradient        (shader WebGL)
+  09/index.html     → Type kinétique         (Motion One)
+  10/index.html     → Soleil & rubans rétro  (Lenis parallax)
+  a/index.html      → Version A d'origine (référence)
 Dockerfile          → image nginx (sert le dossier site/)
 ```
 
-Chaque page est **autonome** : HTML + CSS en ligne, polices via Google Fonts,
-décors en SVG. Aucune étape de build, aucune dépendance.
+Chaque page est **autonome** : HTML + CSS + JS en ligne, polices via Google Fonts,
+libs (Three.js, GSAP, Lenis, Motion One…) via CDN, décors en SVG. Aucune étape de
+build. Amélioration progressive : chaque hero reste complet en CSS si le JS/WebGL échoue.
 
 ## Aperçu en local
 
@@ -37,7 +46,7 @@ python3 -m http.server 8000
 # puis ouvrir http://127.0.0.1:8000
 ```
 
-URLs : `/` (sélection), `/a/`, `/b/`, `/c/`.
+URLs : `/` (sélection), `/01/` … `/10/`, et `/a/` (référence).
 
 ## Déploiement sur Dokploy
 
@@ -54,9 +63,10 @@ En ligne, tu obtiens :
 
 ```
 tondomaine.com       → page de sélection
-tondomaine.com/a/    → A · Éditorial solaire
-tondomaine.com/b/    → B · Pop joyeux
-tondomaine.com/c/    → C · Carnet artisanal
+tondomaine.com/01/   → Solaire éditorial
+…
+tondomaine.com/10/   → Soleil & rubans rétro
+tondomaine.com/a/    → version A d'origine (référence)
 ```
 
 Tu envoies **une seule URL** pour récolter les retours.
