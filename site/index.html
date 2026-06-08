@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Soleia — 10 itérations à partir de l’Aurora</title>
-<meta name="description" content="Dix itérations du hero Soleia à partir de la direction Aurora, avec les retours de Gwen." />
+<title>Soleia — 10 nouvelles pistes (à partir de la v1)</title>
+<meta name="description" content="Dix itérations du hero Soleia à partir de la v1 préférée, avec les retours de Gwen." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -63,14 +63,18 @@
   .thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .6s var(--ease); }
   .card:hover .thumb img { transform: scale(1.045); }
   .badge {
-    position: absolute; top: 11px; left: 11px; min-width: 36px; height: 30px; padding: 0 10px;
+    position: absolute; top: 11px; left: 11px; min-width: 40px; height: 30px; padding: 0 10px;
     display: grid; place-items: center; border-radius: 30px;
     background: linear-gradient(96deg, var(--orange), var(--rose)); color: var(--creme);
     font-family: "Fraunces", serif; font-weight: 600; font-size: .9rem;
     box-shadow: 0 6px 14px -6px rgba(248,116,47,.8);
   }
+  .tagchip {
+    position: absolute; top: 11px; right: 11px; padding: 4px 10px; border-radius: 30px;
+    background: rgba(58,42,46,.62); color: #fff; font-size: .62rem; letter-spacing: .05em;
+    text-transform: uppercase; font-weight: 600; backdrop-filter: blur(4px);
+  }
   .body { padding: 15px 17px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-  .tag { font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--rose); font-weight: 600; }
   .name { font-family: "Fraunces", serif; font-weight: 500; font-size: 1.16rem; letter-spacing: -.01em; }
   .desc { font-size: .87rem; color: #6a5358; flex: 1; }
   .go { margin-top: 4px; display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: .87rem; color: var(--orange); }
@@ -83,8 +87,8 @@
     background: rgba(255,250,246,.6); border: 1px dashed rgba(251,107,166,.45); border-radius: 16px;
   }
   .ref p { font-size: .92rem; color: #6a5358; }
-  .ref .links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
-  .ref a { font-weight: 600; color: var(--orange); display: inline-flex; align-items: center; gap: 7px; }
+  .ref .links { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .ref a { font-weight: 600; color: var(--orange); display: inline-flex; align-items: center; gap: 6px; }
 
   footer {
     margin-top: clamp(34px,5vw,54px); padding-top: 20px; border-top: 1px solid rgba(251,107,166,.22);
@@ -103,17 +107,14 @@
         <span class="word">solei<b>a</b></span>
       </div>
       <div class="lede">
-        <p class="eyebrow">Itérations · base Aurora (08)</p>
-        <h1>Dix pistes à partir de l’<em>Aurora</em> que tu adores.</h1>
-        <p>Toutes partent de la direction préférée et intègrent tes retours. Elles se distinguent surtout par le fond, le traitement du titre (plein ou en contour), les éléments à déplacer et la place des réseaux. Ouvre chacune en plein écran.</p>
+        <p class="eyebrow">Itérations · base v1 (ta préférée)</p>
+        <h1>Dix nouvelles pistes à partir de ta <em>préférée</em>.</h1>
+        <p>Toutes repartent de la v1, en croisant ce que tu aimes de la 8 (le fond liquide) et de la 9 (le texte en contour), et en répondant à chacun de tes retours. Ouvre chacune en plein écran.</p>
         <div class="applied">
-          <span>Logo centré, Ateliers &amp; Boutique / Histoire &amp; Galerie</span>
-          <span>Sans le badge « Soleia Expérience »</span>
-          <span>Sans l’accroche « Ici tu peux retrouver »</span>
-          <span>Boutons plus gros &amp; en gras</span>
-          <span>Citation sur une ligne, Gwen dessous à gauche</span>
-          <span>Réseaux visibles sans scroller</span>
-          <span>Éléments à déplacer</span>
+          <span>« Déplace-moi » repositionné (jamais sur le titre)</span>
+          <span>Banderole testée : 4 avec, 6 sans — à toi de juger</span>
+          <span>Contour gardé, sans le cadre ni les labels de la 9</span>
+          <span>Fond liquide de la 8 en ambiance, ronds → fleurs &amp; soleils</span>
         </div>
       </div>
     </header>
@@ -121,10 +122,13 @@
     <main class="grid" id="grid"></main>
 
     <div class="ref">
-      <p><strong>Pour comparer&#8239;:</strong> la base Aurora (08) et ta version A d’origine restent accessibles.</p>
+      <p><strong>Pour comparer&#8239;:</strong> tes trois coups de cœur précédents restent accessibles.</p>
       <span class="links">
-        <a href="/08/" target="_blank" rel="noopener">La base Aurora (08) →</a>
-        <a href="/a/" target="_blank" rel="noopener">Version A d’origine →</a>
+        <a href="/v1/" target="_blank" rel="noopener">v1 (ta préférée) →</a>
+        <a href="/v8/" target="_blank" rel="noopener">v8 (fond liquide) →</a>
+        <a href="/v9/" target="_blank" rel="noopener">v9 (contour) →</a>
+        <a href="/08/" target="_blank" rel="noopener">base 08 →</a>
+        <a href="/a/" target="_blank" rel="noopener">version A →</a>
       </span>
     </div>
 
@@ -140,36 +144,36 @@
 
   <script>
     const ITER = [
-      { key:'v1', name:'Aurora signature', tag:'Fidèle · Doux',
-        desc:'La 08 peaufinée : fond aurora adouci (plus de crème), titre plein, « BIEN » dégradé. La version sûre.' },
-      { key:'v2', name:'Contour', tag:'Outline · Orange',
-        desc:'Titre entièrement en contour (sans fond), sur un fond orange coucher de soleil. Réseaux en colonne « Suivre ».' },
-      { key:'v3', name:'Menu contour & grain', tag:'Menu outline · Grain',
-        desc:'Le menu en lettres évidées, un fond rose poudré grainé (riso), des mots-stickers à déplacer.' },
-      { key:'v4', name:'Drag party', tag:'Interactif · Ludique',
-        desc:'Plein d’éléments à déplacer (soleil, fleurs, mots), « créative » en contour, réseaux bien en vue.' },
-      { key:'v5', name:'Sunset bold', tag:'Bold · Sunset',
-        desc:'Fond coucher de soleil saturé, titre crème affirmé, réseaux en pastilles libellées. La plus « waouh ».' },
-      { key:'v6', name:'Crème lumière', tag:'Clair · Luxe',
-        desc:'Luxe minimal et clair : fond crème très lumineux, titre plein raffiné, réseaux libellés. Beaucoup de respiration.' },
-      { key:'v7', name:'Outline coloré', tag:'Outline · Graphique',
-        desc:'Titre tout en contour coloré (rose/orange) sur un fond cotton-candy rose/crème. Le contour, version graphique.' },
-      { key:'v8', name:'Liquide', tag:'Gooey · Fluide',
-        desc:'Un fond de blobs liquides qui fusionnent (gooey/metaballs), hypnotique. Des blobs à déplacer.' },
-      { key:'v9', name:'Éditorial aurora', tag:'Magazine · Structuré',
-        desc:'Mise en page magazine asymétrique : titre à gauche, index numéroté, « créative » en contour.' },
-      { key:'v10', name:'Particules solaires', tag:'Particules · Magique',
-        desc:'Fond doré + des particules de lumière qui dérivent, vivant et magique. Plein d’éléments à déplacer.' },
+      { key:'v11', name:'Signature + banderole', tag:'Banderole · Doux',
+        desc:'Ta v1 + une banderole ruban en diagonale, élégante et discrète. « Déplace-moi » sur la marguerite.' },
+      { key:'v12', name:'Signature épurée', tag:'Épuré · Fidèle',
+        desc:'Ta v1 telle quelle, sans banderole. Stickers et « déplace-moi » bien placés, hors du titre.' },
+      { key:'v13', name:'Liquide doux', tag:'Liquide · Doux',
+        desc:'Le fond liquide de la 8 en ambiance + des fleurs et un soleil à déplacer (plus de ronds nus).' },
+      { key:'v14', name:'Liquide + banderole', tag:'Liquide · Banderole',
+        desc:'Le fond liquide + une banderole ruban (style fanion). Fleurs et étoiles à déplacer.' },
+      { key:'v15', name:'Contour épuré', tag:'Contour · Épuré',
+        desc:'Le contour de la 9 (« créative » évidé), sur fond doux, sans le cadre ni les labels.' },
+      { key:'v16', name:'Contour + banderole', tag:'Contour · Banderole',
+        desc:'Titre coloré à liseré + banderole festonnée. Une lecture plus graphique du contour.' },
+      { key:'v17', name:'Éditorial libre', tag:'Éditorial · Libre',
+        desc:'L’esprit magazine de la 9 (titre à gauche, mot en contour) sans la limitation ni les labels.' },
+      { key:'v18', name:'Liquide + contour', tag:'Liquide · Contour',
+        desc:'Les deux éléments que tu aimes réunis : le fond liquide de la 8 + le titre en contour de la 9.' },
+      { key:'v19', name:'Banderole vedette', tag:'Banderole · Vedette',
+        desc:'La banderole assumée : un beau ruban ondulé qui traverse le hero. Réponse franche à l’idée.' },
+      { key:'v20', name:'Sérénité minimale', tag:'Minimal · Serein',
+        desc:'La plus épurée : fond très doux, décoration minimale, aucune banderole. Tout en sérénité.' },
     ];
     document.getElementById('grid').innerHTML = ITER.map(d => `
       <article class="card">
         <a class="cover" href="/${d.key}/" target="_blank" rel="noopener" aria-label="Ouvrir ${d.name}"></a>
         <div class="thumb">
           <span class="badge">${d.key.toUpperCase()}</span>
+          <span class="tagchip">${d.tag}</span>
           <img src="/previews/${d.key}.jpg" alt="Aperçu — ${d.name}" loading="lazy" />
         </div>
         <div class="body">
-          <span class="tag">${d.tag}</span>
           <h2 class="name">${d.name}</h2>
           <p class="desc">${d.desc}</p>
           <span class="go">Voir en plein écran <span class="arrow">→</span></span>
