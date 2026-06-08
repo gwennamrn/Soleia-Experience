@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Soleia — la 13 affinée + 5 explorations libres</title>
-<meta name="description" content="La v13 affinée (5 signatures) et 5 explorations libres en 3D/WebGL pour le hero Soleia." />
+<title>Soleia — v30 affinée (fidèles + créatives)</title>
+<meta name="description" content="La v30 (Gradient vivant) affinée selon les retours : 5 fidèles + 5 créatives." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,7 +27,7 @@
   .wrap { max-width: 1320px; margin: 0 auto; padding: clamp(30px,5vw,64px) clamp(20px,5vw,56px) 64px; }
 
   .brand { display: flex; align-items: center; gap: 12px; }
-  .brand img { width: 34px; height: 34px; }
+  .brand img { width: 38px; height: 38px; }
   .brand .word { font-family: "Fraunces", serif; font-weight: 600; font-size: 1.7rem; letter-spacing: .04em; }
   .brand .word b { color: var(--orange); font-weight: 600; }
 
@@ -37,7 +37,15 @@
   .lede h1 em { font-style: italic; color: var(--orange); }
   .lede p { font-size: clamp(1rem,1.5vw,1.1rem); color: #6a5358; max-width: 70ch; }
 
-  .section-head { margin-top: clamp(34px,5vw,52px); margin-bottom: 6px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .applied { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .applied span {
+    font-size: .78rem; font-weight: 500; color: #6a5358;
+    background: rgba(255,250,246,.7); border: 1px solid rgba(251,107,166,.28);
+    padding: 5px 11px; border-radius: 30px;
+  }
+  .applied span::before { content: "✓ "; color: var(--orange); font-weight: 700; }
+
+  .section-head { margin-top: clamp(32px,5vw,50px); margin-bottom: 6px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
   .section-head h2 { font-family: "Fraunces", serif; font-weight: 500; font-size: clamp(1.3rem,2.4vw,1.7rem); letter-spacing: -.01em; }
   .section-head .meta { font-size: .9rem; color: #8a7176; }
 
@@ -91,43 +99,50 @@
     display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between;
     font-size: .86rem; color: #7a6166;
   }
-  .swatches { display: flex; gap: 8px; }
+  .swatches { display: flex; gap: 8px; align-items: center; }
   .swatch { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(58,42,46,.12); }
+  .swatch span { display:none; }
 </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <div class="brand">
-        <img src="/favicon.svg" alt="" />
+        <img src="/logo.svg" alt="Soleia" />
         <span class="word">solei<b>a</b></span>
       </div>
       <div class="lede">
-        <p class="eyebrow">Nouveau tour · base v13</p>
-        <h1>La <em>13</em> affinée, et 5 explorations plus libres.</h1>
-        <p>D’un côté ta v13 reprise avec le fond de la 18, sans banderole, 4 éléments à déplacer (style 20), et la signature « Gwennaëlle » déclinée en 5 polices — choisis celle que tu préfères. De l’autre, 5 pistes plus audacieuses en 3D / WebGL.</p>
+        <p class="eyebrow">Base v30 · Gradient vivant</p>
+        <h1>La <em>v30</em> affinée selon tes retours.</h1>
+        <p>Toutes partent de la v30 que tu as choisie, avec le logo officiel, le « BIEN » bien accentué, les réseaux passés sur le côté, le menu en gras, la citation centrée et la palette exacte. À gauche les 5 plus fidèles, à droite 5 plus créatives.</p>
+        <div class="applied">
+          <span>Logo officiel Soleia dans la nav</span>
+          <span>« BIEN » bien accentué</span>
+          <span>Réseaux sur le côté (haut désencombré)</span>
+          <span>Menu en gras</span>
+          <span>Citation centrée en bas</span>
+          <span>Palette exacte #fb6ba6 / #f8742f / #f8e6e6</span>
+        </div>
       </div>
     </header>
 
     <div class="section-head">
-      <h2>Lot 1 — la 13 affinée</h2>
-      <span class="meta">fond de la 18 · 4 stickers (style 20) · sans banderole · 5 polices de « Gwennaëlle »</span>
+      <h2>5 fidèles</h2>
+      <span class="meta">la v30 + tes retours, au plus près</span>
     </div>
     <main class="grid" id="grid1"></main>
 
     <div class="section-head">
-      <h2>Lot 2 — explorations libres</h2>
-      <span class="meta">3D / WebGL · à voir sur un navigateur récent · certaines réagissent à la souris</span>
+      <h2>5 créatives</h2>
+      <span class="meta">plus audacieuses · à voir sur un navigateur récent (réagissent à la souris)</span>
     </div>
     <main class="grid" id="grid2"></main>
 
     <div class="ref">
-      <p><strong>Sources&#8239;:</strong> les versions dont sont issus ces réglages restent accessibles.</p>
+      <p><strong>Pour comparer&#8239;:</strong> la v30 d’origine (et la v27 que tu aimais) restent accessibles.</p>
       <span class="links">
-        <a href="/v13/" target="_blank" rel="noopener">v13 (la base) →</a>
-        <a href="/v18/" target="_blank" rel="noopener">v18 (le fond) →</a>
-        <a href="/v20/" target="_blank" rel="noopener">v20 (les stickers) →</a>
-        <a href="/v1/" target="_blank" rel="noopener">v1 →</a>
+        <a href="/v30/" target="_blank" rel="noopener">v30 (la base) →</a>
+        <a href="/v27/" target="_blank" rel="noopener">v27 (fluide) →</a>
       </span>
     </div>
 
@@ -142,29 +157,29 @@
   </div>
 
   <script>
-    const LOT1 = [
-      { key:'v21', name:'Fond chaud · Pinyon', tag:'Pinyon Script',
-        desc:'Fond liquide chaud (pêche/orange). Signature « Gwennaëlle » en Pinyon Script (calligraphie classique).' },
-      { key:'v22', name:'Fond rose · Parisienne', tag:'Parisienne',
-        desc:'Fond liquide rose dominant. Signature en Parisienne (script décontracté élégant).' },
-      { key:'v23', name:'Équilibré · Petit Formal', tag:'Petit Formal',
-        desc:'Fond équilibré rose ↔ orange. Signature en Petit Formal Script (script formel raffiné).' },
-      { key:'v24', name:'Crémeux · Sacramento', tag:'Sacramento',
-        desc:'Fond crémeux et doux, beaucoup de lumière. Signature en Sacramento (monoline nette).' },
-      { key:'v25', name:'Vif · Mrs Saint Delafield', tag:'Mrs S. Delafield',
-        desc:'Fond plus vif et coloré. Signature en Mrs Saint Delafield (manuscrite fine).' },
+    const FID = [
+      { key:'v31', name:'BIEN orange', tag:'Fidèle',
+        desc:'« BIEN » en orange vif plein, réseaux à gauche. La plus proche de la v30.' },
+      { key:'v32', name:'BIEN dégradé', tag:'Fidèle',
+        desc:'« BIEN » en dégradé rose→orange, réseaux à droite, fond un peu plus chaud.' },
+      { key:'v33', name:'Clair & rosé', tag:'Fidèle',
+        desc:'Ambiance claire et lumineuse, « BIEN » rose vif, réseaux à gauche.' },
+      { key:'v34', name:'BIEN souligné', tag:'Fidèle',
+        desc:'« BIEN » orange souligné d’un trait, réseaux à droite, fond plus contrasté.' },
+      { key:'v35', name:'Signature', tag:'Fidèle',
+        desc:'Le mood signature de la v30, « BIEN » dégradé + halo, signature en Pinyon Script.' },
     ];
-    const LOT2 = [
-      { key:'v26', name:'Soleil 3D vivant', tag:'3D · Three.js',
-        desc:'Un vrai soleil 3D déformé par du bruit qui rayonne et tourne derrière le titre.' },
-      { key:'v27', name:'Fluide interactif', tag:'Fluide · WebGL',
-        desc:'Une encre rose/orange qui ondule en continu et se remue à la souris. Hypnotique.' },
-      { key:'v28', name:'Verre & pétales 3D', tag:'Verre 3D',
-        desc:'Des pétales et une marguerite en verre qui flottent en profondeur (parallaxe souris).' },
-      { key:'v29', name:'Particules solaires', tag:'Particules GPU',
-        desc:'Des milliers de particules lumineuses forment un soleil scintillant, réactif au curseur.' },
-      { key:'v30', name:'Gradient vivant', tag:'Shader réactif',
-        desc:'Un dégradé iridescent qui se courbe vers le curseur — une lumière suit la souris.' },
+    const CRE = [
+      { key:'v36', name:'Projecteur solaire', tag:'Créative',
+        desc:'Une lumière-projecteur solaire chaude suit la souris ; le titre réagit. Spectaculaire.' },
+      { key:'v37', name:'Étincelles', tag:'Créative',
+        desc:'Le dégradé vivant + une couche d’étincelles lumineuses qui dérivent et réagissent.' },
+      { key:'v38', name:'BIEN liquide', tag:'Créative',
+        desc:'Un accent liquide (gooey) qui ondule autour du mot « BIEN » pour le faire vibrer.' },
+      { key:'v39', name:'Profondeur 3D', tag:'Créative',
+        desc:'Une légère profondeur 3D : le logo et le titre flottent en parallaxe à la souris.' },
+      { key:'v40', name:'Iridescent premium', tag:'Créative',
+        desc:'Un rendu iridescent/holographique haut de gamme ; les rayons de l’emblème tournent.' },
     ];
     function render(arr, id) {
       document.getElementById(id).innerHTML = arr.map(d => `
@@ -182,8 +197,8 @@
           </div>
         </article>`).join('');
     }
-    render(LOT1, 'grid1');
-    render(LOT2, 'grid2');
+    render(FID, 'grid1');
+    render(CRE, 'grid2');
   </script>
 </body>
 </html>
