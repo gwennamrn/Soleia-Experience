@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Soleia — 10 nouvelles pistes (à partir de la v1)</title>
-<meta name="description" content="Dix itérations du hero Soleia à partir de la v1 préférée, avec les retours de Gwen." />
+<title>Soleia — la 13 affinée + 5 explorations libres</title>
+<meta name="description" content="La v13 affinée (5 signatures) et 5 explorations libres en 3D/WebGL pour le hero Soleia." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,16 +37,12 @@
   .lede h1 em { font-style: italic; color: var(--orange); }
   .lede p { font-size: clamp(1rem,1.5vw,1.1rem); color: #6a5358; max-width: 70ch; }
 
-  .applied { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
-  .applied span {
-    font-size: .78rem; font-weight: 500; color: #6a5358;
-    background: rgba(255,250,246,.7); border: 1px solid rgba(251,107,166,.28);
-    padding: 5px 11px; border-radius: 30px;
-  }
-  .applied span::before { content: "✓ "; color: var(--orange); font-weight: 700; }
+  .section-head { margin-top: clamp(34px,5vw,52px); margin-bottom: 6px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .section-head h2 { font-family: "Fraunces", serif; font-weight: 500; font-size: clamp(1.3rem,2.4vw,1.7rem); letter-spacing: -.01em; }
+  .section-head .meta { font-size: .9rem; color: #8a7176; }
 
   .grid {
-    margin-top: clamp(26px,4vw,40px);
+    margin-top: 16px;
     display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: clamp(16px,2vw,24px);
   }
@@ -107,33 +103,36 @@
         <span class="word">solei<b>a</b></span>
       </div>
       <div class="lede">
-        <p class="eyebrow">Itérations · base v1 (ta préférée)</p>
-        <h1>Dix nouvelles pistes à partir de ta <em>préférée</em>.</h1>
-        <p>Toutes repartent de la v1, en croisant ce que tu aimes de la 8 (le fond liquide) et de la 9 (le texte en contour), et en répondant à chacun de tes retours. Ouvre chacune en plein écran.</p>
-        <div class="applied">
-          <span>« Déplace-moi » repositionné (jamais sur le titre)</span>
-          <span>Banderole testée : 4 avec, 6 sans — à toi de juger</span>
-          <span>Contour gardé, sans le cadre ni les labels de la 9</span>
-          <span>Fond liquide de la 8 en ambiance, ronds → fleurs &amp; soleils</span>
-        </div>
+        <p class="eyebrow">Nouveau tour · base v13</p>
+        <h1>La <em>13</em> affinée, et 5 explorations plus libres.</h1>
+        <p>D’un côté ta v13 reprise avec le fond de la 18, sans banderole, 4 éléments à déplacer (style 20), et la signature « Gwennaëlle » déclinée en 5 polices — choisis celle que tu préfères. De l’autre, 5 pistes plus audacieuses en 3D / WebGL.</p>
       </div>
     </header>
 
-    <main class="grid" id="grid"></main>
+    <div class="section-head">
+      <h2>Lot 1 — la 13 affinée</h2>
+      <span class="meta">fond de la 18 · 4 stickers (style 20) · sans banderole · 5 polices de « Gwennaëlle »</span>
+    </div>
+    <main class="grid" id="grid1"></main>
+
+    <div class="section-head">
+      <h2>Lot 2 — explorations libres</h2>
+      <span class="meta">3D / WebGL · à voir sur un navigateur récent · certaines réagissent à la souris</span>
+    </div>
+    <main class="grid" id="grid2"></main>
 
     <div class="ref">
-      <p><strong>Pour comparer&#8239;:</strong> tes trois coups de cœur précédents restent accessibles.</p>
+      <p><strong>Sources&#8239;:</strong> les versions dont sont issus ces réglages restent accessibles.</p>
       <span class="links">
-        <a href="/v1/" target="_blank" rel="noopener">v1 (ta préférée) →</a>
-        <a href="/v8/" target="_blank" rel="noopener">v8 (fond liquide) →</a>
-        <a href="/v9/" target="_blank" rel="noopener">v9 (contour) →</a>
-        <a href="/08/" target="_blank" rel="noopener">base 08 →</a>
-        <a href="/a/" target="_blank" rel="noopener">version A →</a>
+        <a href="/v13/" target="_blank" rel="noopener">v13 (la base) →</a>
+        <a href="/v18/" target="_blank" rel="noopener">v18 (le fond) →</a>
+        <a href="/v20/" target="_blank" rel="noopener">v20 (les stickers) →</a>
+        <a href="/v1/" target="_blank" rel="noopener">v1 →</a>
       </span>
     </div>
 
     <footer>
-      <span>Soleia&#8239;Expérience — la pause créative qui fait du bien. · Gwen</span>
+      <span>Soleia&#8239;Expérience — la pause créative qui fait du bien. · Gwennaëlle</span>
       <span class="swatches" aria-hidden="true">
         <span class="swatch" style="background:#fb6ba6"></span>
         <span class="swatch" style="background:#f8742f"></span>
@@ -143,42 +142,48 @@
   </div>
 
   <script>
-    const ITER = [
-      { key:'v11', name:'Signature + banderole', tag:'Banderole · Doux',
-        desc:'Ta v1 + une banderole ruban en diagonale, élégante et discrète. « Déplace-moi » sur la marguerite.' },
-      { key:'v12', name:'Signature épurée', tag:'Épuré · Fidèle',
-        desc:'Ta v1 telle quelle, sans banderole. Stickers et « déplace-moi » bien placés, hors du titre.' },
-      { key:'v13', name:'Liquide doux', tag:'Liquide · Doux',
-        desc:'Le fond liquide de la 8 en ambiance + des fleurs et un soleil à déplacer (plus de ronds nus).' },
-      { key:'v14', name:'Liquide + banderole', tag:'Liquide · Banderole',
-        desc:'Le fond liquide + une banderole ruban (style fanion). Fleurs et étoiles à déplacer.' },
-      { key:'v15', name:'Contour épuré', tag:'Contour · Épuré',
-        desc:'Le contour de la 9 (« créative » évidé), sur fond doux, sans le cadre ni les labels.' },
-      { key:'v16', name:'Contour + banderole', tag:'Contour · Banderole',
-        desc:'Titre coloré à liseré + banderole festonnée. Une lecture plus graphique du contour.' },
-      { key:'v17', name:'Éditorial libre', tag:'Éditorial · Libre',
-        desc:'L’esprit magazine de la 9 (titre à gauche, mot en contour) sans la limitation ni les labels.' },
-      { key:'v18', name:'Liquide + contour', tag:'Liquide · Contour',
-        desc:'Les deux éléments que tu aimes réunis : le fond liquide de la 8 + le titre en contour de la 9.' },
-      { key:'v19', name:'Banderole vedette', tag:'Banderole · Vedette',
-        desc:'La banderole assumée : un beau ruban ondulé qui traverse le hero. Réponse franche à l’idée.' },
-      { key:'v20', name:'Sérénité minimale', tag:'Minimal · Serein',
-        desc:'La plus épurée : fond très doux, décoration minimale, aucune banderole. Tout en sérénité.' },
+    const LOT1 = [
+      { key:'v21', name:'Fond chaud · Pinyon', tag:'Pinyon Script',
+        desc:'Fond liquide chaud (pêche/orange). Signature « Gwennaëlle » en Pinyon Script (calligraphie classique).' },
+      { key:'v22', name:'Fond rose · Parisienne', tag:'Parisienne',
+        desc:'Fond liquide rose dominant. Signature en Parisienne (script décontracté élégant).' },
+      { key:'v23', name:'Équilibré · Petit Formal', tag:'Petit Formal',
+        desc:'Fond équilibré rose ↔ orange. Signature en Petit Formal Script (script formel raffiné).' },
+      { key:'v24', name:'Crémeux · Sacramento', tag:'Sacramento',
+        desc:'Fond crémeux et doux, beaucoup de lumière. Signature en Sacramento (monoline nette).' },
+      { key:'v25', name:'Vif · Mrs Saint Delafield', tag:'Mrs S. Delafield',
+        desc:'Fond plus vif et coloré. Signature en Mrs Saint Delafield (manuscrite fine).' },
     ];
-    document.getElementById('grid').innerHTML = ITER.map(d => `
-      <article class="card">
-        <a class="cover" href="/${d.key}/" target="_blank" rel="noopener" aria-label="Ouvrir ${d.name}"></a>
-        <div class="thumb">
-          <span class="badge">${d.key.toUpperCase()}</span>
-          <span class="tagchip">${d.tag}</span>
-          <img src="/previews/${d.key}.jpg" alt="Aperçu — ${d.name}" loading="lazy" />
-        </div>
-        <div class="body">
-          <h2 class="name">${d.name}</h2>
-          <p class="desc">${d.desc}</p>
-          <span class="go">Voir en plein écran <span class="arrow">→</span></span>
-        </div>
-      </article>`).join('');
+    const LOT2 = [
+      { key:'v26', name:'Soleil 3D vivant', tag:'3D · Three.js',
+        desc:'Un vrai soleil 3D déformé par du bruit qui rayonne et tourne derrière le titre.' },
+      { key:'v27', name:'Fluide interactif', tag:'Fluide · WebGL',
+        desc:'Une encre rose/orange qui ondule en continu et se remue à la souris. Hypnotique.' },
+      { key:'v28', name:'Verre & pétales 3D', tag:'Verre 3D',
+        desc:'Des pétales et une marguerite en verre qui flottent en profondeur (parallaxe souris).' },
+      { key:'v29', name:'Particules solaires', tag:'Particules GPU',
+        desc:'Des milliers de particules lumineuses forment un soleil scintillant, réactif au curseur.' },
+      { key:'v30', name:'Gradient vivant', tag:'Shader réactif',
+        desc:'Un dégradé iridescent qui se courbe vers le curseur — une lumière suit la souris.' },
+    ];
+    function render(arr, id) {
+      document.getElementById(id).innerHTML = arr.map(d => `
+        <article class="card">
+          <a class="cover" href="/${d.key}/" target="_blank" rel="noopener" aria-label="Ouvrir ${d.name}"></a>
+          <div class="thumb">
+            <span class="badge">${d.key.toUpperCase()}</span>
+            <span class="tagchip">${d.tag}</span>
+            <img src="/previews/${d.key}.jpg" alt="Aperçu — ${d.name}" loading="lazy" />
+          </div>
+          <div class="body">
+            <h3 class="name">${d.name}</h3>
+            <p class="desc">${d.desc}</p>
+            <span class="go">Voir en plein écran <span class="arrow">→</span></span>
+          </div>
+        </article>`).join('');
+    }
+    render(LOT1, 'grid1');
+    render(LOT2, 'grid2');
   </script>
 </body>
 </html>

@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Soleia Expérience — La pause créative qui fait du BIEN</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --rose: #fb6ba6;
+    --rose-deep: #f4548b;
+    --framboise: #f4548b;
+    --corail: #fa7e58;
+    --orange: #f8742f;
+    --orange-deep: #f4823c;
+    --peche: #ffb992;
+    --creme: #f8e6e6;
+    --creme-2: #fdf3ee;
+    --creme-chaude: #fdeede;
+    --ink: #3a2a2e;
+    --ink-soft: #71565b;
+    --glass: rgba(253, 243, 238, 0.58);
+    --glass-strong: rgba(253, 243, 238, 0.8);
+    --fine: 0.06em;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+
+  body {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--creme);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* ============ FOND : gradient vivant réactif ============ */
+  .living {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background:
+      radial-gradient(130% 120% at 50% 0%, var(--creme-2) 0%, var(--creme-chaude) 58%, #fbe1d4 100%);
+  }
+
+  /* Fallback CSS animé (sans JS / sans WebGL) : aurora conique + blobs doux */
+  .living__css {
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(42% 50% at 30% 38%, rgba(251, 107, 166, 0.62), transparent 70%),
+      radial-gradient(46% 52% at 72% 32%, rgba(248, 116, 47, 0.50), transparent 72%),
+      radial-gradient(50% 54% at 54% 74%, rgba(255, 185, 146, 0.55), transparent 74%),
+      conic-gradient(from 200deg at 50% 50%, rgba(251,107,166,0.30), rgba(248,116,47,0.26), rgba(255,185,146,0.30), rgba(244,84,139,0.26), rgba(251,107,166,0.30));
+    filter: blur(46px) saturate(1.05);
+    opacity: 0.92;
+    transition: opacity 1s ease;
+    animation: auroraDrift 30s ease-in-out infinite alternate;
+  }
+  @keyframes auroraDrift {
+    0%   { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1.04); }
+    50%  { transform: translate3d(3%, 2%, 0) rotate(8deg) scale(1.12); }
+    100% { transform: translate3d(-1%, 3%, 0) rotate(-6deg) scale(1.06); }
+  }
+
+  /* Canvas WebGL au-dessus du fallback une fois prêt */
+  #gl {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.3s ease;
+  }
+  .gl-ready #gl { opacity: 1; }
+  .gl-ready .living__css { opacity: 0; }
+
+  /* Voile crème + grain fin : texte net, ambiance studio solaire */
+  .living__veil {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(125% 96% at 50% 3%, transparent 32%, rgba(253, 243, 238, 0.52) 100%),
+      radial-gradient(82% 70% at 50% 48%, rgba(253, 243, 238, 0.40), transparent 64%),
+      linear-gradient(180deg, rgba(253, 243, 238, 0.30) 0%, transparent 26%, transparent 72%, rgba(253, 243, 238, 0.38) 100%);
+    pointer-events: none;
+  }
+  .living__grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.045;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ============ SHELL ============ */
+  .shell {
+    position: relative;
+    z-index: 2;
+    height: 100svh;
+    min-height: 600px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: clamp(0.9rem, 2.2vw, 1.7rem) clamp(1.2rem, 5vw, 4.5rem) clamp(1rem, 2.2vh, 1.6rem);
+  }
+
+  /* ============ NAV — 3 colonnes ============ */
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: clamp(0.8rem, 2vw, 2rem);
+  }
+  .nav__col {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.2vw, 2.1rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav__col--left { justify-self: start; }
+  .nav__col--right {
+    justify-self: end;
+    gap: clamp(1rem, 1.9vw, 1.8rem);
+  }
+  .nav__col a.nav__link {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 400;
+    font-size: clamp(0.86rem, 1vw, 0.94rem);
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding: 0.35rem 0.1rem;
+    transition: color 0.25s ease;
+    white-space: nowrap;
+  }
+  .nav__col a.nav__link::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0.05rem;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--rose-deep), var(--orange-deep));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav__col a.nav__link:hover::after,
+  .nav__col a.nav__link:focus-visible::after { transform: scaleX(1); }
+  .nav__col a.nav__link:hover { color: var(--orange-deep); }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.9;
+    text-decoration: none;
+    color: var(--ink);
+    justify-self: center;
+  }
+  .brand__name {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.45rem, 2.4vw, 1.95rem);
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .brand__sub {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 300;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 0.36rem;
+    margin-left: 0.22em;
+  }
+
+  .nav__socials {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: 0.4rem;
+    margin-left: 0.2rem;
+    border-left: 1px solid rgba(58, 42, 46, 0.14);
+  }
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(58, 42, 46, 0.16);
+    background: var(--glass-strong);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .icon-btn:hover {
+    transform: translateY(-2px);
+    color: var(--orange-deep);
+    border-color: var(--rose-deep);
+    box-shadow: 0 8px 20px rgba(251, 107, 166, 0.28);
+  }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .account { color: var(--ink); }
+  .account svg { width: 18px; height: 18px; }
+
+  .nav__burger {
+    display: none;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(58, 42, 46, 0.16);
+    background: var(--glass-strong);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--ink);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav__burger svg { width: 20px; height: 20px; }
+
+  /* ============ HERO ============ */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: clamp(0.6rem, 2vh, 1.6rem) 0;
+  }
+
+  .title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 360;
+    font-size: clamp(3rem, 10.4vw, 10.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin: 0 0 clamp(1.6rem, 4vh, 2.8rem);
+    color: var(--ink);
+    max-width: 14ch;
+    font-variation-settings: "opsz" 144;
+    cursor: default;
+  }
+  .title .line { display: block; }
+  .title em {
+    font-style: italic;
+    font-weight: 340;
+    font-variation-settings: "opsz" 144;
+  }
+  /* lettres animables (onde au survol) */
+  .title .ch {
+    display: inline-block;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .title .sp { display: inline-block; width: 0.28em; }
+
+  /* « BIEN » — texte plein dégradé + halo doux */
+  .bien {
+    position: relative;
+    display: inline-block;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    padding-right: 0.06em;
+  }
+  .bien .ch {
+    background: linear-gradient(96deg, var(--framboise) 0%, var(--corail) 52%, var(--orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .bien::after {
+    content: "BIEN.";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(96deg, var(--framboise) 0%, var(--orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: blur(18px);
+    opacity: 0.6;
+    animation: glow 4.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes glow {
+    0%, 100% { opacity: 0.42; filter: blur(16px); }
+    50%      { opacity: 0.72; filter: blur(24px); }
+  }
+
+  /* ============ BOUTONS ============ */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.7rem, 1.4vw, 1rem);
+  }
+  .pill {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.02rem, 1.35vw, 1.16rem);
+    letter-spacing: 0.005em;
+    padding: clamp(1rem, 1.7vh, 1.25rem) clamp(1.7rem, 2.6vw, 2.4rem);
+    border-radius: 999px;
+    border: 1.5px solid rgba(58, 42, 46, 0.2);
+    background: var(--glass-strong);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.28s ease, border-color 0.28s ease, color 0.28s ease;
+    white-space: nowrap;
+  }
+  .pill:hover {
+    transform: translateY(-2px);
+    border-color: var(--rose-deep);
+    color: var(--orange-deep);
+    box-shadow: 0 10px 26px rgba(251, 107, 166, 0.24);
+  }
+  .pill--primary {
+    border: none;
+    color: var(--creme-2);
+    background: linear-gradient(96deg, var(--framboise) 0%, var(--orange) 100%);
+    box-shadow: 0 12px 32px rgba(248, 116, 47, 0.34);
+    position: relative;
+    overflow: hidden;
+  }
+  .pill--primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(96deg, var(--orange) 0%, var(--framboise) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .pill--primary span { position: relative; z-index: 1; }
+  .pill--primary:hover {
+    transform: translateY(-2px);
+    color: var(--creme-2);
+    box-shadow: 0 16px 40px rgba(248, 116, 47, 0.46);
+  }
+  .pill--primary:hover::before { opacity: 1; }
+
+  /* ============ CITATION ============ */
+  .quote {
+    margin: 0;
+    max-width: min(92vw, 70ch);
+    text-align: left;
+    justify-self: start;
+  }
+  .quote p {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 330;
+    font-size: clamp(0.98rem, 1.7vw, 1.32rem);
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0 0 0.5rem;
+    white-space: nowrap;
+  }
+  .quote cite {
+    display: block;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    color: var(--orange-deep);
+  }
+
+  /* ============ FOOTER ============ */
+  .foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding-top: clamp(0.6rem, 1.4vh, 1.1rem);
+  }
+
+  /* ============ FOCUS / A11Y ============ */
+  a:focus-visible, button:focus-visible {
+    outline: 2.5px solid var(--orange-deep);
+    outline-offset: 3px;
+    border-radius: 999px;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .quote p { white-space: normal; }
+  }
+  @media (max-width: 760px) {
+    .nav { grid-template-columns: auto auto; }
+    .nav__col--left { display: none; }
+    .nav__col--right .nav__link { display: none; }
+    .brand { justify-self: start; align-items: flex-start; }
+    .nav__burger { display: inline-flex; }
+    .title { font-size: clamp(2.8rem, 14vw, 5.2rem); max-width: 11ch; }
+    .actions .pill { font-size: 1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    #gl { display: none; }
+    .living__css { opacity: 0.92 !important; animation: none !important; }
+    .title .ch { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <!-- ===================== FOND : GRADIENT VIVANT RÉACTIF ===================== -->
+  <div class="living" aria-hidden="true">
+    <div class="living__css"></div>
+    <canvas id="gl"></canvas>
+    <div class="living__veil"></div>
+    <div class="living__grain"></div>
+  </div>
+
+  <div class="shell">
+    <!-- ===================== NAV ===================== -->
+    <nav class="nav" aria-label="Navigation principale">
+      <ul class="nav__col nav__col--left">
+        <li><a class="nav__link" href="#ateliers">Ateliers</a></li>
+        <li><a class="nav__link" href="#boutique">Boutique</a></li>
+      </ul>
+
+      <a class="brand" href="#" aria-label="Soleia Expérience, accueil">
+        <span class="brand__name">soleia</span>
+        <span class="brand__sub">expérience</span>
+      </a>
+
+      <div class="nav__col nav__col--right">
+        <a class="nav__link" href="#histoire">Histoire</a>
+        <a class="nav__link" href="#galerie">Galerie</a>
+
+        <div class="nav__socials" role="group" aria-label="Réseaux sociaux">
+          <a class="icon-btn" href="#" aria-label="Instagram de Soleia">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a class="icon-btn" href="#" aria-label="Pinterest de Soleia">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3.5a8.5 8.5 0 0 0-3.1 16.4c-.07-.7-.13-1.78.03-2.55.14-.66.92-4.2.92-4.2s-.24-.47-.24-1.17c0-1.1.64-1.92 1.43-1.92.67 0 1 .5 1 1.1 0 .68-.43 1.69-.65 2.63-.19.78.4 1.42 1.17 1.42 1.4 0 2.48-1.48 2.48-3.62 0-1.9-1.36-3.22-3.3-3.22a3.43 3.43 0 0 0-3.58 3.44c0 .68.26 1.42.59 1.81a.24.24 0 0 1 .05.23l-.22.9c-.04.15-.12.18-.27.11-1-.47-1.63-1.93-1.63-3.1 0-2.53 1.84-4.85 5.3-4.85 2.78 0 4.94 1.98 4.94 4.63 0 2.76-1.74 4.98-4.16 4.98-.81 0-1.57-.42-1.83-.92l-.5 1.9c-.18.7-.67 1.57-1 2.1A8.5 8.5 0 1 0 12 3.5Z" fill="currentColor"/>
+            </svg>
+          </a>
+          <a class="icon-btn" href="#contact" aria-label="Contacter Soleia par e-mail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="3"/>
+              <path d="m4 7 8 5.5L20 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <button class="icon-btn account" aria-label="Mon compte">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.4"/>
+            <path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="nav__burger" aria-label="Ouvrir le menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ===================== HERO ===================== -->
+    <main class="hero">
+      <h1 class="title" id="title">
+        <span class="line" data-wave>La pause créative</span>
+        <span class="line" data-wave>qui fait <em>du</em> <span class="bien" data-wave-bien>BIEN.</span></span>
+      </h1>
+
+      <div class="actions">
+        <a class="pill pill--primary" href="#ateliers"><span>Les prochains ateliers</span></a>
+        <a class="pill" href="#boutique">La boutique</a>
+        <a class="pill" href="#histoire">Notre histoire</a>
+        <a class="pill" href="#faq">F.A.Q</a>
+      </div>
+    </main>
+
+    <!-- ===================== CITATION ===================== -->
+    <footer class="foot">
+      <figure class="quote">
+        <p>«&#8239;Parce que prendre du temps pour soi, c’est important &amp; ça fait du bien.&#8239;»</p>
+        <cite>— Gwennaëlle</cite>
+      </figure>
+    </footer>
+  </div>
+
+  <!-- ===================== ONDE / DISTORSION DU TITRE AU SURVOL ===================== -->
+  <script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+
+    // Découpe le texte en lettres animables (préserve <em> et .bien)
+    function splitNode(node) {
+      var out = [];
+      node.childNodes.forEach && node.childNodes.forEach(function(){});
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) { // texte
+          var frag = document.createDocumentFragment();
+          n.nodeValue.split("").forEach(function (c) {
+            var s = document.createElement("span");
+            if (c === " ") { s.className = "sp"; s.setAttribute("aria-hidden", "true"); }
+            else { s.className = "ch"; s.textContent = c; out.push(s); }
+            frag.appendChild(s);
+          });
+          node.replaceChild(frag, n);
+        } else if (n.nodeType === 1) {
+          out = out.concat(splitNode(n));
+        }
+      });
+      return out;
+    }
+
+    var lines = document.querySelectorAll("[data-wave]");
+    var allCh = [];
+    lines.forEach(function (line) {
+      // garde l'accessibilité : le texte reste lisible par le lecteur d'écran via aria-label
+      allCh = allCh.concat(splitNode(line));
+    });
+    // pose un aria-label propre sur le titre, et masque les lettres au lecteur
+    var titleEl = document.getElementById("title");
+    if (titleEl) {
+      titleEl.setAttribute("aria-label", "La pause créative qui fait du BIEN.");
+      allCh.forEach(function (c) { c.setAttribute("aria-hidden", "true"); });
+    }
+
+    if (reduce || coarse || allCh.length === 0) return;
+
+    var hovering = false;
+    var raf = null;
+    var t0 = 0;
+    var amp = 0;        // amplitude courante (ease-in/out)
+    var targetAmp = 0;
+
+    function frame(now) {
+      if (!t0) t0 = now;
+      var t = (now - t0) * 0.004;
+      amp += (targetAmp - amp) * 0.08;
+      if (amp > 0.002 || targetAmp > 0) {
+        for (var i = 0; i < allCh.length; i++) {
+          var ph = i * 0.45;
+          var y = Math.sin(t + ph) * 9 * amp;
+          var rot = Math.cos(t * 0.9 + ph) * 3 * amp;
+          var sc = 1 + Math.sin(t * 1.2 + ph) * 0.04 * amp;
+          allCh[i].style.transform = "translateY(" + y.toFixed(2) + "px) rotate(" + rot.toFixed(2) + "deg) scale(" + sc.toFixed(3) + ")";
+        }
+        raf = requestAnimationFrame(frame);
+      } else {
+        for (var j = 0; j < allCh.length; j++) allCh[j].style.transform = "";
+        raf = null;
+      }
+    }
+
+    function start() {
+      hovering = true;
+      targetAmp = 1;
+      if (!raf) { raf = requestAnimationFrame(frame); }
+    }
+    function stop() {
+      hovering = false;
+      targetAmp = 0;
+      if (!raf) { raf = requestAnimationFrame(frame); }
+    }
+
+    if (titleEl) {
+      titleEl.addEventListener("pointerenter", start);
+      titleEl.addEventListener("pointerleave", stop);
+    }
+  })();
+  </script>
+
+  <!-- ===================== WebGL — GRADIENT VIVANT QUI SE COURBE VERS LE CURSEUR ===================== -->
+  <script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    var canvas = document.getElementById("gl");
+    if (!canvas) return;
+
+    var gl = canvas.getContext("webgl", { antialias: true, alpha: false, premultipliedAlpha: false })
+          || canvas.getContext("experimental-webgl");
+    if (!gl) return; // fallback CSS reste visible
+
+    var vertSrc =
+      "attribute vec2 p;" +
+      "void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
+
+    // Mesh-gradient / aurora évolué : domain warp FBM attiré (courbé) vers le curseur,
+    // + lumière chaude qui suit la souris. Palette Soleia, crème dominante pour lisibilité.
+    var fragSrc = [
+      "precision highp float;",
+      "uniform vec2  u_res;",
+      "uniform float u_time;",
+      "uniform vec2  u_mouse;",   // 0..1, y déjà retourné
+      "uniform float u_pull;",    // intensité d'attraction (0 repos -> 1 survol)",
+      "",
+      "vec3 ROSE   = vec3(0.984, 0.420, 0.651);", // #fb6ba6
+      "vec3 FRAMB  = vec3(0.957, 0.329, 0.545);", // #f4548b
+      "vec3 CORAL  = vec3(0.980, 0.494, 0.345);", // #fa7e58
+      "vec3 ORANGE = vec3(0.973, 0.455, 0.184);", // #f8742f
+      "vec3 PEACH  = vec3(1.000, 0.725, 0.573);", // #ffb992
+      "vec3 CREAM  = vec3(0.973, 0.902, 0.902);", // #f8e6e6
+      "vec3 CREAMW = vec3(0.992, 0.933, 0.871);", // #fdeede
+      "",
+      "float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }",
+      "float noise(vec2 p){",
+      "  vec2 i = floor(p); vec2 f = fract(p);",
+      "  vec2 u = f*f*(3.0-2.0*f);",
+      "  float a = hash(i);",
+      "  float b = hash(i + vec2(1.0, 0.0));",
+      "  float c = hash(i + vec2(0.0, 1.0));",
+      "  float d = hash(i + vec2(1.0, 1.0));",
+      "  return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);",
+      "}",
+      "float fbm(vec2 p){",
+      "  float v = 0.0; float a = 0.55;",
+      "  mat2 m = mat2(1.6, 1.2, -1.2, 1.6);",
+      "  for(int i=0;i<5;i++){ v += a*noise(p); p = m*p; a *= 0.5; }",
+      "  return v;",
+      "}",
+      "",
+      "void main(){",
+      "  vec2 uv = gl_FragCoord.xy / u_res.xy;",
+      "  float asp = u_res.x / u_res.y;",
+      "  vec2 p = vec2((uv.x - 0.5) * asp, uv.y - 0.5);",
+      "  vec2 m = vec2((u_mouse.x - 0.5) * asp, u_mouse.y - 0.5);",
+      "  float t = u_time * 0.06;",
+      "",
+      "  // --- COURBURE vers le curseur : lentille douce qui attire le champ ---",
+      "  vec2 toM = m - p;",
+      "  float dM = length(toM);",
+      "  float lens = (0.16 + 0.20 * u_pull) / (dM * dM + 0.10);", // poids gravitationnel doux
+      "  vec2 curved = p + toM * lens * 0.45;",
+      "",
+      "  // --- domain warp (aurora évoluée) sur le champ courbé ---",
+      "  vec2 q = vec2(fbm(curved*1.5 + vec2(0.0, t)), fbm(curved*1.5 + vec2(5.2, -t*0.8)));",
+      "  vec2 r = vec2(fbm(curved*1.5 + 3.2*q + vec2(1.7, 9.2) + t*0.5),",
+      "                fbm(curved*1.5 + 3.2*q + vec2(8.3, 2.8) - t*0.4));",
+      "  float n = fbm(curved*1.6 + 2.4*r + t*0.3);",
+      "",
+      "  // --- iridescence : tissage de couleurs Soleia selon le champ ---",
+      "  vec3 col = CREAM;",
+      "  col = mix(col, PEACH,  smoothstep(0.30, 0.95, n));",
+      "  col = mix(col, ROSE,   smoothstep(0.35, 0.85, r.x));",
+      "  col = mix(col, CORAL,  smoothstep(0.40, 0.95, q.y));",
+      "  col = mix(col, ORANGE, smoothstep(0.55, 1.05, r.y) * 0.85);",
+      "  col = mix(col, FRAMB,  smoothstep(0.60, 1.10, n * r.x) * 0.6);",
+      "",
+      "  // léger reflet nacré (bandes iridescentes mobiles)",
+      "  float sheen = 0.5 + 0.5 * sin((q.x + r.y) * 6.2832 + u_time * 0.25);",
+      "  col += sheen * 0.05 * vec3(1.0, 0.92, 0.85);",
+      "",
+      "  // --- LUMIÈRE CHAUDE qui suit la souris ---",
+      "  float glowR = 0.55;",
+      "  float warm = exp(-dM*dM / (glowR*glowR)) * (0.18 + 0.42 * u_pull);",
+      "  vec3 warmCol = mix(PEACH, ORANGE, 0.4);",
+      "  col += warm * warmCol * 0.55;",
+      "  // petit cœur plus intense",
+      "  col += exp(-dM*dM / 0.02) * (0.10 + 0.25 * u_pull) * vec3(1.0, 0.85, 0.7);",
+      "",
+      "  // --- crème dominante pour lisibilité parfaite du texte ---",
+      "  col = mix(col, CREAM, smoothstep(0.55, 1.0, uv.y) * 0.50);", // haut (nav/titre)
+      "  col = mix(col, CREAMW, 0.14);",
+      "  float vig = distance(uv, vec2(0.5, 0.5));",
+      "  col = mix(col, CREAM, smoothstep(0.50, 1.05, vig) * 0.32);",
+      "  // doux plancher de luminosité",
+      "  col = clamp(col, 0.0, 1.0);",
+      "",
+      "  gl_FragColor = vec4(col, 1.0);",
+      "}"
+    ].join("\n");
+
+    function compile(type, src) {
+      var s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
+      return s;
+    }
+
+    var vs = compile(gl.VERTEX_SHADER, vertSrc);
+    var fs = compile(gl.FRAGMENT_SHADER, fragSrc);
+    if (!vs || !fs) return;
+
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(prog, "p");
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+    var uRes   = gl.getUniformLocation(prog, "u_res");
+    var uTime  = gl.getUniformLocation(prog, "u_time");
+    var uMouse = gl.getUniformLocation(prog, "u_mouse");
+    var uPull  = gl.getUniformLocation(prog, "u_pull");
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    function resize() {
+      var w = Math.floor(canvas.clientWidth * dpr);
+      var h = Math.floor(canvas.clientHeight * dpr);
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w; canvas.height = h;
+        gl.viewport(0, 0, w, h);
+      }
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    // --- état souris : cible + valeur lissée (inertie) ---
+    var mx = 0.5, my = 0.5;        // cible (0..1, y retourné pour le shader)
+    var smx = 0.5, smy = 0.5;      // valeur lissée
+    var pull = 0.0, pullTarget = 0.0;
+    var idleAngle = Math.random() * 6.28;
+
+    function setFromEvent(cx, cy) {
+      var rect = canvas.getBoundingClientRect();
+      mx = (cx - rect.left) / rect.width;
+      my = 1.0 - (cy - rect.top) / rect.height;
+      pullTarget = 1.0;
+    }
+    window.addEventListener("pointermove", function (e) {
+      setFromEvent(e.clientX, e.clientY);
+    }, { passive: true });
+    window.addEventListener("pointerdown", function (e) {
+      setFromEvent(e.clientX, e.clientY);
+      pullTarget = 1.0;
+    }, { passive: true });
+    window.addEventListener("pointerleave", function () { pullTarget = 0.0; });
+    document.addEventListener("mouseleave", function () { pullTarget = 0.0; });
+
+    document.querySelector(".living").classList.add("gl-ready");
+    document.body.classList.add("gl-ready");
+
+    var start = performance.now();
+    var running = true;
+    var elapsed = 0;
+    document.addEventListener("visibilitychange", function () {
+      running = !document.hidden;
+      if (running) { start = performance.now() - elapsed; requestAnimationFrame(loop); }
+    });
+
+    function loop(now) {
+      if (!running) return;
+      resize();
+      elapsed = now - start;
+      var ts = elapsed * 0.001;
+
+      // au repos, la lumière dérive doucement (cible mobile lente) pour rester vivante
+      pull += (pullTarget - pull) * 0.05;
+      if (pullTarget < 0.5) {
+        idleAngle += 0.0035;
+        var rx = 0.5 + Math.cos(idleAngle) * 0.18;
+        var ry = 0.5 + Math.sin(idleAngle * 0.8) * 0.14;
+        mx += (rx - mx) * 0.02;
+        my += (ry - my) * 0.02;
+      }
+      // inertie de la lumière (suit la souris en douceur)
+      smx += (mx - smx) * 0.06;
+      smy += (my - smy) * 0.06;
+
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uTime, ts);
+      gl.uniform2f(uMouse, smx, smy);
+      gl.uniform1f(uPull, pull);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  })();
+  </script>
+</body>
+</html>
