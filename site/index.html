@@ -127,8 +127,14 @@
     </header>
 
     <div class="section-head">
+      <h2>League Spartan recentrée · taille du menu</h2>
+      <span class="meta">↑ le plus récent · v51 retenue (League Spartan MAJ) · emblème recentré · 5 tailles de menu, de la plus sobre à la plus grande</span>
+    </div>
+    <main class="grid" id="gridc"></main>
+
+    <div class="section-head">
       <h2>Logo-texte en MAJUSCULES</h2>
-      <span class="meta">↑ le plus récent · « SOLEIA EXPÉRIENCE » en majuscules — 10 polices (dont League Spartan) · menu en Bricolage · titre en Fraunces</span>
+      <span class="meta">« SOLEIA EXPÉRIENCE » en majuscules — 10 polices (dont League Spartan) · menu en Bricolage · titre en Fraunces</span>
     </div>
     <main class="grid" id="grid0"></main>
 
@@ -261,6 +267,19 @@
       { key:'v60', name:'MAJ · Righteous', tag:'Righteous',
         desc:'En Righteous (rétro géométrique, art-déco).' },
     ];
+    const CENTER = [
+      { key:'v61', name:'Menu +1 · le plus sobre', tag:'Menu 16px',
+        desc:'Emblème « SOLEIA · EXPÉRIENCE » recentré pile au milieu. Menu légèrement plus gros (le plus sobre).' },
+      { key:'v62', name:'Menu +2', tag:'Menu ~18px',
+        desc:'Emblème recentré. Menu un peu plus gros que la v61.' },
+      { key:'v63', name:'Menu +3 · intermédiaire', tag:'Menu ~18-19px',
+        desc:'Emblème recentré. Menu taille intermédiaire — un bon compromis.' },
+      { key:'v64', name:'Menu +4', tag:'Menu ~19-20px',
+        desc:'Emblème recentré. Menu encore plus présent.' },
+      { key:'v65', name:'Menu +5 · le plus gros', tag:'Menu ~20px',
+        desc:'Emblème recentré. Menu le plus gros — bien affirmé.' },
+    ];
+    render(CENTER, 'gridc');
     render(UP, 'grid0');
     render(FID, 'grid1');
     render(CRE, 'grid2');
