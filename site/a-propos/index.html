@@ -280,16 +280,7 @@
   /* HALO crème DOUX et SANS BORD derrière les blocs de texte (aide la lecture,
      dégradé radial flou aux bords totalement transparents — jamais de boîte nette) */
   .halo { position: relative; }
-  .halo::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: clamp(-1.4rem, -3vw, -2.6rem) clamp(-1.8rem, -4vw, -3.4rem);
-    background:
-      radial-gradient(72% 78% at 50% 50%, rgba(255, 250, 246, 0.30) 0%, rgba(255, 250, 246, 0.15) 42%, rgba(255, 250, 246, 0.04) 70%, transparent 100%);
-    filter: blur(8px);
-    pointer-events: none;
-  }
+  .halo::before { display: none; }
   .halo--left::before  { background: radial-gradient(70% 80% at 32% 50%, rgba(255, 250, 246, 0.30) 0%, rgba(255, 250, 246, 0.15) 42%, rgba(255, 250, 246, 0.04) 70%, transparent 100%); }
   .halo--right::before { background: radial-gradient(70% 80% at 68% 50%, rgba(255, 250, 246, 0.30) 0%, rgba(255, 250, 246, 0.15) 42%, rgba(255, 250, 246, 0.04) 70%, transparent 100%); }
 
@@ -373,12 +364,12 @@
   /* espacement vertical entre blocs : très respirant */
   .block { margin: clamp(3.2rem, 9vh, 6.5rem) 0; }
 
-  /* ---- BLOC 2 : « Soleia, c'est quoi ? » — texte aligné à GAUCHE ---- */
-  .block--quoi { text-align: left; }
+  /* ---- BLOC 2 : « Soleia, c'est quoi ? » — texte aligné à GAUCHE (poussé vers le bord) ---- */
+  .block--quoi { text-align: left; margin-left: clamp(-1rem, -7vw, -8.5rem); }
   .block--quoi .placeholder { margin-right: auto; }
 
-  /* ---- BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE ---- */
-  .block--pourquoi { text-align: right; }
+  /* ---- BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE (poussé vers le bord) ---- */
+  .block--pourquoi { text-align: right; margin-right: clamp(-1rem, -6.5vw, -7.5rem); }
   .block--pourquoi .placeholder { margin-left: auto; }
   .block--pourquoi .sun { margin-right: 0; margin-left: 0.5em; }
 
@@ -489,6 +480,20 @@
     line-height: 1.65;
     color: var(--ink-soft);
     margin: 0;
+  }
+
+  /* ---- INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ---- */
+  .presentation-intro { text-align: center; margin: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 3.2rem); }
+  .presentation-title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.45rem, 3.3vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0;
+    white-space: nowrap;
+    font-variation-settings: "opsz" 120;
   }
 
   /* ---- BLOC FINAL : deux colonnes (photo / Gwennaëlle) ---- */
@@ -608,7 +613,8 @@
     .photo-frame { max-width: 340px; margin: 0 auto; width: 100%; }
 
     /* texte des blocs 2 & 3 : on garde l'alignement mais on autorise toute la largeur */
-    .block--quoi, .block--pourquoi { }
+    .block--quoi, .block--pourquoi { margin-left: 0; margin-right: 0; }
+    .presentation-title { white-space: normal; font-size: clamp(1.45rem, 6vw, 2.2rem); }
 
     /* sur mobile, le rail est replié horizontalement en bas pour rester visible */
     .social-rail {
@@ -716,9 +722,8 @@
       </a>
 
       <div class="nav__col nav__col--right">
-        <a class="nav__link" href="/a-propos/">Histoire</a>
+        <a class="nav__link is-active" href="/a-propos/" aria-current="page">Concept</a>
         <a class="nav__link" href="/a-propos/">Galerie</a>
-        <a class="nav__link is-active" href="/a-propos/" aria-current="page">À&#8239;propos</a>
 
         <!-- icône compte discrète à l'extrême droite (tolérée) -->
         <button class="icon-btn account" aria-label="Mon compte">
@@ -813,6 +818,11 @@
           </p>
         </article>
       </div>
+    </section>
+
+    <!-- ===== INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ===== -->
+    <section class="presentation-intro reveal">
+      <h2 class="presentation-title">Qui se cache derrière Soleia Expérience</h2>
     </section>
 
     <!-- ===== BLOC FINAL : photo (gauche) + Gwennaëlle centrée verticalement (droite) ===== -->
