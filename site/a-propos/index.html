@@ -293,16 +293,14 @@
   .halo--left::before  { background: radial-gradient(70% 80% at 32% 50%, rgba(255, 250, 246, 0.80) 0%, rgba(255, 250, 246, 0.44) 42%, rgba(255, 250, 246, 0.14) 70%, transparent 100%); }
   .halo--right::before { background: radial-gradient(70% 80% at 68% 50%, rgba(255, 250, 246, 0.80) 0%, rgba(255, 250, 246, 0.44) 42%, rgba(255, 250, 246, 0.14) 70%, transparent 100%); }
 
-  /* petit accent : point coloré dégradé (repris de la V4) */
-  .dot {
+  /* petit accent : un vrai petit soleil dégradé (remplace l'ancien point) */
+  .sun {
     display: inline-block;
-    width: 0.42em;
-    height: 0.42em;
-    border-radius: 50%;
-    background: linear-gradient(120deg, var(--rose), var(--orange));
-    vertical-align: middle;
+    width: 1.05em;
+    height: 1.05em;
+    vertical-align: -0.09em;
     margin-right: 0.5em;
-    box-shadow: 0 4px 12px rgba(248, 116, 47, 0.28);
+    filter: drop-shadow(0 4px 10px rgba(248, 116, 47, 0.28));
   }
 
   /* texte placeholder atténué (emplacement à remplir plus tard) */
@@ -382,7 +380,7 @@
   /* ---- BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE ---- */
   .block--pourquoi { text-align: right; }
   .block--pourquoi .placeholder { margin-left: auto; }
-  .block--pourquoi .dot { margin-right: 0; margin-left: 0.5em; }
+  .block--pourquoi .sun { margin-right: 0; margin-left: 0.5em; }
 
   /* ---- BLOC 4 : temps fort centré — punchline « Ce qu'on apporte » ---- */
   .apporte {
@@ -687,8 +685,8 @@
     <!-- ===================== NAV (identique à l'accueil) ===================== -->
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__col nav__col--left">
-        <li><a class="nav__link" href="/#ateliers">Ateliers</a></li>
-        <li><a class="nav__link" href="/#boutique">Boutique</a></li>
+        <li><a class="nav__link" href="/a-propos/">Ateliers</a></li>
+        <li><a class="nav__link" href="/a-propos/">Boutique</a></li>
       </ul>
 
       <a class="brand" href="/" aria-label="Soleia Expérience, accueil">
@@ -718,8 +716,8 @@
       </a>
 
       <div class="nav__col nav__col--right">
-        <a class="nav__link" href="/#histoire">Histoire</a>
-        <a class="nav__link" href="/#galerie">Galerie</a>
+        <a class="nav__link" href="/a-propos/">Histoire</a>
+        <a class="nav__link" href="/a-propos/">Galerie</a>
         <a class="nav__link is-active" href="/a-propos/" aria-current="page">À&#8239;propos</a>
 
         <!-- icône compte discrète à l'extrême droite (tolérée) -->
@@ -751,7 +749,7 @@
     <!-- ===== BLOC 2 : « Soleia, c'est quoi ? » — texte aligné à GAUCHE (halo doux) ===== -->
     <section class="block block--quoi reveal" aria-labelledby="quoi-title">
       <div class="halo halo--left">
-        <h2 class="section__title" id="quoi-title"><span class="dot" aria-hidden="true"></span>Soleia, c’est quoi&#8239;?</h2>
+        <h2 class="section__title" id="quoi-title"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sunGradQuoi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb6ba6"/><stop offset="1" stop-color="#f8742f"/></linearGradient></defs><circle cx="12" cy="12" r="5.3" fill="url(#sunGradQuoi)"/><g stroke="url(#sunGradQuoi)" stroke-width="2.3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="1.8"/><line x1="12" y1="19" x2="12" y2="22.2"/><line x1="5" y1="12" x2="1.8" y2="12"/><line x1="19" y1="12" x2="22.2" y2="12"/><line x1="7.05" y1="7.05" x2="4.79" y2="4.79"/><line x1="16.95" y1="16.95" x2="19.21" y2="19.21"/><line x1="7.05" y1="16.95" x2="4.79" y2="19.21"/><line x1="16.95" y1="7.05" x2="19.21" y2="4.79"/></g></svg>Notre concept</h2>
         <p class="placeholder">
           Voici l’emplacement réservé à la présentation de Soleia. Quelques lignes douces
           pour raconter l’esprit de la marque, les ateliers et cette envie de créer ensemble.
@@ -764,7 +762,7 @@
     <!-- ===== BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE (halo doux) ===== -->
     <section class="block block--pourquoi reveal" aria-labelledby="pourquoi-title">
       <div class="halo halo--right">
-        <h2 class="section__title" id="pourquoi-title">Pourquoi Soleia&#8239;?<span class="dot" aria-hidden="true"></span></h2>
+        <h2 class="section__title" id="pourquoi-title">Pourquoi Soleia&#8239;?<svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sunGradPourquoi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb6ba6"/><stop offset="1" stop-color="#f8742f"/></linearGradient></defs><circle cx="12" cy="12" r="5.3" fill="url(#sunGradPourquoi)"/><g stroke="url(#sunGradPourquoi)" stroke-width="2.3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="1.8"/><line x1="12" y1="19" x2="12" y2="22.2"/><line x1="5" y1="12" x2="1.8" y2="12"/><line x1="19" y1="12" x2="22.2" y2="12"/><line x1="7.05" y1="7.05" x2="4.79" y2="4.79"/><line x1="16.95" y1="16.95" x2="19.21" y2="19.21"/><line x1="7.05" y1="16.95" x2="4.79" y2="19.21"/><line x1="16.95" y1="7.05" x2="19.21" y2="4.79"/></g></svg></h2>
         <p class="placeholder">
           Emplacement réservé pour expliquer le « pourquoi » de Soleia&#8239;: l’envie d’offrir
           une parenthèse créative, un moment rien que pour soi. Ces quelques phrases factices
