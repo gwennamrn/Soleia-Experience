@@ -16,6 +16,8 @@
     --rose-clair: #f8e6e6;    /* rose clair marque */
     --ink: #3a2a2e;           /* texte sombre chaleureux */
     --creme: #fffaf6;         /* crème / blanc cassé */
+    --or: #f4b63e;            /* jaune doré chaud — UNIQUEMENT cœurs de fleurs / soleils */
+    --rose-doux: #fba6c6;     /* rose plus doux (déco) */
     /* dérivés neutres pour voiles/verre (transparences de la crème) */
     --ink-soft: rgba(58, 42, 46, 0.62);
     --glass: rgba(255, 250, 246, 0.62);
@@ -100,7 +102,7 @@
   /* ============ SHELL ============ */
   .shell {
     position: relative;
-    z-index: 2;
+    z-index: 4;
     padding: clamp(0.9rem, 2.2vw, 1.7rem) clamp(1.4rem, 5vw, 4.8rem) 0 clamp(1.4rem, 5vw, 4.8rem);
   }
 
@@ -277,22 +279,20 @@
     padding: clamp(1.4rem, 4vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
   }
 
-  /* HALO crème DOUX et SANS BORD derrière les blocs de texte (aide la lecture,
-     dégradé radial flou aux bords totalement transparents — jamais de boîte nette) */
+  /* HALO crème — DÉSACTIVÉ (plus aucun halo derrière les textes). Le fond animé reste. */
   .halo { position: relative; }
   .halo::before { display: none; }
-  .halo--left::before  { background: radial-gradient(70% 80% at 32% 50%, rgba(255, 250, 246, 0.30) 0%, rgba(255, 250, 246, 0.15) 42%, rgba(255, 250, 246, 0.04) 70%, transparent 100%); }
-  .halo--right::before { background: radial-gradient(70% 80% at 68% 50%, rgba(255, 250, 246, 0.30) 0%, rgba(255, 250, 246, 0.15) 42%, rgba(255, 250, 246, 0.04) 70%, transparent 100%); }
 
-  /* petit accent : un vrai petit soleil dégradé (remplace l'ancien point) */
+  /* petit accent : un vrai petit SOLEIL DESSINÉ-MAIN à côté des titres de section */
   .sun {
     display: inline-block;
-    width: 1.08em;
-    height: 1.08em;
-    vertical-align: -0.12em;
+    width: 1.18em;
+    height: 1.18em;
+    vertical-align: -0.18em;
     margin-right: 0.5em;
     filter: drop-shadow(0 2px 6px rgba(248, 116, 47, 0.16));
   }
+  .sun svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
   /* texte placeholder atténué (emplacement à remplir plus tard) */
   .placeholder {
@@ -483,7 +483,7 @@
   }
 
   /* ---- INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ---- */
-  .presentation-intro { text-align: center; margin: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 3.2rem); }
+  .presentation-intro { text-align: center; margin: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 3.2rem); position: relative; }
   .presentation-title {
     font-family: "Fraunces", Georgia, serif;
     font-weight: 400;
@@ -494,6 +494,8 @@
     margin: 0;
     white-space: nowrap;
     font-variation-settings: "opsz" 120;
+    position: relative;
+    z-index: 1;
   }
 
   /* ---- BLOC FINAL : deux colonnes (photo / Gwennaëlle) ---- */
@@ -502,6 +504,7 @@
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
     align-items: center;
     gap: clamp(2rem, 5vw, 4.5rem);
+    position: relative;
   }
   /* cadre photo — STYLE V2 (coins très arrondis, presque arche en haut) */
   .photo-frame {
@@ -541,7 +544,7 @@
   }
 
   /* « Gwennaëlle » centré verticalement par rapport à la photo (align-items:center sur la grille) */
-  .signature__text { text-align: center; }
+  .signature__text { text-align: center; position: relative; }
   .signature__name {
     font-family: "Fraunces", Georgia, serif;
     font-style: italic;
@@ -552,6 +555,8 @@
     color: var(--orange);
     margin: 0 0 clamp(0.9rem, 2.2vh, 1.4rem);
     font-variation-settings: "opsz" 144;
+    position: relative;
+    z-index: 1;
   }
   .signature__desc {
     font-family: "Space Grotesk", sans-serif;
@@ -582,6 +587,51 @@
   /* ============ APPARITION AU DÉFILEMENT (avec repli : tout visible si pas de JS) ============ */
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
   .reveal.is-in { opacity: 1; transform: none; }
+
+  /* ============================================================
+     ✿ CALQUE DÉCOR PLEINE PAGE — fleurs rétro + soleils dessinés-main ✿
+     Un SEUL calque absolu couvrant TOUTE la hauteur du document.
+     Le calque ne capte pas la souris (pointer-events:none) pour ne pas
+     bloquer la page ; chaque décor, lui, est attrapable et DÉPLAÇABLE.
+     ============================================================ */
+  .deco-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;     /* le calque laisse tout passer */
+    z-index: 3;               /* au-dessus du fond animé, sous la barre du haut (z-index:4) et le rail (z-index:6) */
+    overflow: hidden;
+  }
+
+  /* chaque décor : positionné en % (proportionnel), attrapable et glissable */
+  .deco-item {
+    position: absolute;
+    pointer-events: auto;     /* on peut l'attraper… */
+    touch-action: none;       /* …au doigt aussi, sans scroller la page */
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: grab;
+    will-change: transform;
+    filter: drop-shadow(0 6px 14px rgba(248, 116, 47, 0.12));
+    /* --dx/--dy : décalage appliqué par le glisser (mémorisé) ; --rot : inclinaison ; --s : échelle */
+    transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)) scale(var(--s, 1));
+  }
+  .deco-item.is-grabbing { cursor: grabbing; z-index: 99; filter: drop-shadow(0 10px 22px rgba(248, 116, 47, 0.22)); }
+  .deco-item svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+
+  /* taille de base d'un décor (l'échelle --s module ensuite) */
+  .deco-item { width: 74px; height: 74px; }
+
+  /* flottement TRÈS doux ; on l'éteint dès qu'on attrape une fleur (et en reduced-motion) */
+  @keyframes decoFloat {
+    0%   { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
+    50%  { transform: translate(var(--dx,0px), calc(var(--dy,0px) - 8px)) rotate(calc(var(--rot,0deg) + 2.5deg)) scale(var(--s,1)); }
+    100% { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
+  }
+  .deco-item.is-float { animation: decoFloat var(--dur, 8s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
+  .deco-item.is-grabbing, .deco-item.is-moved { animation: none; }  /* figé une fois attrapé / déplacé */
 
   /* ============ FOCUS / A11Y ============ */
   a:focus-visible, button:focus-visible {
@@ -634,10 +684,16 @@
 
     /* la page laisse de la place au rail replié en bas */
     .page { padding-bottom: clamp(4.5rem, 12vw, 6rem); }
+
+    /* ✿ DÉCO sur mobile : on réduit la taille de base et on masque les fleurs « en trop » ✿ */
+    .deco-item { width: 58px; height: 58px; filter: drop-shadow(0 4px 9px rgba(248, 116, 47, 0.12)); }
+    .deco-item.hide-mobile { display: none; }
   }
 
   @media (max-width: 480px) {
     .photo-frame { border-radius: 110px 110px 26px 26px; }
+    .deco-item { width: 50px; height: 50px; }
+    .deco-item.hide-small { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -651,6 +707,8 @@
     .living__css { opacity: 0.94 !important; animation: none !important; }
     /* repli : tout reste visible */
     .reveal { opacity: 1 !important; transform: none !important; }
+    /* déco : on coupe le flottement, on garde juste l'inclinaison + décalage */
+    .deco-item.is-float { animation: none !important; }
   }
 </style>
 </head>
@@ -662,6 +720,112 @@
     <div class="living__veil"></div>
     <div class="living__grain"></div>
   </div>
+
+  <!-- ===================== DÉCORS RÉUTILISABLES (définis une fois, réutilisés via <use>) ===================== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques,
+           longueurs variées, bouts arrondis (16 rayons). Esprit « exemple soleil.jpg ». -->
+      <g id="soleiaSunDoodle">
+        <!-- disque central plein, un poil doré -->
+        <circle cx="50" cy="50" r="20" fill="#f8742f"/>
+        <circle cx="50" cy="50" r="20" fill="#f4b63e" opacity="0.18"/>
+        <!-- 16 rayons ondulés (courbes douces en S), longueurs variées, bouts ronds -->
+        <g fill="none" stroke="#f8742f" stroke-width="4.4" stroke-linecap="round">
+          <path d="M50 28 q3 -6 -0.6 -13"/>
+          <path d="M58.6 29.4 q5 -4 5.4 -10.4"/>
+          <path d="M66.3 33.5 q6.4 -3.4 12.8 -5.2"/>
+          <path d="M70.9 40.2 q6.6 -1.4 13.6 -1.4"/>
+          <path d="M72.4 50 q7.4 0.6 13.6 -1.4"/>
+          <path d="M70.9 59.8 q7 1.6 12.4 6.2"/>
+          <path d="M66.3 66.5 q6.2 3.2 10.6 8.8"/>
+          <path d="M58.6 70.6 q4.8 5 5 12.2"/>
+          <path d="M50 72 q-2.8 6.4 0.6 13.4"/>
+          <path d="M41.4 70.6 q-5 4.6 -5.4 11.4"/>
+          <path d="M33.7 66.5 q-6.2 3.2 -12.4 4.4"/>
+          <path d="M29.1 59.8 q-6.8 1.6 -13.4 0.4"/>
+          <path d="M27.6 50 q-7.6 -0.6 -14.4 1.2"/>
+          <path d="M29.1 40.2 q-6.8 -1.6 -11.8 -6.6"/>
+          <path d="M33.7 33.5 q-6 -3.4 -9.4 -9"/>
+          <path d="M41.4 29.4 q-4.6 -4.6 -4.2 -11.2"/>
+        </g>
+      </g>
+
+      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, arrondis, légèrement ondulés, APLAT,
+           fins interstices clairs entre pétales, cœur jaune doré arrondi presque carré.
+           Couleur des pétales pilotée par currentColor. -->
+      <g id="soleiaFlowerRetro">
+        <g fill="currentColor">
+          <!-- pétale haut -->
+          <path d="M50 12
+                   c 9 0 15 7 14.5 15
+                   c -0.4 6 -4 9.5 -8 12
+                   c -2.5 1.6 -4.6 3 -6.5 3
+                   c -1.9 0 -4 -1.4 -6.5 -3
+                   c -4 -2.5 -7.6 -6 -8 -12
+                   c -0.5 -8 5 -15 14.5 -15 Z"/>
+          <!-- pétale haut-droit -->
+          <path d="M86.1 38.2
+                   c 2.8 8.6 -1.1 16.3 -8.5 19.4
+                   c -5.6 2.3 -10.1 0.6 -13.9 -1.9
+                   c -2.4 -1.6 -4.5 -2.9 -5.4 -4.6
+                   c -0.9 -1.8 -0.7 -4.3 -0.1 -7.2
+                   c 0.9 -4.6 3 -9.3 8.6 -11.6
+                   c 7.6 -3.1 16 0 19.2 5.9 Z"/>
+          <!-- pétale bas-droit -->
+          <path d="M72.3 80.9
+                   c -7.3 5.3 -15.9 4.2 -20.4 -2.3
+                   c -3.5 -4.9 -2.7 -9.6 -1.2 -13.9
+                   c 0.9 -2.7 1.6 -5.1 3.1 -6.2
+                   c 1.5 -1.1 4 -1.3 6.9 -1.3
+                   c 4.7 0 9.8 1.1 13.3 6
+                   c 4.5 6.5 5 15.1 -1.7 19.9
+                   l 0 -2.2 Z"/>
+          <!-- pétale bas-gauche -->
+          <path d="M27.7 80.9
+                   c -6.7 -4.8 -6.2 -13.4 -1.7 -19.9
+                   c 3.5 -4.9 8.6 -6 13.3 -6
+                   c 2.9 0 5.4 0.2 6.9 1.3
+                   c 1.5 1.1 2.2 3.5 3.1 6.2
+                   c 1.5 4.3 2.3 9 -1.2 13.9
+                   c -4.5 6.5 -13.1 7.6 -20.4 2.3 Z"/>
+          <!-- pétale haut-gauche -->
+          <path d="M13.9 38.2
+                   c 3.2 -5.9 11.6 -9 19.2 -5.9
+                   c 5.6 2.3 7.7 7 8.6 11.6
+                   c 0.6 2.9 0.8 5.4 -0.1 7.2
+                   c -0.9 1.7 -3 3 -5.4 4.6
+                   c -3.8 2.5 -8.3 4.2 -13.9 1.9
+                   c -7.4 -3.1 -11.3 -10.8 -8.5 -19.4 Z"/>
+        </g>
+        <!-- cœur : forme presque carrée à coins très ronds, jaune doré chaud -->
+        <rect x="42" y="42" width="16" height="16" rx="6.4" fill="#f4b63e"/>
+      </g>
+
+      <!-- ✺ petit soleil dessiné-main pour les TITRES de section
+           (disque plein orangé + rayons ondulés, esprit « exemple soleil.jpg ») -->
+      <g id="soleiaSunTitle">
+        <circle cx="50" cy="50" r="19" fill="#f8742f"/>
+        <circle cx="50" cy="50" r="19" fill="#f4b63e" opacity="0.18"/>
+        <g fill="none" stroke="#f8742f" stroke-width="5" stroke-linecap="round">
+          <path d="M50 29 q3 -6 -0.6 -13"/>
+          <path d="M59 31 q5 -4 5.6 -10.6"/>
+          <path d="M67.5 35.5 q6.4 -3.2 12.8 -4.6"/>
+          <path d="M71.5 43 q6.6 -1.2 13.4 -0.8"/>
+          <path d="M71.5 57 q7 1.4 12.6 6"/>
+          <path d="M67.5 64.5 q6.2 3.2 10.4 9"/>
+          <path d="M59 69 q4.8 5 5 12"/>
+          <path d="M50 71 q-3 6.4 0.6 13.4"/>
+          <path d="M41 69 q-5 4.6 -5.6 11.2"/>
+          <path d="M32.5 64.5 q-6.2 3.2 -12 4.2"/>
+          <path d="M28.5 57 q-6.8 1.4 -13.2 0.2"/>
+          <path d="M28.5 43 q-7 -1.4 -12.6 -6"/>
+          <path d="M32.5 35.5 q-6 -3.2 -9.2 -8.6"/>
+          <path d="M41 31 q-4.6 -4.6 -4.2 -11"/>
+        </g>
+      </g>
+    </defs>
+  </svg>
 
   <!-- ===================== RAIL RÉSEAUX SOCIAUX — bord DROIT ===================== -->
   <aside class="social-rail" aria-label="Suivre Soleia sur les réseaux sociaux">
@@ -686,6 +850,52 @@
     </a>
     <span class="social-rail__line" aria-hidden="true"></span>
   </aside>
+
+  <!-- ===================== CALQUE DÉCOR PLEINE PAGE (fleurs + soleils déplaçables) ===================== -->
+  <!-- Position en %, tailles/rotations/couleurs variées. Réparti sur TOUTE la hauteur :
+       autour du titre, le long des blocs, autour des cartes, de la photo et du prénom, et en bas.
+       Les décors se posent dans les MARGES / espaces vides, pas par-dessus les paragraphes. -->
+  <div class="deco-layer" aria-hidden="true">
+
+    <!-- ░░ Zone titre « Notre concept » (haut de page) ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-1"  style="top:5.2%;  left:8%;   --rot:-10deg; --s:0.74; --dur:8s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-2"  style="top:3.8%;  right:9%;  --rot:8deg;   --s:0.98; --dur:10s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-small" data-deco-id="deco-3"  style="top:9.5%;  left:21%;  --rot:14deg;  --s:0.54; --dur:9s;  --delay:-2s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-4"  style="top:10.5%; right:24%; --rot:-6deg;  --s:0.6;  --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+
+    <!-- ░░ Zone « En quelques mots » (texte à gauche → on garnit la droite) ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-5"  style="top:18%;   right:6%;  --rot:12deg;  --s:0.86; --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-6"  style="top:22.5%; right:17%; --rot:-9deg;  --s:0.52; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-small" data-deco-id="deco-7"  style="top:16.5%; left:3%;  --rot:6deg;   --s:0.62; --dur:11s; --delay:-2.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+
+    <!-- ░░ Zone « Pourquoi Soleia ? » (texte à droite → on garnit la gauche) ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-8"  style="top:30%;   left:5%;   --rot:-12deg; --s:0.82; --dur:8s;  --delay:-2s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-9"  style="top:33.5%; left:16%;  --rot:10deg;  --s:0.54; --dur:10s; --delay:-4s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-small" data-deco-id="deco-10" style="top:28.5%; right:4%;  --rot:5deg;   --s:0.68; --dur:9s;  --delay:-1s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+
+    <!-- ░░ Zone « Ce qu'on apporte » (centrée → on garnit les deux marges) ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-11" style="top:43%;   left:6%;   --rot:9deg;   --s:0.74; --dur:11s; --delay:-3s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-12" style="top:42%;   right:7%;  --rot:-8deg;  --s:0.8;  --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-13" style="top:46.5%; right:19%; --rot:13deg;  --s:0.5;  --dur:10s; --delay:-2.5s; color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+
+    <!-- ░░ Zone « Nos valeurs » + cartes (marges latérales) ░░ -->
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-14" style="top:53%;   left:3%;   --rot:-7deg;  --s:0.62; --dur:8s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-15" style="top:52.5%; right:4%;  --rot:11deg;  --s:0.72; --dur:10s; --delay:-4s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-small" data-deco-id="deco-16" style="top:60.5%; left:5%;   --rot:8deg;   --s:0.56; --dur:9s;  --delay:-1s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-17" style="top:61.5%; right:5%;  --rot:-11deg; --s:0.64; --dur:11s; --delay:-3.5s; color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+
+    <!-- ░░ Zone « Qui se cache derrière… » + photo + Gwennaëlle ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-18" style="top:69%;   left:9%;   --rot:6deg;   --s:0.8;  --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-19" style="top:72.5%; right:8%;  --rot:-9deg;  --s:0.72; --dur:10s; --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-20" style="top:77.5%; left:4%;   --rot:12deg;  --s:0.56; --dur:8s;  --delay:-3s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-21" style="top:80.5%; right:6%;  --rot:7deg;   --s:0.72; --dur:11s; --delay:-2.5s; color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-small" data-deco-id="deco-22" style="top:84%;   left:13%;  --rot:-6deg;  --s:0.5;  --dur:9s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+
+    <!-- ░░ Bas de page (phrase de fin) ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-23" style="top:90.5%; left:10%;  --rot:10deg;  --s:0.66; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-24" style="top:91.5%; right:11%; --rot:-8deg;  --s:0.62; --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-25" style="top:95.5%; right:23%; --rot:14deg;  --s:0.5;  --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+  </div>
 
   <div class="shell">
     <!-- ===================== NAV (identique à l'accueil) ===================== -->
@@ -750,10 +960,10 @@
       <span class="intro__rule" aria-hidden="true"></span>
     </section>
 
-    <!-- ===== BLOC 2 : « Soleia, c'est quoi ? » — texte aligné à GAUCHE (halo doux) ===== -->
+    <!-- ===== BLOC 2 : « Soleia, c'est quoi ? » — texte aligné à GAUCHE ===== -->
     <section class="block block--quoi reveal" aria-labelledby="quoi-title">
       <div class="halo halo--left">
-        <h2 class="section__title" id="quoi-title"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sunGradQuoi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb6ba6"/><stop offset="1" stop-color="#f8742f"/></linearGradient></defs><circle cx="12" cy="12" r="6.2" fill="none" stroke="url(#sunGradQuoi)" stroke-width="1.6"/><g stroke="url(#sunGradQuoi)" stroke-width="1.6" stroke-linecap="round"><line x1="20.2" y1="12" x2="22.8" y2="12"/><line x1="19.1" y1="16.1" x2="21.35" y2="17.4"/><line x1="16.1" y1="19.1" x2="17.4" y2="21.35"/><line x1="12" y1="20.2" x2="12" y2="22.8"/><line x1="7.9" y1="19.1" x2="6.6" y2="21.35"/><line x1="4.9" y1="16.1" x2="2.65" y2="17.4"/><line x1="3.8" y1="12" x2="1.2" y2="12"/><line x1="4.9" y1="7.9" x2="2.65" y2="6.6"/><line x1="7.9" y1="4.9" x2="6.6" y2="2.65"/><line x1="12" y1="3.8" x2="12" y2="1.2"/><line x1="16.1" y1="4.9" x2="17.4" y2="2.65"/><line x1="19.1" y1="7.9" x2="21.35" y2="6.6"/></g></svg>En quelques mots</h2>
+        <h2 class="section__title" id="quoi-title"><span class="sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunTitle"/></svg></span>En quelques mots</h2>
         <p class="placeholder">
           Voici l’emplacement réservé à la présentation de Soleia. Quelques lignes douces
           pour raconter l’esprit de la marque, les ateliers et cette envie de créer ensemble.
@@ -763,10 +973,10 @@
       </div>
     </section>
 
-    <!-- ===== BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE (halo doux) ===== -->
+    <!-- ===== BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE ===== -->
     <section class="block block--pourquoi reveal" aria-labelledby="pourquoi-title">
       <div class="halo halo--right">
-        <h2 class="section__title" id="pourquoi-title">Pourquoi Soleia&#8239;?<svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sunGradPourquoi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb6ba6"/><stop offset="1" stop-color="#f8742f"/></linearGradient></defs><circle cx="12" cy="12" r="6.2" fill="none" stroke="url(#sunGradPourquoi)" stroke-width="1.6"/><g stroke="url(#sunGradPourquoi)" stroke-width="1.6" stroke-linecap="round"><line x1="20.2" y1="12" x2="22.8" y2="12"/><line x1="19.1" y1="16.1" x2="21.35" y2="17.4"/><line x1="16.1" y1="19.1" x2="17.4" y2="21.35"/><line x1="12" y1="20.2" x2="12" y2="22.8"/><line x1="7.9" y1="19.1" x2="6.6" y2="21.35"/><line x1="4.9" y1="16.1" x2="2.65" y2="17.4"/><line x1="3.8" y1="12" x2="1.2" y2="12"/><line x1="4.9" y1="7.9" x2="2.65" y2="6.6"/><line x1="7.9" y1="4.9" x2="6.6" y2="2.65"/><line x1="12" y1="3.8" x2="12" y2="1.2"/><line x1="16.1" y1="4.9" x2="17.4" y2="2.65"/><line x1="19.1" y1="7.9" x2="21.35" y2="6.6"/></g></svg></h2>
+        <h2 class="section__title" id="pourquoi-title">Pourquoi Soleia&#8239;?<span class="sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunTitle"/></svg></span></h2>
         <p class="placeholder">
           Emplacement réservé pour expliquer le « pourquoi » de Soleia&#8239;: l’envie d’offrir
           une parenthèse créative, un moment rien que pour soi. Ces quelques phrases factices
@@ -887,6 +1097,98 @@
     els.forEach(function (el) { io.observe(el); });
     // Filet de sécurité : au cas où, tout devient visible après un court délai.
     setTimeout(function () { els.forEach(function (el) { el.classList.add("is-in"); }); }, 2600);
+  })();
+  </script>
+
+  <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT (+ mémoire des positions) ===================== -->
+  <script>
+  (function () {
+    var STORE_KEY = "soleia-deco-pos";
+    var items = Array.prototype.slice.call(document.querySelectorAll(".deco-item"));
+    if (!items.length) return;
+
+    // --- lecture des positions mémorisées (robuste) ---
+    function loadPos() {
+      try {
+        var raw = window.localStorage.getItem(STORE_KEY);
+        return raw ? (JSON.parse(raw) || {}) : {};
+      } catch (e) { return {}; }
+    }
+    function savePos(map) {
+      try { window.localStorage.setItem(STORE_KEY, JSON.stringify(map)); } catch (e) {}
+    }
+
+    var positions = loadPos();
+
+    // --- restauration au chargement : on applique le décalage (dx,dy) mémorisé ---
+    items.forEach(function (el) {
+      var id = el.getAttribute("data-deco-id");
+      var p = id && positions[id];
+      if (p && (p.dx || p.dy)) {
+        el.style.setProperty("--dx", p.dx + "px");
+        el.style.setProperty("--dy", p.dy + "px");
+        el.classList.add("is-moved");   // fige le flottement sur les décors déjà déplacés
+      }
+    });
+
+    // --- glisser-déposer (pointer events : souris ET tactile) ---
+    var startX = 0, startY = 0;
+    var baseDx = 0, baseDy = 0;
+    var movedThisDrag = false;
+    var current = null;
+
+    function numVar(el, name) {
+      var n = parseFloat(el.style.getPropertyValue(name));
+      return isNaN(n) ? 0 : n;
+    }
+
+    function onDown(e) {
+      var el = e.currentTarget;
+      current = el;
+      movedThisDrag = false;
+      baseDx = numVar(el, "--dx");
+      baseDy = numVar(el, "--dy");
+      startX = e.clientX;
+      startY = e.clientY;
+      el.classList.add("is-grabbing");
+      el.classList.add("is-moved");   // coupe le flottement pendant la prise
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+
+    function onMove(e) {
+      var el = e.currentTarget;
+      if (current !== el) return;
+      var dx = baseDx + (e.clientX - startX);
+      var dy = baseDy + (e.clientY - startY);
+      if (Math.abs(e.clientX - startX) > 2 || Math.abs(e.clientY - startY) > 2) movedThisDrag = true;
+      el.style.setProperty("--dx", dx + "px");
+      el.style.setProperty("--dy", dy + "px");
+    }
+
+    function onUp(e) {
+      var el = e.currentTarget;
+      if (current !== el) return;
+      el.classList.remove("is-grabbing");
+      try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+      // mémorisation de la nouvelle position si elle a bougé
+      if (movedThisDrag) {
+        var id = el.getAttribute("data-deco-id");
+        if (id) {
+          positions[id] = { dx: Math.round(numVar(el, "--dx")), dy: Math.round(numVar(el, "--dy")) };
+          savePos(positions);
+        }
+      }
+      current = null;
+    }
+
+    items.forEach(function (el) {
+      el.addEventListener("pointerdown", onDown);
+      el.addEventListener("pointermove", onMove);
+      el.addEventListener("pointerup", onUp);
+      el.addEventListener("pointercancel", onUp);
+      // évite la sélection / le glisser d'image natif pendant le déplacement
+      el.addEventListener("dragstart", function (ev) { ev.preventDefault(); });
+    });
   })();
   </script>
 
