@@ -287,11 +287,11 @@
   /* petit accent : un vrai petit soleil dégradé (remplace l'ancien point) */
   .sun {
     display: inline-block;
-    width: 1.22em;
-    height: 1.22em;
-    vertical-align: -0.18em;
+    width: 1.08em;
+    height: 1.08em;
+    vertical-align: -0.12em;
     margin-right: 0.5em;
-    filter: drop-shadow(0 2px 6px rgba(248, 116, 47, 0.18));
+    filter: drop-shadow(0 2px 6px rgba(248, 116, 47, 0.16));
   }
 
   /* texte placeholder atténué (emplacement à remplir plus tard) */
@@ -483,8 +483,10 @@
   }
 
   /* ---- INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ---- */
-  .presentation-intro { text-align: center; margin: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 3.2rem); }
+  .presentation-intro { position: relative; text-align: center; margin: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 3.2rem); }
   .presentation-title {
+    position: relative;
+    z-index: 1;
     font-family: "Fraunces", Georgia, serif;
     font-weight: 400;
     font-size: clamp(1.45rem, 3.3vw, 3rem);
@@ -498,6 +500,7 @@
 
   /* ---- BLOC FINAL : deux colonnes (photo / Gwennaëlle) ---- */
   .signature {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
     align-items: center;
@@ -541,8 +544,10 @@
   }
 
   /* « Gwennaëlle » centré verticalement par rapport à la photo (align-items:center sur la grille) */
-  .signature__text { text-align: center; }
+  .signature__text { position: relative; text-align: center; }
   .signature__name {
+    position: relative;
+    z-index: 1;
     font-family: "Fraunces", Georgia, serif;
     font-style: italic;
     font-weight: 420;
@@ -579,6 +584,44 @@
     max-width: 46ch;
   }
 
+  /* ============================================================
+     ✿ DÉCORATIONS « BOUQUET DE COIN » — fleurs rétro/groovy + soleils griffonnés
+     (purement visuelles : pointer-events:none, aria-hidden)
+     ============================================================ */
+  .deco {
+    position: absolute;
+    pointer-events: none;
+    display: block;
+    filter: drop-shadow(0 8px 16px rgba(248, 116, 47, 0.16));
+    will-change: transform;
+  }
+  .deco svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+  /* flottements TRÈS doux, délicats */
+  @keyframes decoFloatA { 0%,100% { transform: translateY(0) rotate(var(--rot,0deg)); } 50% { transform: translateY(-9px) rotate(calc(var(--rot,0deg) + 2.5deg)); } }
+  @keyframes decoFloatB { 0%,100% { transform: translateY(0) rotate(var(--rot,0deg)); } 50% { transform: translateY(7px) rotate(calc(var(--rot,0deg) - 2.5deg)); } }
+  @keyframes decoSpin    { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .deco--floatA { animation: decoFloatA 9s ease-in-out infinite; }
+  .deco--floatB { animation: decoFloatB 11s ease-in-out infinite; }
+  .deco--floatA.is-delayed { animation-delay: -3.5s; }
+  .deco--floatB.is-delayed { animation-delay: -5s; }
+  /* les rayons du soleil tournent très très lentement (vie discrète) */
+  .deco .sunspin { transform-origin: 0 0; animation: decoSpin 70s linear infinite; }
+
+  /* ---------- BOUQUET autour du titre « Qui se cache derrière… » ---------- */
+  .deco-presentation { position: absolute; inset: 0; z-index: 0; }
+  .deco-pres-left  { top: -70px;  left: clamp(-12px, 1vw, 30px);  width: clamp(118px, 16vw, 186px); height: clamp(118px, 16vw, 186px); --rot: -6deg; }
+  .deco-pres-right { top: -34px;  right: clamp(-16px, 0vw, 18px); width: clamp(84px, 11vw, 130px);  height: clamp(84px, 11vw, 130px);  --rot: 8deg; }
+
+  /* ---------- BOUQUET haut-gauche du cadre photo (déborde joliment sur le bord) ---------- */
+  .deco-photo-bouquet { position: absolute; top: clamp(-56px, -5vw, -78px); left: clamp(-64px, -6vw, -88px); width: clamp(170px, 25vw, 282px); height: clamp(170px, 25vw, 282px); z-index: 4; }
+  /* petit accent en bas-droite du cadre, posé sur le bord (chevauchement joli) */
+  .deco-photo-corner { position: absolute; bottom: clamp(-32px, -3.4vw, -46px); right: clamp(-28px, -3vw, -42px); width: clamp(76px, 10vw, 116px); height: clamp(76px, 10vw, 116px); z-index: 4; --rot: 10deg; }
+
+  /* ---------- BOUQUET près du prénom « Gwennaëlle » ---------- */
+  .deco-name-bouquet { position: absolute; top: clamp(-120px, -10vw, -158px); left: 50%; transform: translateX(-46%); width: clamp(186px, 26vw, 296px); height: clamp(130px, 18vw, 198px); z-index: 0; }
+  .deco-name-accent  { position: absolute; bottom: clamp(-46px, -4vw, -60px); right: clamp(0px, 4vw, 54px); width: clamp(70px, 9vw, 104px); height: clamp(70px, 9vw, 104px); z-index: 0; --rot: -8deg; }
+
   /* ============ APPARITION AU DÉFILEMENT (avec repli : tout visible si pas de JS) ============ */
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
   .reveal.is-in { opacity: 1; transform: none; }
@@ -589,67 +632,6 @@
     outline-offset: 3px;
     border-radius: 12px;
   }
-
-  /* ============================================================
-     ✿✿✿  DÉCORATIONS « BOUQUET DE COIN »  ✿✿✿
-     (fleurs hibiscus + soleils rayonnants — ajout pur, purement décoratif)
-     ============================================================ */
-
-  /* La zone présentation devient le repère de positionnement des bouquets */
-  .presentation-zone { position: relative; }
-
-  /* élément décoratif générique : flotte au-dessus du fond, jamais cliquable */
-  .deco {
-    position: absolute;
-    pointer-events: none;
-    z-index: 3;
-    will-change: transform;
-  }
-  .deco svg { display: block; width: 100%; height: 100%; overflow: visible; }
-
-  /* fleurs : ombre douce chaude pour les détacher délicatement du fond */
-  .deco--bloom svg { filter: drop-shadow(0 6px 14px rgba(248, 116, 47, 0.16)); }
-  .deco--sun svg { filter: drop-shadow(0 3px 9px rgba(248, 116, 47, 0.18)); }
-
-  /* ---- animations TRÈS douces : flottement + balancement lent ---- */
-  @keyframes floatSoft {
-    0%   { transform: translateY(0) rotate(var(--rot, 0deg)); }
-    50%  { transform: translateY(-9px) rotate(calc(var(--rot, 0deg) + 2.5deg)); }
-    100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
-  }
-  @keyframes swaySoft {
-    0%   { transform: translateY(0) rotate(var(--rot, 0deg)); }
-    50%  { transform: translateY(6px) rotate(calc(var(--rot, 0deg) - 2deg)); }
-    100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
-  }
-  @keyframes spinSlow {
-    from { transform: rotate(var(--rot, 0deg)); }
-    to   { transform: rotate(calc(var(--rot, 0deg) + 360deg)); }
-  }
-  .deco--float { animation: floatSoft 9s ease-in-out infinite; }
-  .deco--sway  { animation: swaySoft 11s ease-in-out infinite; }
-  .deco--spin  { animation: spinSlow 60s linear infinite; }
-
-  /* ---- BOUQUET sur le cadre photo : haut-gauche, débordant joliment sur le bord ---- */
-  .bouquet-photo { position: relative; }
-  .bouquet-photo .b-bloom-1 { top: -54px;  left: -48px; width: 124px; height: 124px; --rot: -16deg; animation-delay: -1.2s; }
-  .bouquet-photo .b-bloom-2 { top: 14px;   left: -70px; width: 86px;  height: 86px;  --rot: 22deg;  animation-delay: -3s; }
-  .bouquet-photo .b-bloom-3 { top: -30px;  left: 40px;  width: 70px;  height: 70px;  --rot: 8deg;   animation-delay: -2.1s; }
-  .bouquet-photo .b-sun-1   { top: -64px;  left: 58px;  width: 56px;  height: 56px;  --rot: 0deg;   animation-delay: -0.6s; }
-  .bouquet-photo .b-sun-2   { top: 70px;   left: -52px; width: 34px;  height: 34px;  --rot: 0deg; }
-  /* un petit accent fleuri qui retombe en bas-droite du cadre */
-  .bouquet-photo .b-bloom-4 { bottom: -30px; right: -34px; top: auto; left: auto; width: 64px; height: 64px; --rot: -24deg; animation-delay: -4s; }
-
-  /* ---- BOUQUET près du prénom « Gwennaëlle » : coin haut-droit du bloc texte ---- */
-  .bouquet-name { position: relative; }
-  .bouquet-name .n-bloom-1 { top: -42px; right: -16px; width: 96px;  height: 96px;  --rot: 18deg;  animation-delay: -2.4s; }
-  .bouquet-name .n-bloom-2 { top: -8px;  right: 56px;  width: 60px;  height: 60px;  --rot: -14deg; animation-delay: -0.8s; }
-  .bouquet-name .n-sun-1   { top: -56px; right: 60px;  width: 46px;  height: 46px;  --rot: 0deg;   animation-delay: -1.5s; }
-  .bouquet-name .n-sun-2   { top: 24px;  right: -8px;  width: 28px;  height: 28px;  --rot: 0deg; }
-
-  /* ---- petits accents parsemés autour du titre de présentation ---- */
-  .deco-presentation .p-sun-1   { top: 4px;  left: clamp(2%, 12vw, 18%);  width: 40px; height: 40px; --rot: 0deg; animation-delay: -2s; }
-  .deco-presentation .p-bloom-1 { top: -14px; right: clamp(2%, 12vw, 18%); width: 58px; height: 58px; --rot: -18deg; animation-delay: -1s; }
 
   /* ============ RESPONSIVE ============ */
   @media (max-width: 880px) {
@@ -696,26 +678,23 @@
     /* la page laisse de la place au rail replié en bas */
     .page { padding-bottom: clamp(4.5rem, 12vw, 6rem); }
 
-    /* ===== DÉCORATIONS : on allège fortement sur mobile pour rester propre ===== */
-    /* on masque les éléments qui déborderaient hors écran ou cacheraient le texte */
-    .bouquet-photo .b-bloom-2,
-    .bouquet-photo .b-bloom-4,
-    .bouquet-photo .b-sun-2,
-    .bouquet-name  .n-bloom-2,
-    .bouquet-name  .n-sun-2,
-    .deco-presentation .p-bloom-1 { display: none; }
+    /* ----- DÉCORS : on allège sur mobile pour rester propre ----- */
+    /* on masque les accents qui déborderaient trop, on garde les bouquets essentiels */
+    .deco-pres-right,
+    .deco-photo-corner,
+    .deco-name-accent { display: none; }
 
-    /* on réduit ce qui reste et on rentre les positions pour éviter tout débordement */
-    .bouquet-photo .b-bloom-1 { width: 84px; height: 84px; top: -34px; left: -20px; }
-    .bouquet-photo .b-bloom-3 { width: 50px; height: 50px; top: -22px; left: 30px; }
-    .bouquet-photo .b-sun-1   { width: 40px; height: 40px; top: -40px; left: 44px; }
-    .bouquet-name  .n-bloom-1 { width: 70px; height: 70px; top: -30px; right: 2px; }
-    .bouquet-name  .n-sun-1   { width: 36px; height: 36px; top: -38px; right: 50px; }
-    .deco-presentation .p-sun-1 { width: 32px; height: 32px; left: 6%; }
+    .deco-presentation .deco-pres-left { top: -48px; left: -8px; width: clamp(86px, 22vw, 122px); height: clamp(86px, 22vw, 122px); }
+    .deco-photo-bouquet { top: -40px; left: -28px; width: clamp(124px, 38vw, 182px); height: clamp(124px, 38vw, 182px); }
+    .deco-name-bouquet { top: -72px; width: clamp(150px, 52vw, 222px); height: clamp(120px, 40vw, 172px); opacity: 0.94; }
   }
 
   @media (max-width: 480px) {
     .photo-frame { border-radius: 110px 110px 26px 26px; }
+    /* sur très petit écran, on garde uniquement le bouquet du cadre photo, très discret */
+    .deco-presentation,
+    .deco-name-bouquet { display: none; }
+    .deco-photo-bouquet { opacity: 0.88; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -729,8 +708,9 @@
     .living__css { opacity: 0.94 !important; animation: none !important; }
     /* repli : tout reste visible */
     .reveal { opacity: 1 !important; transform: none !important; }
-    /* décorations : on fige le mouvement mais on garde l'inclinaison de départ */
-    .deco { animation: none !important; transform: rotate(var(--rot, 0deg)) !important; }
+    /* décors : on fige le mouvement mais on garde l'orientation */
+    .deco--floatA, .deco--floatB { animation: none !important; transform: rotate(var(--rot,0deg)) !important; }
+    .deco .sunspin { animation: none !important; }
   }
 </style>
 </head>
@@ -743,32 +723,47 @@
     <div class="living__grain"></div>
   </div>
 
-  <!-- ===================== DÉFINITIONS SVG PARTAGÉES (dégradés réutilisés par les décorations) ===================== -->
-  <svg width="0" height="0" aria-hidden="true" style="position:absolute" focusable="false">
+  <!-- ===================== DÉFINITIONS SVG RÉUTILISABLES (fleurs rétro/groovy + soleils griffonnés) ===================== -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
     <defs>
-      <!-- dégradé rose → orange de la marque, pour soleils & fleurs -->
-      <linearGradient id="solGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#fb6ba6"/>
-        <stop offset="1" stop-color="#f8742f"/>
-      </linearGradient>
-      <!-- pétales d'hibiscus : rose vif au bord, plus clair au cœur -->
-      <radialGradient id="petalGrad" cx="50%" cy="78%" r="80%">
-        <stop offset="0" stop-color="#f8e6e6"/>
-        <stop offset="42%" stop-color="#fb6ba6"/>
-        <stop offset="100%" stop-color="#f8742f"/>
-      </radialGradient>
-      <!-- variante plus rosée pour varier le bouquet -->
-      <radialGradient id="petalGrad2" cx="50%" cy="80%" r="82%">
-        <stop offset="0" stop-color="#fff3f3"/>
-        <stop offset="50%" stop-color="#fb6ba6"/>
-        <stop offset="100%" stop-color="#fb6ba6"/>
-      </radialGradient>
-      <!-- cœur / gorge de la fleur, orangé chaud -->
-      <radialGradient id="throatGrad" cx="50%" cy="60%" r="70%">
-        <stop offset="0" stop-color="#ffd9b0"/>
-        <stop offset="55%" stop-color="#f8742f"/>
-        <stop offset="100%" stop-color="#e85f1c"/>
-      </radialGradient>
+      <!-- ✿ FLEUR RÉTRO / GROOVY : 5 pétales larges, arrondis, légèrement ondulés (aplat),
+           fins interstices clairs entre les pétales, petit cœur jaune doré presque carré.
+           La couleur des pétales se règle via currentColor sur le <use>. -->
+      <g id="soleia-flower">
+        <g fill="currentColor">
+          <path d="M0,-25 C 9,-29 18.5,-25 18,-13.5 C 17.6,-6 9,-2 1.4,-2 L 0,-2 C -1.4,-2 -1.4,-2 0,-2 C -9,-2 -17.6,-6 -18,-13.5 C -18.5,-25 -9,-29 0,-25 Z"/>
+          <path d="M0,-25 C 9,-29 18.5,-25 18,-13.5 C 17.6,-6 9,-2 1.4,-2 L 0,-2 C -1.4,-2 -1.4,-2 0,-2 C -9,-2 -17.6,-6 -18,-13.5 C -18.5,-25 -9,-29 0,-25 Z" transform="rotate(72)"/>
+          <path d="M0,-25 C 9,-29 18.5,-25 18,-13.5 C 17.6,-6 9,-2 1.4,-2 L 0,-2 C -1.4,-2 -1.4,-2 0,-2 C -9,-2 -17.6,-6 -18,-13.5 C -18.5,-25 -9,-29 0,-25 Z" transform="rotate(144)"/>
+          <path d="M0,-25 C 9,-29 18.5,-25 18,-13.5 C 17.6,-6 9,-2 1.4,-2 L 0,-2 C -1.4,-2 -1.4,-2 0,-2 C -9,-2 -17.6,-6 -18,-13.5 C -18.5,-25 -9,-29 0,-25 Z" transform="rotate(216)"/>
+          <path d="M0,-25 C 9,-29 18.5,-25 18,-13.5 C 17.6,-6 9,-2 1.4,-2 L 0,-2 C -1.4,-2 -1.4,-2 0,-2 C -9,-2 -17.6,-6 -18,-13.5 C -18.5,-25 -9,-29 0,-25 Z" transform="rotate(288)"/>
+        </g>
+        <!-- cœur arrondi (presque carré à coins ronds), jaune doré chaud -->
+        <path d="M-6.6,-3.4 C -6.6,-6.4 -4,-7.6 0,-7.6 C 4,-7.6 6.6,-6.4 6.6,-3.4 C 7.7,-1.1 7.7,1.1 6.6,3.4 C 6.6,6.4 4,7.6 0,7.6 C -4,7.6 -6.6,6.4 -6.6,3.4 C -7.7,1.1 -7.7,-1.1 -6.6,-3.4 Z" fill="#f4b63e"/>
+      </g>
+
+      <!-- ☀ SOLEIL GRIFFONNÉ / doodle : disque plein orange chaud + rayons ondulés organiques,
+           longueurs variées, bouts arrondis. Les rayons tournent très lentement (.sunspin). -->
+      <g id="soleia-sun">
+        <g class="sunspin" fill="none" stroke="#f8742f" stroke-width="3.3" stroke-linecap="round">
+          <path d="M0,-22 q 2.6,-7 -1.2,-13.5"/>
+          <path d="M0,22 q -2.6,7 1.2,13.5"/>
+          <path d="M22,0 q 7,2.6 13.5,-1.2"/>
+          <path d="M-22,0 q -7,-2.6 -13.5,1.2"/>
+          <path d="M15.6,-15.6 q 6,-3.6 8.4,-10.4"/>
+          <path d="M-15.6,15.6 q -6,3.6 -8.4,10.4"/>
+          <path d="M15.6,15.6 q 3.6,6 10.4,8.4"/>
+          <path d="M-15.6,-15.6 q -3.6,-6 -10.4,-8.4"/>
+          <path d="M8.4,-20.4 q 0.6,-6.6 6.6,-10.8"/>
+          <path d="M-8.4,20.4 q -0.6,6.6 -6.6,10.8"/>
+          <path d="M20.4,8.4 q 6.6,0.6 10.8,6.6"/>
+          <path d="M-20.4,-8.4 q -6.6,-0.6 -10.8,-6.6"/>
+          <path d="M-8.4,-20.4 q -3,-6 -2,-12.4"/>
+          <path d="M8.4,20.4 q 3,6 2,12.4"/>
+        </g>
+        <!-- disque plein, orange chaud, légèrement doré au centre -->
+        <circle cx="0" cy="0" r="19.5" fill="#f8742f"/>
+        <circle cx="0" cy="0" r="19.5" fill="#f99a3c" opacity="0.4"/>
+      </g>
     </defs>
   </svg>
 
@@ -862,7 +857,7 @@
     <!-- ===== BLOC 2 : « Soleia, c'est quoi ? » — texte aligné à GAUCHE (halo doux) ===== -->
     <section class="block block--quoi reveal" aria-labelledby="quoi-title">
       <div class="halo halo--left">
-        <h2 class="section__title" id="quoi-title"><svg class="sun" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="9.6" fill="none" stroke="url(#solGrad)" stroke-width="2.4"/><g stroke="url(#solGrad)" stroke-width="2.4" stroke-linecap="round"><line x1="24" y1="3.2" x2="24" y2="9"/><line x1="24" y1="39" x2="24" y2="44.8"/><line x1="3.2" y1="24" x2="9" y2="24"/><line x1="39" y1="24" x2="44.8" y2="24"/><line x1="9.35" y1="9.35" x2="13.4" y2="13.4"/><line x1="34.6" y1="34.6" x2="38.65" y2="38.65"/><line x1="9.35" y1="38.65" x2="13.4" y2="34.6"/><line x1="34.6" y1="13.4" x2="38.65" y2="9.35"/></g><g stroke="url(#solGrad)" stroke-width="1.9" stroke-linecap="round"><line x1="24" y1="13.2" x2="24" y2="16"/><line x1="24" y1="32" x2="24" y2="34.8"/><line x1="13.2" y1="24" x2="16" y2="24"/><line x1="32" y1="24" x2="34.8" y2="24"/><line x1="16.45" y1="16.45" x2="18.4" y2="18.4"/><line x1="29.6" y1="29.6" x2="31.55" y2="31.55"/><line x1="16.45" y1="31.55" x2="18.4" y2="29.6"/><line x1="29.6" y1="18.4" x2="31.55" y2="16.45"/></g></svg>En quelques mots</h2>
+        <h2 class="section__title" id="quoi-title"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sunGradQuoi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb6ba6"/><stop offset="1" stop-color="#f8742f"/></linearGradient></defs><circle cx="12" cy="12" r="6.2" fill="none" stroke="url(#sunGradQuoi)" stroke-width="1.6"/><g stroke="url(#sunGradQuoi)" stroke-width="1.6" stroke-linecap="round"><line x1="20.2" y1="12" x2="22.8" y2="12"/><line x1="19.1" y1="16.1" x2="21.35" y2="17.4"/><line x1="16.1" y1="19.1" x2="17.4" y2="21.35"/><line x1="12" y1="20.2" x2="12" y2="22.8"/><line x1="7.9" y1="19.1" x2="6.6" y2="21.35"/><line x1="4.9" y1="16.1" x2="2.65" y2="17.4"/><line x1="3.8" y1="12" x2="1.2" y2="12"/><line x1="4.9" y1="7.9" x2="2.65" y2="6.6"/><line x1="7.9" y1="4.9" x2="6.6" y2="2.65"/><line x1="12" y1="3.8" x2="12" y2="1.2"/><line x1="16.1" y1="4.9" x2="17.4" y2="2.65"/><line x1="19.1" y1="7.9" x2="21.35" y2="6.6"/></g></svg>En quelques mots</h2>
         <p class="placeholder">
           Voici l’emplacement réservé à la présentation de Soleia. Quelques lignes douces
           pour raconter l’esprit de la marque, les ateliers et cette envie de créer ensemble.
@@ -875,7 +870,7 @@
     <!-- ===== BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE (halo doux) ===== -->
     <section class="block block--pourquoi reveal" aria-labelledby="pourquoi-title">
       <div class="halo halo--right">
-        <h2 class="section__title" id="pourquoi-title">Pourquoi Soleia&#8239;?<svg class="sun" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="9.6" fill="none" stroke="url(#solGrad)" stroke-width="2.4"/><g stroke="url(#solGrad)" stroke-width="2.4" stroke-linecap="round"><line x1="24" y1="3.2" x2="24" y2="9"/><line x1="24" y1="39" x2="24" y2="44.8"/><line x1="3.2" y1="24" x2="9" y2="24"/><line x1="39" y1="24" x2="44.8" y2="24"/><line x1="9.35" y1="9.35" x2="13.4" y2="13.4"/><line x1="34.6" y1="34.6" x2="38.65" y2="38.65"/><line x1="9.35" y1="38.65" x2="13.4" y2="34.6"/><line x1="34.6" y1="13.4" x2="38.65" y2="9.35"/></g><g stroke="url(#solGrad)" stroke-width="1.9" stroke-linecap="round"><line x1="24" y1="13.2" x2="24" y2="16"/><line x1="24" y1="32" x2="24" y2="34.8"/><line x1="13.2" y1="24" x2="16" y2="24"/><line x1="32" y1="24" x2="34.8" y2="24"/><line x1="16.45" y1="16.45" x2="18.4" y2="18.4"/><line x1="29.6" y1="29.6" x2="31.55" y2="31.55"/><line x1="16.45" y1="31.55" x2="18.4" y2="29.6"/><line x1="29.6" y1="18.4" x2="31.55" y2="16.45"/></g></svg></h2>
+        <h2 class="section__title" id="pourquoi-title">Pourquoi Soleia&#8239;?<svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sunGradPourquoi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb6ba6"/><stop offset="1" stop-color="#f8742f"/></linearGradient></defs><circle cx="12" cy="12" r="6.2" fill="none" stroke="url(#sunGradPourquoi)" stroke-width="1.6"/><g stroke="url(#sunGradPourquoi)" stroke-width="1.6" stroke-linecap="round"><line x1="20.2" y1="12" x2="22.8" y2="12"/><line x1="19.1" y1="16.1" x2="21.35" y2="17.4"/><line x1="16.1" y1="19.1" x2="17.4" y2="21.35"/><line x1="12" y1="20.2" x2="12" y2="22.8"/><line x1="7.9" y1="19.1" x2="6.6" y2="21.35"/><line x1="4.9" y1="16.1" x2="2.65" y2="17.4"/><line x1="3.8" y1="12" x2="1.2" y2="12"/><line x1="4.9" y1="7.9" x2="2.65" y2="6.6"/><line x1="7.9" y1="4.9" x2="6.6" y2="2.65"/><line x1="12" y1="3.8" x2="12" y2="1.2"/><line x1="16.1" y1="4.9" x2="17.4" y2="2.65"/><line x1="19.1" y1="7.9" x2="21.35" y2="6.6"/></g></svg></h2>
         <p class="placeholder">
           Emplacement réservé pour expliquer le « pourquoi » de Soleia&#8239;: l’envie d’offrir
           une parenthèse créative, un moment rien que pour soi. Ces quelques phrases factices
@@ -929,181 +924,95 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         ZONE PRÉSENTATION (fleurie) : intro + photo + Gwennaëlle
-         ============================================================ -->
-    <div class="presentation-zone">
-
-      <!-- ===== INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ===== -->
-      <section class="presentation-intro reveal deco-presentation">
-        <!-- petits accents parsemés autour du titre -->
-        <span class="deco deco--sun deco--spin p-sun-1" aria-hidden="true">
-          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="8.5" fill="none" stroke="url(#solGrad)" stroke-width="2.2"/><g stroke="url(#solGrad)" stroke-width="2.2" stroke-linecap="round"><line x1="24" y1="4" x2="24" y2="10"/><line x1="24" y1="38" x2="24" y2="44"/><line x1="4" y1="24" x2="10" y2="24"/><line x1="38" y1="24" x2="44" y2="24"/><line x1="9.9" y1="9.9" x2="14.1" y2="14.1"/><line x1="33.9" y1="33.9" x2="38.1" y2="38.1"/><line x1="9.9" y1="38.1" x2="14.1" y2="33.9"/><line x1="33.9" y1="14.1" x2="38.1" y2="9.9"/></g></svg>
-        </span>
-        <span class="deco deco--bloom deco--sway p-bloom-1" aria-hidden="true">
-          <svg viewBox="0 0 100 100"><use href="#hibiscus" /></svg>
-        </span>
-        <h2 class="presentation-title">Qui se cache derrière Soleia Expérience</h2>
-      </section>
-
-      <!-- ===== BLOC FINAL : photo (gauche) + Gwennaëlle centrée verticalement (droite) ===== -->
-      <section class="block signature reveal" aria-labelledby="signature-name">
-
-        <!-- ----- CADRE PHOTO + BOUQUET DE COIN (haut-gauche) ----- -->
-        <div class="photo-wrap bouquet-photo">
-          <div class="photo-frame" role="img" aria-label="Emplacement pour une photo de Gwennaëlle">
-            <div class="photo-frame__inner">
-              <span class="photo-frame__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                  <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
-                  <circle cx="8.6" cy="9.6" r="1.7"/>
-                  <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <span class="photo-frame__label">Photo</span>
-            </div>
-          </div>
-
-          <!-- bouquet posé dans le coin haut-gauche, débordant délicatement sur le bord -->
-          <span class="deco deco--bloom deco--float b-bloom-1" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#hibiscus" /></svg></span>
-          <span class="deco deco--bloom deco--sway  b-bloom-2" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#hibiscus-rose" /></svg></span>
-          <span class="deco deco--bloom deco--float b-bloom-3" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#hibiscus" /></svg></span>
-          <span class="deco deco--sun   deco--spin  b-sun-1"   aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#sunburst" /></svg></span>
-          <span class="deco deco--sun   deco--spin  b-sun-2"   aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#sunburst" /></svg></span>
-          <!-- petit accent fleuri en bas-droite -->
-          <span class="deco deco--bloom deco--sway  b-bloom-4" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#hibiscus-rose" /></svg></span>
+    <!-- ===== INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ===== -->
+    <section class="presentation-intro reveal">
+      <!-- ✿ DÉCO : bouquets de coin autour du titre de présentation -->
+      <div class="deco-presentation" aria-hidden="true">
+        <!-- bouquet haut-gauche : 3 fleurs rétro + 1 soleil griffonné mêlés -->
+        <div class="deco deco-pres-left deco--floatA" aria-hidden="true">
+          <svg viewBox="-60 -60 120 120" aria-hidden="true">
+            <g transform="translate(-16,-8) scale(1.18)" style="color:#fb6ba6"><use href="#soleia-flower"/></g>
+            <g transform="translate(20,8) scale(0.9)" style="color:#f8742f"><use href="#soleia-flower"/></g>
+            <g transform="translate(6,-30) scale(0.6)"><use href="#soleia-sun"/></g>
+            <g transform="translate(-30,28) scale(0.66)" style="color:#fb6ba6"><use href="#soleia-flower"/></g>
+          </svg>
         </div>
-
-        <!-- ----- PRÉNOM « GWENNAËLLE » + PETIT BOUQUET DE COIN ----- -->
-        <div class="signature__text bouquet-name">
-          <!-- bouquet près du prénom, coin haut-droit -->
-          <span class="deco deco--bloom deco--float n-bloom-1" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#hibiscus" /></svg></span>
-          <span class="deco deco--bloom deco--sway  n-bloom-2" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#hibiscus-rose" /></svg></span>
-          <span class="deco deco--sun   deco--spin  n-sun-1"   aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#sunburst" /></svg></span>
-          <span class="deco deco--sun   deco--spin  n-sun-2"   aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#sunburst" /></svg></span>
-
-          <p class="signature__name" id="signature-name">Gwennaëlle</p>
-          <p class="signature__desc">
-            Une courte présentation viendra ici&#8239;: quelques mots tendres sur celle qui
-            imagine et anime les ateliers Soleia. Ce texte est provisoire et sera complété
-            plus tard.
-          </p>
+        <!-- petit accent haut-droite : une fleur + un mini soleil -->
+        <div class="deco deco-pres-right deco--floatB is-delayed" aria-hidden="true">
+          <svg viewBox="-50 -50 100 100" aria-hidden="true">
+            <g transform="translate(8,4) scale(1.0)" style="color:#fb6ba6"><use href="#soleia-flower"/></g>
+            <g transform="translate(-22,-18) scale(0.48)"><use href="#soleia-sun"/></g>
+          </svg>
         </div>
-      </section>
-    </div><!-- /.presentation-zone -->
+      </div>
+      <h2 class="presentation-title">Qui se cache derrière Soleia Expérience</h2>
+    </section>
+
+    <!-- ===== BLOC FINAL : photo (gauche) + Gwennaëlle centrée verticalement (droite) ===== -->
+    <section class="block signature reveal" aria-labelledby="signature-name">
+      <div class="photo-frame" role="img" aria-label="Emplacement pour une photo de Gwennaëlle">
+        <div class="photo-frame__inner">
+          <span class="photo-frame__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
+              <circle cx="8.6" cy="9.6" r="1.7"/>
+              <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="photo-frame__label">Photo</span>
+        </div>
+      </div>
+
+      <!-- ✿ DÉCO : gros bouquet de coin en haut-gauche du cadre (chevauche joliment le bord) -->
+      <div class="deco deco-photo-bouquet deco--floatA" aria-hidden="true">
+        <svg viewBox="-90 -90 180 180" aria-hidden="true">
+          <g transform="translate(-20,-16) scale(1.42)" style="color:#fb6ba6"><use href="#soleia-flower"/></g>
+          <g transform="translate(30,-30) scale(0.95)" style="color:#f8742f"><use href="#soleia-flower"/></g>
+          <g transform="translate(-46,32) scale(0.86)" style="color:#fb6ba6"><use href="#soleia-flower"/></g>
+          <g transform="translate(36,24) scale(0.66)"><use href="#soleia-sun"/></g>
+          <g transform="translate(-4,-52) scale(0.6)"><use href="#soleia-sun"/></g>
+          <g transform="translate(20,42) scale(0.58)" style="color:#f8742f"><use href="#soleia-flower"/></g>
+        </svg>
+      </div>
+      <!-- petit accent posé sur le bord bas-droit du cadre photo -->
+      <div class="deco deco-photo-corner deco--floatB" aria-hidden="true">
+        <svg viewBox="-50 -50 100 100" aria-hidden="true">
+          <g transform="translate(0,0) scale(1.05)" style="color:#f8742f"><use href="#soleia-flower"/></g>
+        </svg>
+      </div>
+
+      <div class="signature__text">
+        <!-- ✿ DÉCO : bouquet de coin au-dessus du prénom « Gwennaëlle » -->
+        <div class="deco deco-name-bouquet deco--floatB is-delayed" aria-hidden="true">
+          <svg viewBox="-95 -60 190 120" aria-hidden="true">
+            <g transform="translate(-50,-2) scale(1.06)" style="color:#fb6ba6"><use href="#soleia-flower"/></g>
+            <g transform="translate(-4,-20) scale(0.74)"><use href="#soleia-sun"/></g>
+            <g transform="translate(48,2) scale(0.98)" style="color:#f8742f"><use href="#soleia-flower"/></g>
+            <g transform="translate(22,28) scale(0.5)" style="color:#fb6ba6"><use href="#soleia-flower"/></g>
+            <g transform="translate(-30,30) scale(0.44)"><use href="#soleia-sun"/></g>
+          </svg>
+        </div>
+        <!-- petit accent sous la description -->
+        <div class="deco deco-name-accent deco--floatA is-delayed" aria-hidden="true">
+          <svg viewBox="-46 -46 92 92" aria-hidden="true">
+            <g transform="translate(0,2) scale(0.9)" style="color:#fb6ba6"><use href="#soleia-flower"/></g>
+            <g transform="translate(26,-20) scale(0.48)"><use href="#soleia-sun"/></g>
+          </svg>
+        </div>
+        <p class="signature__name" id="signature-name">Gwennaëlle</p>
+        <p class="signature__desc">
+          Une courte présentation viendra ici&#8239;: quelques mots tendres sur celle qui
+          imagine et anime les ateliers Soleia. Ce texte est provisoire et sera complété
+          plus tard.
+        </p>
+      </div>
+    </section>
 
     <!-- ===== PHRASE DE FIN : petite, fine, discrète (emplacement à compléter) ===== -->
     <footer class="pied reveal">
       <p>Une petite phrase de fin viendra se poser ici, tout en douceur.</p>
     </footer>
   </main>
-
-  <!-- ===================== SYMBOLES SVG RÉUTILISABLES (fleurs hibiscus + soleil rayonnant) ===================== -->
-  <svg width="0" height="0" aria-hidden="true" style="position:absolute" focusable="false">
-    <defs>
-      <!-- ===== HIBISCUS rose/orange : 5 pétales arrondis + cœur + long pistil avec petits points ===== -->
-      <symbol id="hibiscus" viewBox="0 0 100 100">
-        <g transform="translate(50 52)">
-          <!-- 5 pétales arrondis, disposés en étoile (étamine pointant vers le haut-droit) -->
-          <g>
-            <g transform="rotate(0)">
-              <path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad)"/>
-              <path d="M0 -8 C 4 -22, 2 -34, 0 -44" fill="none" stroke="#e85f1c" stroke-opacity="0.28" stroke-width="1.4" stroke-linecap="round"/>
-            </g>
-            <g transform="rotate(72)">
-              <path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad)"/>
-              <path d="M0 -8 C 4 -22, 2 -34, 0 -44" fill="none" stroke="#e85f1c" stroke-opacity="0.28" stroke-width="1.4" stroke-linecap="round"/>
-            </g>
-            <g transform="rotate(144)">
-              <path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad)"/>
-              <path d="M0 -8 C 4 -22, 2 -34, 0 -44" fill="none" stroke="#e85f1c" stroke-opacity="0.28" stroke-width="1.4" stroke-linecap="round"/>
-            </g>
-            <g transform="rotate(216)">
-              <path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad)"/>
-              <path d="M0 -8 C 4 -22, 2 -34, 0 -44" fill="none" stroke="#e85f1c" stroke-opacity="0.28" stroke-width="1.4" stroke-linecap="round"/>
-            </g>
-            <g transform="rotate(288)">
-              <path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad)"/>
-              <path d="M0 -8 C 4 -22, 2 -34, 0 -44" fill="none" stroke="#e85f1c" stroke-opacity="0.28" stroke-width="1.4" stroke-linecap="round"/>
-            </g>
-          </g>
-          <!-- cœur / gorge orangée -->
-          <circle cx="0" cy="0" r="9" fill="url(#throatGrad)"/>
-          <circle cx="0" cy="0" r="4.4" fill="#e85f1c" opacity="0.55"/>
-          <!-- LE PISTIL caractéristique de l'hibiscus : long, dépasse, légèrement courbé -->
-          <path d="M0 0 C 10 12, 20 22, 30 30" fill="none" stroke="#f8742f" stroke-width="3.1" stroke-linecap="round"/>
-          <!-- petites étamines (points) le long du pistil -->
-          <circle cx="13" cy="13" r="2.0" fill="#f8b06a"/>
-          <circle cx="19" cy="19" r="2.0" fill="#f8b06a"/>
-          <circle cx="25" cy="25" r="2.0" fill="#f8b06a"/>
-          <!-- stigmate : 5 petits points au bout du pistil -->
-          <g fill="#fb6ba6">
-            <circle cx="33" cy="29" r="2.6"/>
-            <circle cx="34.5" cy="33" r="2.6"/>
-            <circle cx="31" cy="33.5" r="2.4"/>
-            <circle cx="36" cy="30" r="2.2"/>
-            <circle cx="30.5" cy="30" r="2.2"/>
-          </g>
-        </g>
-      </symbol>
-
-      <!-- ===== HIBISCUS variante plus ROSE (pour varier le bouquet) ===== -->
-      <symbol id="hibiscus-rose" viewBox="0 0 100 100">
-        <g transform="translate(50 52)">
-          <g>
-            <g transform="rotate(0)"><path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad2)"/></g>
-            <g transform="rotate(72)"><path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad2)"/></g>
-            <g transform="rotate(144)"><path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad2)"/></g>
-            <g transform="rotate(216)"><path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad2)"/></g>
-            <g transform="rotate(288)"><path d="M0 -6 C 16 -10, 30 -26, 24 -40 C 18 -52, -18 -52, -24 -40 C -30 -26, -16 -10, 0 -6 Z" fill="url(#petalGrad2)"/></g>
-          </g>
-          <circle cx="0" cy="0" r="9" fill="url(#throatGrad)"/>
-          <circle cx="0" cy="0" r="4.4" fill="#e85f1c" opacity="0.55"/>
-          <path d="M0 0 C 10 12, 20 22, 30 30" fill="none" stroke="#f8742f" stroke-width="3.1" stroke-linecap="round"/>
-          <circle cx="13" cy="13" r="2.0" fill="#ffd9b0"/>
-          <circle cx="19" cy="19" r="2.0" fill="#ffd9b0"/>
-          <circle cx="25" cy="25" r="2.0" fill="#ffd9b0"/>
-          <g fill="#f8742f">
-            <circle cx="33" cy="29" r="2.6"/>
-            <circle cx="34.5" cy="33" r="2.6"/>
-            <circle cx="31" cy="33.5" r="2.4"/>
-            <circle cx="36" cy="30" r="2.2"/>
-            <circle cx="30.5" cy="30" r="2.2"/>
-          </g>
-        </g>
-      </symbol>
-
-      <!-- ===== SOLEIL RAYONNANT : disque dégradé + 16 rayons longs/courts alternés (élégant) ===== -->
-      <symbol id="sunburst" viewBox="0 0 48 48">
-        <circle cx="24" cy="24" r="7.4" fill="url(#solGrad)"/>
-        <circle cx="24" cy="24" r="10" fill="none" stroke="url(#solGrad)" stroke-width="1.1" stroke-opacity="0.45"/>
-        <g stroke="url(#solGrad)" stroke-linecap="round">
-          <!-- 8 rayons LONGS (cardinaux + diagonaux), fins et étirés -->
-          <g stroke-width="2">
-            <line x1="24" y1="1.8" x2="24" y2="9.4"/>
-            <line x1="24" y1="38.6" x2="24" y2="46.2"/>
-            <line x1="1.8" y1="24" x2="9.4" y2="24"/>
-            <line x1="38.6" y1="24" x2="46.2" y2="24"/>
-            <line x1="8.3" y1="8.3" x2="13.7" y2="13.7"/>
-            <line x1="34.3" y1="34.3" x2="39.7" y2="39.7"/>
-            <line x1="8.3" y1="39.7" x2="13.7" y2="34.3"/>
-            <line x1="34.3" y1="13.7" x2="39.7" y2="8.3"/>
-          </g>
-          <!-- 8 rayons COURTS (intercalés à 22.5°), plus fins -->
-          <g stroke-width="1.6">
-            <line x1="33.05" y1="3.45" x2="30.3" y2="9.6"/>
-            <line x1="44.55" y1="14.95" x2="38.4" y2="17.7"/>
-            <line x1="44.55" y1="33.05" x2="38.4" y2="30.3"/>
-            <line x1="33.05" y1="44.55" x2="30.3" y2="38.4"/>
-            <line x1="14.95" y1="44.55" x2="17.7" y2="38.4"/>
-            <line x1="3.45" y1="33.05" x2="9.6" y2="30.3"/>
-            <line x1="3.45" y1="14.95" x2="9.6" y2="17.7"/>
-            <line x1="14.95" y1="3.45" x2="17.7" y2="9.6"/>
-          </g>
-        </g>
-      </symbol>
-    </defs>
-  </svg>
 
   <!-- ===================== Repli logo si /logo.svg indisponible ===================== -->
   <script>

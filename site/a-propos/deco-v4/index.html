@@ -287,9 +287,9 @@
   /* petit accent : un vrai petit soleil dégradé (remplace l'ancien point) */
   .sun {
     display: inline-block;
-    width: 1.18em;
-    height: 1.18em;
-    vertical-align: -0.16em;
+    width: 1.08em;
+    height: 1.08em;
+    vertical-align: -0.12em;
     margin-right: 0.5em;
     filter: drop-shadow(0 2px 6px rgba(248, 116, 47, 0.16));
   }
@@ -482,68 +482,8 @@
     margin: 0;
   }
 
-  /* ============================================================
-     ★ ZONE PRÉSENTATION DÉCORÉE — « Branche d'hibiscus botanique »
-     Tout est ENVELOPPÉ dans .presentation-deco (position:relative) pour
-     ancrer proprement les décorations en position absolue.
-     ============================================================ */
-  .presentation-deco { position: relative; }
-
-  /* couche décorative pleine largeur, derrière le contenu, jamais cliquable */
-  .deco-layer {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: visible;
-  }
-  .presentation-deco > .presentation-intro,
-  .presentation-deco > .signature { position: relative; z-index: 1; }
-
-  /* éléments décoratifs SVG génériques */
-  .deco { position: absolute; pointer-events: none; }
-  .deco svg { display: block; width: 100%; height: 100%; overflow: visible; }
-
-  /* --- petits soleils-accents (flottement doux) --- */
-  .deco-sun { will-change: transform; }
-  .deco-sun--a { top: -1.4rem; right: 7%; width: 74px; height: 74px; opacity: 0.92; animation: floatSun 11s ease-in-out infinite; }
-  .deco-sun--b { top: 38%; left: 2%; width: 52px; height: 52px; opacity: 0.8; animation: floatSun 9s ease-in-out infinite 0.6s; }
-  .deco-sun--c { bottom: 4%; right: 4%; width: 60px; height: 60px; opacity: 0.85; animation: floatSun 13s ease-in-out infinite 1.2s; }
-  .deco-sun--d { top: 6%; left: 9%; width: 40px; height: 40px; opacity: 0.7; animation: floatSun 10s ease-in-out infinite 0.3s; }
-
-  @keyframes floatSun {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50%      { transform: translateY(-10px) rotate(8deg); }
-  }
-
-  /* --- la grande branche d'hibiscus, le long du bord GAUCHE de la zone --- */
-  .hibiscus-branch {
-    top: -2.5rem;
-    left: -3.4rem;
-    width: 240px;
-    height: 560px;
-    opacity: 0.96;
-    transform-origin: top center;
-    animation: swayBranch 14s ease-in-out infinite;
-  }
-  @keyframes swayBranch {
-    0%, 100% { transform: rotate(0deg); }
-    50%      { transform: rotate(1.6deg); }
-  }
-
-  /* --- fleurs d'hibiscus disséminées (accents) --- */
-  .deco-flower { will-change: transform; }
-  .deco-flower--top { top: -2.2rem; left: 44%; width: 86px; height: 86px; opacity: 0.97; animation: floatFlower 12s ease-in-out infinite; }
-  .deco-flower--name { bottom: -1.2rem; right: 8%; width: 70px; height: 70px; opacity: 0.95; animation: floatFlower 10s ease-in-out infinite 0.8s; }
-  .deco-flower--side { top: 30%; right: -1.4rem; width: 58px; height: 58px; opacity: 0.9; animation: floatFlower 13s ease-in-out infinite 0.4s; }
-
-  @keyframes floatFlower {
-    0%, 100% { transform: translateY(0) rotate(-3deg); }
-    50%      { transform: translateY(-9px) rotate(3deg); }
-  }
-
   /* ---- INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ---- */
-  .presentation-intro { text-align: center; margin: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 3.2rem); }
+  .presentation-intro { text-align: center; margin: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 3.2rem); position: relative; }
   .presentation-title {
     font-family: "Fraunces", Georgia, serif;
     font-weight: 400;
@@ -554,6 +494,8 @@
     margin: 0;
     white-space: nowrap;
     font-variation-settings: "opsz" 120;
+    position: relative;
+    z-index: 1;
   }
 
   /* ---- BLOC FINAL : deux colonnes (photo / Gwennaëlle) ---- */
@@ -562,6 +504,7 @@
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
     align-items: center;
     gap: clamp(2rem, 5vw, 4.5rem);
+    position: relative;
   }
   /* cadre photo — STYLE V2 (coins très arrondis, presque arche en haut) */
   .photo-frame {
@@ -600,21 +543,8 @@
     text-transform: uppercase;
   }
 
-  /* petite fleur posée délicatement sur le BORD HAUT du cadre photo (chevauchement permis) */
-  .photo-frame__bloom {
-    position: absolute;
-    top: -1.5rem;
-    left: -1.4rem;
-    width: 78px;
-    height: 78px;
-    z-index: 3;
-    pointer-events: none;
-    filter: drop-shadow(0 6px 14px rgba(248, 116, 47, 0.22));
-    animation: floatFlower 11s ease-in-out infinite 0.5s;
-  }
-
   /* « Gwennaëlle » centré verticalement par rapport à la photo (align-items:center sur la grille) */
-  .signature__text { position: relative; text-align: center; }
+  .signature__text { text-align: center; position: relative; }
   .signature__name {
     font-family: "Fraunces", Georgia, serif;
     font-style: italic;
@@ -625,6 +555,8 @@
     color: var(--orange);
     margin: 0 0 clamp(0.9rem, 2.2vh, 1.4rem);
     font-variation-settings: "opsz" 144;
+    position: relative;
+    z-index: 1;
   }
   .signature__desc {
     font-family: "Space Grotesk", sans-serif;
@@ -650,6 +582,71 @@
     color: rgba(58, 42, 46, 0.5);
     margin: 0 auto;
     max-width: 46ch;
+  }
+
+  /* ============================================================
+     ✿ DÉCORATIONS « BRANCHE FLEURIE » — soleils doodle + fleurs rétro/groovy
+        (purement visuelles : pointer-events:none, aria-hidden — n'altèrent rien)
+     ============================================================ */
+  .deco {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;            /* derrière le texte (texte en z-index:1) */
+    will-change: transform;
+  }
+  .deco svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+  /* flottement TRÈS doux et délicat */
+  @keyframes decoFloat {
+    0%   { transform: translateY(0) rotate(var(--rot, 0deg)); }
+    50%  { transform: translateY(-9px) rotate(calc(var(--rot, 0deg) + 2deg)); }
+    100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  }
+  .deco--float { animation: decoFloat 7s ease-in-out infinite; }
+
+  /* ----- La grande BRANCHE FLEURIE qui descend à GAUCHE de la zone présentation ----- */
+  .branche {
+    top: clamp(-2.4rem, -2vw, -1.4rem);
+    left: clamp(-3.6rem, -3vw, -1.6rem);
+    width: clamp(150px, 17vw, 250px);
+    height: clamp(440px, 52vw, 620px);
+    z-index: 0;
+  }
+  .branche .tige-sway { transform-box: fill-box; transform-origin: 50% 0%; animation: brancheSway 9s ease-in-out infinite; }
+  @keyframes brancheSway {
+    0%, 100% { transform: rotate(0deg); }
+    50%      { transform: rotate(1.6deg); }
+  }
+
+  /* ----- petits accents : soleils doodle + fleurs isolées ----- */
+  .deco-sun-pres {
+    top: clamp(-1.8rem, -1vw, -0.6rem);
+    right: clamp(-0.4rem, 2vw, 2.6rem);
+    width: clamp(58px, 7vw, 92px);
+    height: clamp(58px, 7vw, 92px);
+    --rot: -6deg;
+  }
+  .deco-fleur-photo {
+    bottom: clamp(-1.6rem, -1vw, -0.6rem);
+    right: clamp(-1.8rem, -1.4vw, -0.8rem);
+    width: clamp(62px, 7.5vw, 104px);
+    height: clamp(62px, 7.5vw, 104px);
+    --rot: 8deg;
+    z-index: 2;             /* joli léger chevauchement sur le bord du cadre */
+  }
+  .deco-sun-name {
+    top: clamp(-2.2rem, -2vw, -1.2rem);
+    right: clamp(0.2rem, 4vw, 3.2rem);
+    width: clamp(46px, 5.5vw, 74px);
+    height: clamp(46px, 5.5vw, 74px);
+    --rot: 9deg;
+  }
+  .deco-fleur-name {
+    bottom: clamp(-2rem, -1.6vw, -1rem);
+    left: clamp(0.4rem, 5vw, 3.6rem);
+    width: clamp(40px, 5vw, 64px);
+    height: clamp(40px, 5vw, 64px);
+    --rot: -10deg;
   }
 
   /* ============ APPARITION AU DÉFILEMENT (avec repli : tout visible si pas de JS) ============ */
@@ -689,18 +686,6 @@
     .block--quoi, .block--pourquoi { margin-left: 0; margin-right: 0; }
     .presentation-title { white-space: normal; font-size: clamp(1.45rem, 6vw, 2.2rem); }
 
-    /* ★ DÉCORATIONS sur mobile : on masque celles qui déborderaient,
-       on garde seulement quelques touches discrètes et bien placées */
-    .hibiscus-branch,
-    .deco-sun--b,
-    .deco-sun--d,
-    .deco-flower--side,
-    .photo-frame__bloom { display: none; }
-    .deco-flower--top { width: 60px; height: 60px; left: 50%; transform: translateX(-50%); top: -1.6rem; }
-    .deco-flower--name { width: 54px; height: 54px; right: 4%; }
-    .deco-sun--a { width: 54px; height: 54px; right: 5%; }
-    .deco-sun--c { width: 46px; height: 46px; }
-
     /* sur mobile, le rail est replié horizontalement en bas pour rester visible */
     .social-rail {
       flex-direction: row;
@@ -719,10 +704,19 @@
 
     /* la page laisse de la place au rail replié en bas */
     .page { padding-bottom: clamp(4.5rem, 12vw, 6rem); }
+
+    /* ✿ DÉCO sur mobile : on allège pour rester propre, sans déborder */
+    .branche { width: clamp(96px, 26vw, 130px); height: clamp(300px, 80vw, 380px); left: -1.6rem; top: -1rem; opacity: 0.94; }
+    .deco-sun-pres  { width: 46px; height: 46px; right: -0.2rem; }
+    .deco-fleur-photo { width: 52px; height: 52px; right: -0.6rem; }
+    .deco-sun-name  { display: none; }   /* on masque les accents qui déborderaient */
+    .deco-fleur-name { width: 40px; height: 40px; left: 0.4rem; }
   }
 
   @media (max-width: 480px) {
     .photo-frame { border-radius: 110px 110px 26px 26px; }
+    .branche { display: none; }          /* trop étroit : on retire la grande branche */
+    .deco-fleur-name { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -736,8 +730,8 @@
     .living__css { opacity: 0.94 !important; animation: none !important; }
     /* repli : tout reste visible */
     .reveal { opacity: 1 !important; transform: none !important; }
-    /* décorations : on fige tout mouvement, on les garde posées */
-    .deco-sun, .deco-flower, .hibiscus-branch, .photo-frame__bloom { animation: none !important; }
+    /* déco : on fige tout mouvement */
+    .deco, .deco--float, .branche .tige-sway { animation: none !important; }
   }
 </style>
 </head>
@@ -750,35 +744,51 @@
     <div class="living__grain"></div>
   </div>
 
-  <!-- ===================== DÉFINITIONS SVG PARTAGÉES (dégradés des décorations) ===================== -->
+  <!-- ===================== DÉFINITIONS SVG RÉUTILISABLES (déco) — soleil doodle + fleur rétro/groovy + feuille ===================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
-      <linearGradient id="soleiaGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#fb6ba6"/>
-        <stop offset="1" stop-color="#f8742f"/>
-      </linearGradient>
-      <radialGradient id="petalGrad" cx="50%" cy="78%" r="80%">
-        <stop offset="0" stop-color="#f8742f"/>
-        <stop offset="42%" stop-color="#fb6ba6"/>
-        <stop offset="100%" stop-color="#fb6ba6"/>
-      </radialGradient>
-      <radialGradient id="petalGradSoft" cx="50%" cy="80%" r="82%">
-        <stop offset="0" stop-color="#fb6ba6"/>
-        <stop offset="58%" stop-color="#f8e6e6"/>
-        <stop offset="100%" stop-color="#f8e6e6"/>
-      </radialGradient>
-      <radialGradient id="heartGrad" cx="50%" cy="50%" r="60%">
-        <stop offset="0" stop-color="#f8742f"/>
-        <stop offset="100%" stop-color="#fb6ba6"/>
-      </radialGradient>
-      <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#e6b58f"/>
-        <stop offset="100%" stop-color="#cf9a7a"/>
-      </linearGradient>
-      <linearGradient id="stemGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#d79a72"/>
-        <stop offset="100%" stop-color="#c98a64"/>
-      </linearGradient>
+      <!-- ✿ SOLEIL doodle : disque plein + rayons ONDULÉS de longueurs variées, bouts arrondis -->
+      <g id="soleiaSoleil">
+        <!-- rayons ondulés (organiques, légèrement courbés), longueurs variées -->
+        <g fill="none" stroke="#f8742f" stroke-width="6.2" stroke-linecap="round">
+          <path d="M50 18 q3 -8 -1 -16"/>
+          <path d="M64 22 q6 -5 11 -10"/>
+          <path d="M76 33 q8 -2 16 -4"/>
+          <path d="M83 50 q9 1 16 -1"/>
+          <path d="M79 66 q8 5 13 11"/>
+          <path d="M66 78 q5 7 7 15"/>
+          <path d="M50 83 q-2 8 1 16"/>
+          <path d="M34 78 q-5 7 -9 13"/>
+          <path d="M21 66 q-8 4 -15 7"/>
+          <path d="M17 50 q-9 -1 -16 1"/>
+          <path d="M21 34 q-8 -5 -13 -11"/>
+          <path d="M34 22 q-5 -7 -8 -13"/>
+          <path d="M58 19 q3 -6 1 -12"/>
+          <path d="M42 19 q-2 -6 -5 -11"/>
+        </g>
+        <!-- disque plein, un poil plus doré -->
+        <circle cx="50" cy="50" r="22" fill="#f9913f"/>
+      </g>
+
+      <!-- ✿ FLEUR rétro/groovy : 5 pétales larges ondulés (aplat) + cœur doré arrondi.
+           Couleur surchargeable via fill sur le parent <g>/<svg>. -->
+      <g id="soleiaFleur">
+        <g class="fleur-petals">
+          <path d="M50 50 C 42 30, 41 14, 50 8 C 59 14, 58 30, 50 50 Z"/>
+          <path d="M50 50 C 66 41, 82 36, 89 44 C 85 54, 69 56, 50 50 Z"/>
+          <path d="M50 50 C 64 63, 72 77, 65 86 C 54 86, 50 70, 50 50 Z"/>
+          <path d="M50 50 C 36 63, 28 77, 35 86 C 46 86, 50 70, 50 50 Z"/>
+          <path d="M50 50 C 34 41, 18 36, 11 44 C 15 54, 31 56, 50 50 Z"/>
+        </g>
+        <!-- cœur : petit carré à coins ronds, jaune doré chaud -->
+        <rect x="42" y="42" width="16" height="16" rx="6.5" fill="#f4b63e"/>
+      </g>
+
+      <!-- ✿ FEUILLE simple (vert TRÈS doux / olive discret) -->
+      <g id="soleiaFeuille">
+        <path d="M2 18 C 14 2, 30 0, 38 4 C 30 16, 14 20, 2 18 Z" fill="#aab07c"/>
+        <path d="M5 17 C 16 9, 27 6, 35 5" fill="none" stroke="#8d9560" stroke-width="1.6" stroke-linecap="round" opacity="0.65"/>
+      </g>
     </defs>
   </svg>
 
@@ -872,7 +882,7 @@
     <!-- ===== BLOC 2 : « Soleia, c'est quoi ? » — texte aligné à GAUCHE (halo doux) ===== -->
     <section class="block block--quoi reveal" aria-labelledby="quoi-title">
       <div class="halo halo--left">
-        <h2 class="section__title" id="quoi-title"><svg class="sun" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="9.4" fill="none" stroke="url(#soleiaGrad)" stroke-width="2.1"/><circle cx="24" cy="24" r="3.4" fill="url(#soleiaGrad)"/><g stroke="url(#soleiaGrad)" stroke-width="2.1" stroke-linecap="round"><line x1="24" y1="2.6" x2="24" y2="9.6"/><line x1="24" y1="38.4" x2="24" y2="45.4"/><line x1="2.6" y1="24" x2="9.6" y2="24"/><line x1="38.4" y1="24" x2="45.4" y2="24"/><line x1="8.85" y1="8.85" x2="13.8" y2="13.8"/><line x1="34.2" y1="34.2" x2="39.15" y2="39.15"/><line x1="8.85" y1="39.15" x2="13.8" y2="34.2"/><line x1="34.2" y1="13.8" x2="39.15" y2="8.85"/></g><g stroke="url(#soleiaGrad)" stroke-width="1.7" stroke-linecap="round"><line x1="24" y1="12.2" x2="24" y2="15.4"/><line x1="24" y1="32.6" x2="24" y2="35.8"/><line x1="12.2" y1="24" x2="15.4" y2="24"/><line x1="32.6" y1="24" x2="35.8" y2="24"/><line x1="15.85" y1="15.85" x2="18.1" y2="18.1"/><line x1="29.9" y1="29.9" x2="32.15" y2="32.15"/><line x1="15.85" y1="32.15" x2="18.1" y2="29.9"/><line x1="29.9" y1="18.1" x2="32.15" y2="15.85"/></g></svg>En quelques mots</h2>
+        <h2 class="section__title" id="quoi-title"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sunGradQuoi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb6ba6"/><stop offset="1" stop-color="#f8742f"/></linearGradient></defs><circle cx="12" cy="12" r="6.2" fill="none" stroke="url(#sunGradQuoi)" stroke-width="1.6"/><g stroke="url(#sunGradQuoi)" stroke-width="1.6" stroke-linecap="round"><line x1="20.2" y1="12" x2="22.8" y2="12"/><line x1="19.1" y1="16.1" x2="21.35" y2="17.4"/><line x1="16.1" y1="19.1" x2="17.4" y2="21.35"/><line x1="12" y1="20.2" x2="12" y2="22.8"/><line x1="7.9" y1="19.1" x2="6.6" y2="21.35"/><line x1="4.9" y1="16.1" x2="2.65" y2="17.4"/><line x1="3.8" y1="12" x2="1.2" y2="12"/><line x1="4.9" y1="7.9" x2="2.65" y2="6.6"/><line x1="7.9" y1="4.9" x2="6.6" y2="2.65"/><line x1="12" y1="3.8" x2="12" y2="1.2"/><line x1="16.1" y1="4.9" x2="17.4" y2="2.65"/><line x1="19.1" y1="7.9" x2="21.35" y2="6.6"/></g></svg>En quelques mots</h2>
         <p class="placeholder">
           Voici l’emplacement réservé à la présentation de Soleia. Quelques lignes douces
           pour raconter l’esprit de la marque, les ateliers et cette envie de créer ensemble.
@@ -885,7 +895,7 @@
     <!-- ===== BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE (halo doux) ===== -->
     <section class="block block--pourquoi reveal" aria-labelledby="pourquoi-title">
       <div class="halo halo--right">
-        <h2 class="section__title" id="pourquoi-title">Pourquoi Soleia&#8239;?<svg class="sun" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="9.4" fill="none" stroke="url(#soleiaGrad)" stroke-width="2.1"/><circle cx="24" cy="24" r="3.4" fill="url(#soleiaGrad)"/><g stroke="url(#soleiaGrad)" stroke-width="2.1" stroke-linecap="round"><line x1="24" y1="2.6" x2="24" y2="9.6"/><line x1="24" y1="38.4" x2="24" y2="45.4"/><line x1="2.6" y1="24" x2="9.6" y2="24"/><line x1="38.4" y1="24" x2="45.4" y2="24"/><line x1="8.85" y1="8.85" x2="13.8" y2="13.8"/><line x1="34.2" y1="34.2" x2="39.15" y2="39.15"/><line x1="8.85" y1="39.15" x2="13.8" y2="34.2"/><line x1="34.2" y1="13.8" x2="39.15" y2="8.85"/></g><g stroke="url(#soleiaGrad)" stroke-width="1.7" stroke-linecap="round"><line x1="24" y1="12.2" x2="24" y2="15.4"/><line x1="24" y1="32.6" x2="24" y2="35.8"/><line x1="12.2" y1="24" x2="15.4" y2="24"/><line x1="32.6" y1="24" x2="35.8" y2="24"/><line x1="15.85" y1="15.85" x2="18.1" y2="18.1"/><line x1="29.9" y1="29.9" x2="32.15" y2="32.15"/><line x1="15.85" y1="32.15" x2="18.1" y2="29.9"/><line x1="29.9" y1="18.1" x2="32.15" y2="15.85"/></g></svg></h2>
+        <h2 class="section__title" id="pourquoi-title">Pourquoi Soleia&#8239;?<svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="sunGradPourquoi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb6ba6"/><stop offset="1" stop-color="#f8742f"/></linearGradient></defs><circle cx="12" cy="12" r="6.2" fill="none" stroke="url(#sunGradPourquoi)" stroke-width="1.6"/><g stroke="url(#sunGradPourquoi)" stroke-width="1.6" stroke-linecap="round"><line x1="20.2" y1="12" x2="22.8" y2="12"/><line x1="19.1" y1="16.1" x2="21.35" y2="17.4"/><line x1="16.1" y1="19.1" x2="17.4" y2="21.35"/><line x1="12" y1="20.2" x2="12" y2="22.8"/><line x1="7.9" y1="19.1" x2="6.6" y2="21.35"/><line x1="4.9" y1="16.1" x2="2.65" y2="17.4"/><line x1="3.8" y1="12" x2="1.2" y2="12"/><line x1="4.9" y1="7.9" x2="2.65" y2="6.6"/><line x1="7.9" y1="4.9" x2="6.6" y2="2.65"/><line x1="12" y1="3.8" x2="12" y2="1.2"/><line x1="16.1" y1="4.9" x2="17.4" y2="2.65"/><line x1="19.1" y1="7.9" x2="21.35" y2="6.6"/></g></svg></h2>
         <p class="placeholder">
           Emplacement réservé pour expliquer le « pourquoi » de Soleia&#8239;: l’envie d’offrir
           une parenthèse créative, un moment rien que pour soi. Ces quelques phrases factices
@@ -939,209 +949,90 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         ★ ZONE PRÉSENTATION FLEURIE — « Branche d'hibiscus botanique »
-         Le contenu (titre, photo, prénom) est INCHANGÉ ; on l'enveloppe
-         juste pour poser autour les fleurs, la branche et les soleils.
-         ============================================================ -->
-    <div class="presentation-deco">
+    <!-- ===== INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ===== -->
+    <section class="presentation-intro reveal">
+      <!-- ✿ petit soleil doodle en accent, en haut à droite du titre -->
+      <span class="deco deco--float deco-sun-pres" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><use href="#soleiaSoleil"/></svg>
+      </span>
+      <h2 class="presentation-title">Qui se cache derrière Soleia Expérience</h2>
+    </section>
 
-      <!-- couche décorative (derrière, non cliquable) -->
-      <div class="deco-layer" aria-hidden="true">
+    <!-- ===== BLOC FINAL : photo (gauche) + Gwennaëlle centrée verticalement (droite) ===== -->
+    <section class="block signature reveal" aria-labelledby="signature-name">
 
-        <!-- ── GRANDE BRANCHE D'HIBISCUS, le long du bord gauche ── -->
-        <div class="deco hibiscus-branch">
-          <svg viewBox="0 0 240 560" aria-hidden="true">
-            <!-- tige principale, gracieuse et courbée -->
-            <path d="M150 4 C108 70 96 150 110 230 C122 300 96 372 120 452 C134 498 150 528 168 556"
-                  fill="none" stroke="url(#stemGrad)" stroke-width="4.2" stroke-linecap="round"/>
-            <!-- petites tiges secondaires vers les fleurs -->
-            <path d="M104 196 C84 198 66 188 50 176" fill="none" stroke="url(#stemGrad)" stroke-width="3.4" stroke-linecap="round"/>
-            <path d="M114 350 C96 360 78 360 60 354" fill="none" stroke="url(#stemGrad)" stroke-width="3.4" stroke-linecap="round"/>
+      <!-- ✿ GRANDE BRANCHE FLEURIE : tige douce + 3 fleurs rétro + feuilles, descend à gauche du cadre photo -->
+      <span class="deco branche" aria-hidden="true">
+        <svg viewBox="0 0 250 620" preserveAspectRatio="xMidYMin meet">
+          <g class="tige-sway">
+            <!-- tige principale, courbe douce qui descend le long du côté -->
+            <path d="M156 4 C 150 60, 96 96, 110 162 C 122 220, 78 270, 98 338 C 116 400, 80 452, 104 520 C 120 566, 138 588, 150 614"
+                  fill="none" stroke="#cf8f5a" stroke-width="5" stroke-linecap="round" opacity="0.72"/>
+            <!-- petites brindilles vers les fleurs -->
+            <path d="M101 120 C 86 108, 74 104, 60 104" fill="none" stroke="#cf8f5a" stroke-width="3.4" stroke-linecap="round" opacity="0.66"/>
+            <path d="M96 314 C 116 304, 132 302, 150 304" fill="none" stroke="#cf8f5a" stroke-width="3.4" stroke-linecap="round" opacity="0.66"/>
+            <path d="M104 496 C 88 488, 76 484, 60 484" fill="none" stroke="#cf8f5a" stroke-width="3.4" stroke-linecap="round" opacity="0.66"/>
 
-            <!-- feuilles simples (vert TRÈS doux / olive discret) -->
-            <g>
-              <path d="M110 116 C84 104 64 116 56 142 C84 150 104 140 110 116 Z" fill="#cdd6ad" opacity="0.9"/>
-              <path d="M110 116 C84 104 64 116 56 142" fill="none" stroke="#b7c293" stroke-width="1.4"/>
-              <path d="M101 274 C128 268 148 282 154 308 C126 314 107 300 101 274 Z" fill="#cdd6ad" opacity="0.85"/>
-              <path d="M101 274 C128 268 148 282 154 308" fill="none" stroke="#b7c293" stroke-width="1.4"/>
-              <path d="M118 424 C92 416 72 430 66 456 C94 462 113 448 118 424 Z" fill="#cdd6ad" opacity="0.85"/>
-              <path d="M118 424 C92 416 72 430 66 456" fill="none" stroke="#b7c293" stroke-width="1.4"/>
-            </g>
+            <!-- feuilles douces le long de la tige -->
+            <g transform="translate(150 48) rotate(40) scale(1.45)"><use href="#soleiaFeuille"/></g>
+            <g transform="translate(112 192) rotate(-22) scale(1.3)"><use href="#soleiaFeuille"/></g>
+            <g transform="translate(90 244) rotate(158) scale(1.25)"><use href="#soleiaFeuille"/></g>
+            <g transform="translate(112 408) rotate(-16) scale(1.35)"><use href="#soleiaFeuille"/></g>
+            <g transform="translate(108 556) rotate(150) scale(1.25)"><use href="#soleiaFeuille"/></g>
 
-            <!-- FLEUR D'HIBISCUS n°1 (haut) — pleine grandeur sur la branche -->
-            <g transform="translate(50 176) scale(0.92)">
-              <use href="#hibiscusFlower"/>
-            </g>
-            <!-- FLEUR D'HIBISCUS n°2 (milieu) -->
-            <g transform="translate(56 350) scale(0.78) rotate(18)">
-              <use href="#hibiscusFlower"/>
-            </g>
-            <!-- bouton d'hibiscus (fleur fermée) en bas -->
-            <g transform="translate(150 530)">
-              <path d="M0 0 C-9 -6 -9 -22 0 -30 C9 -22 9 -6 0 0 Z" fill="url(#petalGrad)" opacity="0.92"/>
-              <path d="M0 0 C-6 -4 -6 -14 0 -18" fill="none" stroke="#f8e6e6" stroke-width="1.2" opacity="0.7"/>
-            </g>
-          </svg>
+            <!-- FLEUR 1 (haut) — rose marque -->
+            <g transform="translate(26 104) rotate(-12) scale(0.84)" fill="#fb6ba6"><use href="#soleiaFleur"/></g>
+            <!-- FLEUR 2 (milieu) — orange marque, posée vers le bord du cadre -->
+            <g transform="translate(126 306) rotate(14) scale(1)" fill="#f8742f"><use href="#soleiaFleur"/></g>
+            <!-- FLEUR 3 (bas) — rose un peu plus doux -->
+            <g transform="translate(22 482) rotate(-8) scale(0.88)" fill="#fb8db8"><use href="#soleiaFleur"/></g>
+
+            <!-- petit soleil doodle blotti dans la branche -->
+            <g transform="translate(150 372) scale(0.4)"><use href="#soleiaSoleil"/></g>
+          </g>
+        </svg>
+      </span>
+
+      <!-- ✿ petite fleur rétro posée sur le bord bas du cadre photo (joli léger chevauchement) -->
+      <span class="deco deco--float deco-fleur-photo" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="#fb6ba6"><use href="#soleiaFleur"/></svg>
+      </span>
+
+      <div class="photo-frame" role="img" aria-label="Emplacement pour une photo de Gwennaëlle">
+        <div class="photo-frame__inner">
+          <span class="photo-frame__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
+              <circle cx="8.6" cy="9.6" r="1.7"/>
+              <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="photo-frame__label">Photo</span>
         </div>
-
-        <!-- ── PETITS SOLEILS-ACCENTS rayonnants ── -->
-        <div class="deco deco-sun deco-sun--a"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#radiantSun"/></svg></div>
-        <div class="deco deco-sun deco-sun--b"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#radiantSun"/></svg></div>
-        <div class="deco deco-sun deco-sun--c"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#radiantSun"/></svg></div>
-        <div class="deco deco-sun deco-sun--d"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#radiantSun"/></svg></div>
-
-        <!-- ── FLEURS D'HIBISCUS dispersées (accents délicats) ── -->
-        <div class="deco deco-flower deco-flower--top"><svg viewBox="0 0 120 120" aria-hidden="true"><g transform="translate(60 60)"><use href="#hibiscusFlower"/></g></svg></div>
-        <div class="deco deco-flower deco-flower--side"><svg viewBox="0 0 120 120" aria-hidden="true"><g transform="translate(60 60) scale(0.95)"><use href="#hibiscusFlowerSoft"/></g></svg></div>
-        <div class="deco deco-flower deco-flower--name"><svg viewBox="0 0 120 120" aria-hidden="true"><g transform="translate(60 60) scale(0.92)"><use href="#hibiscusFlower"/></g></svg></div>
       </div>
 
-      <!-- ===== INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ===== -->
-      <section class="presentation-intro reveal">
-        <h2 class="presentation-title">Qui se cache derrière Soleia Expérience</h2>
-      </section>
-
-      <!-- ===== BLOC FINAL : photo (gauche) + Gwennaëlle centrée verticalement (droite) ===== -->
-      <section class="block signature reveal" aria-labelledby="signature-name">
-        <div class="photo-frame" role="img" aria-label="Emplacement pour une photo de Gwennaëlle">
-          <!-- fleur posée sur le coin haut-gauche du cadre (chevauchement délicat permis) -->
-          <span class="photo-frame__bloom" aria-hidden="true"><svg viewBox="0 0 120 120"><g transform="translate(60 60)"><use href="#hibiscusFlower"/></g></svg></span>
-          <div class="photo-frame__inner">
-            <span class="photo-frame__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
-                <circle cx="8.6" cy="9.6" r="1.7"/>
-                <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span class="photo-frame__label">Photo</span>
-          </div>
-        </div>
-
-        <div class="signature__text">
-          <p class="signature__name" id="signature-name">Gwennaëlle</p>
-          <p class="signature__desc">
-            Une courte présentation viendra ici&#8239;: quelques mots tendres sur celle qui
-            imagine et anime les ateliers Soleia. Ce texte est provisoire et sera complété
-            plus tard.
-          </p>
-        </div>
-      </section>
-
-    </div><!-- /.presentation-deco -->
+      <div class="signature__text">
+        <!-- ✿ accents autour du prénom Gwennaëlle : petit soleil + petite fleur -->
+        <span class="deco deco--float deco-sun-name" aria-hidden="true">
+          <svg viewBox="0 0 100 100"><use href="#soleiaSoleil"/></svg>
+        </span>
+        <span class="deco deco--float deco-fleur-name" aria-hidden="true">
+          <svg viewBox="0 0 100 100" fill="#f8742f"><use href="#soleiaFleur"/></svg>
+        </span>
+        <p class="signature__name" id="signature-name">Gwennaëlle</p>
+        <p class="signature__desc">
+          Une courte présentation viendra ici&#8239;: quelques mots tendres sur celle qui
+          imagine et anime les ateliers Soleia. Ce texte est provisoire et sera complété
+          plus tard.
+        </p>
+      </div>
+    </section>
 
     <!-- ===== PHRASE DE FIN : petite, fine, discrète (emplacement à compléter) ===== -->
     <footer class="pied reveal">
       <p>Une petite phrase de fin viendra se poser ici, tout en douceur.</p>
     </footer>
   </main>
-
-  <!-- ===================== BIBLIOTHÈQUE SVG DES DÉCORATIONS (formes réutilisées via <use>) ===================== -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <defs>
-
-      <!-- ☀ SOLEIL RAYONNANT : 16 rayons alternés (longs/courts), anneau + cœur plein -->
-      <g id="radiantSun">
-        <circle cx="24" cy="24" r="6.6" fill="url(#soleiaGrad)"/>
-        <circle cx="24" cy="24" r="9.6" fill="none" stroke="url(#soleiaGrad)" stroke-width="1.6" opacity="0.85"/>
-        <g stroke="url(#soleiaGrad)" stroke-width="2" stroke-linecap="round">
-          <!-- 8 rayons LONGS (cardinaux + diagonales) -->
-          <line x1="24" y1="2"  x2="24" y2="11"/>
-          <line x1="24" y1="37" x2="24" y2="46"/>
-          <line x1="2"  y1="24" x2="11" y2="24"/>
-          <line x1="37" y1="24" x2="46" y2="24"/>
-          <line x1="8.6"  y1="8.6"  x2="14.95" y2="14.95"/>
-          <line x1="33.05" y1="33.05" x2="39.4" y2="39.4"/>
-          <line x1="8.6"  y1="39.4"  x2="14.95" y2="33.05"/>
-          <line x1="33.05" y1="14.95" x2="39.4" y2="8.6"/>
-        </g>
-        <g stroke="url(#soleiaGrad)" stroke-width="1.6" stroke-linecap="round">
-          <!-- 8 rayons COURTS (intercalés, +22.5°) -->
-          <line x1="32.41" y1="4.25" x2="30.6"  y2="9.05"/>
-          <line x1="15.59" y1="43.75" x2="17.4" y2="38.95"/>
-          <line x1="43.75" y1="32.41" x2="38.95" y2="30.6"/>
-          <line x1="4.25"  y1="15.59" x2="9.05"  y2="17.4"/>
-          <line x1="43.75" y1="15.59" x2="38.95" y2="17.4"/>
-          <line x1="4.25"  y1="32.41" x2="9.05"  y2="30.6"/>
-          <line x1="32.41" y1="43.75" x2="30.6"  y2="38.95"/>
-          <line x1="15.59" y1="4.25"  x2="17.4"  y2="9.05"/>
-        </g>
-      </g>
-
-      <!-- ❀ FLEUR D'HIBISCUS (centrée sur 0,0) : 5 pétales arrondis, cœur,
-           long staminal column légèrement courbé + couronne de stigmates -->
-      <g id="hibiscusFlower">
-        <!-- 5 pétales arrondis, façon hibiscus, base rosée pour la profondeur + fine nervure claire -->
-        <g>
-          <g>
-            <path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGrad)"/>
-            <path d="M-1 3 C-10 0 -16 -8 -18 -16" fill="none" stroke="#fb6ba6" stroke-width="1.4" opacity="0.42" stroke-linecap="round"/>
-            <path d="M-3 -1 C-12 -7 -18 -16 -21 -25" fill="none" stroke="#fff2ea" stroke-width="1.1" opacity="0.6" stroke-linecap="round"/>
-          </g>
-          <g transform="rotate(72)">
-            <path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGrad)"/>
-            <path d="M-1 3 C-10 0 -16 -8 -18 -16" fill="none" stroke="#fb6ba6" stroke-width="1.4" opacity="0.42" stroke-linecap="round"/>
-            <path d="M-3 -1 C-12 -7 -18 -16 -21 -25" fill="none" stroke="#fff2ea" stroke-width="1.1" opacity="0.6" stroke-linecap="round"/>
-          </g>
-          <g transform="rotate(144)">
-            <path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGrad)"/>
-            <path d="M-1 3 C-10 0 -16 -8 -18 -16" fill="none" stroke="#fb6ba6" stroke-width="1.4" opacity="0.42" stroke-linecap="round"/>
-            <path d="M-3 -1 C-12 -7 -18 -16 -21 -25" fill="none" stroke="#fff2ea" stroke-width="1.1" opacity="0.6" stroke-linecap="round"/>
-          </g>
-          <g transform="rotate(216)">
-            <path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGrad)"/>
-            <path d="M-1 3 C-10 0 -16 -8 -18 -16" fill="none" stroke="#fb6ba6" stroke-width="1.4" opacity="0.42" stroke-linecap="round"/>
-            <path d="M-3 -1 C-12 -7 -18 -16 -21 -25" fill="none" stroke="#fff2ea" stroke-width="1.1" opacity="0.6" stroke-linecap="round"/>
-          </g>
-          <g transform="rotate(288)">
-            <path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGrad)"/>
-            <path d="M-1 3 C-10 0 -16 -8 -18 -16" fill="none" stroke="#fb6ba6" stroke-width="1.4" opacity="0.42" stroke-linecap="round"/>
-            <path d="M-3 -1 C-12 -7 -18 -16 -21 -25" fill="none" stroke="#fff2ea" stroke-width="1.1" opacity="0.6" stroke-linecap="round"/>
-          </g>
-        </g>
-        <!-- petit cœur orangé -->
-        <circle cx="0" cy="0" r="7" fill="url(#heartGrad)"/>
-        <circle cx="0" cy="0" r="3" fill="#fff2ea" opacity="0.9"/>
-        <!-- colonne staminale caractéristique : long pistil central qui DÉPASSE, gracieusement courbé -->
-        <path d="M0 0 C1.6 -12 -1.4 -22 1 -33" fill="none" stroke="#f8742f" stroke-width="2.1" stroke-linecap="round"/>
-        <!-- petites anthères (points) le long de la colonne -->
-        <g fill="#f8742f">
-          <circle cx="-2.6" cy="-15" r="1.5"/>
-          <circle cx="2.6" cy="-20" r="1.5"/>
-          <circle cx="-2" cy="-26" r="1.4"/>
-        </g>
-        <!-- couronne de stigmates au bout (cluster rose), centrée sur l'extrémité courbée (~1,-33) -->
-        <g fill="#fb6ba6">
-          <circle cx="1" cy="-35.5" r="2.2"/>
-          <circle cx="-3" cy="-33.5" r="1.7"/>
-          <circle cx="5" cy="-33.5" r="1.7"/>
-          <circle cx="-1.4" cy="-37.5" r="1.5"/>
-          <circle cx="3.4" cy="-37.5" r="1.5"/>
-        </g>
-      </g>
-
-      <!-- ❀ FLEUR D'HIBISCUS variante DOUCE (rose clair) — pour varier les accents -->
-      <g id="hibiscusFlowerSoft">
-        <g>
-          <g><path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGradSoft)"/></g>
-          <g transform="rotate(72)"><path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGradSoft)"/></g>
-          <g transform="rotate(144)"><path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGradSoft)"/></g>
-          <g transform="rotate(216)"><path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGradSoft)"/></g>
-          <g transform="rotate(288)"><path d="M0 4 C-17 2 -27 -10 -26 -26 C-14 -33 1 -29 6 -14 C9 -5 6 1 0 4 Z" fill="url(#petalGradSoft)"/></g>
-        </g>
-        <circle cx="0" cy="0" r="6.5" fill="url(#heartGrad)"/>
-        <circle cx="0" cy="0" r="2.6" fill="#fff2ea" opacity="0.9"/>
-        <line x1="0" y1="0" x2="0" y2="-32" stroke="#f8742f" stroke-width="1.9" stroke-linecap="round"/>
-        <g fill="#fb6ba6">
-          <circle cx="0" cy="-34" r="2"/>
-          <circle cx="-3.6" cy="-32" r="1.5"/>
-          <circle cx="3.6" cy="-32" r="1.5"/>
-        </g>
-      </g>
-
-    </defs>
-  </svg>
 
   <!-- ===================== Repli logo si /logo.svg indisponible ===================== -->
   <script>
