@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>À propos — Soleia Expérience</title>
+<title>Boutique — Soleia Expérience</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -151,7 +151,7 @@
   .nav__col a.nav__link:hover::after,
   .nav__col a.nav__link:focus-visible::after { transform: scaleX(1); }
   .nav__col a.nav__link:hover { color: var(--orange); }
-  /* lien actif « À propos » : souligné dégradé visible en permanence */
+  /* lien actif « Boutique » : souligné dégradé visible en permanence */
   .nav__col a.nav__link.is-active { color: var(--orange); }
   .nav__col a.nav__link.is-active::after { transform: scaleX(1); }
 
@@ -268,8 +268,8 @@
   }
 
   /* ============================================================
-     CONTENU « À PROPOS » — structure V4, cartes/cadre V2,
-     fond CONTINU et coloré (sections transparentes, halos sans bord)
+     CONTENU « BOUTIQUE » — grand titre hero + liste de produits
+     (carré à gauche, description à droite), fond CONTINU et coloré
      ============================================================ */
   .page {
     position: relative;
@@ -279,11 +279,7 @@
     padding: clamp(1.4rem, 4vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
   }
 
-  /* HALO crème — DÉSACTIVÉ (plus aucun halo derrière les textes). Le fond animé reste. */
-  .halo { position: relative; }
-  .halo::before { display: none; }
-
-  /* petit accent : un vrai petit SOLEIL DESSINÉ-MAIN à côté des titres de section */
+  /* petit accent : un vrai petit SOLEIL DESSINÉ-MAIN à côté des titres */
   .sun {
     display: inline-block;
     width: 1.18em;
@@ -294,34 +290,12 @@
   }
   .sun svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
-  /* texte placeholder atténué (emplacement à remplir plus tard) */
-  .placeholder {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 400;
-    font-size: clamp(1.05rem, 1.6vw, 1.28rem);
-    line-height: 1.78;
-    color: var(--ink-soft);
-    margin: 0;
-    max-width: 56ch;
-  }
-
-  /* ---- BLOC 1 : accroche d'entrée, centrée et aérée ---- */
-  .intro {
+  /* ---- GRAND TITRE de la page (façon hero) ---- */
+  .hero {
     text-align: center;
-    padding: clamp(3rem, 9vh, 6.5rem) 0 clamp(2.4rem, 7vh, 5rem);
+    padding: clamp(3rem, 9vh, 6.5rem) 0 clamp(2.2rem, 6vh, 4rem);
   }
-  .intro__line1 {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 360;
-    font-style: italic;
-    font-size: clamp(1.55rem, 3.6vw, 2.7rem);
-    line-height: 1.08;
-    letter-spacing: -0.01em;
-    color: var(--ink);
-    margin: 0 0 clamp(0.5rem, 1.4vh, 1rem);
-    font-variation-settings: "opsz" 90;
-  }
-  .intro__line2 {
+  .hero__title {
     font-family: "Fraunces", Georgia, serif;
     font-weight: 440;
     font-size: clamp(3rem, 8vw, 6.2rem);
@@ -331,15 +305,26 @@
     color: var(--ink);
     font-variation-settings: "opsz" 144;
   }
-  /* « Expérience » subtilement mis en valeur en dégradé rose → orange */
-  .intro__line2 .grad {
+  /* « en plus » subtilement mis en valeur en dégradé rose → orange */
+  .hero__title .grad {
     background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
   }
-  .intro__rule {
+  .hero__subtitle {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 350;
+    font-size: clamp(1.05rem, 2vw, 1.4rem);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: clamp(1rem, 2.6vh, 1.6rem) auto 0;
+    max-width: 44ch;
+    font-variation-settings: "opsz" 90;
+  }
+  .hero__rule {
     display: block;
     width: clamp(56px, 8vw, 96px);
     height: 4px;
@@ -349,184 +334,72 @@
     opacity: 0.9;
   }
 
-  /* titres de section communs */
-  .section__title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 500;
-    font-size: clamp(1.7rem, 3vw, 2.4rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin: 0 0 clamp(1.1rem, 2.6vh, 1.6rem);
-    font-variation-settings: "opsz" 120;
+  /* ---- LISTE DE PRODUITS : rangées (carré à gauche, description à droite) ---- */
+  .shop {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.8rem, 7vh, 5rem);
+    margin-top: clamp(1rem, 3vh, 2rem);
   }
 
-  /* espacement vertical entre blocs : très respirant */
-  .block { margin: clamp(3.2rem, 9vh, 6.5rem) 0; }
-
-  /* ---- BLOC 2 : « Soleia, c'est quoi ? » — texte aligné à GAUCHE (poussé vers le bord) ---- */
-  .block--quoi { text-align: left; margin-left: clamp(-1rem, -7vw, -8.5rem); }
-  .block--quoi .placeholder { margin-right: auto; }
-
-  /* ---- BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE (poussé vers le bord) ---- */
-  .block--pourquoi { text-align: right; margin-right: clamp(-1rem, -6.5vw, -7.5rem); }
-  .block--pourquoi .placeholder { margin-left: auto; }
-  .block--pourquoi .sun { margin-right: 0; margin-left: 0.5em; }
-
-  /* ---- BLOC 4 : temps fort centré — punchline « Ce qu'on apporte » ---- */
-  .apporte {
-    text-align: center;
-    padding: clamp(2.2rem, 6vh, 4rem) clamp(0.5rem, 4vw, 2rem);
-  }
-  .apporte__kicker {
-    font-family: "League Spartan", sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.1rem, 2vw, 1.55rem);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin: 0 0 clamp(1.1rem, 2.6vh, 1.7rem);
-  }
-  .punchline {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 360;
-    font-style: italic;
-    font-size: clamp(1.5rem, 3vw, 2.4rem);
-    line-height: 1.24;
-    letter-spacing: -0.015em;
-    color: var(--ink);
-    margin: 0 auto;
-    max-width: 22ch;
-    font-variation-settings: "opsz" 120;
-  }
-  .punchline .grad {
-    font-style: italic;
-    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* ---- BLOC 5 : « Nos valeurs » — moment fort en typo ---- */
-  .valeurs { text-align: center; }
-  .valeurs__head { margin-bottom: clamp(2.4rem, 5vh, 3.6rem); }
-  .valeurs__title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 500;
-    font-size: clamp(1.7rem, 3vw, 2.4rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin: 0;
-    font-variation-settings: "opsz" 120;
-    /* dégradé rose → orange, comme le mot « BIEN » de l'accueil */
-    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* cartes « valeurs » — STYLE V2 (coins arrondis, rose clair translucide, ombre chaude, badge rond) */
-  .cards {
+  .product {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(1.3rem, 2.6vw, 2.2rem);
-    text-align: left;
-  }
-  .card {
-    position: relative;
-    background: rgba(248, 230, 230, 0.55);   /* rose clair translucide */
-    border: 1px solid rgba(251, 107, 166, 0.16);
-    border-radius: 26px;
-    padding: clamp(1.7rem, 3vw, 2.4rem) clamp(1.5rem, 2.6vw, 2.1rem) clamp(1.8rem, 3vw, 2.4rem);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 18px 44px rgba(248, 116, 47, 0.14), 0 4px 14px rgba(251, 107, 166, 0.10);
-    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s ease;
-  }
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 26px 58px rgba(248, 116, 47, 0.22), 0 8px 20px rgba(251, 107, 166, 0.16);
-  }
-  /* pastille ronde dégradée — petit soleil numéroté */
-  .card__num {
-    display: grid;
-    place-items: center;
-    width: clamp(44px, 5vw, 54px);
-    height: clamp(44px, 5vw, 54px);
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--rose) 0%, var(--orange) 100%);
-    color: var(--creme);
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-    font-size: clamp(1.3rem, 2vw, 1.55rem);
-    line-height: 1;
-    box-shadow: 0 10px 22px rgba(248, 116, 47, 0.34);
-    margin-bottom: clamp(1.1rem, 2.4vw, 1.5rem);
-  }
-  .card__title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 500;
-    font-size: clamp(1.3rem, 2.1vw, 1.6rem);
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    color: var(--ink);
-    margin: 0 0 0.6rem;
-  }
-  .card__text {
-    font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(0.98rem, 1.4vw, 1.08rem);
-    line-height: 1.65;
-    color: var(--ink-soft);
-    margin: 0;
-  }
-
-  /* ---- INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ---- */
-  .presentation-intro { text-align: center; margin: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 3.2rem); position: relative; }
-  .presentation-title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 500;
-    font-size: clamp(1.7rem, 3vw, 2.4rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin: 0;
-    white-space: nowrap;
-    font-variation-settings: "opsz" 120;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ---- BLOC FINAL : deux colonnes (photo / Gwennaëlle) ---- */
-  .signature {
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    grid-template-columns: clamp(320px, 36vw, 420px) 1fr;
     align-items: center;
     gap: clamp(2rem, 5vw, 4.5rem);
-    position: relative;
   }
-  /* cadre photo — STYLE V2 (coins très arrondis, presque arche en haut) */
-  .photo-frame {
+  /* ALTERNANCE zigzag : un produit sur deux a le carré à DROITE et la description à GAUCHE */
+  .product:nth-of-type(even) { grid-template-columns: 1fr clamp(320px, 36vw, 420px); }
+  .product:nth-of-type(even) .product__square { order: 2; }
+  .product:nth-of-type(even) .product__info  { order: 1; text-align: right; }
+  .product:nth-of-type(even) .product__desc  { margin-left: auto; }
+
+  /* ===== LE CARRÉ PRODUIT — direction « Contour marqué » =====
+     fond doux (crème / rose clair translucide) + CONTOUR ÉPAIS et TRÈS VISIBLE
+     en dégradé rose→orange (le contour est la vedette). */
+  .product__square {
     position: relative;
-    aspect-ratio: 4 / 5;
-    border-radius: 140px 140px 30px 30px;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    border-radius: 30px;
+    padding: clamp(12px, 1.4vw, 16px);              /* épaisseur du contour dégradé */
+    background: linear-gradient(135deg, var(--rose) 0%, var(--orange) 100%);
+    box-shadow: 0 24px 58px rgba(248, 116, 47, 0.20), 0 8px 22px rgba(251, 107, 166, 0.16);
+    transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.34s ease;
+  }
+  .product__square:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 32px 70px rgba(248, 116, 47, 0.28), 0 12px 28px rgba(251, 107, 166, 0.20);
+  }
+  /* le « cadre photo » intérieur : fond crème / rose clair translucide, cadre vide */
+  .product__photo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
     background:
-      radial-gradient(120% 90% at 50% 12%, rgba(248, 230, 230, 0.85), rgba(255, 250, 246, 0.6));
-    border: 1.5px solid rgba(251, 107, 166, 0.22);
-    box-shadow: 0 26px 60px rgba(248, 116, 47, 0.18), 0 8px 22px rgba(251, 107, 166, 0.14);
+      radial-gradient(120% 100% at 50% 14%, rgba(248, 230, 230, 0.92), rgba(255, 250, 246, 0.78));
     display: grid;
     place-items: center;
     overflow: hidden;
   }
-  .photo-frame__inner {
+  /* fin liseré clair pour bien détacher la photo du contour coloré */
+  .product__photo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    border: 1.5px solid rgba(255, 250, 246, 0.8);
+    pointer-events: none;
+  }
+  .product__photo-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.7rem;
     color: rgba(58, 42, 46, 0.42);
   }
-  .photo-frame__icon {
+  .product__photo-icon {
     width: clamp(46px, 6vw, 62px);
     height: clamp(46px, 6vw, 62px);
     display: grid;
@@ -534,8 +407,8 @@
     border-radius: 50%;
     background: linear-gradient(135deg, rgba(251, 107, 166, 0.16), rgba(248, 116, 47, 0.16));
   }
-  .photo-frame__icon svg { width: 56%; height: 56%; color: var(--orange); }
-  .photo-frame__label {
+  .product__photo-icon svg { width: 56%; height: 56%; color: var(--orange); }
+  .product__photo-label {
     font-family: "League Spartan", sans-serif;
     font-weight: 700;
     font-size: 0.74rem;
@@ -543,45 +416,79 @@
     text-transform: uppercase;
   }
 
-  /* « Gwennaëlle » centré verticalement par rapport à la photo (align-items:center sur la grille) */
-  .signature__text { text-align: center; position: relative; }
-  .signature__name {
-    font-family: "Fraunces", Georgia, serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: clamp(1.7rem, 3vw, 2.4rem);
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+  /* ===== DESCRIPTION (droite) : nom + 1 ligne atténuée + prix + bouton ===== */
+  .product__info { text-align: left; }
+  .product__kicker {
+    font-family: "League Spartan", sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     color: var(--orange);
-    margin: 0 0 clamp(0.9rem, 2.2vh, 1.4rem);
-    font-variation-settings: "opsz" 144;
-    position: relative;
-    z-index: 1;
+    margin: 0 0 clamp(0.5rem, 1.2vh, 0.8rem);
   }
-  .signature__desc {
+  .product__name {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+    line-height: 1.06;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    margin: 0 0 clamp(0.6rem, 1.4vh, 0.9rem);
+    font-variation-settings: "opsz" 120;
+  }
+  .product__desc {
     font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(1rem, 1.5vw, 1.15rem);
-    line-height: 1.7;
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    line-height: 1.6;
     color: var(--ink-soft);
-    margin: 0 auto;
+    margin: 0 0 clamp(1rem, 2.4vh, 1.5rem);
     max-width: 42ch;
   }
+  .product__price {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1;
+    color: var(--ink);
+    margin: 0 0 clamp(1.1rem, 2.6vh, 1.6rem);
+    font-variation-settings: "opsz" 110;
+  }
+  .product__price .cur { color: var(--orange); }
 
-  /* ---- PHRASE DE FIN : petite, fine, centrée, atténuée (emplacement à compléter) ---- */
+  /* petit bouton « Découvrir » — dégradé rose → orange */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    letter-spacing: 0.01em;
+    color: var(--creme);
+    text-decoration: none;
+    padding: 0.72rem 1.5rem;
+    border-radius: 999px;
+    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+    box-shadow: 0 12px 26px rgba(248, 116, 47, 0.26), 0 4px 12px rgba(251, 107, 166, 0.18);
+    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.26s ease;
+  }
+  .btn svg { width: 16px; height: 16px; transition: transform 0.26s ease; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(248, 116, 47, 0.34), 0 6px 16px rgba(251, 107, 166, 0.22); }
+  .btn:hover svg { transform: translateX(3px); }
+
+  /* ---- PIED DE PAGE sobre ---- */
   .pied {
     text-align: center;
     margin-top: clamp(3.4rem, 9vh, 6rem);
   }
   .pied p {
-    font-family: "Fraunces", Georgia, serif;
-    font-style: italic;
-    font-weight: 330;
-    font-size: clamp(0.92rem, 1.4vw, 1.08rem);
-    line-height: 1.5;
-    letter-spacing: 0.01em;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 400;
+    font-size: clamp(0.84rem, 1.2vw, 0.95rem);
+    letter-spacing: 0.04em;
     color: rgba(58, 42, 46, 0.5);
-    margin: 0 auto;
-    max-width: 46ch;
+    margin: 0;
   }
 
   /* ============ APPARITION AU DÉFILEMENT (avec repli : tout visible si pas de JS) ============ */
@@ -590,9 +497,6 @@
 
   /* ============================================================
      ✿ CALQUE DÉCOR PLEINE PAGE — fleurs rétro + soleils dessinés-main ✿
-     Un SEUL calque absolu couvrant TOUTE la hauteur du document.
-     Le calque ne capte pas la souris (pointer-events:none) pour ne pas
-     bloquer la page ; chaque décor, lui, est attrapable et DÉPLAÇABLE.
      ============================================================ */
   .deco-layer {
     position: absolute;
@@ -600,38 +504,32 @@
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;     /* le calque laisse tout passer */
-    z-index: 3;               /* au-dessus du fond animé, sous la barre du haut (z-index:4) et le rail (z-index:6) */
+    pointer-events: none;
+    z-index: 3;
     overflow: hidden;
   }
-
-  /* chaque décor : positionné en % (proportionnel), attrapable et glissable */
   .deco-item {
     position: absolute;
-    pointer-events: auto;     /* on peut l'attraper… */
-    touch-action: none;       /* …au doigt aussi, sans scroller la page */
+    pointer-events: auto;
+    touch-action: none;
     user-select: none;
     -webkit-user-select: none;
     cursor: grab;
     will-change: transform;
     filter: drop-shadow(0 6px 14px rgba(248, 116, 47, 0.12));
-    /* --dx/--dy : décalage appliqué par le glisser (mémorisé) ; --rot : inclinaison ; --s : échelle */
     transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)) scale(var(--s, 1));
   }
   .deco-item.is-grabbing { cursor: grabbing; z-index: 99; filter: drop-shadow(0 10px 22px rgba(248, 116, 47, 0.22)); }
   .deco-item svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-
-  /* taille de base d'un décor (l'échelle --s module ensuite) */
   .deco-item { width: 74px; height: 74px; }
 
-  /* flottement TRÈS doux ; on l'éteint dès qu'on attrape une fleur (et en reduced-motion) */
   @keyframes decoFloat {
     0%   { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
     50%  { transform: translate(var(--dx,0px), calc(var(--dy,0px) - 8px)) rotate(calc(var(--rot,0deg) + 2.5deg)) scale(var(--s,1)); }
     100% { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
   }
   .deco-item.is-float { animation: decoFloat var(--dur, 8s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
-  .deco-item.is-grabbing, .deco-item.is-moved { animation: none; }  /* figé une fois attrapé / déplacé */
+  .deco-item.is-grabbing, .deco-item.is-moved { animation: none; }
 
   /* ============ FOCUS / A11Y ============ */
   a:focus-visible, button:focus-visible {
@@ -641,10 +539,6 @@
   }
 
   /* ============ RESPONSIVE ============ */
-  @media (max-width: 880px) {
-    .cards { grid-template-columns: 1fr; gap: 1.2rem; max-width: 520px; margin-left: auto; margin-right: auto; }
-    .placeholder { max-width: none; }
-  }
   @media (max-width: 760px) {
     .shell { padding-right: clamp(1.2rem, 5vw, 4.5rem); }
     .nav { grid-template-columns: auto auto; }
@@ -653,18 +547,21 @@
     .brand { justify-self: start; }
     .nav__burger { display: inline-flex; }
 
-    /* le bloc final passe en une colonne : photo au-dessus, texte dessous */
-    .signature {
+    /* chaque produit s'empile : carré au-dessus, description dessous, le tout centré */
+    .product {
       grid-template-columns: 1fr;
-      gap: clamp(1.6rem, 6vw, 2.4rem);
+      gap: clamp(1.4rem, 6vw, 2rem);
+      justify-items: center;
       text-align: center;
     }
-    .signature__text { text-align: center; }
-    .photo-frame { max-width: 340px; margin: 0 auto; width: 100%; }
-
-    /* texte des blocs 2 & 3 : on garde l'alignement mais on autorise toute la largeur */
-    .block--quoi, .block--pourquoi { margin-left: 0; margin-right: 0; }
-    .presentation-title { white-space: normal; font-size: clamp(1.45rem, 6vw, 2.2rem); }
+    .product__square { max-width: 380px; width: 100%; }
+    .product__info { text-align: center; }
+    .product__desc { margin-left: auto; margin-right: auto; }
+    /* sur mobile, on annule l'alternance : tout empilé et centré */
+    .product:nth-of-type(even) { grid-template-columns: 1fr; }
+    .product:nth-of-type(even) .product__square { order: 0; }
+    .product:nth-of-type(even) .product__info  { order: 0; text-align: center; }
+    .product:nth-of-type(even) .product__desc  { margin-left: auto; margin-right: auto; }
 
     /* sur mobile, le rail est replié horizontalement en bas pour rester visible */
     .social-rail {
@@ -682,16 +579,13 @@
     .social-rail__label { writing-mode: horizontal-tb; margin-bottom: 0; margin-right: 0.2rem; }
     .social-rail__line { width: clamp(18px, 6vw, 26px); height: 1.5px; background: linear-gradient(90deg, var(--rose), var(--orange)); }
 
-    /* la page laisse de la place au rail replié en bas */
     .page { padding-bottom: clamp(4.5rem, 12vw, 6rem); }
 
-    /* ✿ DÉCO sur mobile : on réduit la taille de base et on masque les fleurs « en trop » ✿ */
     .deco-item { width: 58px; height: 58px; filter: drop-shadow(0 4px 9px rgba(248, 116, 47, 0.12)); }
     .deco-item.hide-mobile { display: none; }
   }
 
   @media (max-width: 480px) {
-    .photo-frame { border-radius: 110px 110px 26px 26px; }
     .deco-item { width: 50px; height: 50px; }
     .deco-item.hide-small { display: none; }
   }
@@ -705,9 +599,7 @@
     html { scroll-behavior: auto; }
     #gl { display: none; }
     .living__css { opacity: 0.94 !important; animation: none !important; }
-    /* repli : tout reste visible */
     .reveal { opacity: 1 !important; transform: none !important; }
-    /* déco : on coupe le flottement, on garde juste l'inclinaison + décalage */
     .deco-item.is-float { animation: none !important; }
   }
 </style>
@@ -724,13 +616,10 @@
   <!-- ===================== DÉCORS RÉUTILISABLES (définis une fois, réutilisés via <use>) ===================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
-      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques,
-           longueurs variées, bouts arrondis (16 rayons). Esprit « exemple soleil.jpg ». -->
+      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques (16 rayons). -->
       <g id="soleiaSunDoodle">
-        <!-- disque central plein, un poil doré -->
         <circle cx="50" cy="50" r="20" fill="#f8742f"/>
         <circle cx="50" cy="50" r="20" fill="#f4b63e" opacity="0.18"/>
-        <!-- 16 rayons ondulés (courbes douces en S), longueurs variées, bouts ronds -->
         <g fill="none" stroke="#f8742f" stroke-width="4.4" stroke-linecap="round">
           <path d="M50 28 q3 -6 -0.6 -13"/>
           <path d="M58.6 29.4 q5 -4 5.4 -10.4"/>
@@ -751,12 +640,9 @@
         </g>
       </g>
 
-      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, arrondis, légèrement ondulés, APLAT,
-           fins interstices clairs entre pétales, cœur jaune doré arrondi presque carré.
-           Couleur des pétales pilotée par currentColor. -->
+      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, cœur jaune doré arrondi. Couleur pilotée par currentColor. -->
       <g id="soleiaFlowerRetro">
         <g fill="currentColor">
-          <!-- pétale haut -->
           <path d="M50 12
                    c 9 0 15 7 14.5 15
                    c -0.4 6 -4 9.5 -8 12
@@ -764,7 +650,6 @@
                    c -1.9 0 -4 -1.4 -6.5 -3
                    c -4 -2.5 -7.6 -6 -8 -12
                    c -0.5 -8 5 -15 14.5 -15 Z"/>
-          <!-- pétale haut-droit -->
           <path d="M86.1 38.2
                    c 2.8 8.6 -1.1 16.3 -8.5 19.4
                    c -5.6 2.3 -10.1 0.6 -13.9 -1.9
@@ -772,7 +657,6 @@
                    c -0.9 -1.8 -0.7 -4.3 -0.1 -7.2
                    c 0.9 -4.6 3 -9.3 8.6 -11.6
                    c 7.6 -3.1 16 0 19.2 5.9 Z"/>
-          <!-- pétale bas-droit -->
           <path d="M72.3 80.9
                    c -7.3 5.3 -15.9 4.2 -20.4 -2.3
                    c -3.5 -4.9 -2.7 -9.6 -1.2 -13.9
@@ -781,7 +665,6 @@
                    c 4.7 0 9.8 1.1 13.3 6
                    c 4.5 6.5 5 15.1 -1.7 19.9
                    l 0 -2.2 Z"/>
-          <!-- pétale bas-gauche -->
           <path d="M27.7 80.9
                    c -6.7 -4.8 -6.2 -13.4 -1.7 -19.9
                    c 3.5 -4.9 8.6 -6 13.3 -6
@@ -789,7 +672,6 @@
                    c 1.5 1.1 2.2 3.5 3.1 6.2
                    c 1.5 4.3 2.3 9 -1.2 13.9
                    c -4.5 6.5 -13.1 7.6 -20.4 2.3 Z"/>
-          <!-- pétale haut-gauche -->
           <path d="M13.9 38.2
                    c 3.2 -5.9 11.6 -9 19.2 -5.9
                    c 5.6 2.3 7.7 7 8.6 11.6
@@ -798,12 +680,10 @@
                    c -3.8 2.5 -8.3 4.2 -13.9 1.9
                    c -7.4 -3.1 -11.3 -10.8 -8.5 -19.4 Z"/>
         </g>
-        <!-- cœur : forme presque carrée à coins très ronds, jaune doré chaud -->
         <rect x="42" y="42" width="16" height="16" rx="6.4" fill="#f4b63e"/>
       </g>
 
-      <!-- ✺ petit soleil dessiné-main pour les TITRES de section
-           (disque plein orangé + rayons ondulés, esprit « exemple soleil.jpg ») -->
+      <!-- ✺ petit soleil dessiné-main pour les TITRES -->
       <g id="soleiaSunTitle">
         <circle cx="50" cy="50" r="19" fill="#f8742f"/>
         <circle cx="50" cy="50" r="19" fill="#f4b63e" opacity="0.18"/>
@@ -823,6 +703,13 @@
           <path d="M32.5 35.5 q-6 -3.2 -9.2 -8.6"/>
           <path d="M41 31 q-4.6 -4.6 -4.2 -11"/>
         </g>
+      </g>
+
+      <!-- icône « image » pour le cadre photo vide -->
+      <g id="soleiaPhotoIcon">
+        <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
+        <circle cx="8.6" cy="9.6" r="1.7"/>
+        <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
       </g>
     </defs>
   </svg>
@@ -852,49 +739,23 @@
   </aside>
 
   <!-- ===================== CALQUE DÉCOR PLEINE PAGE (fleurs + soleils déplaçables) ===================== -->
-  <!-- Position en %, tailles/rotations/couleurs variées. Réparti sur TOUTE la hauteur :
-       autour du titre, le long des blocs, autour des cartes, de la photo et du prénom, et en bas.
-       Les décors se posent dans les MARGES / espaces vides, pas par-dessus les paragraphes. -->
   <div class="deco-layer" aria-hidden="true">
+    <!-- ░░ Zone titre « Un p'tit truc en plus ! » (haut de page) ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-1"  style="top:5%;    left:8%;   --rot:-10deg; --s:0.74; --dur:8s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-2"  style="top:3.6%;  right:9%;  --rot:8deg;   --s:0.98; --dur:10s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-small" data-deco-id="deco-3"  style="top:10%;   left:22%;  --rot:14deg;  --s:0.54; --dur:9s;  --delay:-2s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
 
-    <!-- ░░ Zone titre « Notre concept » (haut de page) ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-1"  style="top:5.2%;  left:8%;   --rot:-10deg; --s:0.74; --dur:8s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-2"  style="top:3.8%;  right:9%;  --rot:8deg;   --s:0.98; --dur:10s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-3"  style="top:9.5%;  left:21%;  --rot:14deg;  --s:0.54; --dur:9s;  --delay:-2s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-4"  style="top:10.5%; right:24%; --rot:-6deg;  --s:0.6;  --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <!-- ░░ Le long des rangées produits (marges latérales) ░░ -->
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-4"  style="top:24%;   right:4%;  --rot:-6deg;  --s:0.62; --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-5"  style="top:36%;   left:3%;   --rot:6deg;   --s:0.6;  --dur:10s; --delay:-2.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-6"  style="top:48%;   right:3.5%; --rot:11deg; --s:0.66; --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-7"  style="top:60%;   left:3.5%; --rot:-9deg;  --s:0.6;  --dur:11s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-8"  style="top:72%;   right:4%;  --rot:7deg;   --s:0.62; --dur:8s;  --delay:-2s;   color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-9"  style="top:80%;   left:4%;   --rot:12deg;  --s:0.56; --dur:10s; --delay:-1s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
 
-    <!-- ░░ Zone « En quelques mots » (texte à gauche → on garnit la droite) ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-5"  style="top:18%;   right:6%;  --rot:12deg;  --s:0.86; --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-6"  style="top:22.5%; right:17%; --rot:-9deg;  --s:0.52; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-7"  style="top:16.5%; left:3%;  --rot:6deg;   --s:0.62; --dur:11s; --delay:-2.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-
-    <!-- ░░ Zone « Pourquoi Soleia ? » (texte à droite → on garnit la gauche) ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-8"  style="top:30%;   left:5%;   --rot:-12deg; --s:0.82; --dur:8s;  --delay:-2s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-9"  style="top:33.5%; left:16%;  --rot:10deg;  --s:0.54; --dur:10s; --delay:-4s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-10" style="top:28.5%; right:4%;  --rot:5deg;   --s:0.68; --dur:9s;  --delay:-1s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-
-    <!-- ░░ Zone « Ce qu'on apporte » (centrée → on garnit les deux marges) ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-11" style="top:43%;   left:6%;   --rot:9deg;   --s:0.74; --dur:11s; --delay:-3s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-12" style="top:42%;   right:7%;  --rot:-8deg;  --s:0.8;  --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-13" style="top:46.5%; right:19%; --rot:13deg;  --s:0.5;  --dur:10s; --delay:-2.5s; color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-
-    <!-- ░░ Zone « Nos valeurs » + cartes (marges latérales) ░░ -->
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-14" style="top:53%;   left:3%;   --rot:-7deg;  --s:0.62; --dur:8s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-15" style="top:52.5%; right:4%;  --rot:11deg;  --s:0.72; --dur:10s; --delay:-4s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-16" style="top:60.5%; left:5%;   --rot:8deg;   --s:0.56; --dur:9s;  --delay:-1s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-17" style="top:61.5%; right:5%;  --rot:-11deg; --s:0.64; --dur:11s; --delay:-3.5s; color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-
-    <!-- ░░ Zone « Qui se cache derrière… » + photo + Gwennaëlle ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-18" style="top:69%;   left:9%;   --rot:6deg;   --s:0.8;  --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-19" style="top:72.5%; right:8%;  --rot:-9deg;  --s:0.72; --dur:10s; --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-20" style="top:77.5%; left:4%;   --rot:12deg;  --s:0.56; --dur:8s;  --delay:-3s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-21" style="top:80.5%; right:6%;  --rot:7deg;   --s:0.72; --dur:11s; --delay:-2.5s; color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-22" style="top:84%;   left:13%;  --rot:-6deg;  --s:0.5;  --dur:9s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-
-    <!-- ░░ Bas de page (phrase de fin) ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-23" style="top:90.5%; left:10%;  --rot:10deg;  --s:0.66; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-24" style="top:91.5%; right:11%; --rot:-8deg;  --s:0.62; --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-25" style="top:95.5%; right:23%; --rot:14deg;  --s:0.5;  --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <!-- ░░ Bas de page ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-10" style="top:92%;   left:10%;  --rot:10deg;  --s:0.66; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-11" style="top:93%;   right:11%; --rot:-8deg;  --s:0.62; --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
   </div>
 
   <div class="shell">
@@ -902,7 +763,7 @@
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__col nav__col--left">
         <li><a class="nav__link" href="/a-propos/">Ateliers</a></li>
-        <li><a class="nav__link" href="/boutique/">Boutique</a></li>
+        <li><a class="nav__link is-active" href="/boutique/" aria-current="page">Boutique</a></li>
       </ul>
 
       <a class="brand" href="/" aria-label="Soleia Expérience, accueil">
@@ -932,7 +793,7 @@
       </a>
 
       <div class="nav__col nav__col--right">
-        <a class="nav__link is-active" href="/a-propos/" aria-current="page">Concept</a>
+        <a class="nav__link" href="/a-propos/">Concept</a>
         <a class="nav__link" href="/a-propos/">Galerie</a>
 
         <!-- icône compte discrète à l'extrême droite (tolérée) -->
@@ -951,118 +812,139 @@
     </nav>
   </div>
 
-  <!-- ===================== CONTENU « À PROPOS » (sections transparentes, fond continu) ===================== -->
+  <!-- ===================== CONTENU « BOUTIQUE » ===================== -->
   <main class="page">
 
-    <!-- ===== BLOC 1 : accroche d'entrée, centrée sur 2 lignes ===== -->
-    <section class="intro reveal" aria-labelledby="intro-title">
-      <h1 class="intro__line2" id="intro-title">Notre concept</h1>
-      <span class="intro__rule" aria-hidden="true"></span>
+    <!-- ===== GRAND TITRE de la page (façon hero) ===== -->
+    <section class="hero reveal" aria-labelledby="boutique-title">
+      <h1 class="hero__title" id="boutique-title">Un p’tit truc <span class="grad">en plus</span>&#8239;!</h1>
+      <p class="hero__subtitle">Coffrets, kits créatifs et cartes cadeaux&#8239;: un emplacement pour de jolies trouvailles à offrir ou se faire plaisir.</p>
+      <span class="hero__rule" aria-hidden="true"></span>
     </section>
 
-    <!-- ===== BLOC 2 : « Soleia, c'est quoi ? » — texte aligné à GAUCHE ===== -->
-    <section class="block block--quoi reveal" aria-labelledby="quoi-title">
-      <div class="halo halo--left">
-        <h2 class="section__title" id="quoi-title"><span class="sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunTitle"/></svg></span>En quelques mots</h2>
-        <p class="placeholder">
-          Voici l’emplacement réservé à la présentation de Soleia. Quelques lignes douces
-          pour raconter l’esprit de la marque, les ateliers et cette envie de créer ensemble.
-          Ce texte sera remplacé plus tard par le vrai contenu&#8239;: il est ici en attendant,
-          juste pour montrer la place et le ton.
-        </p>
-      </div>
-    </section>
+    <!-- ===== LISTE DE 5 PRODUITS (placeholders) — carré à gauche, description à droite ===== -->
+    <section class="shop" aria-label="Nos produits">
 
-    <!-- ===== BLOC 3 : « Pourquoi Soleia ? » — texte aligné à DROITE ===== -->
-    <section class="block block--pourquoi reveal" aria-labelledby="pourquoi-title">
-      <div class="halo halo--right">
-        <h2 class="section__title" id="pourquoi-title">Pourquoi Soleia&#8239;?<span class="sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunTitle"/></svg></span></h2>
-        <p class="placeholder">
-          Emplacement réservé pour expliquer le « pourquoi » de Soleia&#8239;: l’envie d’offrir
-          une parenthèse créative, un moment rien que pour soi. Ces quelques phrases factices
-          seront remplacées par le vrai message&#8239;; elles indiquent simplement l’endroit
-          et le rythme du texte.
-        </p>
-      </div>
-    </section>
-
-    <!-- ===== BLOC 4 : temps fort centré — « Ce qu'on apporte » ===== -->
-    <section class="block apporte reveal" aria-labelledby="apporte-title">
-      <p class="apporte__kicker" id="apporte-title">Ce qu’on apporte</p>
-      <p class="punchline">
-        Repartir le cœur léger, avec un peu de douceur <span class="grad">et un moment rien qu’à soi.</span>
-      </p>
-    </section>
-
-    <!-- ===== BLOC 5 : « Nos valeurs » — titre dégradé + 3 cartes (style V2) ===== -->
-    <section class="block valeurs reveal" aria-labelledby="valeurs-title">
-      <div class="valeurs__head">
-        <h2 class="valeurs__title" id="valeurs-title">Nos valeurs</h2>
-      </div>
-
-      <div class="cards">
-        <article class="card">
-          <span class="card__num" aria-hidden="true">1</span>
-          <h3 class="card__title">Douceur</h3>
-          <p class="card__text">
-            Un emplacement pour décrire cette valeur en une ou deux lignes toutes simples,
-            à compléter plus tard.
-          </p>
-        </article>
-
-        <article class="card">
-          <span class="card__num" aria-hidden="true">2</span>
-          <h3 class="card__title">Créativité</h3>
-          <p class="card__text">
-            Quelques mots à venir ici pour raconter cette valeur, dans un ton chaleureux et
-            accessible à tous.
-          </p>
-        </article>
-
-        <article class="card">
-          <span class="card__num" aria-hidden="true">3</span>
-          <h3 class="card__title">Convivialité</h3>
-          <p class="card__text">
-            Texte provisoire à remplacer&#8239;: une petite phrase qui dit pourquoi cette
-            valeur compte vraiment pour Soleia.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- ===== INTRO PRÉSENTATION : titre sur une seule ligne avant la photo ===== -->
-    <section class="presentation-intro reveal">
-      <h2 class="presentation-title">Qui se cache derrière Soleia Expérience&#8239;?</h2>
-    </section>
-
-    <!-- ===== BLOC FINAL : photo (gauche) + Gwennaëlle centrée verticalement (droite) ===== -->
-    <section class="block signature reveal" aria-labelledby="signature-name">
-      <div class="photo-frame" role="img" aria-label="Emplacement pour une photo de Gwennaëlle">
-        <div class="photo-frame__inner">
-          <span class="photo-frame__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-              <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
-              <circle cx="8.6" cy="9.6" r="1.7"/>
-              <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <span class="photo-frame__label">Photo</span>
+      <!-- Produit 1 — Coffret -->
+      <article class="product reveal">
+        <div class="product__square">
+          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
+            <div class="product__photo-inner">
+              <span class="product__photo-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
+              </span>
+              <span class="product__photo-label">Photo</span>
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="product__info">
+          <p class="product__kicker">Coffret</p>
+          <h2 class="product__name">Coffret créatif</h2>
+          <p class="product__desc">Petit texte d’emplacement pour décrire ce coffret en une ligne toute douce.</p>
+          <p class="product__price">34<span class="cur"> €</span></p>
+          <a class="btn" href="#">Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
 
-      <div class="signature__text">
-        <p class="signature__name" id="signature-name">Gwennaëlle</p>
-        <p class="signature__desc">
-          Une courte présentation viendra ici&#8239;: quelques mots tendres sur celle qui
-          imagine et anime les ateliers Soleia. Ce texte est provisoire et sera complété
-          plus tard.
-        </p>
-      </div>
+      <!-- Produit 2 — Kit DIY -->
+      <article class="product reveal">
+        <div class="product__square">
+          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
+            <div class="product__photo-inner">
+              <span class="product__photo-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
+              </span>
+              <span class="product__photo-label">Photo</span>
+            </div>
+          </div>
+        </div>
+        <div class="product__info">
+          <p class="product__kicker">Kit créatif</p>
+          <h2 class="product__name">Kit DIY</h2>
+          <p class="product__desc">Une ligne provisoire pour présenter ce kit à faire soi-même, bien au chaud.</p>
+          <p class="product__price">22<span class="cur"> €</span></p>
+          <a class="btn" href="#">Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Produit 3 — Carte cadeau (atelier) -->
+      <article class="product reveal">
+        <div class="product__square">
+          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
+            <div class="product__photo-inner">
+              <span class="product__photo-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
+              </span>
+              <span class="product__photo-label">Photo</span>
+            </div>
+          </div>
+        </div>
+        <div class="product__info">
+          <p class="product__kicker">Carte cadeau</p>
+          <h2 class="product__name">Carte cadeau — Atelier</h2>
+          <p class="product__desc">Un bon pour un atelier&#8239;: emplacement à compléter avec quelques mots tendres.</p>
+          <p class="product__price">45<span class="cur"> €</span></p>
+          <a class="btn" href="#">Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Produit 4 — Coffret découverte -->
+      <article class="product reveal">
+        <div class="product__square">
+          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
+            <div class="product__photo-inner">
+              <span class="product__photo-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
+              </span>
+              <span class="product__photo-label">Photo</span>
+            </div>
+          </div>
+        </div>
+        <div class="product__info">
+          <p class="product__kicker">Coffret</p>
+          <h2 class="product__name">Coffret découverte</h2>
+          <p class="product__desc">Texte d’exemple pour ce coffret découverte&#8239;: une petite ligne, le temps de remplir.</p>
+          <p class="product__price">29<span class="cur"> €</span></p>
+          <a class="btn" href="#">Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Produit 5 — Carte cadeau -->
+      <article class="product reveal">
+        <div class="product__square">
+          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
+            <div class="product__photo-inner">
+              <span class="product__photo-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
+              </span>
+              <span class="product__photo-label">Photo</span>
+            </div>
+          </div>
+        </div>
+        <div class="product__info">
+          <p class="product__kicker">Carte cadeau</p>
+          <h2 class="product__name">Carte cadeau</h2>
+          <p class="product__desc">Emplacement pour un montant libre à offrir&#8239;: une ligne discrète, à personnaliser.</p>
+          <p class="product__price">50<span class="cur"> €</span></p>
+          <a class="btn" href="#">Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
     </section>
 
-    <!-- ===== PHRASE DE FIN : petite, fine, discrète (emplacement à compléter) ===== -->
+    <!-- ===== PIED DE PAGE sobre ===== -->
     <footer class="pied reveal">
-      <p>Une petite phrase de fin viendra se poser ici, tout en douceur.</p>
+      <p>© Soleia Expérience</p>
     </footer>
   </main>
 
@@ -1084,7 +966,6 @@
   (function () {
     var els = document.querySelectorAll(".reveal");
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Repli : si pas d'IntersectionObserver ou mouvement réduit, tout reste visible.
     if (reduce || !("IntersectionObserver" in window)) {
       els.forEach(function (el) { el.classList.add("is-in"); });
       return;
@@ -1095,7 +976,6 @@
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
     els.forEach(function (el) { io.observe(el); });
-    // Filet de sécurité : au cas où, tout devient visible après un court délai.
     setTimeout(function () { els.forEach(function (el) { el.classList.add("is-in"); }); }, 2600);
   })();
   </script>
@@ -1103,16 +983,14 @@
   <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT (+ mémoire des positions) ===================== -->
   <script>
   (function () {
-    var STORE_KEY = "soleia-deco-pos";
+    var STORE_KEY = "soleia-deco-pos-boutique";
     var items = Array.prototype.slice.call(document.querySelectorAll(".deco-item"));
     if (!items.length) return;
 
-    // --- le calque décoratif doit couvrir TOUTE la hauteur du document ---
-    // (sinon height:100% = hauteur d'un écran et les décors se tassent en haut de page)
     var layer = document.querySelector(".deco-layer");
     function sizeLayer() {
       if (!layer) return;
-      layer.style.height = "0px";                                  // on neutralise pour mesurer le contenu seul
+      layer.style.height = "0px";
       layer.style.height = document.documentElement.scrollHeight + "px";
     }
     sizeLayer();
@@ -1122,7 +1000,6 @@
     setTimeout(sizeLayer, 1600);
     if (document.fonts && document.fonts.ready) { document.fonts.ready.then(sizeLayer); }
 
-    // --- lecture des positions mémorisées (robuste) ---
     function loadPos() {
       try {
         var raw = window.localStorage.getItem(STORE_KEY);
@@ -1135,18 +1012,16 @@
 
     var positions = loadPos();
 
-    // --- restauration au chargement : on applique le décalage (dx,dy) mémorisé ---
     items.forEach(function (el) {
       var id = el.getAttribute("data-deco-id");
       var p = id && positions[id];
       if (p && (p.dx || p.dy)) {
         el.style.setProperty("--dx", p.dx + "px");
         el.style.setProperty("--dy", p.dy + "px");
-        el.classList.add("is-moved");   // fige le flottement sur les décors déjà déplacés
+        el.classList.add("is-moved");
       }
     });
 
-    // --- glisser-déposer (pointer events : souris ET tactile) ---
     var startX = 0, startY = 0;
     var baseDx = 0, baseDy = 0;
     var movedThisDrag = false;
@@ -1166,7 +1041,7 @@
       startX = e.clientX;
       startY = e.clientY;
       el.classList.add("is-grabbing");
-      el.classList.add("is-moved");   // coupe le flottement pendant la prise
+      el.classList.add("is-moved");
       try { el.setPointerCapture(e.pointerId); } catch (err) {}
     }
 
@@ -1185,7 +1060,6 @@
       if (current !== el) return;
       el.classList.remove("is-grabbing");
       try { el.releasePointerCapture(e.pointerId); } catch (err) {}
-      // mémorisation de la nouvelle position si elle a bougé
       if (movedThisDrag) {
         var id = el.getAttribute("data-deco-id");
         if (id) {
@@ -1201,7 +1075,6 @@
       el.addEventListener("pointermove", onMove);
       el.addEventListener("pointerup", onUp);
       el.addEventListener("pointercancel", onUp);
-      // évite la sélection / le glisser d'image natif pendant le déplacement
       el.addEventListener("dragstart", function (ev) { ev.preventDefault(); });
     });
   })();
@@ -1224,8 +1097,6 @@
       "attribute vec2 p;" +
       "void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
 
-    // Mesh-gradient / aurora : domain warp FBM courbé vers le curseur + lumière chaude.
-    // Palette EXACTE Soleia. Mix rendu plus CHAUD (plus d'orange/pêche).
     var fragSrc = [
       "precision highp float;",
       "uniform vec2  u_res;",
@@ -1233,11 +1104,11 @@
       "uniform vec2  u_mouse;",
       "uniform float u_pull;",
       "",
-      "vec3 ROSE   = vec3(0.984, 0.420, 0.651);", // #fb6ba6
-      "vec3 ORANGE = vec3(0.973, 0.455, 0.184);", // #f8742f
-      "vec3 PEACH  = vec3(0.992, 0.659, 0.392);", // pêche chaude dérivée de l'orange
-      "vec3 ROSEL  = vec3(0.973, 0.902, 0.902);", // #f8e6e6 rose clair
-      "vec3 CREAM  = vec3(1.000, 0.980, 0.965);", // #fffaf6 crème
+      "vec3 ROSE   = vec3(0.984, 0.420, 0.651);",
+      "vec3 ORANGE = vec3(0.973, 0.455, 0.184);",
+      "vec3 PEACH  = vec3(0.992, 0.659, 0.392);",
+      "vec3 ROSEL  = vec3(0.973, 0.902, 0.902);",
+      "vec3 CREAM  = vec3(1.000, 0.980, 0.965);",
       "",
       "float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }",
       "float noise(vec2 p){",
@@ -1263,19 +1134,16 @@
       "  vec2 m = vec2((u_mouse.x - 0.5) * asp, u_mouse.y - 0.5);",
       "  float t = u_time * 0.06;",
       "",
-      "  // --- COURBURE vers le curseur ---",
       "  vec2 toM = m - p;",
       "  float dM = length(toM);",
       "  float lens = (0.16 + 0.20 * u_pull) / (dM * dM + 0.10);",
       "  vec2 curved = p + toM * lens * 0.45;",
       "",
-      "  // --- domain warp (aurora) ---",
       "  vec2 q = vec2(fbm(curved*1.5 + vec2(0.0, t)), fbm(curved*1.5 + vec2(5.2, -t*0.8)));",
       "  vec2 r = vec2(fbm(curved*1.5 + 3.2*q + vec2(1.7, 9.2) + t*0.5),",
       "                fbm(curved*1.5 + 3.2*q + vec2(8.3, 2.8) - t*0.4));",
       "  float n = fbm(curved*1.6 + 2.4*r + t*0.3);",
       "",
-      "  // --- iridescence Soleia, plus CHAUDE (poids orange/pêche renforcé) ---",
       "  vec3 col = mix(CREAM, ROSEL, 0.35);",
       "  col = mix(col, PEACH,  smoothstep(0.22, 0.92, n) * 0.95);",
       "  col = mix(col, ROSE,   smoothstep(0.38, 0.86, r.x) * 0.78);",
@@ -1283,18 +1151,15 @@
       "  col = mix(col, ORANGE, smoothstep(0.50, 1.05, r.y) * 0.62);",
       "  col = mix(col, ROSE,   smoothstep(0.62, 1.12, n * r.x) * 0.42);",
       "",
-      "  // léger reflet nacré",
       "  float sheen = 0.5 + 0.5 * sin((q.x + r.y) * 6.2832 + u_time * 0.25);",
       "  col += sheen * 0.045 * vec3(1.0, 0.9, 0.82);",
       "",
-      "  // --- LUMIÈRE CHAUDE qui suit la souris (plus orange) ---",
       "  float glowR = 0.58;",
       "  float warm = exp(-dM*dM / (glowR*glowR)) * (0.20 + 0.46 * u_pull);",
       "  vec3 warmCol = mix(PEACH, ORANGE, 0.58);",
       "  col += warm * warmCol * 0.6;",
       "  col += exp(-dM*dM / 0.02) * (0.10 + 0.26 * u_pull) * vec3(1.0, 0.82, 0.64);",
       "",
-      "  // --- crème dominante pour lisibilité du texte (atténuée : page plus colorée) ---",
       "  col = mix(col, CREAM, smoothstep(0.55, 1.0, uv.y) * 0.34);",
       "  col = mix(col, CREAM, 0.06);",
       "  float vig = distance(uv, vec2(0.5, 0.5));",
