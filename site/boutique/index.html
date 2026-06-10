@@ -344,12 +344,12 @@
 
   .product {
     display: grid;
-    grid-template-columns: clamp(320px, 36vw, 420px) 1fr;
+    grid-template-columns: clamp(250px, 28vw, 350px) 1fr;
     align-items: center;
     gap: clamp(2rem, 5vw, 4.5rem);
   }
   /* ALTERNANCE zigzag : un produit sur deux a le carré à DROITE et la description à GAUCHE */
-  .product:nth-of-type(even) { grid-template-columns: 1fr clamp(320px, 36vw, 420px); }
+  .product:nth-of-type(even) { grid-template-columns: 1fr clamp(250px, 28vw, 350px); }
   .product:nth-of-type(even) .product__square { order: 2; }
   .product:nth-of-type(even) .product__info  { order: 1; text-align: right; }
   .product:nth-of-type(even) .product__desc  { margin-left: auto; }
