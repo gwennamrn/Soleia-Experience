@@ -342,17 +342,48 @@
     margin-top: clamp(1rem, 3vh, 2rem);
   }
 
+  /* ===== ONGLETS DE TRI (Tout · Coffrets · Cartes cadeaux) ===== */
+  .shop-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(0.5rem, 1.2vw, 0.9rem);
+    margin: clamp(1.4rem, 3.5vh, 2.6rem) auto clamp(0.6rem, 2vh, 1.2rem);
+  }
+  .shop-tab {
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    color: var(--ink);
+    background: var(--glass-strong);
+    border: 1.5px solid rgba(58, 42, 46, 0.16);
+    border-radius: 999px;
+    padding: 0.6rem 1.45rem;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  }
+  .shop-tab:hover { transform: translateY(-2px); color: var(--orange); border-color: var(--rose); }
+  .shop-tab.is-active {
+    color: var(--creme);
+    border-color: transparent;
+    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+    box-shadow: 0 12px 26px rgba(248, 116, 47, 0.28);
+  }
+
   .product {
     display: grid;
     grid-template-columns: clamp(250px, 28vw, 350px) 1fr;
     align-items: center;
     gap: clamp(2rem, 5vw, 4.5rem);
   }
-  /* ALTERNANCE zigzag : un produit sur deux a le carré à DROITE et la description à GAUCHE */
-  .product:nth-of-type(even) { grid-template-columns: 1fr clamp(250px, 28vw, 350px); }
-  .product:nth-of-type(even) .product__square { order: 2; }
-  .product:nth-of-type(even) .product__info  { order: 1; text-align: right; }
-  .product:nth-of-type(even) .product__desc  { margin-left: auto; }
+  /* ALTERNANCE zigzag (classe .is-right posée par le script, recalculée au tri) :
+     le carré passe à DROITE et la description à GAUCHE */
+  .product.is-right { grid-template-columns: 1fr clamp(250px, 28vw, 350px); }
+  .product.is-right .product__square { order: 2; }
+  .product.is-right .product__info  { order: 1; text-align: right; }
+  .product.is-right .product__desc  { margin-left: auto; }
 
   /* ===== LE CARRÉ PRODUIT — direction « Contour marqué » =====
      fond doux (crème / rose clair translucide) + CONTOUR ÉPAIS et TRÈS VISIBLE
@@ -367,10 +398,21 @@
     box-shadow: 0 24px 58px rgba(248, 116, 47, 0.20), 0 8px 22px rgba(251, 107, 166, 0.16);
     transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.34s ease;
   }
-  .product__square:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 32px 70px rgba(248, 116, 47, 0.28), 0 12px 28px rgba(251, 107, 166, 0.20);
+  /* SURVOL PLUS VIVANT : tout le produit réagit */
+  .product:hover .product__square {
+    transform: translateY(-8px) rotate(-1.2deg);
+    box-shadow: 0 36px 80px rgba(248, 116, 47, 0.30), 0 14px 32px rgba(251, 107, 166, 0.22);
   }
+  .product.is-right:hover .product__square { transform: translateY(-8px) rotate(1.2deg); }
+  .product__photo-inner { transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+  .product:hover .product__photo-inner { transform: scale(1.08); }
+  .product__name { transition: color 0.28s ease; }
+  .product:hover .product__name { color: var(--orange); }
+  .product:hover .btn {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(248, 116, 47, 0.36), 0 6px 16px rgba(251, 107, 166, 0.24);
+  }
+  .product:hover .btn svg { transform: translateX(3px); }
   /* le « cadre photo » intérieur : fond crème / rose clair translucide, cadre vide */
   .product__photo {
     position: relative;
@@ -558,10 +600,10 @@
     .product__info { text-align: center; }
     .product__desc { margin-left: auto; margin-right: auto; }
     /* sur mobile, on annule l'alternance : tout empilé et centré */
-    .product:nth-of-type(even) { grid-template-columns: 1fr; }
-    .product:nth-of-type(even) .product__square { order: 0; }
-    .product:nth-of-type(even) .product__info  { order: 0; text-align: center; }
-    .product:nth-of-type(even) .product__desc  { margin-left: auto; margin-right: auto; }
+    .product.is-right { grid-template-columns: 1fr; }
+    .product.is-right .product__square { order: 0; }
+    .product.is-right .product__info  { order: 0; text-align: center; }
+    .product.is-right .product__desc  { margin-left: auto; margin-right: auto; }
 
     /* sur mobile, le rail est replié horizontalement en bas pour rester visible */
     .social-rail {
@@ -822,6 +864,13 @@
       <span class="hero__rule" aria-hidden="true"></span>
     </section>
 
+    <!-- ===== ONGLETS DE TRI ===== -->
+    <div class="shop-tabs reveal" role="tablist" aria-label="Trier les produits">
+      <button class="shop-tab is-active" type="button" role="tab" aria-selected="true" data-cat="tout">Tout</button>
+      <button class="shop-tab" type="button" role="tab" aria-selected="false" data-cat="coffret">Coffrets</button>
+      <button class="shop-tab" type="button" role="tab" aria-selected="false" data-cat="carte">Cartes cadeaux</button>
+    </div>
+
     <!-- ===== LISTE DE 5 PRODUITS (placeholders) — carré à gauche, description à droite ===== -->
     <section class="shop" aria-label="Nos produits">
 
@@ -947,6 +996,50 @@
       <p>© Soleia Expérience</p>
     </footer>
   </main>
+
+  <!-- ===================== ONGLETS DE TRI + ALTERNANCE (zigzag recalculé) ===================== -->
+  <script>
+  (function () {
+    var products = Array.prototype.slice.call(document.querySelectorAll(".product"));
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".shop-tab"));
+    if (!products.length) return;
+
+    function catOf(p) {
+      var k = p.querySelector(".product__kicker");
+      var t = (k && k.textContent || "").toLowerCase();
+      return /carte/.test(t) ? "carte" : "coffret";
+    }
+
+    // (re)pose l'alternance gauche/droite sur les seuls produits VISIBLES
+    function applyZigzag() {
+      var i = 0;
+      products.forEach(function (p) {
+        if (p.style.display === "none") return;
+        p.classList.toggle("is-right", i % 2 === 1);
+        i++;
+      });
+    }
+
+    function filter(cat) {
+      products.forEach(function (p) {
+        var show = (cat === "tout") || (catOf(p) === cat);
+        p.style.display = show ? "" : "none";
+      });
+      applyZigzag();
+    }
+
+    tabs.forEach(function (t) {
+      t.addEventListener("click", function () {
+        tabs.forEach(function (x) { x.classList.remove("is-active"); x.setAttribute("aria-selected", "false"); });
+        t.classList.add("is-active");
+        t.setAttribute("aria-selected", "true");
+        filter(t.getAttribute("data-cat"));
+      });
+    });
+
+    applyZigzag();
+  })();
+  </script>
 
   <!-- ===================== Repli logo si /logo.svg indisponible ===================== -->
   <script>
