@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Boutique — Soleia Expérience</title>
+<title>Coffret créatif — Soleia Expérience</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -268,15 +268,16 @@
   }
 
   /* ============================================================
-     CONTENU « BOUTIQUE » — grand titre hero + liste de produits
-     (carré à gauche, description à droite), fond CONTINU et coloré
+     CONTENU « FICHE PRODUIT » — mise en page classique
+     (à gauche : grande photo + mini-galerie ; à droite : infos)
+     fond CONTINU et coloré
      ============================================================ */
   .page {
     position: relative;
     z-index: 2;
     max-width: 1080px;
     margin: 0 auto;
-    padding: clamp(1.4rem, 4vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
+    padding: clamp(1rem, 3vw, 2.2rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
   }
 
   /* petit accent : un vrai petit SOLEIL DESSINÉ-MAIN à côté des titres */
@@ -290,144 +291,97 @@
   }
   .sun svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
-  /* ---- GRAND TITRE de la page (façon hero) ---- */
-  .hero {
-    text-align: center;
-    padding: clamp(3rem, 9vh, 6.5rem) 0 clamp(2.2rem, 6vh, 4rem);
-  }
-  .hero__title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 440;
-    font-size: clamp(3rem, 8vw, 6.2rem);
-    line-height: 1;
-    letter-spacing: -0.028em;
-    margin: 0;
-    color: var(--ink);
-    font-variation-settings: "opsz" 144;
-  }
-  /* « en plus » subtilement mis en valeur en dégradé rose → orange */
-  .hero__title .grad {
-    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-  }
-  .hero__subtitle {
-    font-family: "Fraunces", Georgia, serif;
-    font-style: italic;
-    font-weight: 350;
-    font-size: clamp(1.05rem, 2vw, 1.4rem);
-    line-height: 1.5;
-    color: var(--ink-soft);
-    margin: clamp(1rem, 2.6vh, 1.6rem) auto 0;
-    max-width: 44ch;
-    font-variation-settings: "opsz" 90;
-  }
-  .hero__rule {
-    display: block;
-    width: clamp(56px, 8vw, 96px);
-    height: 4px;
-    margin: clamp(1.4rem, 3vh, 2.1rem) auto 0;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--rose), var(--orange));
-    opacity: 0.9;
-  }
-
-  /* ---- LISTE DE PRODUITS : rangées (carré à gauche, description à droite) ---- */
-  .shop {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(2.8rem, 7vh, 5rem);
-    margin-top: clamp(1rem, 3vh, 2rem);
-  }
-
-  /* ===== ONGLETS DE TRI (Tout · Coffrets · Cartes cadeaux) ===== */
-  .shop-tabs {
+  /* ===== HAUT : lien retour + fil d'ariane ===== */
+  .topbar {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(0.5rem, 1.2vw, 0.9rem);
-    margin: clamp(1.4rem, 3.5vh, 2.6rem) auto clamp(0.6rem, 2vh, 1.2rem);
+    align-items: center;
+    gap: clamp(0.6rem, 2vw, 1.2rem);
+    margin: clamp(0.6rem, 2vh, 1.4rem) 0 clamp(1.6rem, 4vh, 2.6rem);
   }
-  .shop-tab {
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
     font-weight: 700;
     font-size: clamp(0.95rem, 1.2vw, 1.05rem);
     color: var(--ink);
+    text-decoration: none;
+    padding: 0.5rem 1.1rem 0.5rem 0.95rem;
+    border-radius: 999px;
     background: var(--glass-strong);
     border: 1.5px solid rgba(58, 42, 46, 0.16);
-    border-radius: 999px;
-    padding: 0.6rem 1.45rem;
-    cursor: pointer;
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
-    transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   }
-  .shop-tab:hover { transform: translateY(-2px); color: var(--orange); border-color: var(--rose); }
-  .shop-tab.is-active {
-    color: var(--creme);
-    border-color: transparent;
-    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    box-shadow: 0 12px 26px rgba(248, 116, 47, 0.28);
+  .back svg { width: 16px; height: 16px; transition: transform 0.25s ease; }
+  .back:hover {
+    transform: translateY(-2px);
+    color: var(--orange);
+    border-color: var(--rose);
+    box-shadow: 0 10px 22px rgba(251, 107, 166, 0.22);
   }
-
-  .product {
-    display: grid;
-    grid-template-columns: clamp(250px, 28vw, 350px) 1fr;
+  .back:hover svg { transform: translateX(-3px); }
+  /* mini fil d'ariane discret */
+  .crumb {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(0.84rem, 1.1vw, 0.95rem);
+    letter-spacing: 0.02em;
+    color: rgba(58, 42, 46, 0.5);
+    display: inline-flex;
     align-items: center;
-    gap: clamp(2rem, 5vw, 4.5rem);
+    gap: 0.45rem;
   }
-  /* ALTERNANCE zigzag (classe .is-right posée par le script, recalculée au tri) :
-     le carré passe à DROITE et la description à GAUCHE */
-  .product.is-right { grid-template-columns: 1fr clamp(250px, 28vw, 350px); }
-  .product.is-right .product__square { order: 2; }
-  .product.is-right .product__info  { order: 1; text-align: right; }
-  .product.is-right .product__desc  { margin-left: auto; }
+  .crumb a { color: rgba(58, 42, 46, 0.6); text-decoration: none; }
+  .crumb a:hover { color: var(--orange); }
+  .crumb .sep { color: rgba(58, 42, 46, 0.35); }
+  .crumb .current { color: var(--ink); font-weight: 500; }
 
-  /* ===== LE CARRÉ PRODUIT — direction « Contour marqué » =====
-     fond doux (crème / rose clair translucide) + CONTOUR ÉPAIS et TRÈS VISIBLE
-     en dégradé rose→orange (le contour est la vedette). */
-  .product__square {
+  /* ===== BLOC PRINCIPAL : 2 colonnes (galerie | infos) ===== */
+  .detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  /* --- COLONNE GAUCHE : grande photo + mini-galerie en dessous --- */
+  .gallery { display: flex; flex-direction: column; gap: clamp(0.9rem, 2vw, 1.2rem); }
+
+  /* ===== LA GRANDE PHOTO — direction « Contour marqué » =====
+     fond doux + CONTOUR ÉPAIS et TRÈS VISIBLE en dégradé rose→orange. */
+  .hero-photo {
     position: relative;
     aspect-ratio: 1 / 1;
     width: 100%;
     border-radius: 30px;
-    padding: clamp(12px, 1.4vw, 16px);              /* épaisseur du contour dégradé */
+    padding: clamp(13px, 1.5vw, 18px);              /* épaisseur du contour dégradé */
     background: linear-gradient(135deg, var(--rose) 0%, var(--orange) 100%);
     box-shadow: 0 24px 58px rgba(248, 116, 47, 0.20), 0 8px 22px rgba(251, 107, 166, 0.16);
     transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.34s ease;
   }
-  /* SURVOL PLUS VIVANT : tout le produit réagit */
-  .product:hover .product__square {
-    transform: translateY(-8px) rotate(-1.2deg);
+  .hero-photo:hover {
+    transform: translateY(-6px) rotate(-1deg);
     box-shadow: 0 36px 80px rgba(248, 116, 47, 0.30), 0 14px 32px rgba(251, 107, 166, 0.22);
   }
-  .product.is-right:hover .product__square { transform: translateY(-8px) rotate(1.2deg); }
-  .product__photo-inner { transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
-  .product:hover .product__photo-inner { transform: scale(1.08); }
-  .product__name { transition: color 0.28s ease; }
-  .product:hover .product__name { color: var(--orange); }
-  .product:hover .btn {
-    transform: translateY(-2px);
-    box-shadow: 0 20px 40px rgba(248, 116, 47, 0.36), 0 6px 16px rgba(251, 107, 166, 0.24);
-  }
-  .product:hover .btn svg { transform: translateX(3px); }
 
-  /* petite fleur + petit soleil posés au BORD de chaque cadre produit */
+  /* petite fleur + petit soleil posés au BORD du cadre */
   .square-deco {
     position: absolute;
-    width: clamp(34px, 4vw, 46px);
-    height: clamp(34px, 4vw, 46px);
+    width: clamp(40px, 5vw, 56px);
+    height: clamp(40px, 5vw, 56px);
     pointer-events: none;
     z-index: 4;
     filter: drop-shadow(0 4px 9px rgba(248, 116, 47, 0.18));
   }
   .square-deco svg { width: 100%; height: 100%; display: block; overflow: visible; }
-  .square-deco--flower { top: -15px; left: -15px; color: var(--rose); transform: rotate(-12deg); }
-  .square-deco--sun { right: -13px; bottom: -13px; }
-  /* le « cadre photo » intérieur : fond crème / rose clair translucide, cadre vide */
-  .product__photo {
+  .square-deco--flower { top: -18px; left: -18px; color: var(--rose); transform: rotate(-12deg); }
+  .square-deco--sun { right: -16px; bottom: -16px; }
+
+  /* le « cadre photo » intérieur : fond crème / rose clair translucide */
+  .photo-frame {
     position: relative;
     width: 100%;
     height: 100%;
@@ -438,8 +392,7 @@
     place-items: center;
     overflow: hidden;
   }
-  /* fin liseré clair pour bien détacher la photo du contour coloré */
-  .product__photo::before {
+  .photo-frame::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -447,90 +400,322 @@
     border: 1.5px solid rgba(255, 250, 246, 0.8);
     pointer-events: none;
   }
-  .product__photo-inner {
+  .photo-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.7rem;
     color: rgba(58, 42, 46, 0.42);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .product__photo-icon {
-    width: clamp(46px, 6vw, 62px);
-    height: clamp(46px, 6vw, 62px);
+  .hero-photo:hover .photo-inner { transform: scale(1.06); }
+  .photo-icon {
+    width: clamp(54px, 7vw, 72px);
+    height: clamp(54px, 7vw, 72px);
     display: grid;
     place-items: center;
     border-radius: 50%;
     background: linear-gradient(135deg, rgba(251, 107, 166, 0.16), rgba(248, 116, 47, 0.16));
   }
-  .product__photo-icon svg { width: 56%; height: 56%; color: var(--orange); }
-  .product__photo-label {
+  .photo-icon svg { width: 56%; height: 56%; color: var(--orange); }
+  .photo-label {
     font-family: "League Spartan", sans-serif;
     font-weight: 700;
-    font-size: 0.74rem;
+    font-size: 0.78rem;
     letter-spacing: 0.26em;
     text-transform: uppercase;
   }
 
-  /* ===== DESCRIPTION (droite) : nom + 1 ligne atténuée + prix + bouton ===== */
-  .product__info { text-align: left; }
-  .product__kicker {
+  /* --- MINI-GALERIE : rangée de petites vignettes carrées --- */
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.6rem, 1.4vw, 0.9rem);
+  }
+  .thumb {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 16px;
+    padding: 3px;
+    background: linear-gradient(135deg, rgba(251, 107, 166, 0.45), rgba(248, 116, 47, 0.45));
+    cursor: pointer;
+    border: none;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, background 0.28s ease;
+  }
+  .thumb__inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(120% 100% at 50% 18%, rgba(248, 230, 230, 0.92), rgba(255, 250, 246, 0.82));
+  }
+  .thumb__inner svg { width: 38%; height: 38%; color: rgba(58, 42, 46, 0.34); transition: color 0.28s ease; }
+  .thumb:hover { transform: translateY(-3px); }
+  .thumb:hover .thumb__inner svg { color: var(--orange); }
+  .thumb.is-selected {
+    background: linear-gradient(135deg, var(--rose), var(--orange));
+    box-shadow: 0 12px 26px rgba(248, 116, 47, 0.26), 0 4px 12px rgba(251, 107, 166, 0.18);
+    transform: translateY(-2px);
+  }
+  .thumb.is-selected .thumb__inner svg { color: var(--orange); }
+
+  /* --- COLONNE DROITE : infos produit --- */
+  .info { padding-top: clamp(0.2rem, 1vh, 0.6rem); }
+  .info__kicker {
     font-family: "League Spartan", sans-serif;
     font-weight: 800;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--orange);
-    margin: 0 0 clamp(0.5rem, 1.2vh, 0.8rem);
+    margin: 0 0 clamp(0.6rem, 1.4vh, 0.9rem);
   }
-  .product__name {
+  .info__name {
     font-family: "Fraunces", Georgia, serif;
     font-weight: 500;
-    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
-    line-height: 1.06;
-    letter-spacing: -0.018em;
+    font-size: clamp(2.2rem, 4.4vw, 3.2rem);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
     color: var(--ink);
-    margin: 0 0 clamp(0.6rem, 1.4vh, 0.9rem);
-    font-variation-settings: "opsz" 120;
+    margin: 0 0 clamp(0.8rem, 1.8vh, 1.2rem);
+    font-variation-settings: "opsz" 140;
   }
-  .product__desc {
-    font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(1rem, 1.4vw, 1.1rem);
-    line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 0 0 clamp(1rem, 2.4vh, 1.5rem);
-    max-width: 42ch;
-  }
-  .product__price {
+  .info__price {
     font-family: "Fraunces", Georgia, serif;
     font-weight: 600;
-    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    font-size: clamp(1.7rem, 2.6vw, 2.1rem);
     line-height: 1;
     color: var(--ink);
-    margin: 0 0 clamp(1.1rem, 2.6vh, 1.6rem);
-    font-variation-settings: "opsz" 110;
+    margin: 0 0 clamp(1.1rem, 2.4vh, 1.5rem);
+    font-variation-settings: "opsz" 120;
   }
-  .product__price .cur { color: var(--ink); }
+  .info__price .cur { color: var(--ink); }   /* le « € » en --ink, jamais en orange */
+  .info__desc {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0 0 clamp(1.6rem, 3.4vh, 2.2rem);
+    max-width: 44ch;
+  }
 
-  /* petit bouton « Découvrir » — dégradé rose → orange */
-  .btn {
+  /* ===== ACHAT : sélecteur de quantité + bouton ===== */
+  .buy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(0.8rem, 2vw, 1.2rem);
+  }
+  .qty {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.2rem;
+    background: var(--glass-strong);
+    border: 1.5px solid rgba(58, 42, 46, 0.16);
+    border-radius: 999px;
+    padding: 0.3rem;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .qty__btn {
+    width: 40px; height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.22s ease, color 0.22s ease, transform 0.18s ease;
+  }
+  .qty__btn svg { width: 16px; height: 16px; }
+  .qty__btn:hover { background: rgba(251, 107, 166, 0.16); color: var(--orange); }
+  .qty__btn:active { transform: scale(0.92); }
+  .qty__btn:disabled { opacity: 0.34; cursor: not-allowed; }
+  .qty__btn:disabled:hover { background: transparent; color: var(--ink); }
+  .qty__value {
+    min-width: 2.1ch;
+    text-align: center;
     font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    font-size: 1.15rem;
+    color: var(--ink);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* grand bouton « Ajouter au panier » — dégradé rose → orange */
+  .btn-cart {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex: 1 1 auto;
+    justify-content: center;
+    min-width: 220px;
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 1.3vw, 1.12rem);
     letter-spacing: 0.01em;
     color: var(--creme);
     text-decoration: none;
-    padding: 0.72rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    padding: 0.95rem 1.8rem;
     border-radius: 999px;
     background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    box-shadow: 0 12px 26px rgba(248, 116, 47, 0.26), 0 4px 12px rgba(251, 107, 166, 0.18);
+    box-shadow: 0 14px 30px rgba(248, 116, 47, 0.28), 0 4px 14px rgba(251, 107, 166, 0.2);
     transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.26s ease;
   }
-  .btn svg { width: 16px; height: 16px; transition: transform 0.26s ease; }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(248, 116, 47, 0.34), 0 6px 16px rgba(251, 107, 166, 0.22); }
-  .btn:hover svg { transform: translateX(3px); }
+  .btn-cart svg { width: 19px; height: 19px; transition: transform 0.26s ease; }
+  .btn-cart:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(248, 116, 47, 0.36), 0 6px 16px rgba(251, 107, 166, 0.24); }
+  .btn-cart:hover svg { transform: scale(1.1) rotate(-6deg); }
+  .btn-cart.is-added { animation: cartPop 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+  @keyframes cartPop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.04) translateY(-2px); }
+    100% { transform: scale(1); }
+  }
+
+  /* ============ SECTIONS empilées (aérées) ============ */
+  .section { margin-top: clamp(3rem, 8vh, 5.5rem); }
+  .section__head {
+    text-align: center;
+    margin-bottom: clamp(1.6rem, 4vh, 2.6rem);
+  }
+  .section__title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 460;
+    font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0;
+    font-variation-settings: "opsz" 120;
+  }
+  .section__rule {
+    display: block;
+    width: clamp(48px, 7vw, 80px);
+    height: 4px;
+    margin: clamp(0.9rem, 2vh, 1.3rem) auto 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--rose), var(--orange));
+    opacity: 0.9;
+  }
+
+  /* ===== « Ce qu'il y a dedans » : jolie liste à puces mignonnes ===== */
+  .inside {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 720px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(0.9rem, 2.2vw, 1.3rem);
+  }
+  .inside li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    background: var(--glass-strong);
+    border: 1.5px solid rgba(251, 107, 166, 0.22);
+    border-radius: 20px;
+    padding: clamp(0.9rem, 2vw, 1.1rem) clamp(1rem, 2.2vw, 1.3rem);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(0.98rem, 1.3vw, 1.08rem);
+    color: var(--ink);
+    transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+  }
+  .inside li:hover {
+    transform: translateY(-3px);
+    border-color: var(--rose);
+    box-shadow: 0 12px 26px rgba(251, 107, 166, 0.18);
+  }
+  .inside__bullet {
+    flex: 0 0 auto;
+    width: clamp(30px, 4vw, 38px);
+    height: clamp(30px, 4vw, 38px);
+    display: grid;
+    place-items: center;
+  }
+  .inside__bullet svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+  /* ===== « Tu aimeras aussi » : 3 mini-cartes produits ===== */
+  .suggest {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.4rem, 3vw, 2.2rem);
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card__square {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    border-radius: 24px;
+    padding: clamp(9px, 1.1vw, 12px);
+    background: linear-gradient(135deg, var(--rose) 0%, var(--orange) 100%);
+    box-shadow: 0 18px 40px rgba(248, 116, 47, 0.18), 0 6px 16px rgba(251, 107, 166, 0.14);
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s ease;
+  }
+  .card:hover .card__square {
+    transform: translateY(-7px) rotate(-1.2deg);
+    box-shadow: 0 30px 64px rgba(248, 116, 47, 0.28), 0 12px 28px rgba(251, 107, 166, 0.2);
+  }
+  .card .square-deco { width: clamp(30px, 3.6vw, 40px); height: clamp(30px, 3.6vw, 40px); }
+  .card .square-deco--flower { top: -13px; left: -13px; }
+  .card .square-deco--sun { right: -12px; bottom: -12px; }
+  .card__photo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background: radial-gradient(120% 100% at 50% 16%, rgba(248, 230, 230, 0.92), rgba(255, 250, 246, 0.8));
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .card__photo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    border: 1.5px solid rgba(255, 250, 246, 0.8);
+    pointer-events: none;
+  }
+  .card__photo svg { width: clamp(34px, 4.4vw, 46px); height: clamp(34px, 4.4vw, 46px); color: var(--orange); opacity: 0.78; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+  .card:hover .card__photo svg { transform: scale(1.08); }
+  .card__name {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+    line-height: 1.1;
+    letter-spacing: -0.014em;
+    color: var(--ink);
+    margin: clamp(0.9rem, 2vh, 1.1rem) 0 0.3rem;
+    font-variation-settings: "opsz" 90;
+    transition: color 0.28s ease;
+  }
+  .card:hover .card__name { color: var(--orange); }
+  .card__price {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1;
+    color: var(--ink);
+    margin: 0;
+  }
+  .card__price .cur { color: var(--ink); }
 
   /* ---- PIED DE PAGE sobre ---- */
   .pied {
@@ -594,6 +779,16 @@
   }
 
   /* ============ RESPONSIVE ============ */
+  @media (max-width: 880px) {
+    /* le bloc principal s'empile : galerie au-dessus, infos en dessous */
+    .detail { grid-template-columns: 1fr; gap: clamp(1.6rem, 5vw, 2.4rem); }
+    .gallery { max-width: 460px; margin: 0 auto; width: 100%; }
+    .info { text-align: center; padding-top: 0; }
+    .info__desc { margin-left: auto; margin-right: auto; }
+    .buy { justify-content: center; }
+    .inside { grid-template-columns: 1fr; max-width: 460px; }
+  }
+
   @media (max-width: 760px) {
     .shell { padding-right: clamp(1.2rem, 5vw, 4.5rem); }
     .nav { grid-template-columns: auto auto; }
@@ -601,22 +796,6 @@
     .nav__col--right .nav__link { display: none; }
     .brand { justify-self: start; }
     .nav__burger { display: inline-flex; }
-
-    /* chaque produit s'empile : carré au-dessus, description dessous, le tout centré */
-    .product {
-      grid-template-columns: 1fr;
-      gap: clamp(1.4rem, 6vw, 2rem);
-      justify-items: center;
-      text-align: center;
-    }
-    .product__square { max-width: 380px; width: 100%; }
-    .product__info { text-align: center; }
-    .product__desc { margin-left: auto; margin-right: auto; }
-    /* sur mobile, on annule l'alternance : tout empilé et centré */
-    .product.is-right { grid-template-columns: 1fr; }
-    .product.is-right .product__square { order: 0; }
-    .product.is-right .product__info  { order: 0; text-align: center; }
-    .product.is-right .product__desc  { margin-left: auto; margin-right: auto; }
 
     /* sur mobile, le rail est replié horizontalement en bas pour rester visible */
     .social-rail {
@@ -635,6 +814,7 @@
     .social-rail__line { width: clamp(18px, 6vw, 26px); height: 1.5px; background: linear-gradient(90deg, var(--rose), var(--orange)); }
 
     .page { padding-bottom: clamp(4.5rem, 12vw, 6rem); }
+    .suggest { grid-template-columns: 1fr; max-width: 380px; gap: clamp(1.8rem, 8vw, 2.4rem); }
 
     .deco-item { width: 58px; height: 58px; filter: drop-shadow(0 4px 9px rgba(248, 116, 47, 0.12)); }
     .deco-item.hide-mobile { display: none; }
@@ -795,22 +975,19 @@
 
   <!-- ===================== CALQUE DÉCOR PLEINE PAGE (fleurs + soleils déplaçables) ===================== -->
   <div class="deco-layer" aria-hidden="true">
-    <!-- ░░ Zone titre « Un p'tit truc en plus ! » (haut de page) ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-1"  style="top:5%;    left:8%;   --rot:-10deg; --s:0.74; --dur:8s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-2"  style="top:3.6%;  right:9%;  --rot:8deg;   --s:0.98; --dur:10s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-3"  style="top:10%;   left:22%;  --rot:14deg;  --s:0.54; --dur:9s;  --delay:-2s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <!-- ░░ Haut de page ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-1"  style="top:5%;    left:7%;   --rot:-10deg; --s:0.72; --dur:8s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-2"  style="top:3.6%;  right:8%;  --rot:8deg;   --s:0.92; --dur:10s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
 
-    <!-- ░░ Le long des rangées produits (marges latérales) ░░ -->
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-4"  style="top:24%;   right:4%;  --rot:-6deg;  --s:0.62; --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-5"  style="top:36%;   left:3%;   --rot:6deg;   --s:0.6;  --dur:10s; --delay:-2.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-6"  style="top:48%;   right:3.5%; --rot:11deg; --s:0.66; --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-7"  style="top:60%;   left:3.5%; --rot:-9deg;  --s:0.6;  --dur:11s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-8"  style="top:72%;   right:4%;  --rot:7deg;   --s:0.62; --dur:8s;  --delay:-2s;   color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-9"  style="top:80%;   left:4%;   --rot:12deg;  --s:0.56; --dur:10s; --delay:-1s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <!-- ░░ Le long du bloc principal (marges latérales) ░░ -->
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-3"  style="top:26%;   right:4%;  --rot:-6deg;  --s:0.6;  --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-4"  style="top:40%;   left:3%;   --rot:6deg;   --s:0.58; --dur:10s; --delay:-2.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-5"  style="top:56%;   right:3.5%; --rot:11deg; --s:0.62; --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-6"  style="top:72%;   left:4%;   --rot:-9deg;  --s:0.58; --dur:11s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
 
     <!-- ░░ Bas de page ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-10" style="top:92%;   left:10%;  --rot:10deg;  --s:0.66; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-11" style="top:93%;   right:11%; --rot:-8deg;  --s:0.62; --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-7" style="top:92%;   left:10%;  --rot:10deg;  --s:0.64; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-8" style="top:93%;   right:11%; --rot:-8deg;  --s:0.6;  --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
   </div>
 
   <div class="shell">
@@ -867,151 +1044,168 @@
     </nav>
   </div>
 
-  <!-- ===================== CONTENU « BOUTIQUE » ===================== -->
+  <!-- ===================== CONTENU « FICHE PRODUIT » ===================== -->
   <main class="page">
 
-    <!-- ===== GRAND TITRE de la page (façon hero) ===== -->
-    <section class="hero reveal" aria-labelledby="boutique-title">
-      <h1 class="hero__title" id="boutique-title">Un p’tit truc <span class="grad">en plus</span>&#8239;!</h1>
-      <p class="hero__subtitle">Coffrets, kits créatifs et cartes cadeaux&#8239;: un emplacement pour de jolies trouvailles à offrir ou se faire plaisir.</p>
-      <span class="hero__rule" aria-hidden="true"></span>
-    </section>
-
-    <!-- ===== ONGLETS DE TRI ===== -->
-    <div class="shop-tabs reveal" role="tablist" aria-label="Trier les produits">
-      <button class="shop-tab is-active" type="button" role="tab" aria-selected="true" data-cat="tout">Tout</button>
-      <button class="shop-tab" type="button" role="tab" aria-selected="false" data-cat="coffret">Coffrets</button>
-      <button class="shop-tab" type="button" role="tab" aria-selected="false" data-cat="carte">Cartes cadeaux</button>
+    <!-- ===== HAUT : lien retour + fil d'ariane discret ===== -->
+    <div class="topbar reveal">
+      <a class="back" href="/boutique/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Retour à la boutique
+      </a>
+      <nav class="crumb" aria-label="Fil d’Ariane">
+        <a href="/boutique/">Boutique</a>
+        <span class="sep" aria-hidden="true">›</span>
+        <span class="current" aria-current="page">Coffret créatif</span>
+      </nav>
     </div>
 
-    <!-- ===== LISTE DE 5 PRODUITS (placeholders) — carré à gauche, description à droite ===== -->
-    <section class="shop" aria-label="Nos produits">
+    <!-- ===== BLOC PRINCIPAL : 2 colonnes (galerie | infos) ===== -->
+    <section class="detail" aria-labelledby="produit-nom">
 
-      <!-- Produit 1 — Coffret -->
-      <article class="product reveal">
-        <div class="product__square">
+      <!-- COLONNE GAUCHE : grande photo + mini-galerie -->
+      <div class="gallery reveal">
+        <!-- GRANDE PHOTO carrée — style « contour marqué » + fleur/soleil au bord -->
+        <div class="hero-photo">
           <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
           <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
+          <div class="photo-frame" role="img" aria-label="Emplacement pour la grande photo du produit">
+            <div class="photo-inner" id="hero-photo-inner">
+              <span class="photo-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
               </span>
-              <span class="product__photo-label">Photo</span>
+              <span class="photo-label">Photo</span>
             </div>
           </div>
         </div>
-        <div class="product__info">
-          <p class="product__kicker">Coffret</p>
-          <h2 class="product__name">Coffret créatif</h2>
-          <p class="product__desc">Petit texte d’emplacement pour décrire ce coffret en une ligne toute douce.</p>
-          <p class="product__price">34<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/produit/">Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </article>
 
-      <!-- Produit 2 — Kit DIY -->
-      <article class="product reveal">
-        <div class="product__square">
-          <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="product__photo-label">Photo</span>
+        <!-- MINI-GALERIE : 4 vignettes carrées (mise en évidence au survol/clic) -->
+        <div class="thumbs" role="group" aria-label="Autres vues du produit">
+          <button type="button" class="thumb is-selected" aria-label="Vue 1" aria-pressed="true">
+            <span class="thumb__inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+          </button>
+          <button type="button" class="thumb" aria-label="Vue 2" aria-pressed="false">
+            <span class="thumb__inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+          </button>
+          <button type="button" class="thumb" aria-label="Vue 3" aria-pressed="false">
+            <span class="thumb__inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+          </button>
+          <button type="button" class="thumb" aria-label="Vue 4" aria-pressed="false">
+            <span class="thumb__inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- COLONNE DROITE : infos produit -->
+      <div class="info reveal">
+        <p class="info__kicker">Coffret</p>
+        <h1 class="info__name" id="produit-nom">Coffret créatif</h1>
+        <p class="info__price">34<span class="cur"> €</span></p>
+        <p class="info__desc">Petit texte d’emplacement pour présenter ce joli coffret en quelques lignes toutes douces. On y glissera bientôt une vraie description&#8239;: ce qu’on ressent en l’ouvrant, à qui l’offrir, et la petite touche qui fait du BIEN. En attendant, ce paragraphe garde la place au chaud.</p>
+
+        <div class="buy">
+          <div class="qty" role="group" aria-label="Choisir la quantité">
+            <button type="button" class="qty__btn" id="qty-minus" aria-label="Diminuer la quantité" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14" stroke-linecap="round"/></svg>
+            </button>
+            <span class="qty__value" id="qty-value" aria-live="polite">1</span>
+            <button type="button" class="qty__btn" id="qty-plus" aria-label="Augmenter la quantité">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <button type="button" class="btn-cart" id="add-cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+              <path d="M3 4h2l2.4 12.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 8H6.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="9.5" cy="20.5" r="1.4" fill="currentColor" stroke="none"/>
+              <circle cx="17.5" cy="20.5" r="1.4" fill="currentColor" stroke="none"/>
+            </svg>
+            <span id="add-cart-label">Ajouter au panier</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION « Ce qu'il y a dedans » ===== -->
+    <section class="section reveal" aria-labelledby="dedans-titre">
+      <div class="section__head">
+        <h2 class="section__title" id="dedans-titre">
+          <span class="sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunTitle"/></svg></span>Ce qu’il y a dedans
+        </h2>
+        <span class="section__rule" aria-hidden="true"></span>
+      </div>
+      <ul class="inside">
+        <li>
+          <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100" style="color:var(--rose)"><use href="#soleiaFlowerRetro"/></svg></span>
+          Un premier élément d’emplacement à remplir plus tard.
+        </li>
+        <li>
+          <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+          Un deuxième petit quelque chose, encore provisoire.
+        </li>
+        <li>
+          <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100" style="color:var(--orange)"><use href="#soleiaFlowerRetro"/></svg></span>
+          Un troisième ingrédient placeholder, tout doux.
+        </li>
+        <li>
+          <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+          Un quatrième élément factice, à compléter.
+        </li>
+        <li>
+          <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100" style="color:var(--rose-doux)"><use href="#soleiaFlowerRetro"/></svg></span>
+          Un cinquième petit plus, en attendant le vrai texte.
+        </li>
+        <li>
+          <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+          Et une petite surprise d’emplacement pour finir.
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== SECTION « Tu aimeras aussi » ===== -->
+    <section class="section reveal" aria-labelledby="aussi-titre">
+      <div class="section__head">
+        <h2 class="section__title" id="aussi-titre">Tu aimeras aussi</h2>
+        <span class="section__rule" aria-hidden="true"></span>
+      </div>
+      <div class="suggest">
+
+        <a class="card" href="/boutique/produit/">
+          <div class="card__square">
+            <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+            <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+            <div class="card__photo" role="img" aria-label="Emplacement pour la photo du produit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><use href="#soleiaPhotoIcon"/></svg>
             </div>
           </div>
-        </div>
-        <div class="product__info">
-          <p class="product__kicker">Kit créatif</p>
-          <h2 class="product__name">Kit DIY</h2>
-          <p class="product__desc">Une ligne provisoire pour présenter ce kit à faire soi-même, bien au chaud.</p>
-          <p class="product__price">22<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/produit/">Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </article>
+          <h3 class="card__name">Kit DIY</h3>
+          <p class="card__price">22<span class="cur"> €</span></p>
+        </a>
 
-      <!-- Produit 3 — Carte cadeau (atelier) -->
-      <article class="product reveal">
-        <div class="product__square">
-          <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="product__photo-label">Photo</span>
+        <a class="card" href="/boutique/produit/">
+          <div class="card__square">
+            <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+            <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+            <div class="card__photo" role="img" aria-label="Emplacement pour la photo du produit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><use href="#soleiaPhotoIcon"/></svg>
             </div>
           </div>
-        </div>
-        <div class="product__info">
-          <p class="product__kicker">Carte cadeau</p>
-          <h2 class="product__name">Carte cadeau — Atelier</h2>
-          <p class="product__desc">Un bon pour un atelier&#8239;: emplacement à compléter avec quelques mots tendres.</p>
-          <p class="product__price">45<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/produit/">Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </article>
+          <h3 class="card__name">Coffret découverte</h3>
+          <p class="card__price">29<span class="cur"> €</span></p>
+        </a>
 
-      <!-- Produit 4 — Coffret découverte -->
-      <article class="product reveal">
-        <div class="product__square">
-          <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="product__photo-label">Photo</span>
+        <a class="card" href="/boutique/produit/">
+          <div class="card__square">
+            <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+            <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+            <div class="card__photo" role="img" aria-label="Emplacement pour la photo du produit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><use href="#soleiaPhotoIcon"/></svg>
             </div>
           </div>
-        </div>
-        <div class="product__info">
-          <p class="product__kicker">Coffret</p>
-          <h2 class="product__name">Coffret découverte</h2>
-          <p class="product__desc">Texte d’exemple pour ce coffret découverte&#8239;: une petite ligne, le temps de remplir.</p>
-          <p class="product__price">29<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/produit/">Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </article>
+          <h3 class="card__name">Carte cadeau</h3>
+          <p class="card__price">50<span class="cur"> €</span></p>
+        </a>
 
-      <!-- Produit 5 — Carte cadeau -->
-      <article class="product reveal">
-        <div class="product__square">
-          <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="product__photo-label">Photo</span>
-            </div>
-          </div>
-        </div>
-        <div class="product__info">
-          <p class="product__kicker">Carte cadeau</p>
-          <h2 class="product__name">Carte cadeau</h2>
-          <p class="product__desc">Emplacement pour un montant libre à offrir&#8239;: une ligne discrète, à personnaliser.</p>
-          <p class="product__price">50<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/produit/">Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </article>
-
+      </div>
     </section>
 
     <!-- ===== PIED DE PAGE sobre ===== -->
@@ -1020,47 +1214,52 @@
     </footer>
   </main>
 
-  <!-- ===================== ONGLETS DE TRI + ALTERNANCE (zigzag recalculé) ===================== -->
+  <!-- ===================== MINI-GALERIE : mise en évidence + SÉLECTEUR DE QUANTITÉ ===================== -->
   <script>
   (function () {
-    var products = Array.prototype.slice.call(document.querySelectorAll(".product"));
-    var tabs = Array.prototype.slice.call(document.querySelectorAll(".shop-tab"));
-    if (!products.length) return;
-
-    function catOf(p) {
-      var k = p.querySelector(".product__kicker");
-      var t = (k && k.textContent || "").toLowerCase();
-      return /carte/.test(t) ? "carte" : "coffret";
-    }
-
-    // (re)pose l'alternance gauche/droite sur les seuls produits VISIBLES
-    function applyZigzag() {
-      var i = 0;
-      products.forEach(function (p) {
-        if (p.style.display === "none") return;
-        p.classList.toggle("is-right", i % 2 === 1);
-        i++;
-      });
-    }
-
-    function filter(cat) {
-      products.forEach(function (p) {
-        var show = (cat === "tout") || (catOf(p) === cat);
-        p.style.display = show ? "" : "none";
-      });
-      applyZigzag();
-    }
-
-    tabs.forEach(function (t) {
+    // --- mini-galerie : une vignette sélectionnée à la fois ---
+    var thumbs = Array.prototype.slice.call(document.querySelectorAll(".thumb"));
+    thumbs.forEach(function (t) {
       t.addEventListener("click", function () {
-        tabs.forEach(function (x) { x.classList.remove("is-active"); x.setAttribute("aria-selected", "false"); });
-        t.classList.add("is-active");
-        t.setAttribute("aria-selected", "true");
-        filter(t.getAttribute("data-cat"));
+        thumbs.forEach(function (x) { x.classList.remove("is-selected"); x.setAttribute("aria-pressed", "false"); });
+        t.classList.add("is-selected");
+        t.setAttribute("aria-pressed", "true");
       });
     });
 
-    applyZigzag();
+    // --- sélecteur de quantité (− 1 +) ---
+    var minus = document.getElementById("qty-minus");
+    var plus = document.getElementById("qty-plus");
+    var value = document.getElementById("qty-value");
+    var MIN = 1, MAX = 20;
+    function get() { return parseInt(value.textContent, 10) || MIN; }
+    function set(n) {
+      n = Math.max(MIN, Math.min(MAX, n));
+      value.textContent = n;
+      minus.disabled = (n <= MIN);
+      plus.disabled = (n >= MAX);
+    }
+    if (minus && plus && value) {
+      minus.addEventListener("click", function () { set(get() - 1); });
+      plus.addEventListener("click", function () { set(get() + 1); });
+      set(get());
+    }
+
+    // --- bouton « Ajouter au panier » : petit retour visuel (placeholder, sans vrai panier) ---
+    var add = document.getElementById("add-cart");
+    var label = document.getElementById("add-cart-label");
+    if (add && label) {
+      var original = label.textContent;
+      var timer = null;
+      add.addEventListener("click", function () {
+        add.classList.remove("is-added");
+        void add.offsetWidth;       /* relance l'animation */
+        add.classList.add("is-added");
+        label.textContent = "Ajouté ✿";
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(function () { label.textContent = original; }, 1600);
+      });
+    }
   })();
   </script>
 
@@ -1099,7 +1298,7 @@
   <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT (+ mémoire des positions) ===================== -->
   <script>
   (function () {
-    var STORE_KEY = "soleia-deco-pos-boutique";
+    var STORE_KEY = "soleia-deco-pos-produit";
     var items = Array.prototype.slice.call(document.querySelectorAll(".deco-item"));
     if (!items.length) return;
 
