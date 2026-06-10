@@ -1107,6 +1107,21 @@
     var items = Array.prototype.slice.call(document.querySelectorAll(".deco-item"));
     if (!items.length) return;
 
+    // --- le calque décoratif doit couvrir TOUTE la hauteur du document ---
+    // (sinon height:100% = hauteur d'un écran et les décors se tassent en haut de page)
+    var layer = document.querySelector(".deco-layer");
+    function sizeLayer() {
+      if (!layer) return;
+      layer.style.height = "0px";                                  // on neutralise pour mesurer le contenu seul
+      layer.style.height = document.documentElement.scrollHeight + "px";
+    }
+    sizeLayer();
+    window.addEventListener("load", sizeLayer);
+    window.addEventListener("resize", sizeLayer);
+    setTimeout(sizeLayer, 600);
+    setTimeout(sizeLayer, 1600);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(sizeLayer); }
+
     // --- lecture des positions mémorisées (robuste) ---
     function loadPos() {
       try {
