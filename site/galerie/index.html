@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Galerie — Soleia Expérience</title>
+<title>Soleia Expérience — Galerie des souvenirs</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,14 +11,12 @@
 <style>
   :root {
     /* ===== PALETTE EXACTE SOLEIA ===== */
-    --rose: #fb6ba6;          /* rose marque */
-    --orange: #f8742f;        /* orange marque */
-    --rose-clair: #f8e6e6;    /* rose clair marque */
-    --ink: #3a2a2e;           /* texte sombre chaleureux */
-    --creme: #fffaf6;         /* crème / blanc cassé */
-    --or: #f4b63e;            /* jaune doré chaud — UNIQUEMENT cœurs de fleurs / soleils */
-    --rose-doux: #fba6c6;     /* rose plus doux (déco) */
-    /* dérivés neutres pour voiles/verre (transparences de la crème) */
+    --rose: #fb6ba6;
+    --orange: #f8742f;
+    --rose-clair: #f8e6e6;
+    --ink: #3a2a2e;
+    --creme: #fffaf6;
+    --or: #f4b63e;              /* jaune doré pour les petits cœurs */
     --ink-soft: rgba(58, 42, 46, 0.62);
     --glass: rgba(255, 250, 246, 0.62);
     --glass-strong: rgba(255, 250, 246, 0.82);
@@ -26,8 +24,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; height: 100%; }
 
   body {
     font-family: "Space Grotesk", system-ui, sans-serif;
@@ -35,12 +32,10 @@
     background: var(--creme);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
-    min-height: 100vh;
-    min-height: 100svh;
+    overflow: hidden;                 /* une seule vue, pas de scroll */
   }
 
-  /* ============ FOND : gradient vivant réactif (FIXE — la page défile par-dessus, fond CONTINU) ============ */
+  /* ============ FOND : gradient vivant réactif (identique accueil) ============ */
   .living {
     position: fixed;
     inset: 0;
@@ -49,8 +44,6 @@
     background:
       radial-gradient(130% 120% at 50% 0%, var(--creme) 0%, #fff2ea 56%, #ffe3d2 100%);
   }
-
-  /* Fallback CSS animé (sans JS / sans WebGL) : aurora + blobs doux, plus chaud */
   .living__css {
     position: absolute;
     inset: -20%;
@@ -69,8 +62,6 @@
     50%  { transform: translate3d(3%, 2%, 0) rotate(8deg) scale(1.12); }
     100% { transform: translate3d(-1%, 3%, 0) rotate(-6deg) scale(1.06); }
   }
-
-  /* Canvas WebGL au-dessus du fallback une fois prêt */
   #gl {
     position: absolute;
     inset: 0;
@@ -81,15 +72,13 @@
   }
   .gl-ready #gl { opacity: 1; }
   .gl-ready .living__css { opacity: 0; }
-
-  /* Voile crème + grain fin — ATTÉNUÉ pour laisser ressortir plus de couleur (page solaire) */
   .living__veil {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(125% 96% at 50% 3%, transparent 40%, rgba(255, 250, 246, 0.34) 100%),
-      radial-gradient(82% 70% at 50% 48%, rgba(255, 250, 246, 0.20), transparent 66%),
-      linear-gradient(180deg, rgba(255, 250, 246, 0.18) 0%, transparent 28%, transparent 74%, rgba(255, 250, 246, 0.24) 100%);
+      radial-gradient(125% 96% at 50% 3%, transparent 32%, rgba(255, 250, 246, 0.52) 100%),
+      radial-gradient(82% 70% at 50% 48%, rgba(255, 250, 246, 0.42), transparent 64%),
+      linear-gradient(180deg, rgba(255, 250, 246, 0.30) 0%, transparent 26%, transparent 72%, rgba(255, 250, 246, 0.40) 100%);
     pointer-events: none;
   }
   .living__grain {
@@ -101,14 +90,18 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   }
 
-  /* ============ SHELL ============ */
+  /* ============ SHELL — une seule vue ============ */
   .shell {
     position: relative;
-    z-index: 4;
-    padding: clamp(0.9rem, 2.2vw, 1.7rem) clamp(1.4rem, 5vw, 4.8rem) 0 clamp(1.4rem, 5vw, 4.8rem);
+    z-index: 2;
+    height: 100svh;
+    min-height: 600px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: clamp(0.9rem, 2.2vw, 1.7rem) clamp(1.4rem, 5vw, 4.8rem) clamp(1rem, 2.2vh, 1.6rem) clamp(1.4rem, 5vw, 4.8rem);
   }
 
-  /* ============ NAV — 3 colonnes, haut désencombré (identique à l'accueil) ============ */
+  /* ============ NAV ============ */
   .nav {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -124,13 +117,10 @@
     padding: 0;
   }
   .nav__col--left { justify-self: start; }
-  .nav__col--right {
-    justify-self: end;
-    gap: clamp(1.1rem, 2.2vw, 2rem);
-  }
+  .nav__col--right { justify-self: end; gap: clamp(1.1rem, 2.2vw, 2rem); }
   .nav__col a.nav__link {
-    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;  /* menu = même police que l'accueil */
-    font-weight: 700;                 /* MENU EN GRAS */
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-weight: 700;
     font-size: clamp(1.08rem, 1.3vw, 1.2rem);
     letter-spacing: 0.012em;
     color: var(--ink);
@@ -153,30 +143,24 @@
   .nav__col a.nav__link:hover::after,
   .nav__col a.nav__link:focus-visible::after { transform: scaleX(1); }
   .nav__col a.nav__link:hover { color: var(--orange); }
-  /* lien actif : souligné dégradé visible en permanence */
+  /* lien actif = Galerie */
   .nav__col a.nav__link.is-active { color: var(--orange); }
   .nav__col a.nav__link.is-active::after { transform: scaleX(1); }
 
-  /* ===== LOGO OFFICIEL centré ===== */
   .brand {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;  /* emblème au centre EXACT, un mot de chaque côté */
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: clamp(0.5rem, 1.3vw, 1.1rem);
     text-decoration: none;
     justify-self: center;
     line-height: 1;
   }
-  .brand__word--left { justify-self: end; }    /* SOLEIA collé à l’emblème */
-  .brand__word--right { justify-self: start; } /* EXPÉRIENCE collé à l’emblème */
-  .brand img {
-    height: clamp(40px, 5.4vh, 60px);
-    width: auto;
-    display: block;
-  }
-  /* « Soleia » (gauche) et « Expérience » (droite) — même famille que « BIEN » */
+  .brand__word--left { justify-self: end; }
+  .brand__word--right { justify-self: start; }
+  .brand img { height: clamp(40px, 5.4vh, 60px); width: auto; display: block; }
   .brand__word {
-    font-family: "League Spartan", sans-serif;  /* « SOLEIA EXPÉRIENCE » en majuscules */
+    font-family: "League Spartan", sans-serif;
     font-weight: 700;
     font-size: clamp(0.82rem, 1.25vw, 1.1rem);
     letter-spacing: 0.08em;
@@ -185,16 +169,10 @@
     line-height: 1;
     white-space: nowrap;
   }
-  /* repli si /logo.svg indisponible : emblème soleil bi-ton inline */
-  .brand__fallback {
-    display: none;
-    height: clamp(40px, 5.4vh, 60px);
-    width: auto;
-  }
+  .brand__fallback { display: none; height: clamp(40px, 5.4vh, 60px); width: auto; }
   .brand.is-fallback img { display: none; }
   .brand.is-fallback .brand__fallback { display: block; }
 
-  /* icône compte discrète à l'extrême droite (tolérée) */
   .icon-btn {
     display: grid;
     place-items: center;
@@ -233,35 +211,7 @@
   }
   .nav__burger svg { width: 20px; height: 20px; }
 
-  /* menu mobile déroulant (repli simple, sans dépendance) */
-  .mobile-menu {
-    display: none;
-    position: relative;
-    z-index: 4;
-    margin: 0.6rem clamp(1.4rem, 5vw, 4.8rem) 0;
-    padding: 0.6rem;
-    border-radius: 22px;
-    background: var(--glass-strong);
-    border: 1px solid rgba(251, 107, 166, 0.18);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 14px 36px rgba(248, 116, 47, 0.14);
-  }
-  .mobile-menu.is-open { display: block; }
-  .mobile-menu a {
-    display: block;
-    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 1.12rem;
-    color: var(--ink);
-    text-decoration: none;
-    padding: 0.7rem 0.9rem;
-    border-radius: 14px;
-  }
-  .mobile-menu a.is-active { color: var(--orange); }
-  .mobile-menu a:hover { background: rgba(248, 230, 230, 0.6); color: var(--orange); }
-
-  /* ============ RAIL RÉSEAUX SOCIAUX — bord DROIT, centré vertical ============ */
+  /* ============ RAIL RÉSEAUX SOCIAUX ============ */
   .social-rail {
     position: fixed;
     z-index: 6;
@@ -292,166 +242,421 @@
     border-radius: 2px;
     opacity: 0.8;
   }
-  .social-rail .icon-btn {
-    width: 42px; height: 42px;
-    background: var(--glass-strong);
-  }
+  .social-rail .icon-btn { width: 42px; height: 42px; background: var(--glass-strong); }
 
-  /* ============================================================
-     CONTENU « EN COURS » — petit hero centré, plein écran, très aéré
-     ============================================================ */
-  .page {
+  /* ============ SCÈNE (zone centrale, contient les 2 états) ============ */
+  .stage {
     position: relative;
-    z-index: 2;
-    min-height: calc(100vh - 96px);
-    min-height: calc(100svh - 96px);
-    display: grid;
-    place-items: center;
-    padding: clamp(2rem, 7vh, 5rem) clamp(1.4rem, 6vw, 4rem) clamp(3rem, 9vh, 6rem);
+    overflow: hidden;
   }
-
-  .hero {
-    text-align: center;
-    max-width: 760px;
-    margin: 0 auto;
-  }
-
-  /* petit badge / sur-titre « EN COURS » */
-  .hero__badge {
-    display: inline-flex;
+  .panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.55em;
-    font-family: "League Spartan", sans-serif;
-    font-weight: 800;
-    font-size: clamp(0.82rem, 1.3vw, 0.98rem);
-    letter-spacing: 0.32em;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.7s;
+    pointer-events: none;
+  }
+  .panel.is-on {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* ====== EYEBROW / INTITULÉ ====== */
+  .eyebrow {
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.66rem, 1vw, 0.78rem);
+    letter-spacing: 0.34em;
     text-transform: uppercase;
     color: var(--orange);
-    padding: 0.5rem 1.1rem;
-    border-radius: 999px;
-    background: rgba(248, 230, 230, 0.5);
-    border: 1px solid rgba(251, 107, 166, 0.22);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 8px 22px rgba(248, 116, 47, 0.12);
-    margin-bottom: clamp(1.5rem, 4vh, 2.4rem);
-  }
-  .hero__badge .dot {
-    width: 0.5em; height: 0.5em;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--rose), var(--orange));
-    box-shadow: 0 0 0 0 rgba(248, 116, 47, 0.45);
-    animation: badgePulse 2.4s ease-in-out infinite;
-  }
-  @keyframes badgePulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(248, 116, 47, 0.40); }
-    50%      { box-shadow: 0 0 0 6px rgba(248, 116, 47, 0); }
+    margin: 0;
   }
 
-  /* GRAND TITRE chaleureux en Fraunces */
-  .hero__title {
+  /* ============================================================= */
+  /* ÉTAT A — SÉLECTION DES ÉDITIONS (la cordelette)              */
+  /* ============================================================= */
+  .editions { width: 100%; }
+  .editions__head {
+    text-align: center;
+    margin-bottom: clamp(1.6rem, 5vh, 3.4rem);
+  }
+  .editions__title {
     font-family: "Fraunces", Georgia, serif;
-    font-weight: 440;
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    line-height: 1.04;
-    letter-spacing: -0.025em;
+    font-weight: 350;
+    font-size: clamp(2.1rem, 5.2vw, 3.9rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0.5rem 0 0.7rem;
     color: var(--ink);
-    margin: 0;
     font-variation-settings: "opsz" 144;
   }
-  /* « bientôt » mis en valeur en dégradé rose → orange (comme le mot « BIEN ») */
-  .hero__title .grad {
+  .editions__title em {
+    font-style: italic;
     background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
   }
-
-  .hero__rule {
-    display: block;
-    width: clamp(56px, 8vw, 96px);
-    height: 4px;
-    margin: clamp(1.4rem, 3.4vh, 2.2rem) auto clamp(1.5rem, 3.4vh, 2.2rem);
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--rose), var(--orange));
-    opacity: 0.9;
-  }
-
-  /* courte phrase placeholder douce et atténuée */
-  .hero__sub {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 400;
-    font-size: clamp(1.08rem, 1.7vw, 1.32rem);
-    line-height: 1.7;
-    color: var(--ink-soft);
-    margin: 0 auto clamp(2.2rem, 5vh, 3.2rem);
+  .editions__sub {
+    margin: 0 auto;
     max-width: 46ch;
+    font-size: clamp(0.92rem, 1.4vw, 1.06rem);
+    line-height: 1.5;
+    color: var(--ink-soft);
   }
 
-  /* bouton « Retour à l'accueil » — style pilule */
-  .hero__back {
+  /* ---- la cordelette + ses tirages ---- */
+  .clothesline {
+    position: relative;
+    width: min(92vw, 1020px);
+    margin: 0 auto;
+  }
+  /* la ficelle douce, très tendue (courbe SVG en arrière-plan) */
+  .clothesline__rope {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    width: 100vw;
+    height: 60px;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .clothesline__rope path {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0.5;
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: drawRope 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes drawRope {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .shots {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 4vw, 3.4rem);
+    padding-top: clamp(0.4rem, 2vh, 1rem);
+    align-items: start;
+  }
+  /* les photos suivent la courbe de la ficelle : celle du milieu descend un peu */
+  .shot:nth-child(2) { margin-top: clamp(12px, 1.9vw, 28px); }
+
+  /* un tirage suspendu */
+  .shot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+    opacity: 0;
+    transform: translateY(-16px);
+    animation: dropIn 0.7s cubic-bezier(0.34, 1.3, 0.5, 1) forwards;
+  }
+  .shot:nth-child(1) { animation-delay: 0.55s; }
+  .shot:nth-child(2) { animation-delay: 0.72s; }
+  .shot:nth-child(3) { animation-delay: 0.89s; }
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* la pince à linge fine et élégante */
+  .shot__peg {
+    position: relative;
+    z-index: 3;
+    width: 11px;
+    height: 30px;
+    margin-bottom: -8px;
+  }
+  .shot__peg svg { width: 100%; height: 100%; display: block; }
+
+  /* le cadre du tirage */
+  .shot__frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 3.7;
+    background: var(--creme);
+    border-radius: 6px;
+    padding: clamp(0.5rem, 1.2vw, 0.8rem);
+    padding-bottom: clamp(1.5rem, 3.2vw, 2.1rem);
+    box-shadow:
+      0 1px 0 rgba(58,42,46,0.04),
+      0 18px 36px -18px rgba(58, 42, 46, 0.34);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+    transform-origin: top center;
+  }
+  .shot__photo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background:
+      linear-gradient(150deg, rgba(251,107,166,0.16), rgba(248,116,47,0.16));
+  }
+  .shot__photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,250,246,0.18), transparent 40%);
+    pointer-events: none;
+  }
+  .shot__photo svg.ph {
+    width: 34%;
+    height: 34%;
+    color: rgba(58, 42, 46, 0.34);
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.4;
+  }
+  .shot__cap {
+    margin-top: clamp(0.7rem, 1.6vh, 1rem);
+    text-align: center;
+  }
+  .shot__cap-title {
+    display: block;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 420;
+    font-size: clamp(1rem, 1.7vw, 1.22rem);
+    color: var(--ink);
+    letter-spacing: 0.005em;
+  }
+  .shot__cap-sub {
+    display: block;
+    margin-top: 0.18rem;
+    font-size: clamp(0.66rem, 1vw, 0.74rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .shot:hover .shot__frame,
+  .shot:focus-visible .shot__frame {
+    transform: translateY(2px) rotate(-1.1deg);
+    box-shadow:
+      0 1px 0 rgba(58,42,46,0.04),
+      0 26px 48px -18px rgba(248, 116, 47, 0.42);
+  }
+  .shot:hover .shot__cap-title { color: var(--orange); }
+
+  /* ============================================================= */
+  /* ÉTAT B — GALERIE D'UNE ÉDITION                               */
+  /* ============================================================= */
+  .album { width: 100%; }
+  .album__head {
+    text-align: center;
+    margin-top: clamp(-1.4rem, -2.2vh, -0.6rem);
+    margin-bottom: clamp(1.1rem, 3vh, 2rem);
+  }
+  .album__title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 350;
+    font-size: clamp(2.2rem, 6vw, 4.4rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0.4rem 0 0;
+    padding-bottom: 0.1em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 144;
+  }
+  .album__title .num {
+    font-style: italic;
+    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .album__theme {
+    margin: 0.55rem 0 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 350;
+    font-size: clamp(0.96rem, 1.5vw, 1.18rem);
+    color: var(--ink-soft);
+  }
+
+  /* ---- carrousel défilement continu ---- */
+  .reel {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);   /* déborde plein écran, façon bande de souvenirs */
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .reel__track {
+    display: flex;
+    gap: clamp(0.9rem, 2vw, 1.6rem);
+    width: max-content;
+    padding: clamp(0.8rem, 2vh, 1.4rem) 0;
+    will-change: transform;
+  }
+  .reel__track.is-anim {
+    animation: reelScroll var(--reel-dur, 46s) linear infinite;
+  }
+  .reel:hover .reel__track.is-anim { animation-play-state: paused; }
+  @keyframes reelScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }   /* la piste contient 2 copies → boucle sans à-coup */
+  }
+
+  .pola {
+    flex: 0 0 auto;
+    width: clamp(150px, 22vh, 220px);
+    background: var(--creme);
+    border-radius: 7px;
+    padding: clamp(0.45rem, 1vw, 0.7rem);
+    padding-bottom: clamp(1.3rem, 2.6vw, 1.9rem);
+    box-shadow: 0 16px 34px -18px rgba(58, 42, 46, 0.4);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pola:nth-child(odd)  { transform: rotate(-1.4deg); }
+  .pola:nth-child(even) { transform: rotate(1.4deg); }
+  .pola__img {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 3px;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(150deg, rgba(251,107,166,0.18), rgba(248,116,47,0.18));
+  }
+  .pola__img.v2 { background: linear-gradient(150deg, rgba(248,116,47,0.18), rgba(244,182,62,0.20)); }
+  .pola__img.v3 { background: linear-gradient(150deg, rgba(251,107,166,0.20), rgba(248,230,230,0.5)); }
+  .pola__img svg.ph {
+    width: 32%; height: 32%;
+    color: rgba(58, 42, 46, 0.32);
+    stroke: currentColor; fill: none; stroke-width: 1.4;
+  }
+  .pola__cap {
+    margin-top: clamp(0.5rem, 1.2vh, 0.8rem);
+    text-align: center;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(0.78rem, 1.2vw, 0.92rem);
+    color: var(--ink-soft);
+  }
+
+  /* ---- barre de navigation entre éditions ---- */
+  .album__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.8rem, 2vw, 1.6rem);
+    margin-top: clamp(1rem, 2.6vh, 1.8rem);
+  }
+  .ed-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.55em;
-    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: clamp(1rem, 1.4vw, 1.12rem);
-    color: var(--creme);
-    text-decoration: none;
-    padding: 0.85rem 1.7rem;
+    gap: 0.5rem;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.86rem, 1.2vw, 0.98rem);
+    letter-spacing: 0.01em;
+    padding: 0.7rem 1.25rem;
     border-radius: 999px;
-    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    box-shadow: 0 14px 32px rgba(248, 116, 47, 0.28), 0 4px 12px rgba(251, 107, 166, 0.2);
-    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+    border: 1.5px solid rgba(58, 42, 46, 0.18);
+    background: var(--glass-strong);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--ink);
+    cursor: pointer;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
   }
-  .hero__back .arrow { transition: transform 0.28s ease; }
-  .hero__back:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 22px 44px rgba(248, 116, 47, 0.34), 0 8px 18px rgba(251, 107, 166, 0.24);
+  .ed-btn:hover {
+    transform: translateY(-2px);
+    color: var(--orange);
+    border-color: var(--rose);
+    box-shadow: 0 10px 24px rgba(251, 107, 166, 0.22);
   }
-  .hero__back:hover .arrow { transform: translateX(-3px); }
+  .ed-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.4rem;
+  }
+  .ed-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: rgba(58, 42, 46, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .ed-dot.is-on {
+    background: linear-gradient(96deg, var(--rose), var(--orange));
+    transform: scale(1.5);
+  }
 
-  /* ============ APPARITION (avec repli : tout visible si pas de JS) ============ */
-  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-  .reveal.is-in { opacity: 1; transform: none; }
-  .reveal--d1 { transition-delay: 0.08s; }
-  .reveal--d2 { transition-delay: 0.16s; }
-  .reveal--d3 { transition-delay: 0.24s; }
-  .reveal--d4 { transition-delay: 0.32s; }
-
-  /* ============================================================
-     ✿ CALQUE DÉCOR — fleurs rétro + soleils dessinés-main, léger ✿
-     ============================================================ */
-  .deco-layer {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;     /* le calque laisse tout passer */
-    z-index: 3;               /* au-dessus du fond, sous la barre (z-index:4) et le rail (z-index:6) */
-    overflow: hidden;
-  }
-  .deco-item {
+  /* retour aux éditions */
+  .back-link {
     position: absolute;
-    pointer-events: auto;     /* on peut l'attraper… */
-    touch-action: none;       /* …au doigt aussi, sans scroller la page */
-    user-select: none;
-    -webkit-user-select: none;
-    cursor: grab;
-    will-change: transform;
-    width: 74px; height: 74px;
-    filter: drop-shadow(0 6px 14px rgba(248, 116, 47, 0.12));
-    transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)) scale(var(--s, 1));
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.74rem, 1.1vw, 0.84rem);
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem 0.2rem;
+    transition: color 0.25s ease;
   }
-  .deco-item.is-grabbing { cursor: grabbing; z-index: 99; filter: drop-shadow(0 10px 22px rgba(248, 116, 47, 0.22)); }
-  .deco-item svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .back-link:hover { color: var(--orange); }
 
-  @keyframes decoFloat {
-    0%   { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
-    50%  { transform: translate(var(--dx,0px), calc(var(--dy,0px) - 8px)) rotate(calc(var(--rot,0deg) + 2.5deg)) scale(var(--s,1)); }
-    100% { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
+  /* ============ FOOT (citation discrète) ============ */
+  .foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-top: clamp(0.4rem, 1.2vh, 0.9rem);
+    padding-bottom: clamp(0.3rem, 1.4vh, 1rem);
   }
-  .deco-item.is-float { animation: decoFloat var(--dur, 8s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
-  .deco-item.is-grabbing, .deco-item.is-moved { animation: none; }
+  /* la phrase du bas reste sur la vue guirlande, mais disparaît dans la galerie d'une édition */
+  .stage:has(#panelAlbum.is-on) ~ .foot { display: none; }
+  .foot p {
+    margin: 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 330;
+    font-size: clamp(0.88rem, 1.4vw, 1.08rem);
+    line-height: 1.4;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+  .foot .heart { color: var(--or); font-style: normal; }
 
   /* ============ FOCUS / A11Y ============ */
   a:focus-visible, button:focus-visible {
@@ -469,33 +674,29 @@
     .brand { justify-self: start; }
     .nav__burger { display: inline-flex; }
 
-    .hero__title { font-size: clamp(2.1rem, 9vw, 3.4rem); }
-
-    /* sur mobile, le rail est replié horizontalement en bas pour rester visible */
     .social-rail {
       flex-direction: row;
       right: 50%;
       top: auto;
-      bottom: 0.5rem;
+      bottom: 0.4rem;
       transform: translateX(50%);
-      background: var(--glass-strong);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 0.35rem 0.6rem;
-      border-radius: 999px;
     }
     .social-rail__label { writing-mode: horizontal-tb; margin-bottom: 0; margin-right: 0.2rem; }
     .social-rail__line { width: clamp(18px, 6vw, 26px); height: 1.5px; background: linear-gradient(90deg, var(--rose), var(--orange)); }
 
-    .page { padding-bottom: clamp(5rem, 14vw, 7rem); }
-
-    .deco-item { width: 58px; height: 58px; filter: drop-shadow(0 4px 9px rgba(248, 116, 47, 0.12)); }
-    .deco-item.hide-mobile { display: none; }
+    /* la guirlande s'adapte : on garde les 3 tirages mais plus petits,
+       et la corde reste tendue derrière */
+    .clothesline { width: 94vw; }
+    .shots { gap: clamp(0.4rem, 2.2vw, 0.9rem); }
+    .shot__cap-title { font-size: 0.82rem; }
+    .shot__cap-sub { letter-spacing: 0.14em; font-size: 0.58rem; }
+    .editions__sub { display: none; }
+    .album__nav { flex-wrap: wrap; }
+    .ed-btn { padding: 0.6rem 1rem; }
+    .foot { display: none; }     /* on libère de la place sur petit écran */
   }
-
-  @media (max-width: 480px) {
-    .deco-item { width: 50px; height: 50px; }
-    .deco-item.hide-small { display: none; }
+  @media (max-width: 420px) {
+    .shot__peg { height: 22px; margin-bottom: -6px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -504,16 +705,18 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
     }
-    html { scroll-behavior: auto; }
     #gl { display: none; }
     .living__css { opacity: 0.94 !important; animation: none !important; }
-    .reveal { opacity: 1 !important; transform: none !important; }
-    .deco-item.is-float { animation: none !important; }
+    .clothesline__rope path { stroke-dashoffset: 0 !important; }
+    .shot { opacity: 1 !important; transform: none !important; }
+    /* carrousel : on n'anime pas tout seul ; il reste lisible et défilable */
+    .reel__track.is-anim { animation: none !important; }
+    .reel { overflow-x: auto; }
   }
 </style>
 </head>
 <body>
-  <!-- ===================== FOND : GRADIENT VIVANT RÉACTIF (FIXE) ===================== -->
+  <!-- ===================== FOND VIVANT ===================== -->
   <div class="living" aria-hidden="true">
     <div class="living__css"></div>
     <canvas id="gl"></canvas>
@@ -521,10 +724,9 @@
     <div class="living__grain"></div>
   </div>
 
-  <!-- ===================== DÉCORS RÉUTILISABLES (définis une fois, réutilisés via <use>) ===================== -->
+  <!-- ===================== DÉCORS RÉUTILISABLES ===================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
-      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques -->
       <g id="soleiaSunDoodle">
         <circle cx="50" cy="50" r="20" fill="#f8742f"/>
         <circle cx="50" cy="50" r="20" fill="#f4b63e" opacity="0.18"/>
@@ -547,53 +749,32 @@
           <path d="M41.4 29.4 q-4.6 -4.6 -4.2 -11.2"/>
         </g>
       </g>
-
-      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, cœur jaune doré -->
       <g id="soleiaFlowerRetro">
         <g fill="currentColor">
-          <path d="M50 12
-                   c 9 0 15 7 14.5 15
-                   c -0.4 6 -4 9.5 -8 12
-                   c -2.5 1.6 -4.6 3 -6.5 3
-                   c -1.9 0 -4 -1.4 -6.5 -3
-                   c -4 -2.5 -7.6 -6 -8 -12
-                   c -0.5 -8 5 -15 14.5 -15 Z"/>
-          <path d="M86.1 38.2
-                   c 2.8 8.6 -1.1 16.3 -8.5 19.4
-                   c -5.6 2.3 -10.1 0.6 -13.9 -1.9
-                   c -2.4 -1.6 -4.5 -2.9 -5.4 -4.6
-                   c -0.9 -1.8 -0.7 -4.3 -0.1 -7.2
-                   c 0.9 -4.6 3 -9.3 8.6 -11.6
-                   c 7.6 -3.1 16 0 19.2 5.9 Z"/>
-          <path d="M72.3 80.9
-                   c -7.3 5.3 -15.9 4.2 -20.4 -2.3
-                   c -3.5 -4.9 -2.7 -9.6 -1.2 -13.9
-                   c 0.9 -2.7 1.6 -5.1 3.1 -6.2
-                   c 1.5 -1.1 4 -1.3 6.9 -1.3
-                   c 4.7 0 9.8 1.1 13.3 6
-                   c 4.5 6.5 5 15.1 -1.7 19.9
-                   l 0 -2.2 Z"/>
-          <path d="M27.7 80.9
-                   c -6.7 -4.8 -6.2 -13.4 -1.7 -19.9
-                   c 3.5 -4.9 8.6 -6 13.3 -6
-                   c 2.9 0 5.4 0.2 6.9 1.3
-                   c 1.5 1.1 2.2 3.5 3.1 6.2
-                   c 1.5 4.3 2.3 9 -1.2 13.9
-                   c -4.5 6.5 -13.1 7.6 -20.4 2.3 Z"/>
-          <path d="M13.9 38.2
-                   c 3.2 -5.9 11.6 -9 19.2 -5.9
-                   c 5.6 2.3 7.7 7 8.6 11.6
-                   c 0.6 2.9 0.8 5.4 -0.1 7.2
-                   c -0.9 1.7 -3 3 -5.4 4.6
-                   c -3.8 2.5 -8.3 4.2 -13.9 1.9
-                   c -7.4 -3.1 -11.3 -10.8 -8.5 -19.4 Z"/>
+          <path d="M50 12 c 9 0 15 7 14.5 15 c -0.4 6 -4 9.5 -8 12 c -2.5 1.6 -4.6 3 -6.5 3 c -1.9 0 -4 -1.4 -6.5 -3 c -4 -2.5 -7.6 -6 -8 -12 c -0.5 -8 5 -15 14.5 -15 Z"/>
+          <path d="M86.1 38.2 c 2.8 8.6 -1.1 16.3 -8.5 19.4 c -5.6 2.3 -10.1 0.6 -13.9 -1.9 c -2.4 -1.6 -4.5 -2.9 -5.4 -4.6 c -0.9 -1.8 -0.7 -4.3 -0.1 -7.2 c 0.9 -4.6 3 -9.3 8.6 -11.6 c 7.6 -3.1 16 0 19.2 5.9 Z"/>
+          <path d="M72.3 80.9 c -7.3 5.3 -15.9 4.2 -20.4 -2.3 c -3.5 -4.9 -2.7 -9.6 -1.2 -13.9 c 0.9 -2.7 1.6 -5.1 3.1 -6.2 c 1.5 -1.1 4 -1.3 6.9 -1.3 c 4.7 0 9.8 1.1 13.3 6 c 4.5 6.5 5 15.1 -1.7 19.9 l 0 -2.2 Z"/>
+          <path d="M27.7 80.9 c -6.7 -4.8 -6.2 -13.4 -1.7 -19.9 c 3.5 -4.9 8.6 -6 13.3 -6 c 2.9 0 5.4 0.2 6.9 1.3 c 1.5 1.1 2.2 3.5 3.1 6.2 c 1.5 4.3 2.3 9 -1.2 13.9 c -4.5 6.5 -13.1 7.6 -20.4 2.3 Z"/>
+          <path d="M13.9 38.2 c 3.2 -5.9 11.6 -9 19.2 -5.9 c 5.6 2.3 7.7 7 8.6 11.6 c 0.6 2.9 0.8 5.4 -0.1 7.2 c -0.9 1.7 -3 3 -5.4 4.6 c -3.8 2.5 -8.3 4.2 -13.9 1.9 c -7.4 -3.1 -11.3 -10.8 -8.5 -19.4 Z"/>
         </g>
         <rect x="42" y="42" width="16" height="16" rx="6.4" fill="#f4b63e"/>
+      </g>
+      <!-- icône « image » pour le cadre photo vide -->
+      <g id="soleiaPhotoIcon">
+        <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
+        <circle cx="8.6" cy="9.6" r="1.7"/>
+        <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <!-- pince à linge fine et élégante (currentColor) -->
+      <g id="soleiaPeg">
+        <rect x="2.2" y="1" width="6.6" height="28" rx="3.3" fill="#f8e6e6" stroke="#3a2a2e" stroke-width="0.9" opacity="0.95"/>
+        <line x1="5.5" y1="6" x2="5.5" y2="24" stroke="#3a2a2e" stroke-width="0.8" opacity="0.45"/>
+        <circle cx="5.5" cy="9.5" r="1.1" fill="#3a2a2e" opacity="0.5"/>
       </g>
     </defs>
   </svg>
 
-  <!-- ===================== RAIL RÉSEAUX SOCIAUX — bord DROIT ===================== -->
+  <!-- ===================== RAIL RÉSEAUX SOCIAUX ===================== -->
   <aside class="social-rail" aria-label="Suivre Soleia sur les réseaux sociaux">
     <span class="social-rail__label" aria-hidden="true">Par ici</span>
     <a class="icon-btn" href="#" aria-label="Instagram de Soleia">
@@ -617,17 +798,8 @@
     <span class="social-rail__line" aria-hidden="true"></span>
   </aside>
 
-  <!-- ===================== CALQUE DÉCOR (fleurs + soleils déplaçables, léger et respirant) ===================== -->
-  <div class="deco-layer" aria-hidden="true">
-    <span class="deco-item is-float" data-deco-id="deco-1" style="top:14%; left:8%;   --rot:-10deg; --s:0.84; --dur:9s;  --delay:-1s;   color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-2" style="top:20%; right:11%; --rot:9deg;   --s:0.98; --dur:11s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-3" style="top:62%; left:11%; --rot:8deg;  --s:0.6;  --dur:10s; --delay:-2s;   color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-4" style="bottom:13%; right:9%; --rot:-7deg; --s:0.74; --dur:9.5s; --delay:-4s; color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-5" style="bottom:20%; left:14%; --rot:5deg; --s:0.56; --dur:11s; --delay:-1.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-  </div>
-
   <div class="shell">
-    <!-- ===================== NAV (identique aux autres pages) ===================== -->
+    <!-- ===================== NAV ===================== -->
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__col nav__col--left">
         <li><a class="nav__link" href="/ateliers/">Ateliers</a></li>
@@ -662,46 +834,111 @@
       <div class="nav__col nav__col--right">
         <a class="nav__link" href="/a-propos/">Concept</a>
         <a class="nav__link is-active" href="/galerie/" aria-current="page">Galerie</a>
-
         <button class="icon-btn account" aria-label="Mon compte">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
             <circle cx="12" cy="8" r="3.4"/>
             <path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" stroke-linecap="round"/>
           </svg>
         </button>
-        <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+        <button class="nav__burger" aria-label="Ouvrir le menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
           </svg>
         </button>
       </div>
     </nav>
-  </div>
 
-  <!-- menu mobile déroulant (apparaît au clic sur le burger) -->
-  <div class="mobile-menu" id="mobile-menu">
-    <a href="/ateliers/">Ateliers</a>
-    <a href="/boutique/">Boutique</a>
-    <a href="/a-propos/">Concept</a>
-    <a class="is-active" href="/galerie/" aria-current="page">Galerie</a>
-  </div>
+    <!-- ===================== SCÈNE : 2 états dans la même vue ===================== -->
+    <div class="stage">
 
-  <!-- ===================== CONTENU « EN COURS » ===================== -->
-  <main class="page">
-    <section class="hero" aria-labelledby="hero-title">
-      <span class="hero__badge reveal" aria-hidden="false">
-        <span class="dot" aria-hidden="true"></span>En cours
-      </span>
-      <h1 class="hero__title reveal reveal--d1" id="hero-title">La galerie arrive <span class="grad">bientôt</span>&#8239;!</h1>
-      <span class="hero__rule reveal reveal--d2" aria-hidden="true"></span>
-      <p class="hero__sub reveal reveal--d3">
-        On prépare ça avec amour. Reviens très vite&#8239;! 🌞
-      </p>
-      <a class="hero__back reveal reveal--d4" href="/">
-        <span class="arrow" aria-hidden="true">←</span> Retour à l’accueil
-      </a>
-    </section>
-  </main>
+      <!-- ===== ÉTAT A — LES ÉDITIONS (la cordelette) ===== -->
+      <section class="panel is-on" id="panelEditions" aria-label="Choisir une édition">
+        <div class="editions">
+          <div class="editions__head">
+            <p class="eyebrow">L’album des souvenirs</p>
+            <h1 class="editions__title">Nos trois dernières <em>éditions</em></h1>          </div>
+
+          <div class="clothesline">
+            <!-- la ficelle douce, presque tendue -->
+            <svg class="clothesline__rope" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 12 C 280 36, 720 36, 1000 12" />
+            </svg>
+
+            <div class="shots">
+              <button class="shot" data-ed="0" aria-label="Ouvrir la galerie : Premier atelier">
+                <span class="shot__peg" aria-hidden="true"><svg viewBox="0 0 11 30"><use href="#soleiaPeg"/></svg></span>
+                <span class="shot__frame">
+                  <span class="shot__photo">
+                    <svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><use href="#soleiaPhotoIcon"/></svg>
+                  </span>
+                </span>
+                <span class="shot__cap">
+                  <span class="shot__cap-title">Premier atelier</span>
+                  <span class="shot__cap-sub">Édition n°01</span>
+                </span>
+              </button>
+
+              <button class="shot" data-ed="1" aria-label="Ouvrir la galerie : Deuxième atelier">
+                <span class="shot__peg" aria-hidden="true"><svg viewBox="0 0 11 30"><use href="#soleiaPeg"/></svg></span>
+                <span class="shot__frame">
+                  <span class="shot__photo">
+                    <svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><use href="#soleiaPhotoIcon"/></svg>
+                  </span>
+                </span>
+                <span class="shot__cap">
+                  <span class="shot__cap-title">Deuxième atelier</span>
+                  <span class="shot__cap-sub">Édition n°02</span>
+                </span>
+              </button>
+
+              <button class="shot" data-ed="2" aria-label="Ouvrir la galerie : Troisième atelier">
+                <span class="shot__peg" aria-hidden="true"><svg viewBox="0 0 11 30"><use href="#soleiaPeg"/></svg></span>
+                <span class="shot__frame">
+                  <span class="shot__photo">
+                    <svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><use href="#soleiaPhotoIcon"/></svg>
+                  </span>
+                </span>
+                <span class="shot__cap">
+                  <span class="shot__cap-title">Troisième atelier</span>
+                  <span class="shot__cap-sub">Édition n°03</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ÉTAT B — LA GALERIE D'UNE ÉDITION ===== -->
+      <section class="panel" id="panelAlbum" aria-label="Galerie de l’édition" aria-hidden="true">
+        <button class="back-link" id="backLink" type="button">↩ Retour aux éditions</button>
+
+        <div class="album">
+          <div class="album__head">
+            <p class="eyebrow" id="albumEyebrow">Souvenirs de l’atelier</p>
+            <h2 class="album__title">Édition <span class="num" id="albumNum">n°01</span></h2>
+            <p class="album__theme" id="albumTheme">Premier atelier</p>
+          </div>
+
+          <!-- la bande de souvenirs (défile toute seule, en boucle) -->
+          <div class="reel" aria-label="Bande des souvenirs">
+            <div class="reel__track" id="reelTrack"></div>
+          </div>
+
+          <!-- navigation entre éditions -->
+          <div class="album__nav">
+            <button class="ed-btn" id="prevEd" type="button">‹ Édition précédente</button>
+            <div class="ed-dots" id="edDots" role="tablist" aria-label="Choisir l’édition"></div>
+            <button class="ed-btn" id="nextEd" type="button">Édition suivante ›</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===================== FOOT ===================== -->
+    <footer class="foot">
+      <p>Chaque atelier laisse un souvenir doux. <span class="heart">✿</span> Merci d’avoir partagé ces moments.</p>
+    </footer>
+  </div>
 
   <!-- ===================== Repli logo si /logo.svg indisponible ===================== -->
   <script>
@@ -716,84 +953,123 @@
   })();
   </script>
 
-  <!-- ===================== Menu mobile (burger) ===================== -->
+  <!-- ===================== LOGIQUE GALERIE (états A / B + carrousel) ===================== -->
   <script>
   (function () {
-    var burger = document.querySelector(".nav__burger");
-    var menu = document.getElementById("mobile-menu");
-    if (!burger || !menu) return;
-    burger.addEventListener("click", function () {
-      var open = menu.classList.toggle("is-open");
-      burger.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-  })();
-  </script>
-
-  <!-- ===================== APPARITION (repli sûr : tout visible si indisponible) ===================== -->
-  <script>
-  (function () {
-    var els = document.querySelectorAll(".reveal");
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce || !("IntersectionObserver" in window)) {
-      els.forEach(function (el) { el.classList.add("is-in"); });
-      return;
+
+    /* === Données des éditions (numéro facile à changer) === */
+    var EDITIONS = [
+      { num: "n°01", theme: "Premier atelier",   eyebrow: "Souvenirs de l’atelier", photos: 7, dur: 44 },
+      { num: "n°02", theme: "Deuxième atelier",  eyebrow: "Souvenirs de l’atelier", photos: 8, dur: 50 },
+      { num: "n°03", theme: "Troisième atelier", eyebrow: "Souvenirs de l’atelier", photos: 6, dur: 40 }
+    ];
+    var capLabels = [
+      "Un moment partagé", "Mains créatives", "Sourires", "Couleurs",
+      "Pause douceur", "Création", "Complicité", "Belle lumière"
+    ];
+
+    var panelEd  = document.getElementById("panelEditions");
+    var panelAlb = document.getElementById("panelAlbum");
+    var albNum   = document.getElementById("albumNum");
+    var albTheme = document.getElementById("albumTheme");
+    var albEye   = document.getElementById("albumEyebrow");
+    var track    = document.getElementById("reelTrack");
+    var dotsWrap = document.getElementById("edDots");
+    var current  = 0;
+
+    /* === construit une carte « polaroïd » === */
+    function makePola(i) {
+      var card = document.createElement("div");
+      card.className = "pola";
+      var img = document.createElement("div");
+      img.className = "pola__img v" + ((i % 3) + 1);
+      img.innerHTML = '<svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><use href="#soleiaPhotoIcon"/></svg>';
+      var cap = document.createElement("div");
+      cap.className = "pola__cap";
+      cap.textContent = capLabels[i % capLabels.length];
+      card.appendChild(img);
+      card.appendChild(cap);
+      return card;
     }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+
+    /* === remplit la bande (2 copies pour boucler sans à-coup) === */
+    function fillReel(ed) {
+      track.classList.remove("is-anim");
+      track.innerHTML = "";
+      var n = ed.photos;
+      // copie 1
+      for (var i = 0; i < n; i++) track.appendChild(makePola(i));
+      // copie 2 (identique → la translation -50% reboucle parfaitement)
+      for (var j = 0; j < n; j++) track.appendChild(makePola(j));
+      track.style.setProperty("--reel-dur", ed.dur + "s");
+      if (!reduce) {
+        // relance l'animation proprement
+        void track.offsetWidth;
+        track.classList.add("is-anim");
+      }
+    }
+
+    /* === construit les petits points de navigation === */
+    function buildDots() {
+      dotsWrap.innerHTML = "";
+      EDITIONS.forEach(function (ed, i) {
+        var d = document.createElement("button");
+        d.className = "ed-dot" + (i === current ? " is-on" : "");
+        d.type = "button";
+        d.setAttribute("role", "tab");
+        d.setAttribute("aria-label", "Édition " + ed.num);
+        d.addEventListener("click", function () { showEdition(i); });
+        dotsWrap.appendChild(d);
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
-    els.forEach(function (el) { io.observe(el); });
-    setTimeout(function () { els.forEach(function (el) { el.classList.add("is-in"); }); }, 2600);
-  })();
-  </script>
+    }
+    function refreshDots() {
+      var ds = dotsWrap.querySelectorAll(".ed-dot");
+      ds.forEach(function (d, i) { d.classList.toggle("is-on", i === current); });
+    }
 
-  <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT ===================== -->
-  <script>
-  (function () {
-    var items = Array.prototype.slice.call(document.querySelectorAll(".deco-item"));
-    if (!items.length) return;
-    var startX = 0, startY = 0, baseDx = 0, baseDy = 0, movedThisDrag = false, current = null;
+    /* === affiche une édition (état B) === */
+    function showEdition(i) {
+      current = (i + EDITIONS.length) % EDITIONS.length;
+      var ed = EDITIONS[current];
+      albNum.textContent = ed.num;
+      albTheme.textContent = ed.theme;
+      albEye.textContent = ed.eyebrow;
+      fillReel(ed);
+      refreshDots();
+    }
 
-    function numVar(el, name) {
-      var n = parseFloat(el.style.getPropertyValue(name));
-      return isNaN(n) ? 0 : n;
+    /* === bascule A -> B === */
+    function openAlbum(i) {
+      showEdition(i);
+      panelEd.classList.remove("is-on");
+      panelEd.setAttribute("aria-hidden", "true");
+      panelAlb.classList.add("is-on");
+      panelAlb.setAttribute("aria-hidden", "false");
     }
-    function onDown(e) {
-      var el = e.currentTarget;
-      current = el; movedThisDrag = false;
-      baseDx = numVar(el, "--dx"); baseDy = numVar(el, "--dy");
-      startX = e.clientX; startY = e.clientY;
-      el.classList.add("is-grabbing"); el.classList.add("is-moved");
-      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+    /* === bascule B -> A === */
+    function backToEditions() {
+      panelAlb.classList.remove("is-on");
+      panelAlb.setAttribute("aria-hidden", "true");
+      panelEd.classList.add("is-on");
+      panelEd.setAttribute("aria-hidden", "false");
     }
-    function onMove(e) {
-      var el = e.currentTarget;
-      if (current !== el) return;
-      var dx = baseDx + (e.clientX - startX);
-      var dy = baseDy + (e.clientY - startY);
-      if (Math.abs(e.clientX - startX) > 2 || Math.abs(e.clientY - startY) > 2) movedThisDrag = true;
-      el.style.setProperty("--dx", dx + "px");
-      el.style.setProperty("--dy", dy + "px");
-    }
-    function onUp(e) {
-      var el = e.currentTarget;
-      if (current !== el) return;
-      el.classList.remove("is-grabbing");
-      try { el.releasePointerCapture(e.pointerId); } catch (err) {}
-      current = null;
-    }
-    items.forEach(function (el) {
-      el.addEventListener("pointerdown", onDown);
-      el.addEventListener("pointermove", onMove);
-      el.addEventListener("pointerup", onUp);
-      el.addEventListener("pointercancel", onUp);
-      el.addEventListener("dragstart", function (ev) { ev.preventDefault(); });
+
+    /* === branchements === */
+    Array.prototype.forEach.call(document.querySelectorAll(".shot"), function (btn) {
+      btn.addEventListener("click", function () {
+        openAlbum(parseInt(btn.getAttribute("data-ed"), 10) || 0);
+      });
     });
+    document.getElementById("backLink").addEventListener("click", backToEditions);
+    document.getElementById("prevEd").addEventListener("click", function () { showEdition(current - 1); });
+    document.getElementById("nextEd").addEventListener("click", function () { showEdition(current + 1); });
+
+    buildDots();
   })();
   </script>
 
-  <!-- ===================== WebGL — GRADIENT VIVANT QUI SE COURBE VERS LE CURSEUR (identique à l'accueil) ===================== -->
+  <!-- ===================== WebGL — FOND VIVANT (identique accueil) ===================== -->
   <script>
   (function () {
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -873,10 +1149,10 @@
       "  col += warm * warmCol * 0.6;",
       "  col += exp(-dM*dM / 0.02) * (0.10 + 0.26 * u_pull) * vec3(1.0, 0.82, 0.64);",
       "",
-      "  col = mix(col, CREAM, smoothstep(0.55, 1.0, uv.y) * 0.34);",
-      "  col = mix(col, CREAM, 0.06);",
+      "  col = mix(col, CREAM, smoothstep(0.55, 1.0, uv.y) * 0.50);",
+      "  col = mix(col, CREAM, 0.12);",
       "  float vig = distance(uv, vec2(0.5, 0.5));",
-      "  col = mix(col, CREAM, smoothstep(0.55, 1.10, vig) * 0.22);",
+      "  col = mix(col, CREAM, smoothstep(0.50, 1.05, vig) * 0.30);",
       "  col = clamp(col, 0.0, 1.0);",
       "",
       "  gl_FragColor = vec4(col, 1.0);",
@@ -937,13 +1213,8 @@
       my = 1.0 - (cy - rect.top) / rect.height;
       pullTarget = 1.0;
     }
-    window.addEventListener("pointermove", function (e) {
-      setFromEvent(e.clientX, e.clientY);
-    }, { passive: true });
-    window.addEventListener("pointerdown", function (e) {
-      setFromEvent(e.clientX, e.clientY);
-      pullTarget = 1.0;
-    }, { passive: true });
+    window.addEventListener("pointermove", function (e) { setFromEvent(e.clientX, e.clientY); }, { passive: true });
+    window.addEventListener("pointerdown", function (e) { setFromEvent(e.clientX, e.clientY); pullTarget = 1.0; }, { passive: true });
     window.addEventListener("pointerleave", function () { pullTarget = 0.0; });
     document.addEventListener("mouseleave", function () { pullTarget = 0.0; });
 
