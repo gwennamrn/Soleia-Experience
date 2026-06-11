@@ -36,8 +36,6 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
-    min-height: 100vh;
-    min-height: 100svh;
   }
 
   /* ============ FOND : gradient vivant réactif (FIXE — la page défile par-dessus, fond CONTINU) ============ */
@@ -153,7 +151,7 @@
   .nav__col a.nav__link:hover::after,
   .nav__col a.nav__link:focus-visible::after { transform: scaleX(1); }
   .nav__col a.nav__link:hover { color: var(--orange); }
-  /* lien actif : souligné dégradé visible en permanence */
+  /* lien actif « Ateliers » : souligné dégradé visible en permanence */
   .nav__col a.nav__link.is-active { color: var(--orange); }
   .nav__col a.nav__link.is-active::after { transform: scaleX(1); }
 
@@ -233,34 +231,6 @@
   }
   .nav__burger svg { width: 20px; height: 20px; }
 
-  /* menu mobile déroulant (repli simple, sans dépendance) */
-  .mobile-menu {
-    display: none;
-    position: relative;
-    z-index: 4;
-    margin: 0.6rem clamp(1.4rem, 5vw, 4.8rem) 0;
-    padding: 0.6rem;
-    border-radius: 22px;
-    background: var(--glass-strong);
-    border: 1px solid rgba(251, 107, 166, 0.18);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 14px 36px rgba(248, 116, 47, 0.14);
-  }
-  .mobile-menu.is-open { display: block; }
-  .mobile-menu a {
-    display: block;
-    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 1.12rem;
-    color: var(--ink);
-    text-decoration: none;
-    padding: 0.7rem 0.9rem;
-    border-radius: 14px;
-  }
-  .mobile-menu a.is-active { color: var(--orange); }
-  .mobile-menu a:hover { background: rgba(248, 230, 230, 0.6); color: var(--orange); }
-
   /* ============ RAIL RÉSEAUX SOCIAUX — bord DROIT, centré vertical ============ */
   .social-rail {
     position: fixed;
@@ -298,68 +268,43 @@
   }
 
   /* ============================================================
-     CONTENU « EN COURS » — petit hero centré, plein écran, très aéré
+     CONTENU « ATELIERS » — grand titre + liste de cartes atelier
+     (moodboard mosaïque à gauche, infos douces à droite)
      ============================================================ */
   .page {
     position: relative;
     z-index: 2;
-    min-height: calc(100vh - 96px);
-    min-height: calc(100svh - 96px);
-    display: grid;
-    place-items: center;
-    padding: clamp(2rem, 7vh, 5rem) clamp(1.4rem, 6vw, 4rem) clamp(3rem, 9vh, 6rem);
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(1.4rem, 4vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
   }
 
+  /* petit accent : un vrai petit SOLEIL DESSINÉ-MAIN à côté des titres */
+  .sun {
+    display: inline-block;
+    width: 1.18em;
+    height: 1.18em;
+    vertical-align: -0.18em;
+    margin-right: 0.5em;
+    filter: drop-shadow(0 2px 6px rgba(248, 116, 47, 0.16));
+  }
+  .sun svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+  /* ---- GRAND TITRE de la page (façon hero) ---- */
   .hero {
     text-align: center;
-    max-width: 760px;
-    margin: 0 auto;
+    padding: clamp(3rem, 9vh, 6.5rem) 0 clamp(2.2rem, 6vh, 4rem);
   }
-
-  /* petit badge / sur-titre « EN COURS » */
-  .hero__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55em;
-    font-family: "League Spartan", sans-serif;
-    font-weight: 800;
-    font-size: clamp(0.82rem, 1.3vw, 0.98rem);
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: var(--orange);
-    padding: 0.5rem 1.1rem;
-    border-radius: 999px;
-    background: rgba(248, 230, 230, 0.5);
-    border: 1px solid rgba(251, 107, 166, 0.22);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 8px 22px rgba(248, 116, 47, 0.12);
-    margin-bottom: clamp(1.5rem, 4vh, 2.4rem);
-  }
-  .hero__badge .dot {
-    width: 0.5em; height: 0.5em;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--rose), var(--orange));
-    box-shadow: 0 0 0 0 rgba(248, 116, 47, 0.45);
-    animation: badgePulse 2.4s ease-in-out infinite;
-  }
-  @keyframes badgePulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(248, 116, 47, 0.40); }
-    50%      { box-shadow: 0 0 0 6px rgba(248, 116, 47, 0); }
-  }
-
-  /* GRAND TITRE chaleureux en Fraunces */
   .hero__title {
     font-family: "Fraunces", Georgia, serif;
     font-weight: 440;
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    line-height: 1.04;
-    letter-spacing: -0.025em;
-    color: var(--ink);
+    font-size: clamp(2.7rem, 7vw, 5.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
     margin: 0;
+    color: var(--ink);
     font-variation-settings: "opsz" 144;
   }
-  /* « bientôt » mis en valeur en dégradé rose → orange (comme le mot « BIEN ») */
   .hero__title .grad {
     background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
     -webkit-background-clip: text;
@@ -367,83 +312,348 @@
     color: transparent;
     -webkit-text-fill-color: transparent;
   }
-
+  .hero__subtitle {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 350;
+    font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: clamp(1rem, 2.6vh, 1.6rem) auto 0;
+    max-width: 44ch;
+    font-variation-settings: "opsz" 90;
+  }
+  .hero__subtitle .sunny { font-style: normal; }
   .hero__rule {
     display: block;
     width: clamp(56px, 8vw, 96px);
     height: 4px;
-    margin: clamp(1.4rem, 3.4vh, 2.2rem) auto clamp(1.5rem, 3.4vh, 2.2rem);
+    margin: clamp(1.4rem, 3vh, 2.1rem) auto 0;
     border-radius: 999px;
     background: linear-gradient(90deg, var(--rose), var(--orange));
     opacity: 0.9;
   }
 
-  /* courte phrase placeholder douce et atténuée */
-  .hero__sub {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 400;
-    font-size: clamp(1.08rem, 1.7vw, 1.32rem);
-    line-height: 1.7;
-    color: var(--ink-soft);
-    margin: 0 auto clamp(2.2rem, 5vh, 3.2rem);
-    max-width: 46ch;
+  /* ---- LISTE DES ATELIERS : grandes cartes horizontales, très aérées ---- */
+  .ateliers {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3.2rem, 8vh, 6rem);
+    margin-top: clamp(1.5rem, 4vh, 3rem);
   }
 
-  /* bouton « Retour à l'accueil » — style pilule */
-  .hero__back {
+  /* ===== UNE CARTE ATELIER : grand rectangle horizontal, presque pleine largeur ===== */
+  .atelier {
+    display: grid;
+    grid-template-columns: 1fr 1fr;       /* ~50% moodboard / ~50% infos */
+    align-items: stretch;
+    gap: clamp(1.6rem, 4vw, 3.4rem);
+    text-decoration: none;
+    color: inherit;
+    border-radius: 34px;
+    padding: clamp(1rem, 1.8vw, 1.5rem);
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    border: 1.5px solid rgba(255, 250, 246, 0.7);
+    box-shadow: 0 22px 56px rgba(248, 116, 47, 0.12), 0 8px 22px rgba(251, 107, 166, 0.10);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  }
+  .atelier:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 38px 82px rgba(248, 116, 47, 0.20), 0 14px 32px rgba(251, 107, 166, 0.16);
+  }
+
+  /* ===== LE MOODBOARD : mosaïque organique asymétrique (esprit bento doux) ===== */
+  .mood {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: clamp(8px, 0.9vw, 12px);
+    aspect-ratio: 7 / 5;
+    width: 100%;
+  }
+  /* chaque tuile photo = cadre vide doux rose/orange + icône photo */
+  .mood__tile {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background:
+      radial-gradient(130% 120% at 30% 12%, rgba(251, 107, 166, 0.22), rgba(255, 250, 246, 0.0) 62%),
+      radial-gradient(120% 120% at 88% 90%, rgba(248, 116, 47, 0.22), rgba(255, 250, 246, 0.0) 60%),
+      linear-gradient(150deg, rgba(248, 230, 230, 0.95), rgba(255, 250, 246, 0.82));
+    display: grid;
+    place-items: center;
+    box-shadow: inset 0 0 0 1.5px rgba(255, 250, 246, 0.85);
+  }
+  .mood__tile-icon {
+    width: clamp(26px, 3vw, 40px);
+    height: clamp(26px, 3vw, 40px);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(251, 107, 166, 0.18), rgba(248, 116, 47, 0.18));
+    color: var(--orange);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .mood__tile-icon svg { width: 54%; height: 54%; }
+  .atelier:hover .mood__tile-icon { transform: scale(1.12) rotate(-4deg); }
+
+  /* mosaïque ASYMÉTRIQUE : une grande tuile + plusieurs petites, sans vide */
+  .mood__tile--a { grid-column: 1 / 2; grid-row: 1 / 3; border-radius: 24px; }      /* grande tuile gauche (porte le titre) */
+  .mood__tile--b { grid-column: 2 / 3; grid-row: 1 / 2; }                            /* haut droite */
+  .mood__tile--c { grid-column: 2 / 3; grid-row: 2 / 3; }                            /* bas droite */
+
+  /* sur une seconde rangée fine pour densifier la mosaïque (esprit magazine) */
+  .mood {
+    grid-template-columns: 1.35fr 0.9fr 0.9fr;
+    grid-template-rows: 1.3fr 1fr;
+  }
+  .mood__tile--a { grid-column: 1 / 2; grid-row: 1 / 3; }
+  .mood__tile--b { grid-column: 2 / 4; grid-row: 1 / 2; }
+  .mood__tile--c { grid-column: 2 / 3; grid-row: 2 / 3; }
+  .mood__tile--d { grid-column: 3 / 4; grid-row: 2 / 3; }
+
+  /* petite fleur posée discrètement sur un coin du moodboard */
+  .mood__bloom {
+    position: absolute;
+    width: clamp(40px, 4.4vw, 56px);
+    height: clamp(40px, 4.4vw, 56px);
+    top: -16px;
+    right: -14px;
+    z-index: 5;
+    pointer-events: none;
+    color: var(--rose);
+    transform: rotate(-12deg);
+    filter: drop-shadow(0 5px 13px rgba(248, 116, 47, 0.24));
+  }
+  .mood__bloom svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+  /* TITRE intégré sur la grande tuile : bande dégradée rose→orange translucide en bas */
+  .mood__caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: clamp(0.9rem, 1.6vw, 1.3rem) clamp(0.9rem, 1.6vw, 1.25rem) clamp(0.8rem, 1.3vw, 1.05rem);
+    background: linear-gradient(180deg, rgba(251, 107, 166, 0) 0%, rgba(251, 107, 166, 0.62) 42%, rgba(248, 116, 47, 0.86) 100%);
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    pointer-events: none;
+  }
+  .mood__caption-kicker {
+    display: block;
+    font-family: "League Spartan", sans-serif;
+    font-weight: 800;
+    font-size: clamp(0.6rem, 0.78vw, 0.72rem);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(255, 250, 246, 0.92);
+    margin: 0 0 0.32rem;
+  }
+  .mood__caption-title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 540;
+    font-size: clamp(1.25rem, 2.3vw, 1.85rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    color: var(--creme);
+    margin: 0;
+    text-shadow: 0 2px 14px rgba(58, 42, 46, 0.22);
+    font-variation-settings: "opsz" 120;
+  }
+
+  /* ===== PARTIE INFOS (droite) : douceur, pas administratif ===== */
+  .atelier__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(0.6rem, 1.4vw, 1.4rem) clamp(0.4rem, 1vw, 1rem);
+  }
+  .atelier__lede {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 350;
+    font-size: clamp(1.1rem, 1.7vw, 1.4rem);
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0 0 clamp(1.3rem, 3vh, 1.9rem);
+    max-width: 34ch;
+    font-variation-settings: "opsz" 80;
+  }
+  /* les 3 infos essentielles présentées avec des petites pastilles douces */
+  .atelier__facts {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.7rem, 1.6vh, 1rem);
+    margin: 0 0 clamp(1.6rem, 3.5vh, 2.2rem);
+    list-style: none;
+    padding: 0;
+  }
+  .atelier__fact {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .atelier__fact-ic {
+    flex: 0 0 auto;
+    width: clamp(34px, 3.4vw, 40px);
+    height: clamp(34px, 3.4vw, 40px);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--orange);
+    background: linear-gradient(135deg, rgba(251, 107, 166, 0.16), rgba(248, 116, 47, 0.16));
+    box-shadow: inset 0 0 0 1.5px rgba(255, 250, 246, 0.7);
+  }
+  .atelier__fact-ic svg { width: 50%; height: 50%; }
+  .atelier__fact-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .atelier__fact-label {
+    font-family: "League Spartan", sans-serif;
+    font-weight: 700;
+    font-size: 0.64rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.1rem;
+  }
+  .atelier__fact-value {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: clamp(0.98rem, 1.4vw, 1.12rem);
+    color: var(--ink);
+  }
+
+  /* indicateur « En savoir plus » — doux, pas un bouton agressif */
+  .atelier__more {
     display: inline-flex;
     align-items: center;
-    gap: 0.55em;
+    gap: 0.55rem;
     font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: clamp(1rem, 1.4vw, 1.12rem);
+    font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+    letter-spacing: 0.01em;
     color: var(--creme);
-    text-decoration: none;
-    padding: 0.85rem 1.7rem;
+    padding: 0.72rem 1.55rem;
     border-radius: 999px;
+    align-self: flex-start;
     background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    box-shadow: 0 14px 32px rgba(248, 116, 47, 0.28), 0 4px 12px rgba(251, 107, 166, 0.2);
-    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+    box-shadow: 0 12px 26px rgba(248, 116, 47, 0.24), 0 4px 12px rgba(251, 107, 166, 0.18);
+    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.26s ease;
   }
-  .hero__back .arrow { transition: transform 0.28s ease; }
-  .hero__back:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 22px 44px rgba(248, 116, 47, 0.34), 0 8px 18px rgba(251, 107, 166, 0.24);
+  .atelier__more svg { width: 16px; height: 16px; transition: transform 0.26s ease; }
+  .atelier:hover .atelier__more {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(248, 116, 47, 0.32), 0 6px 16px rgba(251, 107, 166, 0.22);
   }
-  .hero__back:hover .arrow { transform: translateX(-3px); }
+  .atelier:hover .atelier__more svg { transform: translateX(3px); }
 
-  /* ============ APPARITION (avec repli : tout visible si pas de JS) ============ */
+  /* ===== BAS DE PAGE : petit bloc « reste connectée » (emplacement réservé) ===== */
+  .stay {
+    text-align: center;
+    margin-top: clamp(4rem, 11vh, 7rem);
+    padding: clamp(2rem, 5vw, 3rem) clamp(1.4rem, 4vw, 2.6rem);
+    border-radius: 30px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    border: 1.5px solid rgba(255, 250, 246, 0.7);
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 18px 44px rgba(248, 116, 47, 0.10);
+  }
+  .stay__sun {
+    width: clamp(38px, 5vw, 48px);
+    height: clamp(38px, 5vw, 48px);
+    margin: 0 auto clamp(0.7rem, 1.6vh, 1rem);
+    display: block;
+    filter: drop-shadow(0 4px 10px rgba(248, 116, 47, 0.18));
+  }
+  .stay__sun svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .stay__title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 460;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0;
+    font-variation-settings: "opsz" 110;
+  }
+  .stay__title .grad {
+    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  /* emplacement DISCRET réservé pour un futur champ e-mail (sans champ pour l'instant) */
+  .stay__slot {
+    margin: clamp(1.3rem, 3vh, 1.8rem) auto 0;
+    max-width: 380px;
+    height: clamp(46px, 7vw, 54px);
+    border-radius: 999px;
+    border: 1.5px dashed rgba(248, 116, 47, 0.32);
+    background: rgba(255, 250, 246, 0.5);
+    display: grid;
+    place-items: center;
+  }
+  .stay__slot span {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    color: rgba(58, 42, 46, 0.42);
+  }
+
+  /* ---- PIED DE PAGE sobre ---- */
+  .pied {
+    text-align: center;
+    margin-top: clamp(3rem, 8vh, 5rem);
+  }
+  .pied p {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 400;
+    font-size: clamp(0.84rem, 1.2vw, 0.95rem);
+    letter-spacing: 0.04em;
+    color: rgba(58, 42, 46, 0.5);
+    margin: 0;
+  }
+
+  /* ============ APPARITION AU DÉFILEMENT (avec repli : tout visible si pas de JS) ============ */
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
   .reveal.is-in { opacity: 1; transform: none; }
-  .reveal--d1 { transition-delay: 0.08s; }
-  .reveal--d2 { transition-delay: 0.16s; }
-  .reveal--d3 { transition-delay: 0.24s; }
-  .reveal--d4 { transition-delay: 0.32s; }
 
   /* ============================================================
-     ✿ CALQUE DÉCOR — fleurs rétro + soleils dessinés-main, léger ✿
+     ✿ CALQUE DÉCOR PLEINE PAGE — fleurs rétro + soleils dessinés-main ✿
      ============================================================ */
   .deco-layer {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;     /* le calque laisse tout passer */
-    z-index: 3;               /* au-dessus du fond, sous la barre (z-index:4) et le rail (z-index:6) */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
     overflow: hidden;
   }
   .deco-item {
     position: absolute;
-    pointer-events: auto;     /* on peut l'attraper… */
-    touch-action: none;       /* …au doigt aussi, sans scroller la page */
+    pointer-events: auto;
+    touch-action: none;
     user-select: none;
     -webkit-user-select: none;
     cursor: grab;
     will-change: transform;
-    width: 74px; height: 74px;
     filter: drop-shadow(0 6px 14px rgba(248, 116, 47, 0.12));
     transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)) scale(var(--s, 1));
   }
   .deco-item.is-grabbing { cursor: grabbing; z-index: 99; filter: drop-shadow(0 10px 22px rgba(248, 116, 47, 0.22)); }
   .deco-item svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .deco-item { width: 74px; height: 74px; }
 
   @keyframes decoFloat {
     0%   { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
@@ -461,6 +671,16 @@
   }
 
   /* ============ RESPONSIVE ============ */
+  @media (max-width: 880px) {
+    /* la carte s'empile : moodboard au-dessus, infos en dessous */
+    .atelier {
+      grid-template-columns: 1fr;
+      gap: clamp(1.2rem, 4vw, 1.8rem);
+    }
+    .atelier__info { padding: 0 clamp(0.2rem, 1vw, 0.6rem) clamp(0.4rem, 1.5vw, 0.8rem); }
+    .mood { aspect-ratio: 16 / 9; }
+  }
+
   @media (max-width: 760px) {
     .shell { padding-right: clamp(1.2rem, 5vw, 4.5rem); }
     .nav { grid-template-columns: auto auto; }
@@ -468,8 +688,6 @@
     .nav__col--right .nav__link { display: none; }
     .brand { justify-self: start; }
     .nav__burger { display: inline-flex; }
-
-    .hero__title { font-size: clamp(2.1rem, 9vw, 3.4rem); }
 
     /* sur mobile, le rail est replié horizontalement en bas pour rester visible */
     .social-rail {
@@ -487,10 +705,23 @@
     .social-rail__label { writing-mode: horizontal-tb; margin-bottom: 0; margin-right: 0.2rem; }
     .social-rail__line { width: clamp(18px, 6vw, 26px); height: 1.5px; background: linear-gradient(90deg, var(--rose), var(--orange)); }
 
-    .page { padding-bottom: clamp(5rem, 14vw, 7rem); }
+    .page { padding-bottom: clamp(4.5rem, 12vw, 6rem); }
 
     .deco-item { width: 58px; height: 58px; filter: drop-shadow(0 4px 9px rgba(248, 116, 47, 0.12)); }
     .deco-item.hide-mobile { display: none; }
+  }
+
+  @media (max-width: 540px) {
+    /* mosaïque simplifiée sur petit écran : 2 colonnes, reste lisible */
+    .mood {
+      grid-template-columns: 1.2fr 1fr;
+      grid-template-rows: 1.2fr 0.8fr;
+      aspect-ratio: 4 / 3;
+    }
+    .mood__tile--a { grid-column: 1 / 2; grid-row: 1 / 3; }
+    .mood__tile--b { grid-column: 2 / 3; grid-row: 1 / 2; }
+    .mood__tile--c { grid-column: 2 / 3; grid-row: 2 / 3; }
+    .mood__tile--d { display: none; }
   }
 
   @media (max-width: 480px) {
@@ -513,7 +744,7 @@
 </style>
 </head>
 <body>
-  <!-- ===================== FOND : GRADIENT VIVANT RÉACTIF (FIXE) ===================== -->
+  <!-- ===================== FOND : GRADIENT VIVANT RÉACTIF (FIXE — coule en CONTINU derrière toute la page) ===================== -->
   <div class="living" aria-hidden="true">
     <div class="living__css"></div>
     <canvas id="gl"></canvas>
@@ -524,7 +755,7 @@
   <!-- ===================== DÉCORS RÉUTILISABLES (définis une fois, réutilisés via <use>) ===================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
-      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques -->
+      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques (16 rayons). -->
       <g id="soleiaSunDoodle">
         <circle cx="50" cy="50" r="20" fill="#f8742f"/>
         <circle cx="50" cy="50" r="20" fill="#f4b63e" opacity="0.18"/>
@@ -548,7 +779,7 @@
         </g>
       </g>
 
-      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, cœur jaune doré -->
+      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, cœur jaune doré arrondi. Couleur pilotée par currentColor. -->
       <g id="soleiaFlowerRetro">
         <g fill="currentColor">
           <path d="M50 12
@@ -590,6 +821,35 @@
         </g>
         <rect x="42" y="42" width="16" height="16" rx="6.4" fill="#f4b63e"/>
       </g>
+
+      <!-- ✺ petit soleil dessiné-main pour les TITRES -->
+      <g id="soleiaSunTitle">
+        <circle cx="50" cy="50" r="19" fill="#f8742f"/>
+        <circle cx="50" cy="50" r="19" fill="#f4b63e" opacity="0.18"/>
+        <g fill="none" stroke="#f8742f" stroke-width="5" stroke-linecap="round">
+          <path d="M50 29 q3 -6 -0.6 -13"/>
+          <path d="M59 31 q5 -4 5.6 -10.6"/>
+          <path d="M67.5 35.5 q6.4 -3.2 12.8 -4.6"/>
+          <path d="M71.5 43 q6.6 -1.2 13.4 -0.8"/>
+          <path d="M71.5 57 q7 1.4 12.6 6"/>
+          <path d="M67.5 64.5 q6.2 3.2 10.4 9"/>
+          <path d="M59 69 q4.8 5 5 12"/>
+          <path d="M50 71 q-3 6.4 0.6 13.4"/>
+          <path d="M41 69 q-5 4.6 -5.6 11.2"/>
+          <path d="M32.5 64.5 q-6.2 3.2 -12 4.2"/>
+          <path d="M28.5 57 q-6.8 1.4 -13.2 0.2"/>
+          <path d="M28.5 43 q-7 -1.4 -12.6 -6"/>
+          <path d="M32.5 35.5 q-6 -3.2 -9.2 -8.6"/>
+          <path d="M41 31 q-4.6 -4.6 -4.2 -11"/>
+        </g>
+      </g>
+
+      <!-- icône « image » pour le cadre photo vide -->
+      <g id="soleiaPhotoIcon">
+        <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
+        <circle cx="8.6" cy="9.6" r="1.7"/>
+        <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
     </defs>
   </svg>
 
@@ -617,17 +877,27 @@
     <span class="social-rail__line" aria-hidden="true"></span>
   </aside>
 
-  <!-- ===================== CALQUE DÉCOR (fleurs + soleils déplaçables, léger et respirant) ===================== -->
+  <!-- ===================== CALQUE DÉCOR PLEINE PAGE (fleurs + soleils déplaçables) ===================== -->
   <div class="deco-layer" aria-hidden="true">
-    <span class="deco-item is-float" data-deco-id="deco-1" style="top:14%; left:8%;   --rot:-10deg; --s:0.84; --dur:9s;  --delay:-1s;   color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-2" style="top:20%; right:11%; --rot:9deg;   --s:0.98; --dur:11s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-3" style="top:62%; left:11%; --rot:8deg;  --s:0.6;  --dur:10s; --delay:-2s;   color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-4" style="bottom:13%; right:9%; --rot:-7deg; --s:0.74; --dur:9.5s; --delay:-4s; color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-5" style="bottom:20%; left:14%; --rot:5deg; --s:0.56; --dur:11s; --delay:-1.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <!-- ░░ Zone titre (haut de page) ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-1"  style="top:5%;    left:8%;   --rot:-10deg; --s:0.74; --dur:8s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-2"  style="top:3.6%;  right:9%;  --rot:8deg;   --s:0.98; --dur:10s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-small" data-deco-id="deco-3"  style="top:10%;   left:22%;  --rot:14deg;  --s:0.54; --dur:9s;  --delay:-2s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+
+    <!-- ░░ Le long des cartes (marges latérales) ░░ -->
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-4"  style="top:24%;   right:3%;  --rot:-6deg;  --s:0.62; --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-5"  style="top:38%;   left:2.5%; --rot:6deg;   --s:0.6;  --dur:10s; --delay:-2.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-6"  style="top:52%;   right:3%;  --rot:11deg;  --s:0.66; --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-7"  style="top:66%;   left:3%;   --rot:-9deg;  --s:0.6;  --dur:11s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-8"  style="top:78%;   right:3.5%;--rot:7deg;   --s:0.62; --dur:8s;  --delay:-2s;   color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+
+    <!-- ░░ Bas de page ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-9"  style="top:92%;   left:10%;  --rot:10deg;  --s:0.66; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-10" style="top:93%;   right:11%; --rot:-8deg;  --s:0.62; --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
   </div>
 
   <div class="shell">
-    <!-- ===================== NAV (identique aux autres pages) ===================== -->
+    <!-- ===================== NAV (identique à l'accueil) ===================== -->
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__col nav__col--left">
         <li><a class="nav__link is-active" href="/ateliers/" aria-current="page">Ateliers</a></li>
@@ -637,6 +907,7 @@
       <a class="brand" href="/" aria-label="Soleia Expérience, accueil">
         <span class="brand__word brand__word--left">Soleia</span>
         <img src="/logo.svg" alt="" />
+        <!-- repli si /logo.svg manquant : emblème soleil bi-ton rose/orange -->
         <svg class="brand__fallback" viewBox="0 0 64 64" role="img" aria-label="Soleia Expérience">
           <defs>
             <linearGradient id="soleiaSun" x1="0" y1="0" x2="1" y2="1">
@@ -663,13 +934,14 @@
         <a class="nav__link" href="/a-propos/">Concept</a>
         <a class="nav__link" href="/galerie/">Galerie</a>
 
+        <!-- icône compte discrète à l'extrême droite (tolérée) -->
         <button class="icon-btn account" aria-label="Mon compte">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
             <circle cx="12" cy="8" r="3.4"/>
             <path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" stroke-linecap="round"/>
           </svg>
         </button>
-        <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+        <button class="nav__burger" aria-label="Ouvrir le menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
           </svg>
@@ -678,29 +950,218 @@
     </nav>
   </div>
 
-  <!-- menu mobile déroulant (apparaît au clic sur le burger) -->
-  <div class="mobile-menu" id="mobile-menu">
-    <a class="is-active" href="/ateliers/" aria-current="page">Ateliers</a>
-    <a href="/boutique/">Boutique</a>
-    <a href="/a-propos/">Concept</a>
-    <a href="/galerie/">Galerie</a>
-  </div>
-
-  <!-- ===================== CONTENU « EN COURS » ===================== -->
+  <!-- ===================== CONTENU « ATELIERS » ===================== -->
   <main class="page">
-    <section class="hero" aria-labelledby="hero-title">
-      <span class="hero__badge reveal" aria-hidden="false">
-        <span class="dot" aria-hidden="true"></span>En cours
-      </span>
-      <h1 class="hero__title reveal reveal--d1" id="hero-title">Nos ateliers arrivent <span class="grad">bientôt</span>&#8239;!</h1>
-      <span class="hero__rule reveal reveal--d2" aria-hidden="true"></span>
-      <p class="hero__sub reveal reveal--d3">
-        On prépare ça avec amour. Reviens très vite&#8239;! 🌞
-      </p>
-      <a class="hero__back reveal reveal--d4" href="/">
-        <span class="arrow" aria-hidden="true">←</span> Retour à l’accueil
-      </a>
+
+    <!-- ===== GRAND TITRE de la page (façon hero) ===== -->
+    <section class="hero reveal" aria-labelledby="ateliers-title">
+      <h1 class="hero__title" id="ateliers-title">Nos prochains <span class="grad">ateliers</span></h1>
+      <p class="hero__subtitle">Sur toute l’île <span class="sunny" aria-hidden="true">☀️</span></p>
+      <span class="hero__rule" aria-hidden="true"></span>
     </section>
+
+    <!-- ===== LISTE DE 5 CARTES ATELIER (placeholders) — moodboard mosaïque à gauche, infos à droite ===== -->
+    <section class="ateliers" aria-label="Nos prochains ateliers">
+
+      <!-- Atelier 1 — Atelier créatif -->
+      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Atelier créatif — en savoir plus">
+        <div class="mood" role="img" aria-label="Souvenirs de l’atelier créatif (photos à venir)">
+          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+          <div class="mood__tile mood__tile--a">
+            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+            <div class="mood__caption">
+              <span class="mood__caption-kicker">Atelier</span>
+              <h2 class="mood__caption-title">Atelier créatif</h2>
+            </div>
+          </div>
+          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+        </div>
+        <div class="atelier__info">
+          <p class="atelier__lede">Un moment tout doux pour créer de ses mains et repartir avec un joli souvenir.</p>
+          <ul class="atelier__facts">
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Bientôt dévoilée</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Quelque part sur l’île</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">En après-midi</span></span>
+            </li>
+          </ul>
+          <span class="atelier__more">En savoir plus
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Atelier 2 — Atelier au coucher du soleil -->
+      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Atelier au coucher du soleil — en savoir plus">
+        <div class="mood" role="img" aria-label="Souvenirs de l’atelier au coucher du soleil (photos à venir)">
+          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+          <div class="mood__tile mood__tile--a">
+            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+            <div class="mood__caption">
+              <span class="mood__caption-kicker">Atelier</span>
+              <h2 class="mood__caption-title">Atelier au coucher du soleil</h2>
+            </div>
+          </div>
+          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+        </div>
+        <div class="atelier__info">
+          <p class="atelier__lede">Créer les pieds dans le sable, à l’heure dorée, pendant que le ciel s’embrase.</p>
+          <ul class="atelier__facts">
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Bientôt dévoilée</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Face à la mer</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">En fin de journée</span></span>
+            </li>
+          </ul>
+          <span class="atelier__more">En savoir plus
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Atelier 3 — Atelier en bord de mer -->
+      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Atelier en bord de mer — en savoir plus">
+        <div class="mood" role="img" aria-label="Souvenirs de l’atelier en bord de mer (photos à venir)">
+          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+          <div class="mood__tile mood__tile--a">
+            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+            <div class="mood__caption">
+              <span class="mood__caption-kicker">Atelier</span>
+              <h2 class="mood__caption-title">Atelier en bord de mer</h2>
+            </div>
+          </div>
+          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+        </div>
+        <div class="atelier__info">
+          <p class="atelier__lede">Le bruit des vagues, une brise légère et de jolies idées qui prennent forme.</p>
+          <ul class="atelier__facts">
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Bientôt dévoilée</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Sur la plage</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">En matinée</span></span>
+            </li>
+          </ul>
+          <span class="atelier__more">En savoir plus
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Atelier 4 — Atelier gourmand -->
+      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Atelier gourmand — en savoir plus">
+        <div class="mood" role="img" aria-label="Souvenirs de l’atelier gourmand (photos à venir)">
+          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+          <div class="mood__tile mood__tile--a">
+            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+            <div class="mood__caption">
+              <span class="mood__caption-kicker">Atelier</span>
+              <h2 class="mood__caption-title">Atelier gourmand</h2>
+            </div>
+          </div>
+          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+        </div>
+        <div class="atelier__info">
+          <p class="atelier__lede">On crée, on partage et on se régale&#8239;: un atelier plein de douceurs à savourer ensemble.</p>
+          <ul class="atelier__facts">
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Bientôt dévoilée</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Dans un coin cosy</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">À l’heure du goûter</span></span>
+            </li>
+          </ul>
+          <span class="atelier__more">En savoir plus
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Atelier 5 — Atelier bien-être -->
+      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Atelier bien-être — en savoir plus">
+        <div class="mood" role="img" aria-label="Souvenirs de l’atelier bien-être (photos à venir)">
+          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+          <div class="mood__tile mood__tile--a">
+            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+            <div class="mood__caption">
+              <span class="mood__caption-kicker">Atelier</span>
+              <h2 class="mood__caption-title">Atelier bien-être</h2>
+            </div>
+          </div>
+          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+        </div>
+        <div class="atelier__info">
+          <p class="atelier__lede">Une pause rien que pour soi&#8239;: respirer, ralentir et créer en pleine douceur.</p>
+          <ul class="atelier__facts">
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Bientôt dévoilée</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Dans un jardin paisible</span></span>
+            </li>
+            <li class="atelier__fact">
+              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">Au lever du jour</span></span>
+            </li>
+          </ul>
+          <span class="atelier__more">En savoir plus
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </a>
+
+    </section>
+
+    <!-- ===== BAS DE PAGE : reste connectée (emplacement réservé, sans champ) ===== -->
+    <section class="stay reveal" aria-label="Rester informée des prochains ateliers">
+      <span class="stay__sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+      <p class="stay__title">Reste connectée pour être la <span class="grad">première inscrite</span>&#8239;!</p>
+      <!-- emplacement discret réservé pour un futur champ e-mail (à brancher plus tard) -->
+      <div class="stay__slot" aria-hidden="true"><span>Bientôt&#8239;: ton petit mot pour ne rien manquer</span></div>
+    </section>
+
+    <!-- ===== PIED DE PAGE sobre ===== -->
+    <footer class="pied reveal">
+      <p>© Soleia Expérience</p>
+    </footer>
   </main>
 
   <!-- ===================== Repli logo si /logo.svg indisponible ===================== -->
@@ -716,20 +1177,7 @@
   })();
   </script>
 
-  <!-- ===================== Menu mobile (burger) ===================== -->
-  <script>
-  (function () {
-    var burger = document.querySelector(".nav__burger");
-    var menu = document.getElementById("mobile-menu");
-    if (!burger || !menu) return;
-    burger.addEventListener("click", function () {
-      var open = menu.classList.toggle("is-open");
-      burger.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-  })();
-  </script>
-
-  <!-- ===================== APPARITION (repli sûr : tout visible si indisponible) ===================== -->
+  <!-- ===================== APPARITION AU DÉFILEMENT (repli sûr : tout visible si indisponible) ===================== -->
   <script>
   (function () {
     var els = document.querySelectorAll(".reveal");
@@ -748,25 +1196,71 @@
   })();
   </script>
 
-  <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT ===================== -->
+  <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT (+ mémoire des positions) ===================== -->
   <script>
   (function () {
+    var STORE_KEY = "soleia-deco-pos-ateliers";
     var items = Array.prototype.slice.call(document.querySelectorAll(".deco-item"));
     if (!items.length) return;
-    var startX = 0, startY = 0, baseDx = 0, baseDy = 0, movedThisDrag = false, current = null;
+
+    var layer = document.querySelector(".deco-layer");
+    function sizeLayer() {
+      if (!layer) return;
+      layer.style.height = "0px";
+      layer.style.height = document.documentElement.scrollHeight + "px";
+    }
+    sizeLayer();
+    window.addEventListener("load", sizeLayer);
+    window.addEventListener("resize", sizeLayer);
+    setTimeout(sizeLayer, 600);
+    setTimeout(sizeLayer, 1600);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(sizeLayer); }
+
+    function loadPos() {
+      try {
+        var raw = window.localStorage.getItem(STORE_KEY);
+        return raw ? (JSON.parse(raw) || {}) : {};
+      } catch (e) { return {}; }
+    }
+    function savePos(map) {
+      try { window.localStorage.setItem(STORE_KEY, JSON.stringify(map)); } catch (e) {}
+    }
+
+    var positions = loadPos();
+
+    items.forEach(function (el) {
+      var id = el.getAttribute("data-deco-id");
+      var p = id && positions[id];
+      if (p && (p.dx || p.dy)) {
+        el.style.setProperty("--dx", p.dx + "px");
+        el.style.setProperty("--dy", p.dy + "px");
+        el.classList.add("is-moved");
+      }
+    });
+
+    var startX = 0, startY = 0;
+    var baseDx = 0, baseDy = 0;
+    var movedThisDrag = false;
+    var current = null;
 
     function numVar(el, name) {
       var n = parseFloat(el.style.getPropertyValue(name));
       return isNaN(n) ? 0 : n;
     }
+
     function onDown(e) {
       var el = e.currentTarget;
-      current = el; movedThisDrag = false;
-      baseDx = numVar(el, "--dx"); baseDy = numVar(el, "--dy");
-      startX = e.clientX; startY = e.clientY;
-      el.classList.add("is-grabbing"); el.classList.add("is-moved");
+      current = el;
+      movedThisDrag = false;
+      baseDx = numVar(el, "--dx");
+      baseDy = numVar(el, "--dy");
+      startX = e.clientX;
+      startY = e.clientY;
+      el.classList.add("is-grabbing");
+      el.classList.add("is-moved");
       try { el.setPointerCapture(e.pointerId); } catch (err) {}
     }
+
     function onMove(e) {
       var el = e.currentTarget;
       if (current !== el) return;
@@ -776,13 +1270,22 @@
       el.style.setProperty("--dx", dx + "px");
       el.style.setProperty("--dy", dy + "px");
     }
+
     function onUp(e) {
       var el = e.currentTarget;
       if (current !== el) return;
       el.classList.remove("is-grabbing");
       try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+      if (movedThisDrag) {
+        var id = el.getAttribute("data-deco-id");
+        if (id) {
+          positions[id] = { dx: Math.round(numVar(el, "--dx")), dy: Math.round(numVar(el, "--dy")) };
+          savePos(positions);
+        }
+      }
       current = null;
     }
+
     items.forEach(function (el) {
       el.addEventListener("pointerdown", onDown);
       el.addEventListener("pointermove", onMove);
