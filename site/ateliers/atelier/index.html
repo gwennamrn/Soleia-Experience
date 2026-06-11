@@ -362,7 +362,7 @@
   }
   .gallery__viewport {
     display: flex;
-    gap: clamp(12px, 1.4vw, 20px);
+    gap: clamp(4px, 0.6vw, 8px);
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x proximity;
@@ -469,7 +469,7 @@
   /* ---- 3) DESCRIPTION + INFOS PRATIQUES : deux colonnes ---- */
   .duo {
     display: grid;
-    grid-template-columns: 1.35fr 0.9fr;
+    grid-template-columns: 1fr 1fr;
     gap: clamp(1.8rem, 5vw, 4.5rem);
     align-items: start;
   }
@@ -1154,10 +1154,6 @@
             <li class="bullet">
               <span class="bullet__mark" aria-hidden="true"><svg viewBox="0 0 24 24" style="color:var(--lune)"><use href="#soleiaMoon"/></svg></span>
               <span class="bullet__text">Une boisson douce et une petite gourmandise à savourer.</span>
-            </li>
-            <li class="bullet">
-              <span class="bullet__mark" aria-hidden="true"><svg viewBox="0 0 24 24" style="color:var(--lune)"><use href="#soleiaMoon"/></svg></span>
-              <span class="bullet__text">Ta création à emporter, joliment emballée.</span>
             </li>
           </ul>
         </div>
