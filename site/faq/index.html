@@ -608,33 +608,24 @@
 
   /* ===== FOOTER COMMUN ===== */
   .site-foot {
-    position: relative;
-    z-index: 2;
-    border-top: 1px solid rgba(58, 42, 46, 0.12);
-    background: rgba(255, 250, 246, 0.66);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    padding: clamp(1.6rem, 4vw, 2.6rem) clamp(1.4rem, 5vw, 3rem);
+    position: relative; z-index: 2;
+    padding: clamp(2.6rem, 6vw, 4.2rem) clamp(1.4rem, 5vw, 3rem) clamp(1.7rem, 4vw, 2.6rem);
+    background: linear-gradient(180deg, rgba(255,250,246,0) 0%, rgba(248,230,230,0.5) 100%), var(--creme);
   }
-  .site-foot__inner {
-    max-width: 1080px; margin: 0 auto;
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-    gap: clamp(0.55rem, 1.8vw, 1.2rem); text-align: center;
-  }
-  .site-foot__brand {
-    flex-basis: 100%; margin: 0;
-    font-family: "League Spartan", sans-serif; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.82rem; color: var(--ink);
-  }
-  .site-foot__legal { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(0.5rem, 1.6vw, 1.1rem); }
-  .site-foot__legal a, .site-foot__mail {
-    font-family: "Space Grotesk", sans-serif; font-size: clamp(0.82rem, 1vw, 0.92rem);
-    text-decoration: none; transition: color 0.25s ease;
-  }
-  .site-foot__legal a { color: var(--ink-soft); }
+  .site-foot__inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(0.7rem, 2vh, 1.15rem); }
+  .site-foot__brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .site-foot__logo { height: 34px; width: auto; display: block; }
+  .site-foot__name { font-family: "League Spartan", sans-serif; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; font-size: 0.9rem; color: var(--ink); }
+  .site-foot__tag { margin: 0; font-family: "Fraunces", Georgia, serif; font-style: italic; font-weight: 360; font-size: clamp(1rem, 1.6vw, 1.22rem); color: var(--ink-soft); }
+  .site-foot__rule { width: clamp(56px, 9vw, 104px); height: 3px; border-radius: 999px; background: linear-gradient(90deg, var(--rose), var(--orange)); opacity: 0.9; margin: clamp(0.2rem, 0.8vh, 0.5rem) 0; }
+  .site-foot__legal { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(0.4rem, 1.4vw, 1rem); }
+  .site-foot__legal a { font-family: "Space Grotesk", sans-serif; font-size: clamp(0.82rem, 1vw, 0.92rem); color: var(--ink-soft); text-decoration: none; transition: color 0.25s ease; }
   .site-foot__legal a:hover { color: var(--orange); }
-  .site-foot__mail { flex-basis: 100%; color: var(--orange); }
-  .site-foot__copy { flex-basis: 100%; margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 0.78rem; color: rgba(58, 42, 46, 0.5); }
+  .site-foot__legal a:not(:last-child)::after { content: "·"; margin-left: clamp(0.4rem, 1.4vw, 1rem); color: rgba(58,42,46,0.3); }
+  .site-foot__mail { font-family: "Space Grotesk", sans-serif; font-size: clamp(0.86rem, 1.1vw, 0.98rem); color: var(--orange); text-decoration: none; transition: opacity 0.25s ease; }
+  .site-foot__mail:hover { opacity: 0.78; }
+  .site-foot__copy { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 0.78rem; letter-spacing: 0.02em; color: rgba(58,42,46,0.5); }
+  .site-foot__copy span { color: var(--rose); }
 
   /* ============ RESPONSIVE ============ */
   @media (max-width: 760px) {
@@ -847,6 +838,7 @@
       <div class="nav__col nav__col--right">
         <a class="nav__link" href="/a-propos/">Concept</a>
         <a class="nav__link" href="/galerie/">Galerie</a>
+        <a class="nav__link is-active" href="/faq/" aria-current="page">FAQ</a>
 
         <!-- icône compte discrète à l'extrême droite (tolérée) -->
         <button class="icon-btn account" aria-label="Mon compte">
@@ -870,7 +862,6 @@
     <!-- ===== GRAND TITRE de la page ===== -->
     <section class="hero reveal" aria-labelledby="faq-title">
       <h1 class="hero__title" id="faq-title">FAQ</h1>
-      <p class="hero__subtitle">Tu te poses une question&#8239;? On a sûrement la réponse.</p>
       <span class="hero__rule" aria-hidden="true"></span>
     </section>
 
@@ -893,7 +884,6 @@
     <!-- ===== PANNEAU 1 — Réservations d’ateliers ===== -->
     <section class="panel is-shown" id="panel-1" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
       <header class="panel__head">
-        <span class="panel__kicker">Catégorie 1</span>
         <h2 class="panel__title">Réservations d’ateliers</h2>
       </header>
       <div class="accordion">
@@ -906,7 +896,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">La réservation se fait directement sur notre site. Il suffit de cliquer sur le bouton de réservation qui vous redirige vers la page des ateliers pour choisir votre expérience et finaliser votre inscription.</p>
           </div></div>
         </div>
 
@@ -918,7 +908,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Oui, bien sûr ✨ Il est tout à fait possible de réserver plusieurs places pour venir accompagnée.</p>
           </div></div>
         </div>
 
@@ -930,7 +920,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Une fois votre réservation effectuée, vous recevez un mail de confirmation envoyé directement par nos soins. Pensez à vérifier vos spams si besoin.</p>
           </div></div>
         </div>
 
@@ -942,7 +932,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Oui, chaque atelier est limité à 10 personnes maximum afin de garantir une expérience intime, conviviale et de qualité.</p>
           </div></div>
         </div>
 
@@ -954,7 +944,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Oui 🤍 Pour offrir une place à un atelier, vous pouvez passer par nos bons cadeaux, spécialement pensés pour faire plaisir et offrir une expérience Soleia à vos proches.</p>
           </div></div>
         </div>
 
@@ -964,7 +954,6 @@
     <!-- ===== PANNEAU 2 — Bons cadeaux ===== -->
     <section class="panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2" tabindex="0" hidden>
       <header class="panel__head">
-        <span class="panel__kicker">Catégorie 2</span>
         <h2 class="panel__title">Bons cadeaux</h2>
       </header>
       <div class="accordion">
@@ -977,7 +966,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Les bons cadeaux sont disponibles directement sur notre site. Une fois la commande validée, ils sont envoyés sous format digital sous 1 à 3 jours. Vous pouvez ensuite les imprimer si vous souhaitez les offrir en main propre.</p>
           </div></div>
         </div>
 
@@ -989,7 +978,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Les bons cadeaux sont valables pendant 1 an à partir de la date d’achat.</p>
           </div></div>
         </div>
 
@@ -1001,7 +990,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Oui 🤍 Les bons cadeaux peuvent être utilisés sur l’ensemble des ateliers Soleia. Il est également possible de choisir un atelier précis lors de l’achat.</p>
           </div></div>
         </div>
 
@@ -1013,19 +1002,19 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Oui ✨ Il est possible d’ajouter un message personnalisé afin de rendre le cadeau encore plus unique et personnel.</p>
           </div></div>
         </div>
 
         <div class="qa">
           <button class="qa__btn" aria-expanded="false">
-            <span class="qa__q">Comment la personne utilise-t-elle son bon cadeau lors de la réservation&#8239;?</span>
+            <span class="qa__q">Comment utiliser un bon cadeau&#8239;?</span>
             <span class="qa__sign" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Pour réserver un atelier avec un bon cadeau, il suffit de nous envoyer un mail avec le numéro du bon cadeau ainsi que les informations de réservation.</p>
           </div></div>
         </div>
 
@@ -1037,7 +1026,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Les bons cadeaux ne sont pas remboursables.</p>
           </div></div>
         </div>
 
@@ -1047,7 +1036,6 @@
     <!-- ===== PANNEAU 3 — Déroulement des ateliers ===== -->
     <section class="panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3" tabindex="0" hidden>
       <header class="panel__head">
-        <span class="panel__kicker">Catégorie 3</span>
         <h2 class="panel__title">Déroulement des ateliers</h2>
       </header>
       <div class="accordion">
@@ -1060,7 +1048,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Oui 🤍 Les ateliers sont ouverts à toutes, que vous veniez seule ou accompagnée. Beaucoup de participantes viennent seules et repartent souvent après de belles rencontres.</p>
           </div></div>
         </div>
 
@@ -1072,7 +1060,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Pas du tout ✨ Les ateliers Soleia sont accessibles à toutes, même aux débutantes. L’objectif est de découvrir, expérimenter et surtout de profiter du moment sans pression.</p>
           </div></div>
         </div>
 
@@ -1084,7 +1072,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Rien de particulier. Tout le matériel nécessaire est fourni sur place. Il suffit de venir comme vous êtes, prête à profiter de l’expérience.</p>
           </div></div>
         </div>
 
@@ -1096,19 +1084,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
-          </div></div>
-        </div>
-
-        <div class="qa">
-          <button class="qa__btn" aria-expanded="false">
-            <span class="qa__q">Tout le matériel est-il fourni&#8239;?</span>
-            <span class="qa__sign" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
-            </span>
-          </button>
-          <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Oui 🤍 Les ateliers sont accessibles à partir de 18 ans.</p>
           </div></div>
         </div>
 
@@ -1118,7 +1094,6 @@
     <!-- ===== PANNEAU 4 — Annulation et modification ===== -->
     <section class="panel" id="panel-4" role="tabpanel" aria-labelledby="tab-4" tabindex="0" hidden>
       <header class="panel__head">
-        <span class="panel__kicker">Catégorie 4</span>
         <h2 class="panel__title">Annulation et modification</h2>
       </header>
       <div class="accordion">
@@ -1131,7 +1106,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Oui 🤍 Les réservations peuvent être annulées, mais elles ne sont pas remboursables. En cas d’empêchement, vous pouvez néanmoins céder votre place à une autre personne, à condition de nous en informer par mail.</p>
           </div></div>
         </div>
 
@@ -1143,7 +1118,7 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Oui ✨ Vous pouvez transmettre votre place à une autre personne. Il suffit de nous prévenir en amont par mail avec les informations de la personne qui vous remplace.</p>
           </div></div>
         </div>
 
@@ -1155,19 +1130,19 @@
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Dans le cas exceptionnel où un atelier serait annulé par nous, vous aurez le choix entre un remboursement intégral ou un avoir valable sur un prochain atelier.</p>
           </div></div>
         </div>
 
         <div class="qa">
           <button class="qa__btn" aria-expanded="false">
-            <span class="qa__q">Comment suis-je informé·e d’un changement&#8239;?</span>
+            <span class="qa__q">Comment suis-je informée d’un changement&#8239;?</span>
             <span class="qa__sign" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
             </span>
           </button>
           <div class="qa__panel"><div class="qa__panel-inner">
-            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+            <p class="qa__answer">Toute modification ou annulation vous sera communiquée directement par mail dans les plus brefs délais afin de vous tenir informé·e sereinement.</p>
           </div></div>
         </div>
 
@@ -1186,10 +1161,15 @@
 
   </main>
 
-  <!-- ===================== FOOTER COMMUN (liens légaux) ===================== -->
+  <!-- ===================== FOOTER COMMUN ===================== -->
   <footer class="site-foot" aria-label="Pied de page">
     <div class="site-foot__inner">
-      <p class="site-foot__brand">Soleia Expérience</p>
+      <a class="site-foot__brand" href="/" aria-label="Soleia Expérience, accueil">
+        <img class="site-foot__logo" src="/logo.svg" alt="" />
+        <span class="site-foot__name">Soleia Expérience</span>
+      </a>
+      <p class="site-foot__tag">La pause créative qui fait du BIEN.</p>
+      <span class="site-foot__rule" aria-hidden="true"></span>
       <nav class="site-foot__legal" aria-label="Informations légales">
         <a href="/remboursement/">Politique de remboursement</a>
         <a href="/confidentialite/">Politique de confidentialité</a>
@@ -1197,7 +1177,7 @@
         <a href="/mentions-legales/">Mentions légales</a>
       </nav>
       <a class="site-foot__mail" href="mailto:soleiaexperience@gmail.com">soleiaexperience@gmail.com</a>
-      <p class="site-foot__copy">© Soleia Expérience</p>
+      <p class="site-foot__copy">© Soleia Expérience · fait avec <span>♡</span> sur l'île</p>
     </div>
   </footer>
 
