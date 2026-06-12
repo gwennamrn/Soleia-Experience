@@ -423,13 +423,14 @@
     background: linear-gradient(180deg, rgba(255,250,246,0.18), transparent 40%);
     pointer-events: none;
   }
-  .shot__photo svg.ph {
-    width: 34%;
-    height: 34%;
-    color: rgba(58, 42, 46, 0.34);
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 1.4;
+  .shot__photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
   .shot__cap {
     margin-top: clamp(0.7rem, 1.6vh, 1rem);
@@ -543,25 +544,20 @@
     aspect-ratio: 1 / 1;
     border-radius: 3px;
     overflow: hidden;
-    display: grid;
-    place-items: center;
     background: linear-gradient(150deg, rgba(251,107,166,0.18), rgba(248,116,47,0.18));
   }
-  .pola__img.v2 { background: linear-gradient(150deg, rgba(248,116,47,0.18), rgba(244,182,62,0.20)); }
-  .pola__img.v3 { background: linear-gradient(150deg, rgba(251,107,166,0.20), rgba(248,230,230,0.5)); }
-  .pola__img svg.ph {
-    width: 32%; height: 32%;
-    color: rgba(58, 42, 46, 0.32);
-    stroke: currentColor; fill: none; stroke-width: 1.4;
+  .pola__img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
   .pola__cap {
-    margin-top: clamp(0.5rem, 1.2vh, 0.8rem);
-    text-align: center;
-    font-family: "Fraunces", Georgia, serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(0.78rem, 1.2vw, 0.92rem);
-    color: var(--ink-soft);
+    margin-top: clamp(0.4rem, 1vh, 0.7rem);
+    height: clamp(0.5rem, 1.2vh, 0.9rem);
   }
 
   /* ---- barre de navigation entre éditions ---- */
@@ -878,7 +874,7 @@
                 <span class="shot__peg" aria-hidden="true"><svg viewBox="0 0 11 30"><use href="#soleiaPeg"/></svg></span>
                 <span class="shot__frame">
                   <span class="shot__photo">
-                    <svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><use href="#soleiaPhotoIcon"/></svg>
+                    <img src="/galerie/photos/ed1/1.jpg" alt="" loading="lazy" decoding="async" />
                   </span>
                 </span>
                 <span class="shot__cap">
@@ -891,7 +887,7 @@
                 <span class="shot__peg" aria-hidden="true"><svg viewBox="0 0 11 30"><use href="#soleiaPeg"/></svg></span>
                 <span class="shot__frame">
                   <span class="shot__photo">
-                    <svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><use href="#soleiaPhotoIcon"/></svg>
+                    <img src="/galerie/photos/ed2/1.jpg" alt="" loading="lazy" decoding="async" />
                   </span>
                 </span>
                 <span class="shot__cap">
@@ -904,7 +900,7 @@
                 <span class="shot__peg" aria-hidden="true"><svg viewBox="0 0 11 30"><use href="#soleiaPeg"/></svg></span>
                 <span class="shot__frame">
                   <span class="shot__photo">
-                    <svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><use href="#soleiaPhotoIcon"/></svg>
+                    <img src="/galerie/photos/ed3/1.jpg" alt="" loading="lazy" decoding="async" />
                   </span>
                 </span>
                 <span class="shot__cap">
@@ -975,13 +971,27 @@
 
     /* === Données des éditions (numéro facile à changer) === */
     var EDITIONS = [
-      { num: "n°01", theme: "Premier atelier",   eyebrow: "Souvenirs de l’atelier", photos: 7, dur: 44 },
-      { num: "n°02", theme: "Deuxième atelier",  eyebrow: "Souvenirs de l’atelier", photos: 8, dur: 50 },
-      { num: "n°03", theme: "Troisième atelier", eyebrow: "Souvenirs de l’atelier", photos: 6, dur: 40 }
-    ];
-    var capLabels = [
-      "Un moment partagé", "Mains créatives", "Sourires", "Couleurs",
-      "Pause douceur", "Création", "Complicité", "Belle lumière"
+      { num: "n°01", theme: "Premier atelier",   eyebrow: "Souvenirs de l’atelier", dur: 44,
+        photos: [
+          "/galerie/photos/ed1/1.jpg", "/galerie/photos/ed1/2.jpg",
+          "/galerie/photos/ed1/3.jpg", "/galerie/photos/ed1/4.jpg"
+        ] },
+      { num: "n°02", theme: "Deuxième atelier",  eyebrow: "Souvenirs de l’atelier", dur: 50,
+        photos: [
+          "/galerie/photos/ed2/1.jpg",  "/galerie/photos/ed2/2.jpg",
+          "/galerie/photos/ed2/3.jpg",  "/galerie/photos/ed2/4.jpg",
+          "/galerie/photos/ed2/5.jpg",  "/galerie/photos/ed2/6.jpg",
+          "/galerie/photos/ed2/7.jpg",  "/galerie/photos/ed2/8.jpg",
+          "/galerie/photos/ed2/9.jpg",  "/galerie/photos/ed2/10.jpg"
+        ] },
+      { num: "n°03", theme: "Troisième atelier", eyebrow: "Souvenirs de l’atelier", dur: 40,
+        photos: [
+          "/galerie/photos/ed3/1.jpg",  "/galerie/photos/ed3/2.jpg",
+          "/galerie/photos/ed3/3.jpg",  "/galerie/photos/ed3/4.jpg",
+          "/galerie/photos/ed3/5.jpg",  "/galerie/photos/ed3/6.jpg",
+          "/galerie/photos/ed3/7.jpg",  "/galerie/photos/ed3/8.jpg",
+          "/galerie/photos/ed3/9.jpg",  "/galerie/photos/ed3/10.jpg"
+        ] }
     ];
 
     var panelEd  = document.getElementById("panelEditions");
@@ -993,17 +1003,21 @@
     var dotsWrap = document.getElementById("edDots");
     var current  = 0;
 
-    /* === construit une carte « polaroïd » === */
-    function makePola(i) {
+    /* === construit une carte « polaroïd » (vraie photo) === */
+    function makePola(src) {
       var card = document.createElement("div");
       card.className = "pola";
-      var img = document.createElement("div");
-      img.className = "pola__img v" + ((i % 3) + 1);
-      img.innerHTML = '<svg class="ph" viewBox="0 0 24 24" aria-hidden="true"><use href="#soleiaPhotoIcon"/></svg>';
+      var frame = document.createElement("div");
+      frame.className = "pola__img";
+      var img = document.createElement("img");
+      img.src = src;
+      img.alt = "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      frame.appendChild(img);
       var cap = document.createElement("div");
       cap.className = "pola__cap";
-      cap.textContent = capLabels[i % capLabels.length];
-      card.appendChild(img);
+      card.appendChild(frame);
       card.appendChild(cap);
       return card;
     }
@@ -1012,11 +1026,11 @@
     function fillReel(ed) {
       track.classList.remove("is-anim");
       track.innerHTML = "";
-      var n = ed.photos;
+      var list = ed.photos;
       // copie 1
-      for (var i = 0; i < n; i++) track.appendChild(makePola(i));
+      for (var i = 0; i < list.length; i++) track.appendChild(makePola(list[i]));
       // copie 2 (identique → la translation -50% reboucle parfaitement)
-      for (var j = 0; j < n; j++) track.appendChild(makePola(j));
+      for (var j = 0; j < list.length; j++) track.appendChild(makePola(list[j]));
       track.style.setProperty("--reel-dur", ed.dur + "s");
       if (!reduce) {
         // relance l'animation proprement
