@@ -321,18 +321,18 @@
      ============================================================ */
   .tabs {
     display: flex;
-    flex-wrap: wrap;                    /* si tout ne tient pas, ça passe à la ligne — jamais coupé */
+    flex-wrap: nowrap;                  /* les 4 onglets sur une seule ligne */
     justify-content: center;
-    gap: clamp(0.35rem, 0.9vw, 0.6rem);
-    max-width: 1120px;
+    gap: clamp(0.26rem, 0.6vw, 0.45rem);
+    max-width: 100%;
     margin: 0 auto clamp(2rem, 5vh, 3.2rem);
     padding: 0.5rem 0.2rem 0.6rem;
   }
   .tab {
     font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: clamp(0.78rem, 1.05vw, 0.96rem);
-    letter-spacing: 0.005em;
+    font-size: clamp(0.64rem, 1.3vw, 0.94rem);
+    letter-spacing: 0.002em;
     color: var(--ink);
     white-space: nowrap;
     flex: 0 0 auto;
@@ -342,7 +342,7 @@
     border: 1.5px solid rgba(255, 250, 246, 0.8);
     box-shadow: 0 8px 22px rgba(248, 116, 47, 0.08), inset 0 0 0 1px rgba(248, 116, 47, 0.05);
     border-radius: 999px;
-    padding: clamp(0.48rem, 1.1vw, 0.55rem) clamp(0.72rem, 1.7vw, 1.05rem);
+    padding: 0.5em 0.9em;               /* en « em » : se réduit avec la police sur petits écrans */
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -632,6 +632,11 @@
   .site-foot__copy span { color: var(--rose); }
 
   /* ============ RESPONSIVE ============ */
+  /* sur tout petit écran (téléphone), on autorise le retour à la ligne plutôt que de rogner */
+  @media (max-width: 600px) {
+    .tabs { flex-wrap: wrap; }
+  }
+
   @media (max-width: 760px) {
     .shell { padding-right: clamp(1.2rem, 5vw, 4.5rem); }
     .nav { grid-template-columns: auto auto; }
@@ -874,11 +879,11 @@
       <button class="tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true">
         <span class="tab__dot" aria-hidden="true"></span>Réservations d’ateliers
       </button>
-      <button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">
-        <span class="tab__dot" aria-hidden="true"></span>Bons cadeaux
-      </button>
       <button class="tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1">
         <span class="tab__dot" aria-hidden="true"></span>Déroulement des ateliers
+      </button>
+      <button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">
+        <span class="tab__dot" aria-hidden="true"></span>Bons cadeaux
       </button>
       <button class="tab" role="tab" id="tab-4" aria-controls="panel-4" aria-selected="false" tabindex="-1">
         <span class="tab__dot" aria-hidden="true"></span>Annulation et modification
@@ -1202,17 +1207,18 @@
   <script>
   (function () {
     var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
-    var panels = Array.prototype.slice.call(document.querySelectorAll(".panel"));
     if (!tabs.length) return;
+
+    // chaque onglet est relié à SON contenu via aria-controls (indépendant de l'ordre d'affichage)
+    function panelOf(tab) { return document.getElementById(tab.getAttribute("aria-controls")); }
 
     function activate(idx, focusPanel) {
       tabs.forEach(function (t, i) {
         var on = i === idx;
         t.setAttribute("aria-selected", on ? "true" : "false");
         t.tabIndex = on ? 0 : -1;
-      });
-      panels.forEach(function (p, i) {
-        var on = i === idx;
+        var p = panelOf(t);
+        if (!p) return;
         if (on) {
           p.hidden = false;
           // forcer un reflow pour rejouer l'animation d'apparition
@@ -1224,8 +1230,9 @@
           p.hidden = true;
         }
       });
-      if (focusPanel && panels[idx]) {
-        try { panels[idx].focus({ preventScroll: true }); } catch (e) {}
+      if (focusPanel) {
+        var ap = panelOf(tabs[idx]);
+        if (ap) { try { ap.focus({ preventScroll: true }); } catch (e) {} }
       }
     }
 
