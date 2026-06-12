@@ -247,7 +247,7 @@
   /* ============ SCÈNE (zone centrale, contient les 2 états) ============ */
   .stage {
     position: relative;
-    overflow: hidden;
+    overflow: visible;       /* la corde et la bande de souvenirs peuvent déborder plein écran */
   }
   .panel {
     position: absolute;
@@ -326,8 +326,8 @@
     left: 50%;
     transform: translateX(-50%);
     top: 0;
-    width: 134vw;
-    height: 60px;
+    width: 106vw;            /* déborde franchement de chaque côté de l'écran */
+    height: 24px;
     pointer-events: none;
     overflow: visible;
   }
@@ -350,11 +350,10 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: clamp(1rem, 4vw, 3.4rem);
-    padding-top: clamp(0.4rem, 2vh, 1rem);
+    padding-top: clamp(0.1rem, 0.6vh, 0.4rem);
     align-items: start;
   }
-  /* les photos suivent la courbe de la ficelle : celle du milieu descend un peu */
-  .shot:nth-child(2) { margin-top: clamp(12px, 1.9vw, 28px); }
+  /* la ficelle est bien tendue : les trois tirages sont accrochés au même niveau */
 
   /* un tirage suspendu */
   .shot {
@@ -398,7 +397,6 @@
     background: var(--creme);
     border-radius: 6px;
     padding: clamp(0.5rem, 1.2vw, 0.8rem);
-    padding-bottom: clamp(1.5rem, 3.2vw, 2.1rem);
     box-shadow:
       0 1px 0 rgba(58,42,46,0.04),
       0 18px 36px -18px rgba(58, 42, 46, 0.34);
@@ -530,19 +528,20 @@
     flex: 0 0 auto;
     width: clamp(150px, 22vh, 220px);
     background: var(--creme);
-    border-radius: 7px;
-    padding: clamp(0.45rem, 1vw, 0.7rem);
-    padding-bottom: clamp(1.3rem, 2.6vw, 1.9rem);
+    border-radius: 9px;
+    padding: clamp(0.34rem, 0.7vw, 0.46rem);   /* fin liseré, plus d'effet polaroïd */
     box-shadow: 0 16px 34px -18px rgba(58, 42, 46, 0.4);
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+    cursor: zoom-in;
   }
   .pola:nth-child(odd)  { transform: rotate(-1.4deg); }
   .pola:nth-child(even) { transform: rotate(1.4deg); }
+  .pola:hover { box-shadow: 0 22px 46px -18px rgba(248, 116, 47, 0.5); }
   .pola__img {
     position: relative;
     width: 100%;
     aspect-ratio: 1 / 1;
-    border-radius: 3px;
+    border-radius: 6px;
     overflow: hidden;
     background: linear-gradient(150deg, rgba(251,107,166,0.18), rgba(248,116,47,0.18));
   }
@@ -661,6 +660,56 @@
     text-align: center;
   }
   .foot .heart { color: var(--or); font-style: normal; }
+
+  /* ============ VISIONNEUSE (clic sur une photo pour l'agrandir) ============ */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 3rem);
+    background: rgba(58, 42, 46, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s;
+    cursor: zoom-out;
+  }
+  .lightbox.is-on { opacity: 1; visibility: visible; }
+  .lightbox__img {
+    max-width: min(92vw, 1100px);
+    max-height: 86vh;
+    border-radius: 12px;
+    background: var(--creme);
+    padding: clamp(0.4rem, 1vw, 0.7rem);
+    box-shadow: 0 30px 80px -22px rgba(58, 42, 46, 0.7);
+    object-fit: contain;
+    transform: scale(0.94);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: default;
+  }
+  .lightbox.is-on .lightbox__img { transform: scale(1); }
+  .lightbox__close {
+    position: absolute;
+    top: clamp(0.7rem, 2vw, 1.4rem);
+    right: clamp(0.7rem, 2vw, 1.4rem);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 250, 246, 0.5);
+    background: rgba(255, 250, 246, 0.16);
+    color: var(--creme);
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .lightbox__close:hover { transform: rotate(90deg) scale(1.06); background: rgba(255, 250, 246, 0.3); }
 
   /* ============ FOCUS / A11Y ============ */
   a:focus-visible, button:focus-visible {
@@ -865,8 +914,8 @@
 
           <div class="clothesline">
             <!-- la ficelle douce, presque tendue -->
-            <svg class="clothesline__rope" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M0 12 C 280 36, 720 36, 1000 12" />
+            <svg class="clothesline__rope" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 12 L 1000 12" />
             </svg>
 
             <div class="shots">
@@ -874,7 +923,7 @@
                 <span class="shot__peg" aria-hidden="true"><svg viewBox="0 0 11 30"><use href="#soleiaPeg"/></svg></span>
                 <span class="shot__frame">
                   <span class="shot__photo">
-                    <img src="/galerie/photos/ed1/1.jpg" alt="" loading="lazy" decoding="async" />
+                    <img src="/galerie/photos/ed1/cover.jpg" alt="" loading="lazy" decoding="async" />
                   </span>
                 </span>
                 <span class="shot__cap">
@@ -887,7 +936,7 @@
                 <span class="shot__peg" aria-hidden="true"><svg viewBox="0 0 11 30"><use href="#soleiaPeg"/></svg></span>
                 <span class="shot__frame">
                   <span class="shot__photo">
-                    <img src="/galerie/photos/ed2/1.jpg" alt="" loading="lazy" decoding="async" />
+                    <img src="/galerie/photos/ed2/cover.jpg" alt="" loading="lazy" decoding="async" />
                   </span>
                 </span>
                 <span class="shot__cap">
@@ -900,7 +949,7 @@
                 <span class="shot__peg" aria-hidden="true"><svg viewBox="0 0 11 30"><use href="#soleiaPeg"/></svg></span>
                 <span class="shot__frame">
                   <span class="shot__photo">
-                    <img src="/galerie/photos/ed3/1.jpg" alt="" loading="lazy" decoding="async" />
+                    <img src="/galerie/photos/ed3/cover.jpg" alt="" loading="lazy" decoding="async" />
                   </span>
                 </span>
                 <span class="shot__cap">
@@ -951,6 +1000,12 @@
     </footer>
   </div>
 
+  <!-- ===================== VISIONNEUSE (photo en grand) ===================== -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Photo en grand">
+    <button class="lightbox__close" id="lightboxClose" type="button" aria-label="Fermer">&times;</button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="Souvenir d’un atelier Soleia, en grand" />
+  </div>
+
   <!-- ===================== Repli logo si /logo.svg indisponible ===================== -->
   <script>
   (function () {
@@ -971,21 +1026,24 @@
 
     /* === Données des éditions (numéro facile à changer) === */
     var EDITIONS = [
-      { num: "n°01", theme: "Premier atelier",   eyebrow: "Souvenirs de l’atelier", dur: 44,
+      { num: "n°01", theme: "Premier atelier",   eyebrow: "Souvenirs de l’atelier", dur: 29,
         photos: [
+          "/galerie/photos/ed1/cover.jpg",
           "/galerie/photos/ed1/1.jpg", "/galerie/photos/ed1/2.jpg",
           "/galerie/photos/ed1/3.jpg", "/galerie/photos/ed1/4.jpg"
         ] },
-      { num: "n°02", theme: "Deuxième atelier",  eyebrow: "Souvenirs de l’atelier", dur: 50,
+      { num: "n°02", theme: "Deuxième atelier",  eyebrow: "Souvenirs de l’atelier", dur: 33,
         photos: [
+          "/galerie/photos/ed2/cover.jpg",
           "/galerie/photos/ed2/1.jpg",  "/galerie/photos/ed2/2.jpg",
           "/galerie/photos/ed2/3.jpg",  "/galerie/photos/ed2/4.jpg",
           "/galerie/photos/ed2/5.jpg",  "/galerie/photos/ed2/6.jpg",
           "/galerie/photos/ed2/7.jpg",  "/galerie/photos/ed2/8.jpg",
           "/galerie/photos/ed2/9.jpg",  "/galerie/photos/ed2/10.jpg"
         ] },
-      { num: "n°03", theme: "Troisième atelier", eyebrow: "Souvenirs de l’atelier", dur: 40,
+      { num: "n°03", theme: "Troisième atelier", eyebrow: "Souvenirs de l’atelier", dur: 26,
         photos: [
+          "/galerie/photos/ed3/cover.jpg",
           "/galerie/photos/ed3/1.jpg",  "/galerie/photos/ed3/2.jpg",
           "/galerie/photos/ed3/3.jpg",  "/galerie/photos/ed3/4.jpg",
           "/galerie/photos/ed3/5.jpg",  "/galerie/photos/ed3/6.jpg",
@@ -993,6 +1051,22 @@
           "/galerie/photos/ed3/9.jpg",  "/galerie/photos/ed3/10.jpg"
         ] }
     ];
+
+    /* === visionneuse (clic sur une photo pour la voir en grand) === */
+    var lightbox    = document.getElementById("lightbox");
+    var lightboxImg = document.getElementById("lightboxImg");
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add("is-on");
+      lightbox.setAttribute("aria-hidden", "false");
+    }
+    function closeLightbox() {
+      lightbox.classList.remove("is-on");
+      lightbox.setAttribute("aria-hidden", "true");
+    }
+    lightbox.addEventListener("click", function (e) { if (e.target !== lightboxImg) closeLightbox(); });
+    document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLightbox(); });
 
     var panelEd  = document.getElementById("panelEditions");
     var panelAlb = document.getElementById("panelAlbum");
@@ -1007,18 +1081,22 @@
     function makePola(src) {
       var card = document.createElement("div");
       card.className = "pola";
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", "Voir cette photo en grand");
       var frame = document.createElement("div");
       frame.className = "pola__img";
       var img = document.createElement("img");
       img.src = src;
-      img.alt = "";
+      img.alt = "Souvenir d’un atelier Soleia";
       img.loading = "lazy";
       img.decoding = "async";
       frame.appendChild(img);
-      var cap = document.createElement("div");
-      cap.className = "pola__cap";
       card.appendChild(frame);
-      card.appendChild(cap);
+      card.addEventListener("click", function () { openLightbox(src); });
+      card.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(src); }
+      });
       return card;
     }
 

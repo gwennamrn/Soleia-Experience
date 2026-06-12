@@ -322,19 +322,21 @@
   .tabs {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;
-    gap: clamp(0.4rem, 1vw, 0.7rem);
+    justify-content: flex-start;        /* évite le rognage des bords quand ça déborde */
+    gap: clamp(0.35rem, 0.9vw, 0.6rem);
+    width: fit-content;                 /* hugge le contenu : centré quand ça rentre… */
+    max-width: 100%;                    /* …et défile proprement quand c'est trop étroit */
     margin: 0 auto clamp(2rem, 5vh, 3.2rem);
-    max-width: 1120px;
     overflow-x: auto;
-    padding-bottom: 0.3rem;
+    padding: 0.5rem 0.45rem 0.6rem;
     scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
   .tabs::-webkit-scrollbar { display: none; }
   .tab {
     font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: clamp(0.8rem, 1.05vw, 0.96rem);
+    font-size: clamp(0.78rem, 1.05vw, 0.96rem);
     letter-spacing: 0.005em;
     color: var(--ink);
     white-space: nowrap;
@@ -345,7 +347,7 @@
     border: 1.5px solid rgba(255, 250, 246, 0.8);
     box-shadow: 0 8px 22px rgba(248, 116, 47, 0.08), inset 0 0 0 1px rgba(248, 116, 47, 0.05);
     border-radius: 999px;
-    padding: 0.55rem 1.05rem;
+    padding: clamp(0.48rem, 1.1vw, 0.55rem) clamp(0.72rem, 1.7vw, 1.05rem);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -617,7 +619,7 @@
   .site-foot {
     position: relative; z-index: 2;
     padding: clamp(2.6rem, 6vw, 4.2rem) clamp(1.4rem, 5vw, 3rem) clamp(1.7rem, 4vw, 2.6rem);
-    background: linear-gradient(180deg, rgba(255,250,246,0) 0%, rgba(248,230,230,0.5) 100%), var(--creme);
+    background: transparent;          /* plus de fond blanc : juste les éléments sur le dégradé */
   }
   .site-foot__inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(0.7rem, 2vh, 1.15rem); }
   .site-foot__brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; }
