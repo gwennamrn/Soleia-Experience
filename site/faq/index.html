@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>F.A.Q — Soleia Expérience</title>
+<title>FAQ — Soleia Expérience</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,8 +36,6 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
-    min-height: 100vh;
-    min-height: 100svh;
   }
 
   /* ============ FOND : gradient vivant réactif (FIXE — la page défile par-dessus, fond CONTINU) ============ */
@@ -153,9 +151,6 @@
   .nav__col a.nav__link:hover::after,
   .nav__col a.nav__link:focus-visible::after { transform: scaleX(1); }
   .nav__col a.nav__link:hover { color: var(--orange); }
-  /* lien actif : souligné dégradé visible en permanence */
-  .nav__col a.nav__link.is-active { color: var(--orange); }
-  .nav__col a.nav__link.is-active::after { transform: scaleX(1); }
 
   /* ===== LOGO OFFICIEL centré ===== */
   .brand {
@@ -233,34 +228,6 @@
   }
   .nav__burger svg { width: 20px; height: 20px; }
 
-  /* menu mobile déroulant (repli simple, sans dépendance) */
-  .mobile-menu {
-    display: none;
-    position: relative;
-    z-index: 4;
-    margin: 0.6rem clamp(1.4rem, 5vw, 4.8rem) 0;
-    padding: 0.6rem;
-    border-radius: 22px;
-    background: var(--glass-strong);
-    border: 1px solid rgba(251, 107, 166, 0.18);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 14px 36px rgba(248, 116, 47, 0.14);
-  }
-  .mobile-menu.is-open { display: block; }
-  .mobile-menu a {
-    display: block;
-    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 1.12rem;
-    color: var(--ink);
-    text-decoration: none;
-    padding: 0.7rem 0.9rem;
-    border-radius: 14px;
-  }
-  .mobile-menu a.is-active { color: var(--orange); }
-  .mobile-menu a:hover { background: rgba(248, 230, 230, 0.6); color: var(--orange); }
-
   /* ============ RAIL RÉSEAUX SOCIAUX — bord DROIT, centré vertical ============ */
   .social-rail {
     position: fixed;
@@ -298,152 +265,331 @@
   }
 
   /* ============================================================
-     CONTENU « EN COURS » — petit hero centré, plein écran, très aéré
+     CONTENU « FAQ » — grand titre + onglets par catégorie
      ============================================================ */
   .page {
     position: relative;
     z-index: 2;
-    min-height: calc(100vh - 96px);
-    min-height: calc(100svh - 96px);
-    display: grid;
-    place-items: center;
-    padding: clamp(2rem, 7vh, 5rem) clamp(1.4rem, 6vw, 4rem) clamp(3rem, 9vh, 6rem);
+    max-width: 880px;
+    margin: 0 auto;
+    padding: clamp(1.4rem, 4vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
   }
 
+  /* ---- GRAND TITRE de la page (façon hero) ---- */
   .hero {
     text-align: center;
-    max-width: 760px;
-    margin: 0 auto;
+    padding: clamp(3rem, 9vh, 6.5rem) 0 clamp(1.6rem, 4.5vh, 3rem);
   }
-
-  /* petit badge / sur-titre « EN COURS » */
-  .hero__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55em;
-    font-family: "League Spartan", sans-serif;
-    font-weight: 800;
-    font-size: clamp(0.82rem, 1.3vw, 0.98rem);
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: var(--orange);
-    padding: 0.5rem 1.1rem;
-    border-radius: 999px;
-    background: rgba(248, 230, 230, 0.5);
-    border: 1px solid rgba(251, 107, 166, 0.22);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 8px 22px rgba(248, 116, 47, 0.12);
-    margin-bottom: clamp(1.5rem, 4vh, 2.4rem);
-  }
-  .hero__badge .dot {
-    width: 0.5em; height: 0.5em;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--rose), var(--orange));
-    box-shadow: 0 0 0 0 rgba(248, 116, 47, 0.45);
-    animation: badgePulse 2.4s ease-in-out infinite;
-  }
-  @keyframes badgePulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(248, 116, 47, 0.40); }
-    50%      { box-shadow: 0 0 0 6px rgba(248, 116, 47, 0); }
-  }
-
-  /* GRAND TITRE chaleureux en Fraunces */
   .hero__title {
     font-family: "Fraunces", Georgia, serif;
-    font-weight: 440;
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    line-height: 1.04;
-    letter-spacing: -0.025em;
-    color: var(--ink);
+    font-style: italic;                 /* LÉGÈREMENT italique pour l'élégance */
+    font-weight: 420;
+    font-size: clamp(3.2rem, 10vw, 6.4rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
     margin: 0;
+    color: var(--ink);
     font-variation-settings: "opsz" 144;
-  }
-  /* « bientôt » mis en valeur en dégradé rose → orange (comme le mot « BIEN ») */
-  .hero__title .grad {
     background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
   }
-
+  .hero__subtitle {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.02rem, 2vw, 1.25rem);
+    line-height: 1.5;
+    letter-spacing: 0.005em;
+    color: var(--ink-soft);
+    margin: clamp(0.9rem, 2.4vh, 1.4rem) auto 0;
+    max-width: 40ch;
+  }
   .hero__rule {
     display: block;
     width: clamp(56px, 8vw, 96px);
     height: 4px;
-    margin: clamp(1.4rem, 3.4vh, 2.2rem) auto clamp(1.5rem, 3.4vh, 2.2rem);
+    margin: clamp(1.3rem, 3vh, 2rem) auto 0;
     border-radius: 999px;
     background: linear-gradient(90deg, var(--rose), var(--orange));
     opacity: 0.9;
   }
 
-  /* courte phrase placeholder douce et atténuée */
-  .hero__sub {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 400;
-    font-size: clamp(1.08rem, 1.7vw, 1.32rem);
-    line-height: 1.7;
-    color: var(--ink-soft);
-    margin: 0 auto clamp(2.2rem, 5vh, 3.2rem);
-    max-width: 46ch;
+  /* ============================================================
+     ONGLETS PAR CATÉGORIE (pilules) — une seule catégorie visible
+     ============================================================ */
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(0.5rem, 1.4vw, 0.85rem);
+    margin: 0 auto clamp(2rem, 5vh, 3.2rem);
+    max-width: 760px;
   }
-
-  /* bouton « Retour à l'accueil » — style pilule */
-  .hero__back {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55em;
+  .tab {
     font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: clamp(1rem, 1.4vw, 1.12rem);
+    font-size: clamp(0.92rem, 1.3vw, 1.05rem);
+    letter-spacing: 0.005em;
+    color: var(--ink);
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 250, 246, 0.8);
+    box-shadow: 0 8px 22px rgba(248, 116, 47, 0.08), inset 0 0 0 1px rgba(248, 116, 47, 0.05);
+    border-radius: 999px;
+    padding: 0.66rem 1.3rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, color 0.25s ease, background 0.3s ease, border-color 0.25s ease;
+  }
+  .tab__dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), var(--orange));
+    opacity: 0.55;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .tab:hover {
+    transform: translateY(-2px);
+    color: var(--orange);
+    border-color: var(--rose);
+    box-shadow: 0 12px 26px rgba(251, 107, 166, 0.18);
+  }
+  .tab[aria-selected="true"] {
+    color: var(--creme);
+    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+    border-color: transparent;
+    box-shadow: 0 14px 30px rgba(248, 116, 47, 0.26), 0 5px 14px rgba(251, 107, 166, 0.2);
+  }
+  .tab[aria-selected="true"] .tab__dot {
+    background: var(--creme);
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  /* ---- PANNEAU d'une catégorie : titre de catégorie + accordéons ---- */
+  .panel { display: none; }
+  .panel.is-shown { display: block; animation: panelIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  @keyframes panelIn {
+    0%   { opacity: 0; transform: translateY(14px); }
+    100% { opacity: 1; transform: none; }
+  }
+
+  .panel__head {
+    text-align: center;
+    margin: 0 0 clamp(1.4rem, 3.5vh, 2.2rem);
+  }
+  .panel__kicker {
+    display: inline-block;
+    font-family: "League Spartan", sans-serif;
+    font-weight: 700;
+    font-size: 0.66rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin: 0 0 0.5rem;
+  }
+  .panel__title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 480;
+    font-size: clamp(1.55rem, 3.6vw, 2.3rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0;
+    font-variation-settings: "opsz" 110;
+  }
+
+  /* ---- LISTE D'ACCORDÉONS ---- */
+  .accordion {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.8rem, 1.8vh, 1.1rem);
+  }
+
+  .qa {
+    border-radius: 22px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    border: 1.5px solid rgba(255, 250, 246, 0.7);
+    box-shadow: 0 12px 32px rgba(248, 116, 47, 0.07), 0 4px 14px rgba(251, 107, 166, 0.06);
+    overflow: hidden;
+    transition: box-shadow 0.35s ease, border-color 0.3s ease;
+  }
+  .qa.is-open {
+    box-shadow: 0 20px 44px rgba(248, 116, 47, 0.14), 0 8px 20px rgba(251, 107, 166, 0.12);
+    border-color: rgba(251, 107, 166, 0.35);
+  }
+
+  /* la QUESTION = un bouton plein largeur, en GRAS */
+  .qa__btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: left;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: clamp(1.05rem, 2.2vw, 1.4rem) clamp(1.2rem, 2.8vw, 1.7rem);
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-weight: 600;                  /* QUESTION EN GRAS */
+    font-size: clamp(1.02rem, 1.6vw, 1.18rem);
+    line-height: 1.4;
+    letter-spacing: 0.002em;
+    color: var(--ink);
+    transition: color 0.25s ease;
+  }
+  .qa__btn:hover { color: var(--orange); }
+
+  /* indicateur + / − (signe qui pivote) */
+  .qa__sign {
+    flex: 0 0 auto;
+    width: clamp(30px, 4vw, 36px);
+    height: clamp(30px, 4vw, 36px);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--orange);
+    background: linear-gradient(135deg, rgba(251, 107, 166, 0.16), rgba(248, 116, 47, 0.16));
+    box-shadow: inset 0 0 0 1.5px rgba(255, 250, 246, 0.7);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease, color 0.25s ease;
+  }
+  .qa__sign svg { width: 48%; height: 48%; }
+  /* la barre verticale du « + » disparaît à l'ouverture → devient « − » */
+  .qa__sign .bar-v {
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  }
+  .qa.is-open .qa__sign {
+    transform: rotate(180deg);
+    color: var(--creme);
+    background: linear-gradient(135deg, var(--rose), var(--orange));
+  }
+  .qa.is-open .qa__sign .bar-v { transform: scaleY(0); opacity: 0; }
+
+  /* la RÉPONSE : zone qui se déplie en douceur (grid-rows animé) */
+  .qa__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .qa.is-open .qa__panel { grid-template-rows: 1fr; }
+  .qa__panel-inner { overflow: hidden; }
+  .qa__answer {
+    margin: 0;
+    padding: 0 clamp(1.2rem, 2.8vw, 1.7rem) clamp(1.15rem, 2.4vw, 1.5rem);
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-weight: 300;                  /* RÉPONSE en typo plus FINE */
+    font-size: clamp(0.95rem, 1.45vw, 1.06rem);
+    line-height: 1.62;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+  .qa__answer .soon {
+    font-style: italic;
+    opacity: 0.92;
+  }
+
+  /* ===== petit bloc « encore une question ? » en bas (emplacement réservé) ===== */
+  .stay {
+    text-align: center;
+    margin-top: clamp(3.4rem, 9vh, 6rem);
+    padding: clamp(2rem, 5vw, 3rem) clamp(1.4rem, 4vw, 2.6rem);
+    border-radius: 30px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    border: 1.5px solid rgba(255, 250, 246, 0.7);
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 18px 44px rgba(248, 116, 47, 0.10);
+  }
+  .stay__sun {
+    width: clamp(38px, 5vw, 48px);
+    height: clamp(38px, 5vw, 48px);
+    margin: 0 auto clamp(0.7rem, 1.6vh, 1rem);
+    display: block;
+    filter: drop-shadow(0 4px 10px rgba(248, 116, 47, 0.18));
+  }
+  .stay__sun svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .stay__title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 460;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0;
+    font-variation-settings: "opsz" 110;
+  }
+  .stay__title .grad {
+    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .stay__mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: clamp(1.1rem, 2.6vh, 1.5rem) auto 0;
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.96rem, 1.2vw, 1.05rem);
     color: var(--creme);
     text-decoration: none;
-    padding: 0.85rem 1.7rem;
+    padding: 0.7rem 1.5rem;
     border-radius: 999px;
     background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    box-shadow: 0 14px 32px rgba(248, 116, 47, 0.28), 0 4px 12px rgba(251, 107, 166, 0.2);
-    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+    box-shadow: 0 12px 26px rgba(248, 116, 47, 0.24), 0 4px 12px rgba(251, 107, 166, 0.18);
+    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.26s ease;
   }
-  .hero__back .arrow { transition: transform 0.28s ease; }
-  .hero__back:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 22px 44px rgba(248, 116, 47, 0.34), 0 8px 18px rgba(251, 107, 166, 0.24);
+  .stay__mail svg { width: 17px; height: 17px; }
+  .stay__mail:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(248, 116, 47, 0.32), 0 6px 16px rgba(251, 107, 166, 0.22);
   }
-  .hero__back:hover .arrow { transform: translateX(-3px); }
 
-  /* ============ APPARITION (avec repli : tout visible si pas de JS) ============ */
+  /* ============ APPARITION AU DÉFILEMENT (avec repli : tout visible si pas de JS) ============ */
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
   .reveal.is-in { opacity: 1; transform: none; }
-  .reveal--d1 { transition-delay: 0.08s; }
-  .reveal--d2 { transition-delay: 0.16s; }
-  .reveal--d3 { transition-delay: 0.24s; }
-  .reveal--d4 { transition-delay: 0.32s; }
 
   /* ============================================================
-     ✿ CALQUE DÉCOR — fleurs rétro + soleils dessinés-main, léger ✿
+     ✿ CALQUE DÉCOR PLEINE PAGE — fleurs rétro + soleils dessinés-main ✿
      ============================================================ */
   .deco-layer {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;     /* le calque laisse tout passer */
-    z-index: 3;               /* au-dessus du fond, sous la barre (z-index:4) et le rail (z-index:6) */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
     overflow: hidden;
   }
   .deco-item {
     position: absolute;
-    pointer-events: auto;     /* on peut l'attraper… */
-    touch-action: none;       /* …au doigt aussi, sans scroller la page */
+    pointer-events: auto;
+    touch-action: none;
     user-select: none;
     -webkit-user-select: none;
     cursor: grab;
     will-change: transform;
-    width: 74px; height: 74px;
     filter: drop-shadow(0 6px 14px rgba(248, 116, 47, 0.12));
     transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)) scale(var(--s, 1));
   }
   .deco-item.is-grabbing { cursor: grabbing; z-index: 99; filter: drop-shadow(0 10px 22px rgba(248, 116, 47, 0.22)); }
   .deco-item svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .deco-item { width: 74px; height: 74px; }
 
   @keyframes decoFloat {
     0%   { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
@@ -460,6 +606,36 @@
     border-radius: 12px;
   }
 
+  /* ===== FOOTER COMMUN ===== */
+  .site-foot {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid rgba(58, 42, 46, 0.12);
+    background: rgba(255, 250, 246, 0.66);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    padding: clamp(1.6rem, 4vw, 2.6rem) clamp(1.4rem, 5vw, 3rem);
+  }
+  .site-foot__inner {
+    max-width: 1080px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: clamp(0.55rem, 1.8vw, 1.2rem); text-align: center;
+  }
+  .site-foot__brand {
+    flex-basis: 100%; margin: 0;
+    font-family: "League Spartan", sans-serif; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.82rem; color: var(--ink);
+  }
+  .site-foot__legal { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(0.5rem, 1.6vw, 1.1rem); }
+  .site-foot__legal a, .site-foot__mail {
+    font-family: "Space Grotesk", sans-serif; font-size: clamp(0.82rem, 1vw, 0.92rem);
+    text-decoration: none; transition: color 0.25s ease;
+  }
+  .site-foot__legal a { color: var(--ink-soft); }
+  .site-foot__legal a:hover { color: var(--orange); }
+  .site-foot__mail { flex-basis: 100%; color: var(--orange); }
+  .site-foot__copy { flex-basis: 100%; margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 0.78rem; color: rgba(58, 42, 46, 0.5); }
+
   /* ============ RESPONSIVE ============ */
   @media (max-width: 760px) {
     .shell { padding-right: clamp(1.2rem, 5vw, 4.5rem); }
@@ -468,8 +644,6 @@
     .nav__col--right .nav__link { display: none; }
     .brand { justify-self: start; }
     .nav__burger { display: inline-flex; }
-
-    .hero__title { font-size: clamp(2.1rem, 9vw, 3.4rem); }
 
     /* sur mobile, le rail est replié horizontalement en bas pour rester visible */
     .social-rail {
@@ -487,7 +661,7 @@
     .social-rail__label { writing-mode: horizontal-tb; margin-bottom: 0; margin-right: 0.2rem; }
     .social-rail__line { width: clamp(18px, 6vw, 26px); height: 1.5px; background: linear-gradient(90deg, var(--rose), var(--orange)); }
 
-    .page { padding-bottom: clamp(5rem, 14vw, 7rem); }
+    .page { padding-bottom: clamp(4.5rem, 12vw, 6rem); }
 
     .deco-item { width: 58px; height: 58px; filter: drop-shadow(0 4px 9px rgba(248, 116, 47, 0.12)); }
     .deco-item.hide-mobile { display: none; }
@@ -509,11 +683,12 @@
     .living__css { opacity: 0.94 !important; animation: none !important; }
     .reveal { opacity: 1 !important; transform: none !important; }
     .deco-item.is-float { animation: none !important; }
+    .panel.is-shown { animation: none !important; }
   }
 </style>
 </head>
 <body>
-  <!-- ===================== FOND : GRADIENT VIVANT RÉACTIF (FIXE) ===================== -->
+  <!-- ===================== FOND : GRADIENT VIVANT RÉACTIF (FIXE — coule en CONTINU derrière toute la page) ===================== -->
   <div class="living" aria-hidden="true">
     <div class="living__css"></div>
     <canvas id="gl"></canvas>
@@ -524,7 +699,7 @@
   <!-- ===================== DÉCORS RÉUTILISABLES (définis une fois, réutilisés via <use>) ===================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
-      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques -->
+      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques (16 rayons). -->
       <g id="soleiaSunDoodle">
         <circle cx="50" cy="50" r="20" fill="#f8742f"/>
         <circle cx="50" cy="50" r="20" fill="#f4b63e" opacity="0.18"/>
@@ -548,7 +723,7 @@
         </g>
       </g>
 
-      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, cœur jaune doré -->
+      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, cœur jaune doré arrondi. Couleur pilotée par currentColor. -->
       <g id="soleiaFlowerRetro">
         <g fill="currentColor">
           <path d="M50 12
@@ -608,7 +783,7 @@
         <path d="M12 3.5a8.5 8.5 0 0 0-3.1 16.4c-.07-.7-.13-1.78.03-2.55.14-.66.92-4.2.92-4.2s-.24-.47-.24-1.17c0-1.1.64-1.92 1.43-1.92.67 0 1 .5 1 1.1 0 .68-.43 1.69-.65 2.63-.19.78.4 1.42 1.17 1.42 1.4 0 2.48-1.48 2.48-3.62 0-1.9-1.36-3.22-3.3-3.22a3.43 3.43 0 0 0-3.58 3.44c0 .68.26 1.42.59 1.81a.24.24 0 0 1 .05.23l-.22.9c-.04.15-.12.18-.27.11-1-.47-1.63-1.93-1.63-3.1 0-2.53 1.84-4.85 5.3-4.85 2.78 0 4.94 1.98 4.94 4.63 0 2.76-1.74 4.98-4.16 4.98-.81 0-1.57-.42-1.83-.92l-.5 1.9c-.18.7-.67 1.57-1 2.1A8.5 8.5 0 1 0 12 3.5Z" fill="currentColor"/>
       </svg>
     </a>
-    <a class="icon-btn" href="#contact" aria-label="Contacter Soleia par e-mail">
+    <a class="icon-btn" href="mailto:soleiaexperience@gmail.com" aria-label="Contacter Soleia par e-mail">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
         <rect x="3" y="5" width="18" height="14" rx="3"/>
         <path d="m4 7 8 5.5L20 7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -617,17 +792,26 @@
     <span class="social-rail__line" aria-hidden="true"></span>
   </aside>
 
-  <!-- ===================== CALQUE DÉCOR (fleurs + soleils déplaçables, léger et respirant) ===================== -->
+  <!-- ===================== CALQUE DÉCOR PLEINE PAGE (fleurs + soleils déplaçables) ===================== -->
   <div class="deco-layer" aria-hidden="true">
-    <span class="deco-item is-float" data-deco-id="deco-1" style="top:14%; left:8%;   --rot:-10deg; --s:0.84; --dur:9s;  --delay:-1s;   color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-2" style="top:20%; right:11%; --rot:9deg;   --s:0.98; --dur:11s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-3" style="top:62%; left:11%; --rot:8deg;  --s:0.6;  --dur:10s; --delay:-2s;   color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-4" style="bottom:13%; right:9%; --rot:-7deg; --s:0.74; --dur:9.5s; --delay:-4s; color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-5" style="bottom:20%; left:14%; --rot:5deg; --s:0.56; --dur:11s; --delay:-1.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <!-- ░░ Zone titre (haut de page) ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-1"  style="top:5%;    left:8%;   --rot:-10deg; --s:0.74; --dur:8s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-2"  style="top:3.6%;  right:9%;  --rot:8deg;   --s:0.98; --dur:10s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-small" data-deco-id="deco-3"  style="top:11%;   left:22%;  --rot:14deg;  --s:0.54; --dur:9s;  --delay:-2s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+
+    <!-- ░░ Marges latérales (le long des questions) ░░ -->
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-4"  style="top:30%;   right:3%;  --rot:-6deg;  --s:0.62; --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-5"  style="top:46%;   left:2.5%; --rot:6deg;   --s:0.6;  --dur:10s; --delay:-2.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-6"  style="top:62%;   right:3%;  --rot:11deg;  --s:0.66; --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-7"  style="top:76%;   left:3%;   --rot:-9deg;  --s:0.6;  --dur:11s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+
+    <!-- ░░ Bas de page ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-9"  style="top:92%;   left:10%;  --rot:10deg;  --s:0.66; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-10" style="top:93%;   right:11%; --rot:-8deg;  --s:0.62; --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
   </div>
 
   <div class="shell">
-    <!-- ===================== NAV (identique aux autres pages) ===================== -->
+    <!-- ===================== NAV (identique à l'accueil — AUCUN item actif) ===================== -->
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__col nav__col--left">
         <li><a class="nav__link" href="/ateliers/">Ateliers</a></li>
@@ -637,6 +821,7 @@
       <a class="brand" href="/" aria-label="Soleia Expérience, accueil">
         <span class="brand__word brand__word--left">Soleia</span>
         <img src="/logo.svg" alt="" />
+        <!-- repli si /logo.svg manquant : emblème soleil bi-ton rose/orange -->
         <svg class="brand__fallback" viewBox="0 0 64 64" role="img" aria-label="Soleia Expérience">
           <defs>
             <linearGradient id="soleiaSun" x1="0" y1="0" x2="1" y2="1">
@@ -663,13 +848,14 @@
         <a class="nav__link" href="/a-propos/">Concept</a>
         <a class="nav__link" href="/galerie/">Galerie</a>
 
+        <!-- icône compte discrète à l'extrême droite (tolérée) -->
         <button class="icon-btn account" aria-label="Mon compte">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
             <circle cx="12" cy="8" r="3.4"/>
             <path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" stroke-linecap="round"/>
           </svg>
         </button>
-        <button class="nav__burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+        <button class="nav__burger" aria-label="Ouvrir le menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
           </svg>
@@ -678,30 +864,342 @@
     </nav>
   </div>
 
-  <!-- menu mobile déroulant (apparaît au clic sur le burger) -->
-  <div class="mobile-menu" id="mobile-menu">
-    <a href="/ateliers/">Ateliers</a>
-    <a href="/boutique/">Boutique</a>
-    <a href="/a-propos/">Concept</a>
-    <a href="/galerie/">Galerie</a>
-  </div>
-
-  <!-- ===================== CONTENU « EN COURS » ===================== -->
+  <!-- ===================== CONTENU « FAQ » ===================== -->
   <main class="page">
-    <section class="hero" aria-labelledby="hero-title">
-      <span class="hero__badge reveal" aria-hidden="false">
-        <span class="dot" aria-hidden="true"></span>En cours
-      </span>
-      <h1 class="hero__title reveal reveal--d1" id="hero-title">La F.A.Q arrive <span class="grad">bientôt</span>&#8239;!</h1>
-      <span class="hero__rule reveal reveal--d2" aria-hidden="true"></span>
-      <p class="hero__sub reveal reveal--d3">
-        On prépare ça avec amour. Reviens très vite&#8239;! 🌞
-      </p>
-      <a class="hero__back reveal reveal--d4" href="/">
-        <span class="arrow" aria-hidden="true">←</span> Retour à l’accueil
+
+    <!-- ===== GRAND TITRE de la page ===== -->
+    <section class="hero reveal" aria-labelledby="faq-title">
+      <h1 class="hero__title" id="faq-title">FAQ</h1>
+      <p class="hero__subtitle">Tu te poses une question&#8239;? On a sûrement la réponse.</p>
+      <span class="hero__rule" aria-hidden="true"></span>
+    </section>
+
+    <!-- ===== ONGLETS PAR CATÉGORIE (pilules) ===== -->
+    <div class="tabs reveal" role="tablist" aria-label="Catégories de questions">
+      <button class="tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true">
+        <span class="tab__dot" aria-hidden="true"></span>Réservations d’ateliers
+      </button>
+      <button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">
+        <span class="tab__dot" aria-hidden="true"></span>Bons cadeaux
+      </button>
+      <button class="tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1">
+        <span class="tab__dot" aria-hidden="true"></span>Déroulement des ateliers
+      </button>
+      <button class="tab" role="tab" id="tab-4" aria-controls="panel-4" aria-selected="false" tabindex="-1">
+        <span class="tab__dot" aria-hidden="true"></span>Annulation et modification
+      </button>
+    </div>
+
+    <!-- ===== PANNEAU 1 — Réservations d’ateliers ===== -->
+    <section class="panel is-shown" id="panel-1" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
+      <header class="panel__head">
+        <span class="panel__kicker">Catégorie 1</span>
+        <h2 class="panel__title">Réservations d’ateliers</h2>
+      </header>
+      <div class="accordion">
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Comment réserver un atelier&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Puis-je réserver plusieurs places&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Comment savoir si ma réservation est confirmée&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Les ateliers ont-ils un nombre de places limité&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Puis-je offrir une place à quelqu’un&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== PANNEAU 2 — Bons cadeaux ===== -->
+    <section class="panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2" tabindex="0" hidden>
+      <header class="panel__head">
+        <span class="panel__kicker">Catégorie 2</span>
+        <h2 class="panel__title">Bons cadeaux</h2>
+      </header>
+      <div class="accordion">
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Comment acheter un bon cadeau&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Quelle est la durée de validité d’un bon cadeau&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Le bon cadeau est-il valable sur tous les ateliers&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Puis-je personnaliser mon bon cadeau&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Comment la personne utilise-t-elle son bon cadeau lors de la réservation&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Les bons cadeaux sont-ils remboursables&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== PANNEAU 3 — Déroulement des ateliers ===== -->
+    <section class="panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3" tabindex="0" hidden>
+      <header class="panel__head">
+        <span class="panel__kicker">Catégorie 3</span>
+        <h2 class="panel__title">Déroulement des ateliers</h2>
+      </header>
+      <div class="accordion">
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Puis-je venir seule&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Faut-il avoir de l’expérience&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Que dois-je apporter le jour de l’atelier&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Y a-t-il un âge minimum pour participer&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Tout le matériel est-il fourni&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== PANNEAU 4 — Annulation et modification ===== -->
+    <section class="panel" id="panel-4" role="tabpanel" aria-labelledby="tab-4" tabindex="0" hidden>
+      <header class="panel__head">
+        <span class="panel__kicker">Catégorie 4</span>
+        <h2 class="panel__title">Annulation et modification</h2>
+      </header>
+      <div class="accordion">
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Puis-je annuler ma réservation&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Puis-je céder ma place à quelqu’un d’autre&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Que se passe-t-il si Soleia doit annuler un atelier&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+        <div class="qa">
+          <button class="qa__btn" aria-expanded="false">
+            <span class="qa__q">Comment suis-je informé·e d’un changement&#8239;?</span>
+            <span class="qa__sign" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path class="bar-v" d="M12 5v14"/></svg>
+            </span>
+          </button>
+          <div class="qa__panel"><div class="qa__panel-inner">
+            <p class="qa__answer"><span class="soon">La réponse sera bientôt ajoutée.</span></p>
+          </div></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== petit bloc « encore une question ? » ===== -->
+    <section class="stay reveal" aria-label="Encore une question">
+      <span class="stay__sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+      <p class="stay__title">Tu ne trouves pas&#8239;? <span class="grad">Écris-nous, on adore ça&#8239;!</span></p>
+      <a class="stay__mail" href="mailto:soleiaexperience@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 5.5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Nous écrire
       </a>
     </section>
+
   </main>
+
+  <!-- ===================== FOOTER COMMUN (liens légaux) ===================== -->
+  <footer class="site-foot" aria-label="Pied de page">
+    <div class="site-foot__inner">
+      <p class="site-foot__brand">Soleia Expérience</p>
+      <nav class="site-foot__legal" aria-label="Informations légales">
+        <a href="/remboursement/">Politique de remboursement</a>
+        <a href="/confidentialite/">Politique de confidentialité</a>
+        <a href="/cgv/">CGV</a>
+        <a href="/mentions-legales/">Mentions légales</a>
+      </nav>
+      <a class="site-foot__mail" href="mailto:soleiaexperience@gmail.com">soleiaexperience@gmail.com</a>
+      <p class="site-foot__copy">© Soleia Expérience</p>
+    </div>
+  </footer>
 
   <!-- ===================== Repli logo si /logo.svg indisponible ===================== -->
   <script>
@@ -716,20 +1214,71 @@
   })();
   </script>
 
-  <!-- ===================== Menu mobile (burger) ===================== -->
+  <!-- ===================== ONGLETS PAR CATÉGORIE (une seule catégorie visible) ===================== -->
   <script>
   (function () {
-    var burger = document.querySelector(".nav__burger");
-    var menu = document.getElementById("mobile-menu");
-    if (!burger || !menu) return;
-    burger.addEventListener("click", function () {
-      var open = menu.classList.toggle("is-open");
-      burger.setAttribute("aria-expanded", open ? "true" : "false");
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+    var panels = Array.prototype.slice.call(document.querySelectorAll(".panel"));
+    if (!tabs.length) return;
+
+    function activate(idx, focusPanel) {
+      tabs.forEach(function (t, i) {
+        var on = i === idx;
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (p, i) {
+        var on = i === idx;
+        if (on) {
+          p.hidden = false;
+          // forcer un reflow pour rejouer l'animation d'apparition
+          p.classList.remove("is-shown");
+          void p.offsetWidth;
+          p.classList.add("is-shown");
+        } else {
+          p.classList.remove("is-shown");
+          p.hidden = true;
+        }
+      });
+      if (focusPanel && panels[idx]) {
+        try { panels[idx].focus({ preventScroll: true }); } catch (e) {}
+      }
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { activate(i, false); });
+      tab.addEventListener("keydown", function (e) {
+        var dir = 0;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") dir = 1;
+        else if (e.key === "ArrowLeft" || e.key === "ArrowUp") dir = -1;
+        else if (e.key === "Home") { e.preventDefault(); activate(0, false); tabs[0].focus(); return; }
+        else if (e.key === "End") { e.preventDefault(); activate(tabs.length - 1, false); tabs[tabs.length - 1].focus(); return; }
+        if (dir !== 0) {
+          e.preventDefault();
+          var next = (i + dir + tabs.length) % tabs.length;
+          activate(next, false);
+          tabs[next].focus();
+        }
+      });
     });
   })();
   </script>
 
-  <!-- ===================== APPARITION (repli sûr : tout visible si indisponible) ===================== -->
+  <!-- ===================== ACCORDÉONS (ouvrir / fermer une réponse) ===================== -->
+  <script>
+  (function () {
+    var btns = Array.prototype.slice.call(document.querySelectorAll(".qa__btn"));
+    btns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var qa = btn.closest(".qa");
+        var open = qa.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
+  })();
+  </script>
+
+  <!-- ===================== APPARITION AU DÉFILEMENT (repli sûr : tout visible si indisponible) ===================== -->
   <script>
   (function () {
     var els = document.querySelectorAll(".reveal");
@@ -748,25 +1297,71 @@
   })();
   </script>
 
-  <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT ===================== -->
+  <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT (+ mémoire des positions) ===================== -->
   <script>
   (function () {
+    var STORE_KEY = "soleia-deco-pos-faq";
     var items = Array.prototype.slice.call(document.querySelectorAll(".deco-item"));
     if (!items.length) return;
-    var startX = 0, startY = 0, baseDx = 0, baseDy = 0, movedThisDrag = false, current = null;
+
+    var layer = document.querySelector(".deco-layer");
+    function sizeLayer() {
+      if (!layer) return;
+      layer.style.height = "0px";
+      layer.style.height = document.documentElement.scrollHeight + "px";
+    }
+    sizeLayer();
+    window.addEventListener("load", sizeLayer);
+    window.addEventListener("resize", sizeLayer);
+    setTimeout(sizeLayer, 600);
+    setTimeout(sizeLayer, 1600);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(sizeLayer); }
+
+    function loadPos() {
+      try {
+        var raw = window.localStorage.getItem(STORE_KEY);
+        return raw ? (JSON.parse(raw) || {}) : {};
+      } catch (e) { return {}; }
+    }
+    function savePos(map) {
+      try { window.localStorage.setItem(STORE_KEY, JSON.stringify(map)); } catch (e) {}
+    }
+
+    var positions = loadPos();
+
+    items.forEach(function (el) {
+      var id = el.getAttribute("data-deco-id");
+      var p = id && positions[id];
+      if (p && (p.dx || p.dy)) {
+        el.style.setProperty("--dx", p.dx + "px");
+        el.style.setProperty("--dy", p.dy + "px");
+        el.classList.add("is-moved");
+      }
+    });
+
+    var startX = 0, startY = 0;
+    var baseDx = 0, baseDy = 0;
+    var movedThisDrag = false;
+    var current = null;
 
     function numVar(el, name) {
       var n = parseFloat(el.style.getPropertyValue(name));
       return isNaN(n) ? 0 : n;
     }
+
     function onDown(e) {
       var el = e.currentTarget;
-      current = el; movedThisDrag = false;
-      baseDx = numVar(el, "--dx"); baseDy = numVar(el, "--dy");
-      startX = e.clientX; startY = e.clientY;
-      el.classList.add("is-grabbing"); el.classList.add("is-moved");
+      current = el;
+      movedThisDrag = false;
+      baseDx = numVar(el, "--dx");
+      baseDy = numVar(el, "--dy");
+      startX = e.clientX;
+      startY = e.clientY;
+      el.classList.add("is-grabbing");
+      el.classList.add("is-moved");
       try { el.setPointerCapture(e.pointerId); } catch (err) {}
     }
+
     function onMove(e) {
       var el = e.currentTarget;
       if (current !== el) return;
@@ -776,13 +1371,22 @@
       el.style.setProperty("--dx", dx + "px");
       el.style.setProperty("--dy", dy + "px");
     }
+
     function onUp(e) {
       var el = e.currentTarget;
       if (current !== el) return;
       el.classList.remove("is-grabbing");
       try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+      if (movedThisDrag) {
+        var id = el.getAttribute("data-deco-id");
+        if (id) {
+          positions[id] = { dx: Math.round(numVar(el, "--dx")), dy: Math.round(numVar(el, "--dy")) };
+          savePos(positions);
+        }
+      }
       current = null;
     }
+
     items.forEach(function (el) {
       el.addEventListener("pointerdown", onDown);
       el.addEventListener("pointermove", onMove);
