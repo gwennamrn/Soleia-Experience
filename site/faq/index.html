@@ -321,18 +321,13 @@
      ============================================================ */
   .tabs {
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;        /* évite le rognage des bords quand ça déborde */
+    flex-wrap: wrap;                    /* si tout ne tient pas, ça passe à la ligne — jamais coupé */
+    justify-content: center;
     gap: clamp(0.35rem, 0.9vw, 0.6rem);
-    width: fit-content;                 /* hugge le contenu : centré quand ça rentre… */
-    max-width: 100%;                    /* …et défile proprement quand c'est trop étroit */
+    max-width: 1120px;
     margin: 0 auto clamp(2rem, 5vh, 3.2rem);
-    overflow-x: auto;
-    padding: 0.5rem 0.45rem 0.6rem;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    padding: 0.5rem 0.2rem 0.6rem;
   }
-  .tabs::-webkit-scrollbar { display: none; }
   .tab {
     font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
     font-weight: 700;
