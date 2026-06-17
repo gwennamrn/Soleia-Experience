@@ -358,7 +358,7 @@
      ============================================================ */
   .gallery {
     position: relative;
-    margin: 0 0 clamp(3rem, 8vh, 5.5rem);
+    margin: 0 0 clamp(3.6rem, 9vh, 6.5rem);
   }
   .gallery__viewport {
     display: flex;
@@ -463,7 +463,7 @@
      SECTIONS — titres de section communs
      ============================================================ */
   .sec {
-    margin: 0 0 clamp(3.2rem, 8vh, 6rem);
+    margin: 0 0 clamp(4rem, 10vh, 7.5rem);
   }
   .sec__head {
     font-family: "Fraunces", Georgia, serif;
@@ -540,9 +540,12 @@
     font-size: clamp(0.98rem, 1.4vw, 1.12rem);
     color: var(--ink);
   }
-  /* le TARIF, juste en dessous des rectangles, SANS encadré */
+  /* le TARIF, en temps fort CENTRÉ au milieu de la page */
+  .tarif-band {
+    margin: 0 0 clamp(4rem, 10vh, 7.5rem);
+  }
   .tarif {
-    margin: clamp(1.4rem, 3.2vh, 2rem) 0 0;
+    margin: 0;
     text-align: center;
   }
   .tarif__label {
@@ -609,7 +612,7 @@
   /* ---- 5) CE QUE TU EMPORTES AVEC TOI : bloc centré, émotionnel ---- */
   .keep {
     text-align: center;
-    margin: 0 auto clamp(3.4rem, 9vh, 6rem);
+    margin: 0 auto clamp(4rem, 10vh, 7rem);
     max-width: 720px;
     padding: clamp(2.2rem, 6vw, 3.6rem) clamp(1.5rem, 5vw, 3rem);
     border-radius: 34px;
@@ -1138,12 +1141,6 @@
               <span class="info__text"><span class="info__label">Places</span><span class="info__value">10 participantes maximum</span></span>
             </div>
           </div>
-          <!-- TARIF sans encadré -->
-          <p class="tarif">
-            <span class="tarif__label">Tarif</span>
-            <span class="tarif__value">30&#8239;€</span>
-            <span class="tarif__note">par personne</span>
-          </p>
         </div>
       </div>
     </section>
@@ -1195,6 +1192,15 @@
           </ul>
         </div>
       </div>
+    </section>
+
+    <!-- ===== TARIF — temps fort centré, au milieu de la page ===== -->
+    <section class="tarif-band reveal" aria-label="Tarif de l’atelier">
+      <p class="tarif">
+        <span class="tarif__label">Tarif</span>
+        <span class="tarif__value">30&#8239;€</span>
+        <span class="tarif__note">par personne</span>
+      </p>
     </section>
 
     <!-- ===== 5) CE QUE TU EMPORTES AVEC TOI (centré, émotionnel) ===== -->
