@@ -399,6 +399,16 @@
   }
   .mood__tile-icon svg { width: 54%; height: 54%; }
   .atelier:hover .mood__tile-icon { transform: scale(1.12) rotate(-4deg); }
+  .mood__tile img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .atelier:hover .mood__tile img { transform: scale(1.04); }
 
   /* mosaïque ASYMÉTRIQUE : une grande tuile + plusieurs petites, sans vide */
   .mood__tile--a { grid-column: 1 / 2; grid-row: 1 / 3; border-radius: 24px; }      /* grande tuile gauche (porte le titre) */
@@ -979,18 +989,18 @@
 
       <!-- Atelier 1 — Je customise mon tote bag -->
       <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Je customise mon tote bag — en savoir plus">
-        <div class="mood" role="img" aria-label="Souvenirs de l’atelier tote bag (photos à venir)">
+        <div class="mood" role="img" aria-label="Souvenirs de l’atelier « Je customise mon tote bag »">
           <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
           <div class="mood__tile mood__tile--a">
-            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
+            <img src="/ateliers/img/totebag-1.jpg" alt="Table d’atelier dressée avec des tote bags peints et du rosé" loading="lazy" decoding="async" />
             <div class="mood__caption">
               <span class="mood__caption-kicker">Atelier</span>
               <h2 class="mood__caption-title">Je customise mon tote bag</h2>
             </div>
           </div>
-          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <div class="mood__tile mood__tile--b"><img src="/ateliers/img/totebag-3.jpg" alt="Six tote bags personnalisés posés sur l’herbe" loading="lazy" decoding="async" /></div>
+          <div class="mood__tile mood__tile--c"><img src="/ateliers/img/totebag-5.jpg" alt="Tote bag « good vibes only » rose et orange" loading="lazy" decoding="async" /></div>
+          <div class="mood__tile mood__tile--d"><img src="/ateliers/img/totebag-4.jpg" alt="Deux tote bags personnalisés à la plage" loading="lazy" decoding="async" /></div>
         </div>
         <div class="atelier__info">
           <p class="atelier__lede">Un atelier pour customiser ton tote bag à ta façon, sans pression&#8239;: juste créer, respirer et profiter de l’instant.</p>

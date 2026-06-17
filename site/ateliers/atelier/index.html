@@ -399,6 +399,14 @@
   .photo--tall  { width: clamp(220px, 28vw, 340px); height: clamp(280px, 36vw, 420px); }
   .photo--wide  { width: clamp(280px, 38vw, 460px); height: clamp(280px, 36vw, 420px); }
   .photo--soft  { width: clamp(220px, 28vw, 320px); height: clamp(280px, 36vw, 420px); }
+  .photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
   .photo__icon {
     width: clamp(34px, 4vw, 52px);
     height: clamp(34px, 4vw, 52px);
@@ -1080,20 +1088,16 @@
     </header>
 
     <!-- ===== 2) MOODBOARD PHOTOS — carrousel horizontal défilable ===== -->
-    <section class="gallery reveal" aria-label="Souvenirs en images de l’atelier (photos à venir)">
+    <section class="gallery reveal" aria-label="Souvenirs en images de l’atelier">
       <button class="gallery__arrow gallery__arrow--prev" type="button" aria-label="Photo précédente">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="gallery__viewport" id="galleryViewport">
-        <figure class="photo photo--wide">          <span class="photo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
-        </figure>
-        <figure class="photo photo--tall"><span class="photo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></figure>
-        <figure class="photo photo--soft"><span class="photo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></figure>
-        <figure class="photo photo--wide"><span class="photo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></figure>
-        <figure class="photo photo--tall"><span class="photo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></figure>
-        <figure class="photo photo--soft"><span class="photo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></figure>
-        <figure class="photo photo--wide"><span class="photo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></figure>
-        <figure class="photo photo--tall"><span class="photo__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></figure>
+        <figure class="photo photo--tall"><img src="/ateliers/img/totebag-1.jpg" alt="Table d’atelier dressée en extérieur avec des tote bags peints, du rosé et des fleurs" loading="lazy" decoding="async" /></figure>
+        <figure class="photo photo--tall"><img src="/ateliers/img/totebag-2.jpg" alt="Table préparée avec des tote bags vierges, des pinceaux et de petits bouquets" loading="lazy" decoding="async" /></figure>
+        <figure class="photo photo--tall"><img src="/ateliers/img/totebag-3.jpg" alt="Six tote bags personnalisés et colorés posés sur l’herbe" loading="lazy" decoding="async" /></figure>
+        <figure class="photo photo--tall"><img src="/ateliers/img/totebag-4.jpg" alt="Deux tote bags personnalisés posés sur une serviette à la plage" loading="lazy" decoding="async" /></figure>
+        <figure class="photo photo--tall"><img src="/ateliers/img/totebag-5.jpg" alt="Tote bag « good vibes only » aux couleurs rose et orange" loading="lazy" decoding="async" /></figure>
       </div>
       <button class="gallery__arrow gallery__arrow--next" type="button" aria-label="Photo suivante">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
