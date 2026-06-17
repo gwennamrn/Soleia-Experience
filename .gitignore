@@ -18,6 +18,8 @@ node_modules/
 soleia-*.png
 verify-*.png
 soleia-hero.html
+# Exception : le logo de la signature e-mail doit être versionné (sinon logo cassé)
+!site/signature/img/soleia-logo.png
 
 # Images d'inspiration (screenshots d'autres sites, à la racine) — usage interne, non publié
 /IMG_*.JPG
