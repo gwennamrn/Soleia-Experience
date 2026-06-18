@@ -772,9 +772,184 @@
   .site-foot__mail:hover { opacity: 0.78; }
   .site-foot__copy { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 0.78rem; letter-spacing: 0.02em; color: rgba(58,42,46,0.5); }
   .site-foot__copy span { color: var(--rose); }
+
+  /* ============================================================ */
+  /* ===== CARTES D'EXPÉRIENCES — vue unique (pas de défilement) ===== */
+  /* ============================================================ */
+  html, body { height: 100%; }
+  body { overflow: hidden; }              /* une seule vue, comme l'accueil */
+
+  .shell {
+    height: 100svh;
+    min-height: 560px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding-bottom: clamp(0.8rem, 2vh, 1.4rem);
+  }
+
+  .experiences {
+    position: relative;
+    z-index: 4;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.1rem, 3vh, 2.2rem);
+    padding: clamp(0.4rem, 1.5vh, 1rem) 0;
+  }
+  .xp-head { text-align: center; }
+  .xp-title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 360;
+    font-size: clamp(2rem, 4.6vw, 3.4rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--ink);
+    font-variation-settings: "opsz" 144;
+  }
+  .xp-title .grad {
+    font-style: italic;
+    background: linear-gradient(96deg, var(--rose), var(--orange));
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .xp-sub {
+    margin: 0.5rem 0 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+    color: var(--ink-soft);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.8rem, 1.6vw, 1.5rem);
+    width: min(96vw, 1220px);
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 28px;
+    overflow: hidden;
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 250, 246, 0.8);
+    box-shadow: 0 24px 54px -22px rgba(248, 116, 47, 0.3), 0 8px 22px rgba(251, 107, 166, 0.12);
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+  }
+  .card:hover, .card:focus-visible {
+    transform: translateY(-7px);
+    box-shadow: 0 36px 66px -22px rgba(248, 116, 47, 0.44), 0 12px 28px rgba(251, 107, 166, 0.18);
+  }
+  .cards .card:nth-child(2) { transition-delay: 0.07s; }
+  .cards .card:nth-child(3) { transition-delay: 0.14s; }
+  .card--soon { cursor: default; }
+  .card--soon:hover { transform: none; box-shadow: 0 24px 54px -22px rgba(248, 116, 47, 0.22); }
+
+  /* --- mini moodboard (collage) --- */
+  .card__mood {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    padding: 5px;
+    background: linear-gradient(150deg, rgba(248,230,230,0.9), rgba(255,250,246,0.82));
+  }
+  .card__tile {
+    position: relative;
+    overflow: hidden;
+    border-radius: 13px;
+    background:
+      radial-gradient(120% 120% at 30% 12%, rgba(251,107,166,0.22), rgba(255,250,246,0) 62%),
+      radial-gradient(120% 120% at 88% 90%, rgba(248,116,47,0.22), rgba(255,250,246,0) 60%),
+      linear-gradient(150deg, rgba(248,230,230,0.95), rgba(255,250,246,0.82));
+  }
+  .card__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s cubic-bezier(0.22,1,0.36,1); }
+  .card:hover .card__tile img { transform: scale(1.05); }
+  .card__bloom { position:absolute; top:-12px; right:-10px; width: clamp(34px,3.4vw,46px); height: clamp(34px,3.4vw,46px); color: var(--rose); transform: rotate(-12deg); z-index:3; pointer-events:none; filter: drop-shadow(0 5px 12px rgba(248,116,47,0.24)); }
+  .card__bloom svg { width:100%; height:100%; overflow:visible; }
+  .card__soon { position:absolute; inset:0; display:grid; place-items:center; z-index:2; pointer-events:none; }
+  .card__soon span { font-family:"League Spartan",sans-serif; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; font-size: clamp(0.66rem,1vw,0.78rem); color: var(--orange); background: var(--glass-strong); padding:0.42rem 0.85rem; border-radius:999px; box-shadow:0 8px 20px rgba(248,116,47,0.16); }
+
+  /* --- infos sous le collage --- */
+  .card__body {
+    display: flex; flex-direction: column;
+    gap: clamp(0.5rem, 1vh, 0.8rem);
+    padding: clamp(0.9rem, 1.3vw, 1.2rem) clamp(1rem, 1.5vw, 1.35rem) clamp(1.05rem, 1.5vw, 1.35rem);
+    flex: 1 1 auto;
+  }
+  .card__name {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 420;
+    font-size: clamp(1.12rem, 1.55vw, 1.4rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .card__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .card__chip {
+    display: inline-flex; align-items: center; gap: 0.34rem;
+    font-family: "Space Grotesk", sans-serif; font-weight: 500;
+    font-size: clamp(0.74rem, 1vw, 0.84rem);
+    color: var(--ink-soft);
+    background: var(--glass);
+    border: 1px solid rgba(255,250,246,0.7);
+    padding: 0.3rem 0.6rem; border-radius: 999px;
+    white-space: nowrap;
+  }
+  .card__chip svg { width: 14px; height: 14px; color: var(--orange); flex: 0 0 auto; }
+  .card__chip--region { color: var(--orange); border-color: rgba(251,107,166,0.5); font-weight: 600; }
+  .card__cta {
+    margin-top: auto;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-weight: 700;
+    font-size: clamp(0.92rem, 1.2vw, 1.02rem);
+    color: var(--orange);
+    padding-top: 0.2rem;
+  }
+  .card__cta svg { width: 18px; height: 18px; transition: transform 0.28s ease; }
+  .card:hover .card__cta svg { transform: translateX(3px); }
+  .card__cta--soon { color: var(--ink-soft); font-weight: 600; }
+
+  /* le pied minimal (légal discret) */
+  .foot { position: relative; z-index: 4; display: flex; justify-content: center; align-items: center; gap: clamp(0.3rem,1vw,0.6rem); flex-wrap: wrap; padding-top: clamp(0.4rem,1.2vh,0.8rem); }
+  .foot a { font-family:"Space Grotesk",sans-serif; font-size: clamp(0.7rem,0.85vw,0.8rem); color: rgba(58,42,46,0.5); text-decoration:none; transition: color 0.25s ease; }
+  .foot a:hover { color: var(--orange); }
+  .foot a:not(:last-child)::after { content:"·"; margin-left: clamp(0.3rem,1vw,0.6rem); color: rgba(58,42,46,0.3); }
+
+  /* ===== VARIANTES DE COLLAGE ===== */
+  /* V2 — bento asymétrique : 1 grande + 3 petites */
+  body.v-bento .card__mood { grid-template-columns: 1.5fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  body.v-bento .card__tile:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+  body.v-bento .card__tile:nth-child(2) { grid-column: 2 / 4; grid-row: 1; }
+  body.v-bento .card__tile:nth-child(3) { grid-column: 2; grid-row: 2; }
+  body.v-bento .card__tile:nth-child(4) { grid-column: 3; grid-row: 2; }
+  body.v-bento .card { background: var(--creme); }
+
+  /* V3 — bande ciné : 4 tranches verticales */
+  body.v-strip .card__mood { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr; aspect-ratio: 16 / 10; }
+  body.v-strip .card { background: rgba(255,250,246,0.94); }
+
+  /* responsive : sur petit écran, les cartes s'empilent et un léger défilement est permis */
+  @media (max-width: 820px) {
+    body { overflow-y: auto; }
+    .shell { height: auto; min-height: 100svh; }
+    .cards { grid-template-columns: 1fr; width: min(92vw, 460px); }
+    .card__mood { aspect-ratio: 16 / 10; }
+    body.v-bento .card__mood, body.v-strip .card__mood { aspect-ratio: 16 / 10; }
+  }
+
 </style>
 </head>
-<body>
+<body class="v-mosaic">
   <!-- ===================== FOND : GRADIENT VIVANT RÉACTIF (FIXE — coule en CONTINU derrière toute la page) ===================== -->
   <div class="living" aria-hidden="true">
     <div class="living__css"></div>
@@ -972,243 +1147,89 @@
         </button>
       </div>
     </nav>
-  </div>
 
-  <!-- ===================== CONTENU « ATELIERS » ===================== -->
-  <main class="page">
+  <main class="experiences">
+    <header class="xp-head reveal">
+      <h1 class="xp-title">Nos <span class="grad">expériences</span></h1>
+      <p class="xp-sub">Sur toute l’île ☀️</p>
+    </header>
 
-    <!-- ===== GRAND TITRE de la page (façon hero) ===== -->
-    <section class="hero reveal" aria-labelledby="ateliers-title">
-      <h1 class="hero__title" id="ateliers-title">Nos prochains <span class="grad">ateliers</span></h1>
-      <p class="hero__subtitle">Sur toute l’île <span class="sunny" aria-hidden="true">☀️</span></p>
-      <span class="hero__rule" aria-hidden="true"></span>
-    </section>
-
-    <!-- ===== LISTE DE 5 CARTES ATELIER (placeholders) — moodboard mosaïque à gauche, infos à droite ===== -->
-    <section class="ateliers" aria-label="Nos prochains ateliers">
-
-      <!-- Atelier 1 — Je customise mon tote bag -->
-      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Je customise mon tote bag — en savoir plus">
-        <div class="mood" role="img" aria-label="Souvenirs de l’atelier « Je customise mon tote bag »">
-          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <div class="mood__tile mood__tile--a">
-            <img src="/ateliers/img/totebag-1.jpg" alt="Table d’atelier dressée avec des tote bags peints et du rosé" loading="lazy" decoding="async" />
-            <div class="mood__caption">
-              <span class="mood__caption-kicker">Atelier</span>
-              <h2 class="mood__caption-title">Je customise mon tote bag</h2>
-            </div>
-          </div>
-          <div class="mood__tile mood__tile--b"><img src="/ateliers/img/totebag-3.jpg" alt="Six tote bags personnalisés posés sur l’herbe" loading="lazy" decoding="async" /></div>
-          <div class="mood__tile mood__tile--c"><img src="/ateliers/img/totebag-5.jpg" alt="Tote bag « good vibes only » rose et orange" loading="lazy" decoding="async" /></div>
-          <div class="mood__tile mood__tile--d"><img src="/ateliers/img/totebag-4.jpg" alt="Deux tote bags personnalisés à la plage" loading="lazy" decoding="async" /></div>
+    <div class="cards">
+      <!-- Carte 1 — Je customise mon tote bag (réelle) -->
+      <a class="card reveal" href="/ateliers/atelier/" aria-label="Je customise mon tote bag — découvrir">
+        <div class="card__mood">
+          <span class="card__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+          <span class="card__tile"><img src="/ateliers/img/totebag-1.jpg" alt="" loading="lazy" decoding="async"></span>
+          <span class="card__tile"><img src="/ateliers/img/totebag-3.jpg" alt="" loading="lazy" decoding="async"></span>
+          <span class="card__tile"><img src="/ateliers/img/totebag-5.jpg" alt="" loading="lazy" decoding="async"></span>
+          <span class="card__tile"><img src="/ateliers/img/totebag-4.jpg" alt="" loading="lazy" decoding="async"></span>
         </div>
-        <div class="atelier__info">
-          <p class="atelier__lede">Un atelier pour customiser ton tote bag à ta façon, sans pression&#8239;: juste créer, respirer et profiter de l’instant.</p>
-          <ul class="atelier__facts">
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Samedi 25 juillet</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Atelier de Flo, Saint-Pierre</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">13&#8239;h&#8211;14&#8239;h</span></span>
-            </li>
-          </ul>
-          <span class="atelier__more">En savoir plus
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+        <div class="card__body">
+          <h2 class="card__name">Je customise mon tote bag</h2>
+          <div class="card__meta">
+            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>Samedi 25 juillet</span>
+            <span class="card__chip card__chip--region"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg>Sud</span>
+          </div>
+          <span class="card__cta">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </div>
       </a>
 
-      <!-- Atelier 2 — Atelier au coucher du soleil -->
-      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Atelier au coucher du soleil — en savoir plus">
-        <div class="mood" role="img" aria-label="Souvenirs de l’atelier au coucher du soleil (photos à venir)">
-          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <div class="mood__tile mood__tile--a">
-            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
-            <div class="mood__caption">
-              <span class="mood__caption-kicker">Atelier</span>
-              <h2 class="mood__caption-title">Atelier au coucher du soleil</h2>
-            </div>
+      <!-- Cartes à venir (exemples des prochaines expériences) -->
+      <div class="card card--soon">
+        <div class="card__mood">
+          <span class="card__tile"></span><span class="card__tile"></span><span class="card__tile"></span><span class="card__tile"></span>
+          <span class="card__soon"><span>Bientôt</span></span>
+        </div>
+        <div class="card__body">
+          <h2 class="card__name">Prochaine expérience</h2>
+          <div class="card__meta">
+            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>À venir</span>
+            <span class="card__chip card__chip--region"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg>Ouest</span>
           </div>
-          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <span class="card__cta card__cta--soon">Bientôt dévoilée</span>
         </div>
-        <div class="atelier__info">
-          <p class="atelier__lede">Créer les pieds dans le sable, à l’heure dorée, pendant que le ciel s’embrase.</p>
-          <ul class="atelier__facts">
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Bientôt dévoilée</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Face à la mer</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">En fin de journée</span></span>
-            </li>
-          </ul>
-          <span class="atelier__more">En savoir plus
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </div>
-      </a>
+      </div>
 
-      <!-- Atelier 3 — Atelier en bord de mer -->
-      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Atelier en bord de mer — en savoir plus">
-        <div class="mood" role="img" aria-label="Souvenirs de l’atelier en bord de mer (photos à venir)">
-          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <div class="mood__tile mood__tile--a">
-            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
-            <div class="mood__caption">
-              <span class="mood__caption-kicker">Atelier</span>
-              <h2 class="mood__caption-title">Atelier en bord de mer</h2>
-            </div>
+      <div class="card card--soon">
+        <div class="card__mood">
+          <span class="card__tile"></span><span class="card__tile"></span><span class="card__tile"></span><span class="card__tile"></span>
+          <span class="card__soon"><span>Bientôt</span></span>
+        </div>
+        <div class="card__body">
+          <h2 class="card__name">Prochaine expérience</h2>
+          <div class="card__meta">
+            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>À venir</span>
+            <span class="card__chip card__chip--region"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg>Nord</span>
           </div>
-          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <span class="card__cta card__cta--soon">Bientôt dévoilée</span>
         </div>
-        <div class="atelier__info">
-          <p class="atelier__lede">Le bruit des vagues, une brise légère et de jolies idées qui prennent forme.</p>
-          <ul class="atelier__facts">
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Bientôt dévoilée</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Sur la plage</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">En matinée</span></span>
-            </li>
-          </ul>
-          <span class="atelier__more">En savoir plus
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </div>
-      </a>
+      </div>
 
-      <!-- Atelier 4 — Atelier gourmand -->
-      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Atelier gourmand — en savoir plus">
-        <div class="mood" role="img" aria-label="Souvenirs de l’atelier gourmand (photos à venir)">
-          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <div class="mood__tile mood__tile--a">
-            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
-            <div class="mood__caption">
-              <span class="mood__caption-kicker">Atelier</span>
-              <h2 class="mood__caption-title">Atelier gourmand</h2>
-            </div>
+      <div class="card card--soon">
+        <div class="card__mood">
+          <span class="card__tile"></span><span class="card__tile"></span><span class="card__tile"></span><span class="card__tile"></span>
+          <span class="card__soon"><span>Bientôt</span></span>
+        </div>
+        <div class="card__body">
+          <h2 class="card__name">Prochaine expérience</h2>
+          <div class="card__meta">
+            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>À venir</span>
+            <span class="card__chip card__chip--region"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg>Est</span>
           </div>
-          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
+          <span class="card__cta card__cta--soon">Bientôt dévoilée</span>
         </div>
-        <div class="atelier__info">
-          <p class="atelier__lede">On crée, on partage et on se régale&#8239;: un atelier plein de douceurs à savourer ensemble.</p>
-          <ul class="atelier__facts">
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Bientôt dévoilée</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Dans un coin cosy</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">À l’heure du goûter</span></span>
-            </li>
-          </ul>
-          <span class="atelier__more">En savoir plus
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <!-- Atelier 5 — Atelier bien-être -->
-      <a class="atelier reveal" href="/ateliers/atelier/" aria-label="Atelier bien-être — en savoir plus">
-        <div class="mood" role="img" aria-label="Souvenirs de l’atelier bien-être (photos à venir)">
-          <span class="mood__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <div class="mood__tile mood__tile--a">
-            <span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
-            <div class="mood__caption">
-              <span class="mood__caption-kicker">Atelier</span>
-              <h2 class="mood__caption-title">Atelier bien-être</h2>
-            </div>
-          </div>
-          <div class="mood__tile mood__tile--b"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--c"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-          <div class="mood__tile mood__tile--d"><span class="mood__tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span></div>
-        </div>
-        <div class="atelier__info">
-          <p class="atelier__lede">Une pause rien que pour soi&#8239;: respirer, ralentir et créer en pleine douceur.</p>
-          <ul class="atelier__facts">
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Date</span><span class="atelier__fact-value">Bientôt dévoilée</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Lieu</span><span class="atelier__fact-value">Dans un jardin paisible</span></span>
-            </li>
-            <li class="atelier__fact">
-              <span class="atelier__fact-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.6V12l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span class="atelier__fact-text"><span class="atelier__fact-label">Heure</span><span class="atelier__fact-value">Au lever du jour</span></span>
-            </li>
-          </ul>
-          <span class="atelier__more">En savoir plus
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </div>
-      </a>
-
-    </section>
-
-    <!-- ===== BAS DE PAGE : reste connectée (emplacement réservé, sans champ) ===== -->
-    <section class="stay reveal" aria-label="Rester informée des prochains ateliers">
-      <span class="stay__sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-      <p class="stay__title">Reste connectée pour être la <span class="grad">première inscrite</span>&#8239;!</p>
-      <!-- emplacement discret réservé pour un futur champ e-mail (à brancher plus tard) -->
-      <div class="stay__slot" aria-hidden="true"><span>Bientôt&#8239;: ton petit mot pour ne rien manquer</span></div>
-    </section>
-
-    <!-- ===== PIED DE PAGE sobre ===== -->
-    <footer class="pied reveal">
-      <p>© Soleia Expérience</p>
-    </footer>
+      </div>
+    </div>
   </main>
 
-  <!-- ===================== FOOTER COMMUN ===================== -->
-  <footer class="site-foot" aria-label="Pied de page">
-    <div class="site-foot__inner">
-      <a class="site-foot__brand" href="/" aria-label="Soleia Expérience, accueil">
-        <img class="site-foot__logo" src="/logo.svg" alt="" />
-        <span class="site-foot__name">Soleia Expérience</span>
-      </a>
-      <p class="site-foot__tag">La pause créative qui fait du BIEN.</p>
-      <span class="site-foot__rule" aria-hidden="true"></span>
-      <nav class="site-foot__legal" aria-label="Informations légales">
-        <a href="/remboursement/">Politique de remboursement</a>
-        <a href="/confidentialite/">Politique de confidentialité</a>
-        <a href="/cgv/">CGV</a>
-        <a href="/mentions-legales/">Mentions légales</a>
-      </nav>
-      <a class="site-foot__mail" href="mailto:soleiaexperience@gmail.com">soleiaexperience@gmail.com</a>
-      <p class="site-foot__copy">© Soleia Expérience · fait avec le <span>cœur</span></p>
-    </div>
+  <footer class="foot reveal" aria-label="Informations légales">
+    <a href="/remboursement/">Politique de remboursement</a>
+    <a href="/confidentialite/">Confidentialité</a>
+    <a href="/cgv/">CGV</a>
+    <a href="/mentions-legales/">Mentions légales</a>
   </footer>
+  </div>
 
-  <!-- ===================== Repli logo si /logo.svg indisponible ===================== -->
   <script>
   (function () {
     var brand = document.querySelector(".brand");
