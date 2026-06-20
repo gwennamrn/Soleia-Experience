@@ -677,6 +677,41 @@
     margin: 0 auto clamp(1rem, 2.5vh, 1.4rem);
     position: relative;
   }
+  /* petite étiquette « cadeau » incitative au-dessus du bouton */
+  .reserve__gift {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    max-width: 94%;
+    margin: 0 auto clamp(1.1rem, 2.6vh, 1.7rem);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.9rem, 1.25vw, 1.02rem);
+    color: var(--ink);
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(251, 107, 166, 0.5);
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    box-shadow: 0 12px 30px rgba(248, 116, 47, 0.14);
+  }
+  .reserve__gift strong {
+    font-weight: 700;
+    background: linear-gradient(96deg, var(--rose), var(--orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .reserve__gift-ic {
+    flex: 0 0 auto;
+    width: clamp(20px, 2.2vw, 24px);
+    height: clamp(20px, 2.2vw, 24px);
+    color: var(--orange);
+  }
+  .reserve__gift-ic svg { display: block; width: 100%; height: 100%; overflow: visible; }
   .reserve__wrap {
     position: relative;
     display: inline-block;
@@ -1231,6 +1266,17 @@
 
     <!-- ===== 6) RÉSERVATION ===== -->
     <section class="reserve reveal" aria-label="Réserver ma place">
+      <p class="reserve__gift">
+        <span class="reserve__gift-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round">
+            <rect x="3" y="9.5" width="18" height="11" rx="1.8"/>
+            <path d="M3 13.5h18M12 9.5V20.5" stroke-linecap="round"/>
+            <path d="M12 9.5S10.5 5 8 5.4 7 9.5 12 9.5Z"/>
+            <path d="M12 9.5S13.5 5 16 5.4 17 9.5 12 9.5Z"/>
+          </svg>
+        </span>
+        Réserve vite&#8239;: <strong>cadeau offert aux 5 premières</strong>&#8239;!
+      </p>
       <span class="reserve__wrap">
         <span class="reserve__accent reserve__accent--bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
         <a class="reserve__btn" href="https://book.stripe.com/fZu8wR6S19ut9nfae5eZ200" target="_blank" rel="noopener noreferrer">
