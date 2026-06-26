@@ -664,6 +664,10 @@
   .deco-item.is-grabbing { cursor: grabbing; z-index: 99; filter: drop-shadow(0 10px 22px rgba(248, 116, 47, 0.22)); }
   .deco-item svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
   .deco-item { width: 74px; height: 74px; }
+  /* === vue unique : le contenu laisse passer le clic dans les zones vides,
+        pour qu'on puisse de nouveau attraper et déplacer les fleurs/soleils dessous === */
+  .shell { pointer-events: none; }
+  .nav__link, .nav__burger, .brand, .card, .foot a { pointer-events: auto; }
 
   @keyframes decoFloat {
     0%   { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
