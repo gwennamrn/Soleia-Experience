@@ -451,6 +451,22 @@
     border: 1.5px solid rgba(255, 250, 246, 0.8);
     pointer-events: none;
   }
+  .product__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* pastille de stock « Plus que 4 ! » */
+  .product__stock {
+    position: absolute;
+    top: 12px; left: 12px;
+    z-index: 3;
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.7rem, 1vw, 0.82rem);
+    letter-spacing: 0.01em;
+    color: var(--creme);
+    background: linear-gradient(96deg, var(--rose), var(--orange));
+    padding: 0.34rem 0.72rem;
+    border-radius: 999px;
+    box-shadow: 0 8px 20px rgba(248, 116, 47, 0.28);
+  }
   .product__photo-inner {
     display: flex;
     flex-direction: column;
@@ -891,140 +907,36 @@
     <!-- ===== GRAND TITRE de la page (façon hero) ===== -->
     <section class="hero reveal" aria-labelledby="boutique-title">
       <h1 class="hero__title" id="boutique-title">Un p’tit truc <span class="grad">en plus</span>&#8239;!</h1>
-      <p class="hero__subtitle">Coffrets, kits créatifs et cartes cadeaux&#8239;: un emplacement pour de jolies trouvailles à offrir ou se faire plaisir.</p>
+      <p class="hero__subtitle">Kits et cartes cadeaux&#8239;: un emplacement pour de jolies trouvailles à offrir ou se faire plaisir.</p>
       <span class="hero__rule" aria-hidden="true"></span>
     </section>
 
     <!-- ===== ONGLETS DE TRI ===== -->
     <div class="shop-tabs reveal" role="tablist" aria-label="Trier les produits">
       <button class="shop-tab is-active" type="button" role="tab" aria-selected="true" data-cat="tout">Tout</button>
-      <button class="shop-tab" type="button" role="tab" aria-selected="false" data-cat="coffret">Coffrets</button>
+      <button class="shop-tab" type="button" role="tab" aria-selected="false" data-cat="kit">Kits</button>
       <button class="shop-tab" type="button" role="tab" aria-selected="false" data-cat="carte">Cartes cadeaux</button>
     </div>
 
     <!-- ===== LISTE DE 5 PRODUITS (placeholders) — carré à gauche, description à droite ===== -->
     <section class="shop" aria-label="Nos produits">
 
-      <!-- Produit 1 — Coffret -->
-      <article class="product reveal">
-        <a class="product__square" href="/boutique/kit-creatif/" aria-label="Voir la fiche du produit">
+            <!-- Produit — Kit Soleia (le seul disponible) -->
+      <article class="product reveal" data-cat="kit">
+        <a class="product__square" href="/boutique/kit-soleia/" aria-label="Voir la fiche du Kit Soleia">
           <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
           <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="product__photo-label">Photo</span>
-            </div>
+          <span class="product__stock">Plus que 4&#8239;!</span>
+          <div class="product__photo">
+            <img src="/boutique/img/kit-soleia.jpg" alt="Le Kit Soleia : un joli sachet transparent noué d'un ruban rose, avec ses carnets" loading="lazy" decoding="async" />
           </div>
         </a>
         <div class="product__info">
-          <p class="product__kicker">Coffret</p>
-          <h2 class="product__name">Coffret créatif</h2>
-          <p class="product__desc">Petit texte d’emplacement pour décrire ce coffret en une ligne toute douce.</p>
-          <p class="product__price">34<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/kit-creatif/">Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <!-- Produit 2 — Kit DIY -->
-      <article class="product reveal">
-        <a class="product__square" href="/boutique/kit-creatif/" aria-label="Voir la fiche du produit">
-          <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="product__photo-label">Photo</span>
-            </div>
-          </div>
-        </a>
-        <div class="product__info">
-          <p class="product__kicker">Kit créatif</p>
-          <h2 class="product__name">Kit DIY</h2>
-          <p class="product__desc">Une ligne provisoire pour présenter ce kit à faire soi-même, bien au chaud.</p>
-          <p class="product__price">22<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/kit-creatif/">Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <!-- Produit 3 — Carte cadeau (atelier) -->
-      <article class="product reveal">
-        <a class="product__square" href="/boutique/kit-creatif/" aria-label="Voir la fiche du produit">
-          <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="product__photo-label">Photo</span>
-            </div>
-          </div>
-        </a>
-        <div class="product__info">
-          <p class="product__kicker">Carte cadeau</p>
-          <h2 class="product__name">Carte cadeau — Atelier</h2>
-          <p class="product__desc">Un bon pour un atelier&#8239;: emplacement à compléter avec quelques mots tendres.</p>
-          <p class="product__price">45<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/kit-creatif/">Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <!-- Produit 4 — Coffret découverte -->
-      <article class="product reveal">
-        <a class="product__square" href="/boutique/kit-creatif/" aria-label="Voir la fiche du produit">
-          <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="product__photo-label">Photo</span>
-            </div>
-          </div>
-        </a>
-        <div class="product__info">
-          <p class="product__kicker">Coffret</p>
-          <h2 class="product__name">Coffret découverte</h2>
-          <p class="product__desc">Texte d’exemple pour ce coffret découverte&#8239;: une petite ligne, le temps de remplir.</p>
-          <p class="product__price">29<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/kit-creatif/">Découvrir
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <!-- Produit 5 — Carte cadeau -->
-      <article class="product reveal">
-        <a class="product__square" href="/boutique/kit-creatif/" aria-label="Voir la fiche du produit">
-          <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="product__photo" role="img" aria-label="Emplacement pour la photo du produit">
-            <div class="product__photo-inner">
-              <span class="product__photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="product__photo-label">Photo</span>
-            </div>
-          </div>
-        </a>
-        <div class="product__info">
-          <p class="product__kicker">Carte cadeau</p>
-          <h2 class="product__name">Carte cadeau</h2>
-          <p class="product__desc">Emplacement pour un montant libre à offrir&#8239;: une ligne discrète, à personnaliser.</p>
-          <p class="product__price">50<span class="cur"> €</span></p>
-          <a class="btn" href="/boutique/kit-creatif/">Découvrir
+          <p class="product__kicker">Kit</p>
+          <h2 class="product__name">Kit Soleia</h2>
+          <p class="product__desc">Ta petite bulle de douceur à emporter partout&#8239;: un carnet de 10 défis, une liste de Solo Dates, la Roue de la Vie à compléter… et 2 petits cadeaux surprises.</p>
+          <p class="product__price">10<span class="cur"> €</span></p>
+          <a class="btn" href="/boutique/kit-soleia/">Découvrir
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
@@ -1068,7 +980,7 @@
     function catOf(p) {
       var k = p.querySelector(".product__kicker");
       var t = (k && k.textContent || "").toLowerCase();
-      return /carte/.test(t) ? "carte" : "coffret";
+      return /carte/.test(t) ? "carte" : "kit";
     }
 
     // (re)pose l'alternance gauche/droite sur les seuls produits VISIBLES

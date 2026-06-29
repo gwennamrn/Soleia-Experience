@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kit créatif — Soleia Expérience</title>
+<title>Kit Soleia — Soleia Expérience</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -858,6 +858,7 @@
   .site-foot__mail:hover { opacity: 0.78; }
   .site-foot__copy { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 0.78rem; letter-spacing: 0.02em; color: rgba(58,42,46,0.5); }
   .site-foot__copy span { color: var(--rose); }
+  .photo-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 </style>
 </head>
 <body>
@@ -1070,7 +1071,7 @@
       <nav class="crumb" aria-label="Fil d’Ariane">
         <a href="/boutique/">Boutique</a>
         <span class="sep" aria-hidden="true">›</span>
-        <span class="current" aria-current="page">Kit créatif</span>
+        <span class="current" aria-current="page">Kit Soleia</span>
       </nav>
     </div>
 
@@ -1083,39 +1084,19 @@
         <div class="hero-photo">
           <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
           <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          <div class="photo-frame" role="img" aria-label="Emplacement pour la grande photo du produit">
-            <div class="photo-inner" id="hero-photo-inner">
-              <span class="photo-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg>
-              </span>
-              <span class="photo-label">Photo</span>
-            </div>
+          <div class="photo-frame">
+            <img src="/boutique/img/kit-soleia.jpg" alt="Le Kit Soleia dans son sachet transparent noué d’un ruban rose" loading="lazy" decoding="async" />
           </div>
         </div>
-
-        <!-- MINI-GALERIE : 4 vignettes carrées (mise en évidence au survol/clic) -->
-        <div class="thumbs" role="group" aria-label="Autres vues du produit">
-          <button type="button" class="thumb is-selected" aria-label="Vue 1" aria-pressed="true">
-            <span class="thumb__inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
-          </button>
-          <button type="button" class="thumb" aria-label="Vue 2" aria-pressed="false">
-            <span class="thumb__inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
-          </button>
-          <button type="button" class="thumb" aria-label="Vue 3" aria-pressed="false">
-            <span class="thumb__inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
-          </button>
-          <button type="button" class="thumb" aria-label="Vue 4" aria-pressed="false">
-            <span class="thumb__inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#soleiaPhotoIcon"/></svg></span>
-          </button>
         </div>
       </div>
 
       <!-- COLONNE DROITE : infos produit -->
       <div class="info reveal">
         <p class="info__kicker">Kit</p>
-        <h1 class="info__name" id="produit-nom">Kit créatif</h1>
-        <p class="info__price">34<span class="cur"> €</span></p>
-        <p class="info__desc">Petit texte d’emplacement pour présenter ce joli kit en quelques lignes toutes douces. On y glissera bientôt une vraie description&#8239;: ce qu’on ressent en l’ouvrant, à qui l’offrir, et la petite touche qui fait du BIEN. En attendant, ce paragraphe garde la place au chaud.</p>
+        <h1 class="info__name" id="produit-nom">Kit Soleia</h1>
+        <p class="info__price">10<span class="cur"> €</span></p>
+        <p class="info__desc">Ta petite bulle de douceur à emporter partout. Le Kit Soleia t’invite à prendre du temps pour toi, à oser de nouvelles choses et à te (re)découvrir — tout en douceur, à ton rythme. Une jolie attention à s’offrir ou à offrir.</p>
 
         <div class="buy">
           <div class="qty" role="group" aria-label="Choisir la quantité">
@@ -1147,79 +1128,24 @@
         </h2>
         <span class="section__rule" aria-hidden="true"></span>
       </div>
-      <ul class="inside">
+            <ul class="inside">
         <li>
           <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100" style="color:var(--rose)"><use href="#soleiaFlowerRetro"/></svg></span>
-          Un premier élément d’emplacement à remplir plus tard.
+          1 carnet de 10 défis pour sortir de la routine en douceur.
         </li>
         <li>
           <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          Un deuxième petit quelque chose, encore provisoire.
+          1 liste de Solo Dates à réaliser, rien que pour toi.
         </li>
         <li>
           <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100" style="color:var(--orange)"><use href="#soleiaFlowerRetro"/></svg></span>
-          Un troisième ingrédient placeholder, tout doux.
+          1 Roue de la Vie à compléter pour faire le point avec le sourire.
         </li>
         <li>
           <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          Un quatrième élément factice, à compléter.
-        </li>
-        <li>
-          <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100" style="color:var(--rose-doux)"><use href="#soleiaFlowerRetro"/></svg></span>
-          Un cinquième petit plus, en attendant le vrai texte.
-        </li>
-        <li>
-          <span class="inside__bullet" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-          Et une petite surprise d’emplacement pour finir.
+          + 2 petits cadeaux surprises 🎁
         </li>
       </ul>
-    </section>
-
-    <!-- ===== SECTION « Tu aimeras aussi » ===== -->
-    <section class="section reveal" aria-labelledby="aussi-titre">
-      <div class="section__head">
-        <h2 class="section__title" id="aussi-titre">Tu aimeras aussi</h2>
-        <span class="section__rule" aria-hidden="true"></span>
-      </div>
-      <div class="suggest">
-
-        <a class="card" href="/boutique/kit-creatif/">
-          <div class="card__square">
-            <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-            <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-            <div class="card__photo" role="img" aria-label="Emplacement pour la photo du produit">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><use href="#soleiaPhotoIcon"/></svg>
-            </div>
-          </div>
-          <h3 class="card__name">Kit DIY</h3>
-          <p class="card__price">22<span class="cur"> €</span></p>
-        </a>
-
-        <a class="card" href="/boutique/kit-creatif/">
-          <div class="card__square">
-            <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-            <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-            <div class="card__photo" role="img" aria-label="Emplacement pour la photo du produit">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><use href="#soleiaPhotoIcon"/></svg>
-            </div>
-          </div>
-          <h3 class="card__name">Coffret découverte</h3>
-          <p class="card__price">29<span class="cur"> €</span></p>
-        </a>
-
-        <a class="card" href="/boutique/kit-creatif/">
-          <div class="card__square">
-            <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-            <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-            <div class="card__photo" role="img" aria-label="Emplacement pour la photo du produit">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><use href="#soleiaPhotoIcon"/></svg>
-            </div>
-          </div>
-          <h3 class="card__name">Carte cadeau</h3>
-          <p class="card__price">50<span class="cur"> €</span></p>
-        </a>
-
-      </div>
     </section>
 
     <!-- ===== PIED DE PAGE sobre ===== -->

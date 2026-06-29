@@ -897,6 +897,10 @@
     letter-spacing: -0.01em;
     margin: 0;
     color: var(--ink);
+    /* réserve 2 lignes pour que date/région/bouton s'alignent sur toutes les cartes */
+    min-height: 2.24em;
+    display: flex;
+    align-items: flex-start;
   }
   .card__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .card__chip {
@@ -1170,7 +1174,7 @@
         <div class="card__body">
           <h2 class="card__name">Je customise mon miroir</h2>
           <div class="card__meta">
-            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>Dimanche 12 juillet</span>
+            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>Dimanche 19 juillet</span>
             <span class="card__chip card__chip--region"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg>Est</span>
           </div>
           <span class="card__cta">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
