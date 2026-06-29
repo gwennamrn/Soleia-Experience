@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /ateliers/labo/
+
+Sitemap: https://soleiaexperience.re/sitemap.xml
