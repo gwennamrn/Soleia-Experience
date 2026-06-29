@@ -2,111 +2,61 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ateliers — Soleia Expérience</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Nos ateliers &amp; nos souvenirs · Soleia Expérience</title>
+<meta name="description" content="Deux petits trains de lumière aux wagons-vitrines : en haut, nos prochains ateliers Soleia roulent en plein jour vers la droite ; en bas, nos souvenirs s’en vont sous la nuit dorée vers la gauche, vitrines illuminées de l’intérieur. Le nom de chaque atelier est posé sur un joli ruban festonné, et la locomotive éclaire la brume de son phare. Cliquez un wagon pour ouvrir une fiche ou un diaporama plein écran." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..700&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=League+Spartan:wght@400..800&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    /* ===== PALETTE EXACTE SOLEIA ===== */
-    --rose: #fb6ba6;          /* rose marque */
-    --orange: #f8742f;        /* orange marque */
-    --rose-clair: #f8e6e6;    /* rose clair marque */
-    --ink: #3a2a2e;           /* texte sombre chaleureux */
-    --creme: #fffaf6;         /* crème / blanc cassé */
-    --or: #f4b63e;            /* jaune doré chaud — UNIQUEMENT cœurs de fleurs / soleils */
-    --rose-doux: #fba6c6;     /* rose plus doux (déco) */
-    /* dérivés neutres pour voiles/verre (transparences de la crème) */
-    --ink-soft: rgba(58, 42, 46, 0.62);
-    --glass: rgba(255, 250, 246, 0.62);
-    --glass-strong: rgba(255, 250, 246, 0.82);
-    --fine: 0.06em;
+  :root{
+    --rose:#fb6ba6;
+    --orange:#f8742f;
+    --rose-clair:#f8e6e6;
+    --ink:#3a2a2e;
+    --creme:#fffaf6;
+    --or:#f4b63e;
+    --rose-doux:#fba6c6;
+    --ink-soft:rgba(58,42,46,.62);
+    --glass:rgba(255,250,246,.72);
+    --glass-strong:rgba(255,250,246,.92);
+    /* doré chaud pour le monde de nuit (jamais de bleu/violet) */
+    --dusk:#c9883f;
   }
 
-  *, *::before, *::after { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    color: var(--ink);
-    background: var(--creme);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+  *,*::before,*::after{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; height:100%; }
+  body{
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--creme);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow:hidden;
   }
 
-  /* ============ FOND : gradient vivant réactif (FIXE — la page défile par-dessus, fond CONTINU) ============ */
-  .living {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    background:
-      radial-gradient(130% 120% at 50% 0%, var(--creme) 0%, #fff2ea 56%, #ffe3d2 100%);
+  /* ================= SCÈNE PLEIN ÉCRAN ================= */
+  .stage{ position:fixed; inset:0; overflow:hidden; }
+  #scene{
+    position:absolute; inset:0; width:100%; height:100%; display:block;
+    touch-action:pan-y;
   }
 
-  /* Fallback CSS animé (sans JS / sans WebGL) : aurora + blobs doux, plus chaud */
-  .living__css {
-    position: absolute;
-    inset: -20%;
-    background:
-      radial-gradient(44% 52% at 30% 38%, rgba(251, 107, 166, 0.58), transparent 70%),
-      radial-gradient(50% 56% at 72% 34%, rgba(248, 116, 47, 0.62), transparent 72%),
-      radial-gradient(52% 56% at 54% 76%, rgba(248, 116, 47, 0.40), transparent 74%),
-      conic-gradient(from 200deg at 50% 50%, rgba(251,107,166,0.28), rgba(248,116,47,0.34), rgba(248,116,47,0.30), rgba(251,107,166,0.26), rgba(251,107,166,0.28));
-    filter: blur(48px) saturate(1.08);
-    opacity: 0.94;
-    transition: opacity 1s ease;
-    animation: auroraDrift 30s ease-in-out infinite alternate;
+  /* ================= BARRE DU HAUT (menu standard du site) ================= */
+  /* Conteneur fixe : le menu reste tout en haut, AU-DESSUS de la scène plein écran.
+     z-index — scène = auto ; fiches/diaporama plein écran = 60 ; menu = 50,
+     donc le menu est visible et cliquable au-dessus du train, mais passe bien
+     SOUS les fiches/diaporama quand ils s'ouvrent. */
+  header.bar{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding: clamp(0.9rem, 2.2vw, 1.7rem) clamp(1.4rem, 5vw, 4.8rem);
+    padding-top:max(0.9rem, env(safe-area-inset-top));
+    pointer-events:none;
   }
-  @keyframes auroraDrift {
-    0%   { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1.04); }
-    50%  { transform: translate3d(3%, 2%, 0) rotate(8deg) scale(1.12); }
-    100% { transform: translate3d(-1%, 3%, 0) rotate(-6deg) scale(1.06); }
-  }
+  header.bar > *{ pointer-events:auto; }
 
-  /* Canvas WebGL au-dessus du fallback une fois prêt */
-  #gl {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1.3s ease;
-  }
-  .gl-ready #gl { opacity: 1; }
-  .gl-ready .living__css { opacity: 0; }
-
-  /* Voile crème + grain fin — ATTÉNUÉ pour laisser ressortir plus de couleur (page solaire) */
-  .living__veil {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(125% 96% at 50% 3%, transparent 40%, rgba(255, 250, 246, 0.34) 100%),
-      radial-gradient(82% 70% at 50% 48%, rgba(255, 250, 246, 0.20), transparent 66%),
-      linear-gradient(180deg, rgba(255, 250, 246, 0.18) 0%, transparent 28%, transparent 74%, rgba(255, 250, 246, 0.24) 100%);
-    pointer-events: none;
-  }
-  .living__grain {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.045;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  }
-
-  /* ============ SHELL ============ */
-  .shell {
-    position: relative;
-    z-index: 4;
-    padding: clamp(0.9rem, 2.2vw, 1.7rem) clamp(1.4rem, 5vw, 4.8rem) 0 clamp(1.4rem, 5vw, 4.8rem);
-  }
-
-  /* ============ NAV — 3 colonnes, haut désencombré (identique à l'accueil) ============ */
+  /* ============ NAV — 3 colonnes (repris de la page d'accueil) ============ */
   .nav {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -127,8 +77,8 @@
     gap: clamp(1.1rem, 2.2vw, 2rem);
   }
   .nav__col a.nav__link {
-    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;  /* menu = même police que l'accueil */
-    font-weight: 700;                 /* MENU EN GRAS */
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-weight: 700;
     font-size: clamp(1.08rem, 1.3vw, 1.2rem);
     letter-spacing: 0.012em;
     color: var(--ink);
@@ -151,30 +101,29 @@
   .nav__col a.nav__link:hover::after,
   .nav__col a.nav__link:focus-visible::after { transform: scaleX(1); }
   .nav__col a.nav__link:hover { color: var(--orange); }
-  /* lien actif « Ateliers » : souligné dégradé visible en permanence */
+  /* page active : « Ateliers » mis en avant en permanence */
   .nav__col a.nav__link.is-active { color: var(--orange); }
   .nav__col a.nav__link.is-active::after { transform: scaleX(1); }
 
   /* ===== LOGO OFFICIEL centré ===== */
   .brand {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;  /* emblème au centre EXACT, un mot de chaque côté */
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: clamp(0.5rem, 1.3vw, 1.1rem);
     text-decoration: none;
     justify-self: center;
     line-height: 1;
   }
-  .brand__word--left { justify-self: end; }    /* SOLEIA collé à l’emblème */
-  .brand__word--right { justify-self: start; } /* EXPÉRIENCE collé à l’emblème */
+  .brand__word--left { justify-self: end; }
+  .brand__word--right { justify-self: start; }
   .brand img {
     height: clamp(40px, 5.4vh, 60px);
     width: auto;
     display: block;
   }
-  /* « Soleia » (gauche) et « Expérience » (droite) — même famille que « BIEN » */
   .brand__word {
-    font-family: "League Spartan", sans-serif;  /* « SOLEIA EXPÉRIENCE » en majuscules */
+    font-family: "League Spartan", sans-serif;
     font-weight: 700;
     font-size: clamp(0.82rem, 1.25vw, 1.1rem);
     letter-spacing: 0.08em;
@@ -183,7 +132,6 @@
     line-height: 1;
     white-space: nowrap;
   }
-  /* repli si /logo.svg indisponible : emblème soleil bi-ton inline */
   .brand__fallback {
     display: none;
     height: clamp(40px, 5.4vh, 60px);
@@ -191,30 +139,6 @@
   }
   .brand.is-fallback img { display: none; }
   .brand.is-fallback .brand__fallback { display: block; }
-
-  /* icône compte discrète à l'extrême droite (tolérée) */
-  .icon-btn {
-    display: grid;
-    place-items: center;
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(58, 42, 46, 0.16);
-    background: var(--glass-strong);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: var(--ink);
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-  .icon-btn:hover {
-    transform: translateY(-2px);
-    color: var(--orange);
-    border-color: var(--rose);
-    box-shadow: 0 8px 20px rgba(251, 107, 166, 0.28);
-  }
-  .icon-btn svg { width: 18px; height: 18px; }
-  .account svg { width: 18px; height: 18px; }
 
   .nav__burger {
     display: none;
@@ -231,887 +155,631 @@
   }
   .nav__burger svg { width: 20px; height: 20px; }
 
-  /* ============ RAIL RÉSEAUX SOCIAUX — bord DROIT, centré vertical ============ */
-  .social-rail {
-    position: fixed;
-    z-index: 6;
-    right: clamp(0.5rem, 1.3vw, 1.05rem);
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(0.7rem, 1.4vh, 1rem);
+  /* ===== TIROIR MOBILE (menu déroulant déclenché par le burger) ===== */
+  .nav__drawer{
+    position:fixed; top:0; left:0; right:0; z-index:55;
+    padding:max(0.9rem,env(safe-area-inset-top)) clamp(1.4rem,5vw,4.8rem) 1.6rem;
+    background:var(--glass-strong);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 16px 40px rgba(58,42,46,.16);
+    border-bottom:1px solid rgba(58,42,46,.08);
+    transform:translateY(-14px); opacity:0;
+    transition:transform .3s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+    pointer-events:none; visibility:hidden;
   }
-  .social-rail__label {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: 0.66rem;
-    letter-spacing: 0.34em;
-    text-transform: uppercase;
-    color: var(--ink);
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    margin-bottom: 0.25rem;
-    opacity: 0.78;
+  .nav__drawer.is-open{ transform:translateY(0); opacity:1; pointer-events:auto; visibility:visible; }
+  .nav__drawer ul{ list-style:none; margin:3.4rem 0 0; padding:0;
+    display:flex; flex-direction:column; gap:1.2rem; }
+  .nav__drawer a{
+    font-family:"Bricolage Grotesque","Space Grotesk",sans-serif; font-weight:700;
+    font-size:1.3rem; color:var(--ink); text-decoration:none;
   }
-  .social-rail__line {
-    width: 1.5px;
-    height: clamp(22px, 3vh, 34px);
-    background: linear-gradient(180deg, var(--rose), var(--orange));
-    border-radius: 2px;
-    opacity: 0.8;
-  }
-  .social-rail .icon-btn {
-    width: 42px; height: 42px;
-    background: var(--glass-strong);
+  .nav__drawer a:hover, .nav__drawer a.is-active{ color:var(--orange); }
+  .nav__drawer__close{
+    position:absolute; top:max(0.9rem,env(safe-area-inset-top)); right:clamp(1.4rem,5vw,4.8rem);
+    width:42px; height:42px; border-radius:50%;
+    border:1.5px solid rgba(58,42,46,.16); background:var(--glass-strong);
+    color:var(--ink); font-size:1.5rem; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
   }
 
-  /* ============================================================
-     CONTENU « ATELIERS » — grand titre + liste de cartes atelier
-     (moodboard mosaïque à gauche, infos douces à droite)
-     ============================================================ */
-  .page {
-    position: relative;
-    z-index: 2;
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: clamp(1.4rem, 4vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
-  }
-
-  /* petit accent : un vrai petit SOLEIL DESSINÉ-MAIN à côté des titres */
-  .sun {
-    display: inline-block;
-    width: 1.18em;
-    height: 1.18em;
-    vertical-align: -0.18em;
-    margin-right: 0.5em;
-    filter: drop-shadow(0 2px 6px rgba(248, 116, 47, 0.16));
-  }
-  .sun svg { display: block; width: 100%; height: 100%; overflow: visible; }
-
-  /* ---- GRAND TITRE de la page (façon hero) ---- */
-  .hero {
-    text-align: center;
-    padding: clamp(3rem, 9vh, 6.5rem) 0 clamp(2.2rem, 6vh, 4rem);
-  }
-  .hero__title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 440;
-    font-size: clamp(2.7rem, 7vw, 5.6rem);
-    line-height: 1.02;
-    letter-spacing: -0.028em;
-    margin: 0;
-    color: var(--ink);
-    font-variation-settings: "opsz" 144;
-  }
-  .hero__title .grad {
-    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-  }
-  .hero__subtitle {
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: clamp(1.25rem, 2.5vw, 1.7rem);
-    line-height: 1.5;
-    letter-spacing: 0.005em;
-    color: var(--ink);
-    margin: clamp(1rem, 2.6vh, 1.6rem) auto 0;
-    max-width: 44ch;
-  }
-  .hero__subtitle .sunny { font-style: normal; }
-  .hero__rule {
-    display: block;
-    width: clamp(56px, 8vw, 96px);
-    height: 4px;
-    margin: clamp(1.4rem, 3vh, 2.1rem) auto 0;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--rose), var(--orange));
-    opacity: 0.9;
-  }
-
-  /* ---- LISTE DES ATELIERS : grandes cartes horizontales, très aérées ---- */
-  .ateliers {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(3.2rem, 8vh, 6rem);
-    margin-top: clamp(1.5rem, 4vh, 3rem);
-  }
-
-  /* ===== UNE CARTE ATELIER : grand rectangle horizontal, presque pleine largeur ===== */
-  .atelier {
-    display: grid;
-    grid-template-columns: 1fr 1fr;       /* ~50% moodboard / ~50% infos */
-    align-items: stretch;
-    gap: clamp(1.6rem, 4vw, 3.4rem);
-    text-decoration: none;
-    color: inherit;
-    border-radius: 34px;
-    padding: clamp(1rem, 1.8vw, 1.5rem);
-    background: var(--glass);
-    -webkit-backdrop-filter: blur(7px);
-    backdrop-filter: blur(7px);
-    border: 1.5px solid rgba(255, 250, 246, 0.7);
-    box-shadow: 0 22px 56px rgba(248, 116, 47, 0.12), 0 8px 22px rgba(251, 107, 166, 0.10);
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
-  }
-  .atelier:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 38px 82px rgba(248, 116, 47, 0.20), 0 14px 32px rgba(251, 107, 166, 0.16);
-  }
-
-  /* ===== LE MOODBOARD : mosaïque organique asymétrique (esprit bento doux) ===== */
-  .mood {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1.35fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: clamp(8px, 0.9vw, 12px);
-    aspect-ratio: 7 / 5;
-    width: 100%;
-  }
-  /* chaque tuile photo = cadre vide doux rose/orange + icône photo */
-  .mood__tile {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    background:
-      radial-gradient(130% 120% at 30% 12%, rgba(251, 107, 166, 0.22), rgba(255, 250, 246, 0.0) 62%),
-      radial-gradient(120% 120% at 88% 90%, rgba(248, 116, 47, 0.22), rgba(255, 250, 246, 0.0) 60%),
-      linear-gradient(150deg, rgba(248, 230, 230, 0.95), rgba(255, 250, 246, 0.82));
-    display: grid;
-    place-items: center;
-    box-shadow: inset 0 0 0 1.5px rgba(255, 250, 246, 0.85);
-  }
-  .mood__tile-icon {
-    width: clamp(26px, 3vw, 40px);
-    height: clamp(26px, 3vw, 40px);
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(251, 107, 166, 0.18), rgba(248, 116, 47, 0.18));
-    color: var(--orange);
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .mood__tile-icon svg { width: 54%; height: 54%; }
-  .atelier:hover .mood__tile-icon { transform: scale(1.12) rotate(-4deg); }
-  .mood__tile img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .atelier:hover .mood__tile img { transform: scale(1.04); }
-
-  /* mosaïque ASYMÉTRIQUE : une grande tuile + plusieurs petites, sans vide */
-  .mood__tile--a { grid-column: 1 / 2; grid-row: 1 / 3; border-radius: 24px; }      /* grande tuile gauche (porte le titre) */
-  .mood__tile--b { grid-column: 2 / 3; grid-row: 1 / 2; }                            /* haut droite */
-  .mood__tile--c { grid-column: 2 / 3; grid-row: 2 / 3; }                            /* bas droite */
-
-  /* sur une seconde rangée fine pour densifier la mosaïque (esprit magazine) */
-  .mood {
-    grid-template-columns: 1.35fr 0.9fr 0.9fr;
-    grid-template-rows: 1.3fr 1fr;
-  }
-  .mood__tile--a { grid-column: 1 / 2; grid-row: 1 / 3; }
-  .mood__tile--b { grid-column: 2 / 4; grid-row: 1 / 2; }
-  .mood__tile--c { grid-column: 2 / 3; grid-row: 2 / 3; }
-  .mood__tile--d { grid-column: 3 / 4; grid-row: 2 / 3; }
-
-  /* petite fleur posée discrètement sur un coin du moodboard */
-  .mood__bloom {
-    position: absolute;
-    width: clamp(40px, 4.4vw, 56px);
-    height: clamp(40px, 4.4vw, 56px);
-    top: -16px;
-    right: -14px;
-    z-index: 5;
-    pointer-events: none;
-    color: var(--rose);
-    transform: rotate(-12deg);
-    filter: drop-shadow(0 5px 13px rgba(248, 116, 47, 0.24));
-  }
-  .mood__bloom svg { width: 100%; height: 100%; display: block; overflow: visible; }
-
-  /* TITRE intégré sur la grande tuile : bande dégradée rose→orange translucide en bas */
-  .mood__caption {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    padding: clamp(0.9rem, 1.6vw, 1.3rem) clamp(0.9rem, 1.6vw, 1.25rem) clamp(0.8rem, 1.3vw, 1.05rem);
-    background: linear-gradient(180deg, rgba(251, 107, 166, 0) 0%, rgba(251, 107, 166, 0.62) 42%, rgba(248, 116, 47, 0.86) 100%);
-    border-bottom-left-radius: 24px;
-    border-bottom-right-radius: 24px;
-    pointer-events: none;
-  }
-  .mood__caption-kicker {
-    display: block;
-    font-family: "League Spartan", sans-serif;
-    font-weight: 800;
-    font-size: clamp(0.6rem, 0.78vw, 0.72rem);
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: rgba(255, 250, 246, 0.92);
-    margin: 0 0 0.32rem;
-  }
-  .mood__caption-title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 540;
-    font-size: clamp(1.25rem, 2.3vw, 1.85rem);
-    line-height: 1.04;
-    letter-spacing: -0.015em;
-    color: var(--creme);
-    margin: 0;
-    text-shadow: 0 2px 14px rgba(58, 42, 46, 0.22);
-    font-variation-settings: "opsz" 120;
-  }
-
-  /* ===== PARTIE INFOS (droite) : douceur, pas administratif ===== */
-  .atelier__info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: clamp(0.6rem, 1.4vw, 1.4rem) clamp(0.4rem, 1vw, 1rem);
-  }
-  .atelier__lede {
-    font-family: "Fraunces", Georgia, serif;
-    font-style: italic;
-    font-weight: 350;
-    font-size: clamp(1.1rem, 1.7vw, 1.4rem);
-    line-height: 1.4;
-    color: var(--ink);
-    margin: 0 0 clamp(1.3rem, 3vh, 1.9rem);
-    max-width: 34ch;
-    font-variation-settings: "opsz" 80;
-  }
-  /* les 3 infos essentielles présentées avec des petites pastilles douces */
-  .atelier__facts {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.7rem, 1.6vh, 1rem);
-    margin: 0 0 clamp(1.6rem, 3.5vh, 2.2rem);
-    list-style: none;
-    padding: 0;
-  }
-  .atelier__fact {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-  }
-  .atelier__fact-ic {
-    flex: 0 0 auto;
-    width: clamp(34px, 3.4vw, 40px);
-    height: clamp(34px, 3.4vw, 40px);
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    color: var(--orange);
-    background: linear-gradient(135deg, rgba(251, 107, 166, 0.16), rgba(248, 116, 47, 0.16));
-    box-shadow: inset 0 0 0 1.5px rgba(255, 250, 246, 0.7);
-  }
-  .atelier__fact-ic svg { width: 50%; height: 50%; }
-  .atelier__fact-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-  }
-  .atelier__fact-label {
-    font-family: "League Spartan", sans-serif;
-    font-weight: 700;
-    font-size: 0.64rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 0.1rem;
-  }
-  .atelier__fact-value {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 500;
-    font-size: clamp(0.98rem, 1.4vw, 1.12rem);
-    color: var(--ink);
-  }
-
-  /* indicateur « En savoir plus » — doux, pas un bouton agressif */
-  .atelier__more {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-    font-weight: 700;
-    font-size: clamp(0.98rem, 1.2vw, 1.08rem);
-    letter-spacing: 0.01em;
-    color: var(--creme);
-    padding: 0.72rem 1.55rem;
-    border-radius: 999px;
-    align-self: flex-start;
-    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    box-shadow: 0 12px 26px rgba(248, 116, 47, 0.24), 0 4px 12px rgba(251, 107, 166, 0.18);
-    transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.26s ease;
-  }
-  .atelier__more svg { width: 16px; height: 16px; transition: transform 0.26s ease; }
-  .atelier:hover .atelier__more {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 36px rgba(248, 116, 47, 0.32), 0 6px 16px rgba(251, 107, 166, 0.22);
-  }
-  .atelier:hover .atelier__more svg { transform: translateX(3px); }
-
-  /* ===== BAS DE PAGE : petit bloc « reste connectée » (emplacement réservé) ===== */
-  .stay {
-    text-align: center;
-    margin-top: clamp(4rem, 11vh, 7rem);
-    padding: clamp(2rem, 5vw, 3rem) clamp(1.4rem, 4vw, 2.6rem);
-    border-radius: 30px;
-    background: var(--glass);
-    -webkit-backdrop-filter: blur(7px);
-    backdrop-filter: blur(7px);
-    border: 1.5px solid rgba(255, 250, 246, 0.7);
-    max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 18px 44px rgba(248, 116, 47, 0.10);
-  }
-  .stay__sun {
-    width: clamp(38px, 5vw, 48px);
-    height: clamp(38px, 5vw, 48px);
-    margin: 0 auto clamp(0.7rem, 1.6vh, 1rem);
-    display: block;
-    filter: drop-shadow(0 4px 10px rgba(248, 116, 47, 0.18));
-  }
-  .stay__sun svg { width: 100%; height: 100%; display: block; overflow: visible; }
-  .stay__title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 460;
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    line-height: 1.18;
-    letter-spacing: -0.015em;
-    color: var(--ink);
-    margin: 0;
-    font-variation-settings: "opsz" 110;
-  }
-  .stay__title .grad {
-    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-  }
-  /* emplacement DISCRET réservé pour un futur champ e-mail (sans champ pour l'instant) */
-  .stay__slot {
-    margin: clamp(1.3rem, 3vh, 1.8rem) auto 0;
-    max-width: 380px;
-    height: clamp(46px, 7vw, 54px);
-    border-radius: 999px;
-    border: 1.5px dashed rgba(248, 116, 47, 0.32);
-    background: rgba(255, 250, 246, 0.5);
-    display: grid;
-    place-items: center;
-  }
-  .stay__slot span {
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.06em;
-    color: rgba(58, 42, 46, 0.42);
-  }
-
-  /* ---- PIED DE PAGE sobre ---- */
-  .pied {
-    text-align: center;
-    margin-top: clamp(3rem, 8vh, 5rem);
-  }
-  .pied p {
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 400;
-    font-size: clamp(0.84rem, 1.2vw, 0.95rem);
-    letter-spacing: 0.04em;
-    color: rgba(58, 42, 46, 0.5);
-    margin: 0;
-  }
-
-  /* ============ APPARITION AU DÉFILEMENT (avec repli : tout visible si pas de JS) ============ */
-  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-  .reveal.is-in { opacity: 1; transform: none; }
-
-  /* ============================================================
-     ✿ CALQUE DÉCOR PLEINE PAGE — fleurs rétro + soleils dessinés-main ✿
-     ============================================================ */
-  .deco-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 3;
-    overflow: hidden;
-  }
-  .deco-item {
-    position: absolute;
-    pointer-events: auto;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-    cursor: grab;
-    will-change: transform;
-    filter: drop-shadow(0 6px 14px rgba(248, 116, 47, 0.12));
-    transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)) scale(var(--s, 1));
-  }
-  .deco-item.is-grabbing { cursor: grabbing; z-index: 99; filter: drop-shadow(0 10px 22px rgba(248, 116, 47, 0.22)); }
-  .deco-item svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-  .deco-item { width: 74px; height: 74px; }
-  /* === vue unique : le contenu laisse passer le clic dans les zones vides,
-        pour qu'on puisse de nouveau attraper et déplacer les fleurs/soleils dessous === */
-  .shell { pointer-events: none; }
-  .nav__link, .nav__burger, .brand, .card, .foot a { pointer-events: auto; }
-
-  @keyframes decoFloat {
-    0%   { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
-    50%  { transform: translate(var(--dx,0px), calc(var(--dy,0px) - 8px)) rotate(calc(var(--rot,0deg) + 2.5deg)) scale(var(--s,1)); }
-    100% { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
-  }
-  .deco-item.is-float { animation: decoFloat var(--dur, 8s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
-  .deco-item.is-grabbing, .deco-item.is-moved { animation: none; }
-
-  /* ============ FOCUS / A11Y ============ */
-  a:focus-visible, button:focus-visible {
-    outline: 2.5px solid var(--orange);
-    outline-offset: 3px;
-    border-radius: 12px;
-  }
-
-  /* ============ RESPONSIVE ============ */
-  @media (max-width: 880px) {
-    /* la carte s'empile : moodboard au-dessus, infos en dessous */
-    .atelier {
-      grid-template-columns: 1fr;
-      gap: clamp(1.2rem, 4vw, 1.8rem);
-    }
-    .atelier__info { padding: 0 clamp(0.2rem, 1vw, 0.6rem) clamp(0.4rem, 1.5vw, 0.8rem); }
-    .mood { aspect-ratio: 16 / 9; }
-  }
-
+  /* ===== RESPONSIVE NAV (repris de la page d'accueil) ===== */
   @media (max-width: 760px) {
-    .shell { padding-right: clamp(1.2rem, 5vw, 4.5rem); }
     .nav { grid-template-columns: auto auto; }
     .nav__col--left { display: none; }
     .nav__col--right .nav__link { display: none; }
     .brand { justify-self: start; }
     .nav__burger { display: inline-flex; }
-
-    /* sur mobile, le rail est replié horizontalement en bas pour rester visible */
-    .social-rail {
-      flex-direction: row;
-      right: 50%;
-      top: auto;
-      bottom: 0.5rem;
-      transform: translateX(50%);
-      background: var(--glass-strong);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 0.35rem 0.6rem;
-      border-radius: 999px;
-    }
-    .social-rail__label { writing-mode: horizontal-tb; margin-bottom: 0; margin-right: 0.2rem; }
-    .social-rail__line { width: clamp(18px, 6vw, 26px); height: 1.5px; background: linear-gradient(90deg, var(--rose), var(--orange)); }
-
-    .page { padding-bottom: clamp(4.5rem, 12vw, 6rem); }
-
-    .deco-item { width: 58px; height: 58px; filter: drop-shadow(0 4px 9px rgba(248, 116, 47, 0.12)); }
-    .deco-item.hide-mobile { display: none; }
   }
 
-  @media (max-width: 540px) {
-    /* mosaïque simplifiée sur petit écran : 2 colonnes, reste lisible */
-    .mood {
-      grid-template-columns: 1.2fr 1fr;
-      grid-template-rows: 1.2fr 0.8fr;
-      aspect-ratio: 4 / 3;
-    }
-    .mood__tile--a { grid-column: 1 / 2; grid-row: 1 / 3; }
-    .mood__tile--b { grid-column: 2 / 3; grid-row: 1 / 2; }
-    .mood__tile--c { grid-column: 2 / 3; grid-row: 2 / 3; }
-    .mood__tile--d { display: none; }
-  }
+  /* curseur « main » sur les wagons (interactifs) */
+  .wagon{ cursor:pointer; }
+  .wagon:focus{ outline:none; }
+  .wagon:focus-visible .wfocus{ opacity:1; }
+  .wfocus{ opacity:0; transition:opacity .2s ease; pointer-events:none; }
 
-  @media (max-width: 480px) {
-    .deco-item { width: 50px; height: 50px; }
-    .deco-item.hide-small { display: none; }
+  /* ===================================================================== */
+  /* ============ FICHE ATELIER « FOUFOU » : ÉCLOSION PLEIN ÉCRAN ========= */
+  /* ===================================================================== */
+  .bloom{
+    position:fixed; inset:0; z-index:60; display:none;
+    overflow:hidden; color:var(--ink);
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.001ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
-    }
-    html { scroll-behavior: auto; }
-    #gl { display: none; }
-    .living__css { opacity: 0.94 !important; animation: none !important; }
-    .reveal { opacity: 1 !important; transform: none !important; }
-    .deco-item.is-float { animation: none !important; }
-  }
-
-  /* ===== FOOTER COMMUN ===== */
-  .site-foot {
-    position: relative; z-index: 2;
-    padding: clamp(2.6rem, 6vw, 4.2rem) clamp(1.4rem, 5vw, 3rem) clamp(1.7rem, 4vw, 2.6rem);
-    background: transparent;          /* plus de fond blanc : juste les éléments sur le dégradé */
-  }
-  .site-foot__inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(0.7rem, 2vh, 1.15rem); }
-  .site-foot__brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-  .site-foot__logo { height: 34px; width: auto; display: block; }
-  .site-foot__name { font-family: "League Spartan", sans-serif; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; font-size: 0.9rem; color: var(--ink); }
-  .site-foot__tag { margin: 0; font-family: "Fraunces", Georgia, serif; font-style: italic; font-weight: 360; font-size: clamp(1rem, 1.6vw, 1.22rem); color: var(--ink-soft); }
-  .site-foot__rule { width: clamp(56px, 9vw, 104px); height: 3px; border-radius: 999px; background: linear-gradient(90deg, var(--rose), var(--orange)); opacity: 0.9; margin: clamp(0.2rem, 0.8vh, 0.5rem) 0; }
-  .site-foot__legal { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(0.4rem, 1.4vw, 1rem); }
-  .site-foot__legal a { font-family: "Space Grotesk", sans-serif; font-size: clamp(0.82rem, 1vw, 0.92rem); color: var(--ink-soft); text-decoration: none; transition: color 0.25s ease; }
-  .site-foot__legal a:hover { color: var(--orange); }
-  .site-foot__legal a:not(:last-child)::after { content: "·"; margin-left: clamp(0.4rem, 1.4vw, 1rem); color: rgba(58,42,46,0.3); }
-  .site-foot__mail { font-family: "Space Grotesk", sans-serif; font-size: clamp(0.86rem, 1.1vw, 0.98rem); color: var(--orange); text-decoration: none; transition: opacity 0.25s ease; }
-  .site-foot__mail:hover { opacity: 0.78; }
-  .site-foot__copy { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 0.78rem; letter-spacing: 0.02em; color: rgba(58,42,46,0.5); }
-  .site-foot__copy span { color: var(--rose); }
-
-  /* ============================================================ */
-  /* ===== CARTES D'EXPÉRIENCES — vue unique (pas de défilement) ===== */
-  /* ============================================================ */
-  html, body { height: 100%; }
-  body { overflow: hidden; }              /* une seule vue, comme l'accueil */
-
-  .shell {
-    height: 100svh;
-    min-height: 560px;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    padding-bottom: clamp(0.8rem, 2vh, 1.4rem);
-  }
-
-  .experiences {
-    position: relative;
-    z-index: 4;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(1.1rem, 3vh, 2.2rem);
-    padding: clamp(0.4rem, 1.5vh, 1rem) 0;
-  }
-  .xp-head { text-align: center; }
-  .xp-title {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 360;
-    font-size: clamp(2rem, 4.6vw, 3.4rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin: 0;
-    color: var(--ink);
-    font-variation-settings: "opsz" 144;
-  }
-  .xp-title .grad {
-    font-style: italic;
-    background: linear-gradient(96deg, var(--rose), var(--orange));
-    -webkit-background-clip: text; background-clip: text;
-    color: transparent; -webkit-text-fill-color: transparent;
-  }
-  .xp-sub {
-    margin: 0.5rem 0 0;
-    font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(0.9rem, 1.3vw, 1.05rem);
-    color: var(--ink-soft);
-  }
-
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(0.8rem, 1.6vw, 1.5rem);
-    width: min(96vw, 1220px);
-  }
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    border-radius: 28px;
-    overflow: hidden;
-    background: var(--glass-strong);
-    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-    border: 1.5px solid rgba(255, 250, 246, 0.8);
-    box-shadow: 0 24px 54px -22px rgba(248, 116, 47, 0.3), 0 8px 22px rgba(251, 107, 166, 0.12);
-    text-decoration: none;
-    color: var(--ink);
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
-  }
-  .card:hover, .card:focus-visible {
-    transform: translateY(-7px);
-    box-shadow: 0 36px 66px -22px rgba(248, 116, 47, 0.44), 0 12px 28px rgba(251, 107, 166, 0.18);
-  }
-  .cards .card:nth-child(2) { transition-delay: 0.07s; }
-  .cards .card:nth-child(3) { transition-delay: 0.14s; }
-  .card--soon { cursor: default; }
-  .card--soon:hover { transform: none; box-shadow: 0 24px 54px -22px rgba(248, 116, 47, 0.22); }
-
-  /* --- mini moodboard (collage) --- */
-  .card__mood {
-    position: relative;
-    aspect-ratio: 16 / 11;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 5px;
-    padding: 5px;
-    background: linear-gradient(150deg, rgba(248,230,230,0.9), rgba(255,250,246,0.82));
-  }
-  .card__tile {
-    position: relative;
-    overflow: hidden;
-    border-radius: 13px;
+  .bloom.open{ display:block; }
+  .bloom__bg{
+    position:absolute; inset:0; opacity:0;
     background:
-      radial-gradient(120% 120% at 30% 12%, rgba(251,107,166,0.22), rgba(255,250,246,0) 62%),
-      radial-gradient(120% 120% at 88% 90%, rgba(248,116,47,0.22), rgba(255,250,246,0) 60%),
-      linear-gradient(150deg, rgba(248,230,230,0.95), rgba(255,250,246,0.82));
+      radial-gradient(130% 120% at 18% 16%, rgba(255,247,230,.96), transparent 55%),
+      radial-gradient(120% 130% at 88% 90%, rgba(248,116,47,.34), transparent 58%),
+      linear-gradient(135deg,#fffaf6, #ffe9dd 55%, #ffd9e6);
   }
-  .card__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s cubic-bezier(0.22,1,0.36,1); }
-  .card:hover .card__tile img { transform: scale(1.05); }
-  .card__bloom { position:absolute; top:-12px; right:-10px; width: clamp(34px,3.4vw,46px); height: clamp(34px,3.4vw,46px); color: var(--rose); transform: rotate(-12deg); z-index:3; pointer-events:none; filter: drop-shadow(0 5px 12px rgba(248,116,47,0.24)); }
-  .card__bloom svg { width:100%; height:100%; overflow:visible; }
-  .card__soon { position:absolute; inset:0; display:grid; place-items:center; z-index:2; pointer-events:none; }
-  .card__soon span { font-family:"League Spartan",sans-serif; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; font-size: clamp(0.66rem,1vw,0.78rem); color: var(--orange); background: var(--glass-strong); padding:0.42rem 0.85rem; border-radius:999px; box-shadow:0 8px 20px rgba(248,116,47,0.16); }
-
-  /* --- infos sous le collage --- */
-  .card__body {
-    display: flex; flex-direction: column;
-    gap: clamp(0.5rem, 1vh, 0.8rem);
-    padding: clamp(0.9rem, 1.3vw, 1.2rem) clamp(1rem, 1.5vw, 1.35rem) clamp(1.05rem, 1.5vw, 1.35rem);
-    flex: 1 1 auto;
+  .bloom__hero{
+    position:absolute; inset:0; opacity:0; transform:scale(1.12);
+    clip-path:inset(0 round 0);
   }
-  .card__name {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 420;
-    font-size: clamp(1.12rem, 1.55vw, 1.4rem);
-    line-height: 1.12;
-    letter-spacing: -0.01em;
-    margin: 0;
-    color: var(--ink);
-    /* réserve 2 lignes pour que date/région/bouton s'alignent sur toutes les cartes */
-    min-height: 2.24em;
-    display: flex;
-    align-items: flex-start;
+  .bloom__hero img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .bloom__heroShade{
+    position:absolute; inset:0;
+    background:linear-gradient(90deg, rgba(40,24,28,.78) 0%, rgba(40,24,28,.52) 34%, rgba(40,24,28,.10) 58%, rgba(40,24,28,0) 72%),
+               linear-gradient(0deg, rgba(40,24,28,.55), transparent 40%);
   }
-  .card__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .card__chip {
-    display: inline-flex; align-items: center; gap: 0.34rem;
-    font-family: "Space Grotesk", sans-serif; font-weight: 500;
-    font-size: clamp(0.74rem, 1vw, 0.84rem);
-    color: var(--ink-soft);
-    background: var(--glass);
-    border: 1px solid rgba(255,250,246,0.7);
-    padding: 0.3rem 0.6rem; border-radius: 999px;
-    white-space: nowrap;
+  .bloom__petals{ position:absolute; inset:0; pointer-events:none; z-index:1; }
+  .bloom__strip{
+    position:absolute; left:0; right:0; bottom:0; z-index:3;
+    display:flex; gap:12px; padding:0 clamp(18px,4vw,54px) clamp(18px,3vh,30px);
+    align-items:flex-end; pointer-events:none;
   }
-  .card__chip svg { width: 14px; height: 14px; color: var(--orange); flex: 0 0 auto; }
-  .card__chip--region { color: var(--orange); border-color: rgba(251,107,166,0.5); font-weight: 600; }
-  .card__cta {
-    margin-top: auto;
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif; font-weight: 700;
-    font-size: clamp(0.92rem, 1.2vw, 1.02rem);
-    color: var(--orange);
-    padding-top: 0.2rem;
+  .bloom__thumb{
+    flex:1 1 0; min-width:0; max-width:150px; aspect-ratio:4 / 3;
+    padding:0; border:0;
+    border-radius:18px; overflow:hidden; opacity:0; transform:translateY(28px) scale(.92);
+    box-shadow:0 18px 40px rgba(58,42,46,.30), 0 0 0 3px rgba(255,250,246,.85) inset;
+    pointer-events:auto; cursor:pointer; background:var(--rose-clair);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease;
   }
-  .card__cta svg { width: 18px; height: 18px; transition: transform 0.28s ease; }
-  .card:hover .card__cta svg { transform: translateX(3px); }
-  .card__cta--soon { color: var(--ink-soft); font-weight: 600; }
-
-  /* le pied minimal (légal discret) */
-  .foot { position: relative; z-index: 4; display: flex; justify-content: center; align-items: center; gap: clamp(0.3rem,1vw,0.6rem); flex-wrap: wrap; padding-top: clamp(0.4rem,1.2vh,0.8rem); }
-  .foot a { font-family:"Space Grotesk",sans-serif; font-size: clamp(0.7rem,0.85vw,0.8rem); color: rgba(58,42,46,0.5); text-decoration:none; transition: color 0.25s ease; }
-  .foot a:hover { color: var(--orange); }
-  .foot a:not(:last-child)::after { content:"·"; margin-left: clamp(0.3rem,1vw,0.6rem); color: rgba(58,42,46,0.3); }
-
-  /* ===== VARIANTES DE COLLAGE ===== */
-  /* V2 — bento asymétrique : 1 grande + 3 petites */
-  body.v-bento .card__mood { grid-template-columns: 1.5fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
-  body.v-bento .card__tile:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
-  body.v-bento .card__tile:nth-child(2) { grid-column: 2 / 4; grid-row: 1; }
-  body.v-bento .card__tile:nth-child(3) { grid-column: 2; grid-row: 2; }
-  body.v-bento .card__tile:nth-child(4) { grid-column: 3; grid-row: 2; }
-  body.v-bento .card { background: var(--creme); }
-
-  /* V3 — bande ciné : 4 tranches verticales */
-  body.v-strip .card__mood { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr; aspect-ratio: 16 / 10; }
-  body.v-strip .card { background: rgba(255,250,246,0.94); }
-
-  /* responsive : sur petit écran, les cartes s'empilent et un léger défilement est permis */
-  @media (max-width: 820px) {
-    body { overflow-y: auto; }
-    .shell { height: auto; min-height: 100svh; }
-    .cards { grid-template-columns: 1fr; width: min(92vw, 460px); }
-    .card__mood { aspect-ratio: 16 / 10; }
-    body.v-bento .card__mood, body.v-strip .card__mood { aspect-ratio: 16 / 10; }
+  .bloom__thumb img{ width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+  .bloom__thumb:hover{ transform:translateY(-8px) scale(1.04); box-shadow:0 26px 54px rgba(248,116,47,.40), 0 0 0 3px #fff inset; }
+  .bloom__thumb.is-active{ box-shadow:0 18px 40px rgba(58,42,46,.30), 0 0 0 4px var(--orange) inset; }
+  @media (max-width:760px){
+    .bloom__strip{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .bloom__thumb{ flex:0 0 30vw; max-width:none; aspect-ratio:4 / 3; }
   }
 
+  .bloom__panel{
+    position:absolute; left:clamp(20px,5vw,72px); top:50%; transform:translateY(-50%);
+    z-index:4; width:min(560px,86vw); opacity:0; pointer-events:auto;
+  }
+  .bloom__plate{
+    position:absolute; inset:-26px -30px; z-index:-1; border-radius:30px;
+    background:radial-gradient(120% 120% at 8% 20%, rgba(40,24,28,.42), rgba(40,24,28,.16) 60%, transparent);
+    -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+  }
+  .bloom__title{
+    font-family:"Fraunces",serif; font-weight:500; line-height:1.02; margin:0 0 16px;
+    font-size:clamp(2rem,5.6vw,3.6rem); letter-spacing:-.015em; color:#fffaf6;
+    text-shadow:0 4px 24px rgba(40,24,28,.65), 0 1px 2px rgba(40,24,28,.55);
+  }
+  .bloom__title em{ font-style:italic; font-weight:700;
+    background:linear-gradient(95deg,#ffd9c2,#ffb27e);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 2px 6px rgba(40,24,28,.5)); }
+  .bloom__lead{
+    font-size:clamp(.96rem,1.7vw,1.12rem); line-height:1.6; color:#fff; margin:0 0 20px;
+    max-width:46ch; text-shadow:0 2px 14px rgba(40,24,28,.65);
+  }
+  .bloom__lead strong{ color:#ffd9c2; }
+  .bloom__meta{ display:flex; flex-wrap:wrap; gap:9px; margin:0 0 26px; }
+  .bloom__chip{
+    font-family:"Bricolage Grotesque",sans-serif; font-weight:600; font-size:.84rem;
+    background:rgba(255,250,246,.94); color:var(--ink); padding:8px 15px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:7px; box-shadow:0 8px 20px rgba(58,42,46,.22);
+  }
+  .bloom__actions{ display:flex; flex-wrap:wrap; gap:13px; align-items:center; }
+  .btn{
+    font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:1rem;
+    text-decoration:none; border:none; cursor:pointer; padding:15px 28px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:9px; transition:transform .22s, box-shadow .22s;
+  }
+  .btn--primary{ color:#fff; background:linear-gradient(95deg,var(--rose),var(--orange));
+    box-shadow:0 16px 34px rgba(248,116,47,.42); }
+  .btn--primary:hover{ transform:translateY(-2px); box-shadow:0 22px 46px rgba(248,116,47,.52); }
+  .btn--ghost{ color:var(--ink); background:rgba(255,250,246,.94); box-shadow:0 10px 24px rgba(58,42,46,.16); }
+  .btn--ghost:hover{ transform:translateY(-2px); box-shadow:0 16px 32px rgba(251,107,166,.30); }
+
+  .closeBtn{
+    position:absolute; top:max(16px,env(safe-area-inset-top)); right:18px; z-index:8;
+    width:48px; height:48px; border-radius:999px; border:none; cursor:pointer;
+    background:rgba(255,250,246,.95); color:var(--ink); font-size:1.4rem; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px rgba(58,42,46,.28); transition:transform .25s, background .25s;
+  }
+  .closeBtn:hover{ transform:rotate(90deg) scale(1.06); background:var(--rose); color:#fff; }
+
+  @media (max-width:760px){
+    .bloom__panel{ left:0; right:0; top:auto; bottom:calc(clamp(74px,12vh,128px) + 40px);
+      transform:none; width:auto; padding:0 22px; }
+    .bloom__plate{ inset:-18px -24px; }
+    .bloom__heroShade{ background:linear-gradient(0deg, rgba(40,24,28,.82), rgba(40,24,28,.30) 52%, transparent); }
+    .bloom__title{ font-size:clamp(1.8rem,8vw,2.6rem); }
+    .bloom__actions .btn{ flex:1 1 auto; justify-content:center; }
+  }
+
+  /* ===================================================================== */
+  /* ============ DIAPORAMA SOUVENIRS : UNE PHOTO PLEIN ÉCRAN ============ */
+  /* ===================================================================== */
+  /* CORRECTION 3 : interface en PILE VERTICALE bien aérée — titre EN HAUT,
+     photo AU MILIEU, compteur + légende EN BAS, flèches sur les CÔTÉS,
+     fermer en haut à droite. Aucun chevauchement (chaque rangée a sa place). */
+  .dia{ position:fixed; inset:0; z-index:60; display:none; overflow:hidden; }
+  .dia.open{
+    display:flex; flex-direction:column;
+    padding:max(16px,env(safe-area-inset-top)) 0 max(16px,env(safe-area-inset-bottom));
+  }
+  /* fond = COPIE FLOUTÉE & ASSOMBRIE de la photo (derrière tout : ce n'est PAS
+     l'effet interdit du point 1, qui ne concerne que ce qui est SUR la photo) */
+  .dia__blur{
+    position:absolute; inset:-8%; width:116%; height:116%; z-index:0;
+    background-position:center; background-size:cover; background-repeat:no-repeat;
+    filter:blur(40px) brightness(.55); transform:scale(1.06);
+    opacity:0; transition:opacity .6s ease;
+  }
+  /* voile chaud par-dessus le flou (jamais de bleu) */
+  .dia__veil{
+    position:absolute; inset:0; z-index:0; opacity:0;
+    background:
+      radial-gradient(120% 120% at 50% 18%, rgba(58,30,18,.28), transparent 60%),
+      linear-gradient(0deg, rgba(34,16,12,.72), rgba(34,16,12,.30) 46%, rgba(34,16,12,.52));
+  }
+  /* --- RANGÉE HAUT : titre de l'édition, sur sa propre ligne, AU-DESSUS de l'image --- */
+  .dia__head{
+    position:relative; z-index:5; flex:0 0 auto;
+    text-align:center; padding:clamp(8px,2vh,22px) clamp(76px,12vw,120px) clamp(6px,1.4vh,14px);
+    pointer-events:none; opacity:0;
+  }
+  .dia__kicker{
+    font-family:"Bricolage Grotesque",sans-serif; font-weight:700; letter-spacing:.16em;
+    text-transform:uppercase; font-size:.74rem; color:#ffe2bf; margin:0 0 6px;
+    text-shadow:0 2px 12px rgba(34,16,12,.6);
+  }
+  .dia__title{
+    font-family:"Fraunces",serif; font-weight:500; font-size:clamp(1.4rem,4vw,2.6rem);
+    line-height:1.04; margin:0; color:#fff; letter-spacing:-.01em;
+    text-shadow:0 4px 22px rgba(34,16,12,.6);
+  }
+  .dia__title em{ font-style:italic; font-weight:700;
+    background:linear-gradient(95deg,#ffd27a,#ff9a5a);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  /* --- RANGÉE MILIEU : la PHOTO nette, centrée, place réservée en haut & en bas --- */
+  .dia__stage{
+    position:relative; z-index:4; flex:1 1 auto; min-height:0;
+    display:flex; align-items:center; justify-content:center;
+    padding:clamp(8px,1.5vh,18px) clamp(76px,12vw,120px);
+  }
+  .dia__frame{
+    position:relative; opacity:0; will-change:transform,opacity;
+    max-width:100%; max-height:100%; display:flex;
+  }
+  /* PHOTO NETTE : taille native plafonnée, jamais agrandie ; laisse l'air au titre & au bas */
+  .dia__photo{
+    display:block; width:auto; max-width:min(92vw,620px); max-height:68vh;
+    object-fit:contain; border-radius:18px; background:#2a1a14;
+    box-shadow:0 40px 100px rgba(0,0,0,.55), 0 0 0 6px rgba(255,250,246,.92);
+  }
+  /* --- RANGÉE BAS : compteur PUIS légende, sur des lignes DISTINCTES, bien séparées --- */
+  .dia__foot{
+    position:relative; z-index:5; flex:0 0 auto;
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    padding:clamp(8px,1.6vh,16px) clamp(76px,12vw,120px) clamp(4px,1vh,10px);
+    text-align:center;
+  }
+  .dia__count{ display:flex; flex-direction:column; align-items:center; gap:9px; }
+  .dia__dots{ display:flex; gap:7px; }
+  .dia__dot{
+    width:8px; height:8px; border-radius:999px; border:none; padding:0; cursor:pointer;
+    background:rgba(255,250,246,.4); transition:background .25s, transform .25s; }
+  .dia__dot.is-active{ background:var(--or); transform:scale(1.35); }
+  .dia__num{
+    font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:.82rem;
+    color:#fff; background:rgba(34,16,12,.5); padding:6px 14px; border-radius:999px;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  }
+  .dia__caption{
+    font-family:"Fraunces",serif; font-style:italic; font-weight:500; font-size:1rem;
+    color:#fff; margin:0; max-width:min(86vw,540px); line-height:1.4;
+    text-shadow:0 2px 12px rgba(34,16,12,.7); pointer-events:none;
+  }
+  /* --- FLÈCHES sur les CÔTÉS, hors de l'image, jamais par-dessus le texte --- */
+  .dia__arrow{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:6;
+    width:56px; height:56px; border-radius:999px; border:none; cursor:pointer;
+    background:var(--glass-strong); color:var(--ink); font-size:1.7rem; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 28px rgba(0,0,0,.36); transition:transform .2s, background .2s, color .2s;
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  }
+  .dia__arrow:hover{ background:var(--orange); color:#fff; transform:translateY(-50%) scale(1.08); }
+  .dia__arrow--prev{ left:clamp(12px,3vw,30px); }
+  .dia__arrow--next{ right:clamp(12px,3vw,30px); }
+  /* --- bouton Pause/Lecture en haut à GAUCHE (au-dessus de tout) --- */
+  .dia__play{
+    position:absolute; top:max(16px,env(safe-area-inset-top)); left:18px; z-index:8;
+    font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:.78rem;
+    color:var(--ink); background:var(--glass-strong); padding:9px 14px; border-radius:999px;
+    border:none; cursor:pointer; display:inline-flex; align-items:center; gap:7px;
+    box-shadow:0 8px 20px rgba(0,0,0,.24); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    transition:transform .22s, background .22s, color .22s;
+  }
+  .dia__play:hover{ transform:translateY(-1px); background:var(--orange); color:#fff; }
+  .dia__play svg{ width:12px; height:12px; }
+  .dia__progress{
+    position:absolute; left:0; top:0; height:3px; z-index:9; width:0%;
+    background:linear-gradient(90deg,var(--or),var(--orange),var(--rose));
+    transition:width .12s linear;
+  }
+  /* la croix Fermer du diaporama passe au-dessus de tout */
+  .dia .closeBtn{ z-index:10; }
+  @media (max-width:768px){
+    .dia__head{ padding-left:clamp(60px,16vw,90px); padding-right:clamp(60px,16vw,90px); }
+    .dia__stage{ padding-left:64px; padding-right:64px; }
+    .dia__foot{ padding-left:18px; padding-right:18px; }
+    .dia__photo{ max-width:90vw; max-height:62vh; }
+    .dia__arrow{ width:46px; height:46px; font-size:1.4rem; }
+  }
+  @media (max-width:430px){
+    .dia__title{ font-size:clamp(1.25rem,6.4vw,1.7rem); }
+    .dia__photo{ max-height:56vh; }
+    .dia__caption{ font-size:.92rem; }
+  }
+
+  /* ================= ACCESSIBILITÉ / MOUVEMENT RÉDUIT ================= */
+  @media (prefers-reduced-motion:reduce){
+    .back:hover{ transform:none; }
+    .dia__progress{ transition:none; }
+    .dia__blur{ transition:none; }
+  }
+
+  /* repli sans JS */
+  .fallback-msg{ display:none; }
+  .nojs .fallback-msg{
+    display:block; position:fixed; left:50%; bottom:40px; transform:translateX(-50%);
+    background:var(--glass-strong); padding:12px 20px; border-radius:14px; font-weight:600;
+    z-index:40; box-shadow:0 10px 24px rgba(248,116,47,.16); text-align:center; width:min(90vw,420px);
+  }
 </style>
 </head>
-<body class="v-mosaic">
-  <!-- ===================== FOND : GRADIENT VIVANT RÉACTIF (FIXE — coule en CONTINU derrière toute la page) ===================== -->
-  <div class="living" aria-hidden="true">
-    <div class="living__css"></div>
-    <canvas id="gl"></canvas>
-    <div class="living__veil"></div>
-    <div class="living__grain"></div>
+<body class="nojs">
+  <div class="stage" aria-hidden="false">
+    <!-- ============ LA SCÈNE SVG (deux mondes empilés : jour en haut, nuit en bas) ============ -->
+    <svg id="scene" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"
+         role="img" aria-label="Deux petits trains aux wagons-vitrines : en haut, nos prochains ateliers Soleia roulent vers la droite dans un ciel de plein jour ensoleillé ; en bas, nos souvenirs repartent vers la gauche sous une nuit dorée éclairée d’un croissant de lune et d’étoiles, vitrines illuminées de l’intérieur.">
+      <defs>
+        <!-- CIEL (monde du haut, plein jour lumineux) -->
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#fffaf6"/>
+          <stop offset="40%" stop-color="#f8e6e6"/>
+          <stop offset="80%" stop-color="#fb6ba6"/>
+          <stop offset="100%" stop-color="#f8742f"/>
+        </linearGradient>
+        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#fff3d8" stop-opacity="1"/>
+          <stop offset="34%" stop-color="#f4b63e" stop-opacity=".92"/>
+          <stop offset="64%" stop-color="#f8742f" stop-opacity=".40"/>
+          <stop offset="100%" stop-color="#f8742f" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="sunCore" cx="50%" cy="42%" r="60%">
+          <stop offset="0%"  stop-color="#fff6e2"/>
+          <stop offset="55%" stop-color="#f4b63e"/>
+          <stop offset="100%" stop-color="#f59a32"/>
+        </radialGradient>
+
+        <!-- CIEL DE NUIT CHAUD : brun-prune profond -> rose foncé -> orangé sombre (JAMAIS de bleu/violet) -->
+        <linearGradient id="memorySky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#6b2438"/>
+          <stop offset="34%"  stop-color="#7a2a36"/>
+          <stop offset="64%"  stop-color="#8a3a2c"/>
+          <stop offset="100%" stop-color="#9c4a26"/>
+        </linearGradient>
+        <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#fff3cf" stop-opacity=".85"/>
+          <stop offset="34%" stop-color="#f6cf8c" stop-opacity=".42"/>
+          <stop offset="70%" stop-color="#e8a14c" stop-opacity=".14"/>
+          <stop offset="100%" stop-color="#e8a14c" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="moonFace" cx="38%" cy="36%" r="72%">
+          <stop offset="0%"  stop-color="#fff6e0"/>
+          <stop offset="60%" stop-color="#f7dca0"/>
+          <stop offset="100%" stop-color="#edc079"/>
+        </radialGradient>
+        <!-- ===== VRAI CROISSANT DE LUNE (correction) =====
+             Cercle BLANC = révèle toute la lune (r=62, centré sur l'origine
+             du groupe #moon) ; cercle NOIR légèrement décalé = cache une part
+             du disque -> il ne reste qu'un CROISSANT, et la zone cachée devient
+             TRANSPARENTE (le ciel se voit au travers, AUCUN disque sombre). -->
+        <mask id="crescentMask" maskUnits="userSpaceOnUse" x="-80" y="-80" width="160" height="160">
+          <circle cx="0" cy="0" r="62" fill="#fff"/>
+          <circle cx="30" cy="-13" r="58" fill="#000"/>
+        </mask>
+
+        <!-- ===== COUTURE EN DÉGRADÉ CHAUD : transition jour (haut) -> nuit (bas) ===== -->
+        <linearGradient id="seam" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#f8742f" stop-opacity="0"/>
+          <stop offset="40%" stop-color="#e0613b" stop-opacity=".55"/>
+          <stop offset="50%" stop-color="#b6502a" stop-opacity=".82"/>
+          <stop offset="60%" stop-color="#8a3a2c" stop-opacity=".62"/>
+          <stop offset="100%" stop-color="#6b2438" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="seamLine" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"  stop-color="#f8742f" stop-opacity="0"/>
+          <stop offset="22%" stop-color="#fb6ba6" stop-opacity=".9"/>
+          <stop offset="50%" stop-color="#f4b63e" stop-opacity="1"/>
+          <stop offset="78%" stop-color="#f8742f" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="#f8742f" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- collines lointaines (haut, jour) -->
+        <linearGradient id="hillFar" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fbb39a"/>
+          <stop offset="100%" stop-color="#fb8f8c"/>
+        </linearGradient>
+        <linearGradient id="hillMid" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fb8f7e"/>
+          <stop offset="100%" stop-color="#fb6f6f"/>
+        </linearGradient>
+        <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f8a85f"/>
+          <stop offset="100%" stop-color="#f37e3a"/>
+        </linearGradient>
+
+        <!-- collines de nuit (bas) : tons chauds profonds, jamais bleu -->
+        <linearGradient id="hillNight" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#a3502f"/>
+          <stop offset="100%" stop-color="#7a3a2c"/>
+        </linearGradient>
+        <linearGradient id="groundNight" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6e3024"/>
+          <stop offset="100%" stop-color="#4e2120"/>
+        </linearGradient>
+
+        <!-- matières laiton & locos (jour) -->
+        <linearGradient id="brassA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fde6b0"/><stop offset="50%" stop-color="#f4b63e"/><stop offset="100%" stop-color="#d98f28"/>
+        </linearGradient>
+        <linearGradient id="loco" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ff9bbf"/><stop offset="48%" stop-color="#fb6ba6"/><stop offset="100%" stop-color="#e84e8c"/>
+        </linearGradient>
+        <linearGradient id="locoRoof" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffb27e"/><stop offset="100%" stop-color="#f8742f"/>
+        </linearGradient>
+        <linearGradient id="locoChim" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#d9a85c"/><stop offset="100%" stop-color="#7a3a22"/>
+        </linearGradient>
+        <!-- loco souvenir (nuit, doré chaud illuminé) -->
+        <linearGradient id="locoMem" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f3cf8c"/><stop offset="48%" stop-color="#d99f48"/><stop offset="100%" stop-color="#a06824"/>
+        </linearGradient>
+        <linearGradient id="locoRoofMem" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e7b964"/><stop offset="100%" stop-color="#9a6422"/>
+        </linearGradient>
+        <linearGradient id="locoChimMem" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e7b964"/><stop offset="100%" stop-color="#8a5a1e"/>
+        </linearGradient>
+        <linearGradient id="creamPanel" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fffefb"/><stop offset="100%" stop-color="#fceede"/>
+        </linearGradient>
+
+        <!-- ===== VITRINES (auvents/stores) — jour : rayures rose/orange ===== -->
+        <linearGradient id="awnRose" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ff9bbf"/><stop offset="100%" stop-color="#fb6ba6"/>
+        </linearGradient>
+        <linearGradient id="awnOrange" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffb27e"/><stop offset="100%" stop-color="#f8742f"/>
+        </linearGradient>
+        <!-- corps/boiserie de la vitrine de jour (crème chaud) -->
+        <linearGradient id="shopWood" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fffaf3"/><stop offset="100%" stop-color="#ffe2c8"/>
+        </linearGradient>
+        <!-- éclat de la vitre (reflet doux en diagonale) -->
+        <linearGradient id="glassSheen" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"  stop-color="#ffffff" stop-opacity=".5"/>
+          <stop offset="42%" stop-color="#ffffff" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- ===== VITRINES (auvents/stores) — nuit : dorés profonds illuminés ===== -->
+        <linearGradient id="awnNightA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e7b76a"/><stop offset="100%" stop-color="#b07a32"/>
+        </linearGradient>
+        <linearGradient id="awnNightB" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#c98a4a"/><stop offset="100%" stop-color="#8a5a24"/>
+        </linearGradient>
+        <linearGradient id="shopWoodNight" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#7a4e28"/><stop offset="100%" stop-color="#4e2e18"/>
+        </linearGradient>
+
+        <radialGradient id="smoke" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffe7d2" stop-opacity="0"/>
+          <stop offset="55%" stop-color="#fbc0d0" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#fbc0d0" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="smokeMem" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffdca6" stop-opacity="0"/>
+          <stop offset="55%" stop-color="#c98a5a" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#c98a5a" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- lueurs nocturnes pour les vitrines illuminées -->
+        <radialGradient id="lanternGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#fff3c8" stop-opacity=".95"/>
+          <stop offset="35%" stop-color="#f4b63e" stop-opacity=".62"/>
+          <stop offset="100%" stop-color="#f4b63e" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="windowGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#ffe9a8" stop-opacity=".95"/>
+          <stop offset="60%" stop-color="#f8a23a" stop-opacity=".42"/>
+          <stop offset="100%" stop-color="#f8a23a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="windowFill" cx="50%" cy="40%" r="70%">
+          <stop offset="0%" stop-color="#fff3cf"/>
+          <stop offset="60%" stop-color="#f8b455"/>
+          <stop offset="100%" stop-color="#e07b2c"/>
+        </radialGradient>
+        <!-- lueur chaude qui baigne l'intérieur de la vitrine la nuit -->
+        <radialGradient id="vitrineGlow" cx="50%" cy="38%" r="78%">
+          <stop offset="0%"  stop-color="#fff0c0" stop-opacity=".55"/>
+          <stop offset="60%" stop-color="#f8b455" stop-opacity=".22"/>
+          <stop offset="100%" stop-color="#f8b455" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="groundGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#f8a23a" stop-opacity=".5"/>
+          <stop offset="100%" stop-color="#f8a23a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="headlamp" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#fff6e0" stop-opacity=".95"/>
+          <stop offset="42%" stop-color="#ffd98f" stop-opacity=".55"/>
+          <stop offset="100%" stop-color="#ffd98f" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- ===== FAISCEAU DE PHARE chaud (jour & nuit) — récupéré de r7-loco-brume ===== -->
+        <linearGradient id="beamDay" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"  stop-color="#fff6d8" stop-opacity=".9"/>
+          <stop offset="55%" stop-color="#ffdfa0" stop-opacity=".35"/>
+          <stop offset="100%" stop-color="#ffdfa0" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="beamNight" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"  stop-color="#fff0c0" stop-opacity="1"/>
+          <stop offset="50%" stop-color="#ffcf7a" stop-opacity=".55"/>
+          <stop offset="100%" stop-color="#ffcf7a" stop-opacity="0"/>
+        </linearGradient>
+        <!-- halo rond chaud autour du phare -->
+        <radialGradient id="lampGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#fff3c8" stop-opacity=".95"/>
+          <stop offset="40%" stop-color="#f4b63e" stop-opacity=".55"/>
+          <stop offset="100%" stop-color="#f4b63e" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="lampGlowDay" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#fff6e2" stop-opacity=".7"/>
+          <stop offset="45%" stop-color="#ffd9a0" stop-opacity=".3"/>
+          <stop offset="100%" stop-color="#ffd9a0" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- ombres douces -->
+        <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="7"/>
+        </filter>
+        <filter id="softer" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="14"/>
+        </filter>
+        <filter id="blurFar" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6"/>
+        </filter>
+        <!-- gros flou pour la BRUME / VAPEUR devant la loco (récupéré de r7-loco-brume) -->
+        <filter id="mistBlur" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="18"/>
+        </filter>
+        <filter id="dropWagon" x="-30%" y="-30%" width="160%" height="170%">
+          <feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="#7a3a28" flood-opacity="0.26"/>
+        </filter>
+        <filter id="dropWagonNight" x="-30%" y="-30%" width="160%" height="180%">
+          <feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="#2a1014" flood-opacity="0.46"/>
+        </filter>
+        <!-- léger réchauffement doré pour les photos du train de nuit (PAS de sépia foncé) -->
+        <filter id="warmMem" x="-10%" y="-10%" width="120%" height="120%">
+          <feColorMatrix type="matrix" values="1.04 0    0    0 0.02
+                                                0    0.98 0    0 0.01
+                                                0    0    0.84 0 0
+                                                0    0    0    1 0"/>
+        </filter>
+      </defs>
+
+      <!-- ===== MONDE DU HAUT : CIEL PLEIN JOUR + GRAND SOLEIL ===== -->
+      <rect x="0" y="0" width="1600" height="520" fill="url(#sky)"/>
+      <g id="sunWrap">
+        <circle cx="1320" cy="300" r="380" fill="url(#sunGlow)"/>
+        <circle id="sunCore" cx="1320" cy="300" r="100" fill="url(#sunCore)"/>
+      </g>
+      <g id="sparks" opacity=".8"></g>
+      <g id="skyLifeTop"></g>
+
+      <!-- PLAN lointain (haut) -->
+      <g id="planFar" filter="url(#blurFar)">
+        <path d="M-50 360 C 180 300 360 330 520 300 C 700 264 760 200 900 236
+                 C 1040 272 1160 236 1320 270 C 1460 300 1600 286 1700 300 L1700 520 L-50 520 Z"
+              fill="url(#hillFar)" opacity=".82"/>
+        <path d="M820 248 L905 120 L955 168 L1000 134 L1085 254 Z" fill="#fb9a86" opacity=".9"/>
+        <path d="M905 120 L955 168 L935 178 L905 146 Z" fill="#ffe7d2" opacity=".85"/>
+        <path d="M1000 134 L1040 192 L1010 198 L985 158 Z" fill="#ffe7d2" opacity=".7"/>
+      </g>
+      <!-- PLAN médian (haut) -->
+      <g id="planMid">
+        <path d="M-50 420 C 200 372 380 404 560 378 C 760 348 900 396 1080 372
+                 C 1260 348 1460 384 1700 366 L1700 520 L-50 520 Z"
+              fill="url(#hillMid)" opacity=".92"/>
+      </g>
+
+      <!-- ===== SOL + VOIE DU HAUT (ateliers à venir, roule à DROITE →) ===== -->
+      <g id="planGroundTop">
+        <path d="M-50 452 C 240 432 520 462 820 446 C 1120 432 1420 460 1700 444 L1700 520 L-50 520 Z"
+              fill="url(#ground)"/>
+        <path id="railShadow_top" d="M0 0" fill="none" stroke="#c25e2c" stroke-width="30" stroke-linecap="round" opacity=".5" filter="url(#soft)"/>
+        <g id="sleepers_top" stroke="#a84e24" stroke-width="7" stroke-linecap="round" opacity=".55"></g>
+        <path id="railTopA_top" d="M0 0" fill="none" stroke="#9c4a22" stroke-width="4.5"/>
+        <path id="railTopB_top" d="M0 0" fill="none" stroke="#b3592c" stroke-width="4.5"/>
+      </g>
+
+      <!-- ===== LE CONVOI DU HAUT (positionné par GSAP) ===== -->
+      <g id="convoyTop"></g>
+
+      <!-- ===== MONDE DU BAS : CIEL DE NUIT CHAUD + CROISSANT DE LUNE ===== -->
+      <rect x="0" y="520" width="1600" height="480" fill="url(#memorySky)"/>
+      <g id="stars"></g>
+      <g id="shootingStars"></g>
+      <g id="moonWrap">
+        <!-- halo ambiant + douce lueur dorée diffuse autour du croissant -->
+        <circle cx="270" cy="676" r="190" fill="url(#moonGlow)"/>
+        <circle cx="270" cy="676" r="96" fill="url(#moonGlow)"/>
+        <g id="moon" transform="translate(270 676)">
+          <!-- disque lune plein, masqué pour ne garder qu'un VRAI croissant
+               (la partie cachée devient transparente : aucun disque sombre) -->
+          <circle cx="0" cy="0" r="62" fill="url(#moonFace)" mask="url(#crescentMask)"/>
+          <!-- fin liseré lumineux le long du croissant -->
+          <circle cx="0" cy="0" r="62" fill="none" stroke="#fff6e0" stroke-width="1.4"
+                  opacity=".5" mask="url(#crescentMask)"/>
+        </g>
+      </g>
+      <g id="groundGlows"></g>
+      <g id="skyLifeBot"></g>
+      <g filter="url(#blurFar)" opacity=".82">
+        <path d="M-50 720 C 200 672 420 706 620 678 C 840 648 1000 700 1200 672
+                 C 1380 648 1560 686 1700 668 L1700 1000 L-50 1000 Z"
+              fill="url(#hillNight)"/>
+      </g>
+      <g id="planGroundBot">
+        <path d="M-50 800 C 240 782 520 808 820 794 C 1120 782 1420 806 1700 792 L1700 1000 L-50 1000 Z"
+              fill="url(#groundNight)"/>
+        <path id="railShadow_bot" d="M0 0" fill="none" stroke="#3a1c16" stroke-width="30" stroke-linecap="round" opacity=".5" filter="url(#soft)"/>
+        <g id="sleepers_bot" stroke="#4a261a" stroke-width="7" stroke-linecap="round" opacity=".55"></g>
+        <path id="railTopA_bot" d="M0 0" fill="none" stroke="#caa05e" stroke-width="4.5" opacity=".82"/>
+        <path id="railTopB_bot" d="M0 0" fill="none" stroke="#7a4e28" stroke-width="4.5"/>
+      </g>
+
+      <!-- ===== LE CONVOI DU BAS (souvenirs, roule à GAUCHE ←) ===== -->
+      <g id="convoyBot"></g>
+
+      <!-- ===== PREMIER PLAN : herbes & fleurs du soir (tout en bas) ===== -->
+      <g id="planNear"></g>
+
+      <!-- ===== COUTURE CHAUDE qui relie jour & nuit ===== -->
+      <rect x="0" y="448" width="1600" height="146" fill="url(#seam)"/>
+      <g id="seamWeave"></g>
+    </svg>
+
+    <!-- étiquettes HTML des wagons (panneaux lisibles au survol) -->
+    <div id="labels"></div>
   </div>
 
-  <!-- ===================== DÉCORS RÉUTILISABLES (définis une fois, réutilisés via <use>) ===================== -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <defs>
-      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques (16 rayons). -->
-      <g id="soleiaSunDoodle">
-        <circle cx="50" cy="50" r="20" fill="#f8742f"/>
-        <circle cx="50" cy="50" r="20" fill="#f4b63e" opacity="0.18"/>
-        <g fill="none" stroke="#f8742f" stroke-width="4.4" stroke-linecap="round">
-          <path d="M50 28 q3 -6 -0.6 -13"/>
-          <path d="M58.6 29.4 q5 -4 5.4 -10.4"/>
-          <path d="M66.3 33.5 q6.4 -3.4 12.8 -5.2"/>
-          <path d="M70.9 40.2 q6.6 -1.4 13.6 -1.4"/>
-          <path d="M72.4 50 q7.4 0.6 13.6 -1.4"/>
-          <path d="M70.9 59.8 q7 1.6 12.4 6.2"/>
-          <path d="M66.3 66.5 q6.2 3.2 10.6 8.8"/>
-          <path d="M58.6 70.6 q4.8 5 5 12.2"/>
-          <path d="M50 72 q-2.8 6.4 0.6 13.4"/>
-          <path d="M41.4 70.6 q-5 4.6 -5.4 11.4"/>
-          <path d="M33.7 66.5 q-6.2 3.2 -12.4 4.4"/>
-          <path d="M29.1 59.8 q-6.8 1.6 -13.4 0.4"/>
-          <path d="M27.6 50 q-7.6 -0.6 -14.4 1.2"/>
-          <path d="M29.1 40.2 q-6.8 -1.6 -11.8 -6.6"/>
-          <path d="M33.7 33.5 q-6 -3.4 -9.4 -9"/>
-          <path d="M41.4 29.4 q-4.6 -4.6 -4.2 -11.2"/>
-        </g>
-      </g>
-
-      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, cœur jaune doré arrondi. Couleur pilotée par currentColor. -->
-      <g id="soleiaFlowerRetro">
-        <g fill="currentColor">
-          <path d="M50 12
-                   c 9 0 15 7 14.5 15
-                   c -0.4 6 -4 9.5 -8 12
-                   c -2.5 1.6 -4.6 3 -6.5 3
-                   c -1.9 0 -4 -1.4 -6.5 -3
-                   c -4 -2.5 -7.6 -6 -8 -12
-                   c -0.5 -8 5 -15 14.5 -15 Z"/>
-          <path d="M86.1 38.2
-                   c 2.8 8.6 -1.1 16.3 -8.5 19.4
-                   c -5.6 2.3 -10.1 0.6 -13.9 -1.9
-                   c -2.4 -1.6 -4.5 -2.9 -5.4 -4.6
-                   c -0.9 -1.8 -0.7 -4.3 -0.1 -7.2
-                   c 0.9 -4.6 3 -9.3 8.6 -11.6
-                   c 7.6 -3.1 16 0 19.2 5.9 Z"/>
-          <path d="M72.3 80.9
-                   c -7.3 5.3 -15.9 4.2 -20.4 -2.3
-                   c -3.5 -4.9 -2.7 -9.6 -1.2 -13.9
-                   c 0.9 -2.7 1.6 -5.1 3.1 -6.2
-                   c 1.5 -1.1 4 -1.3 6.9 -1.3
-                   c 4.7 0 9.8 1.1 13.3 6
-                   c 4.5 6.5 5 15.1 -1.7 19.9
-                   l 0 -2.2 Z"/>
-          <path d="M27.7 80.9
-                   c -6.7 -4.8 -6.2 -13.4 -1.7 -19.9
-                   c 3.5 -4.9 8.6 -6 13.3 -6
-                   c 2.9 0 5.4 0.2 6.9 1.3
-                   c 1.5 1.1 2.2 3.5 3.1 6.2
-                   c 1.5 4.3 2.3 9 -1.2 13.9
-                   c -4.5 6.5 -13.1 7.6 -20.4 2.3 Z"/>
-          <path d="M13.9 38.2
-                   c 3.2 -5.9 11.6 -9 19.2 -5.9
-                   c 5.6 2.3 7.7 7 8.6 11.6
-                   c 0.6 2.9 0.8 5.4 -0.1 7.2
-                   c -0.9 1.7 -3 3 -5.4 4.6
-                   c -3.8 2.5 -8.3 4.2 -13.9 1.9
-                   c -7.4 -3.1 -11.3 -10.8 -8.5 -19.4 Z"/>
-        </g>
-        <rect x="42" y="42" width="16" height="16" rx="6.4" fill="#f4b63e"/>
-      </g>
-
-      <!-- ✺ petit soleil dessiné-main pour les TITRES -->
-      <g id="soleiaSunTitle">
-        <circle cx="50" cy="50" r="19" fill="#f8742f"/>
-        <circle cx="50" cy="50" r="19" fill="#f4b63e" opacity="0.18"/>
-        <g fill="none" stroke="#f8742f" stroke-width="5" stroke-linecap="round">
-          <path d="M50 29 q3 -6 -0.6 -13"/>
-          <path d="M59 31 q5 -4 5.6 -10.6"/>
-          <path d="M67.5 35.5 q6.4 -3.2 12.8 -4.6"/>
-          <path d="M71.5 43 q6.6 -1.2 13.4 -0.8"/>
-          <path d="M71.5 57 q7 1.4 12.6 6"/>
-          <path d="M67.5 64.5 q6.2 3.2 10.4 9"/>
-          <path d="M59 69 q4.8 5 5 12"/>
-          <path d="M50 71 q-3 6.4 0.6 13.4"/>
-          <path d="M41 69 q-5 4.6 -5.6 11.2"/>
-          <path d="M32.5 64.5 q-6.2 3.2 -12 4.2"/>
-          <path d="M28.5 57 q-6.8 1.4 -13.2 0.2"/>
-          <path d="M28.5 43 q-7 -1.4 -12.6 -6"/>
-          <path d="M32.5 35.5 q-6 -3.2 -9.2 -8.6"/>
-          <path d="M41 31 q-4.6 -4.6 -4.2 -11"/>
-        </g>
-      </g>
-
-      <!-- icône « image » pour le cadre photo vide -->
-      <g id="soleiaPhotoIcon">
-        <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
-        <circle cx="8.6" cy="9.6" r="1.7"/>
-        <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </g>
-    </defs>
-  </svg>
-
-  <!-- ===================== RAIL RÉSEAUX SOCIAUX — bord DROIT ===================== -->
-  <aside class="social-rail" aria-label="Suivre Soleia sur les réseaux sociaux">
-    <span class="social-rail__label" aria-hidden="true">Par ici</span>
-    <a class="icon-btn" href="https://www.instagram.com/soleia.experience" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Soleia">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-        <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
-        <circle cx="12" cy="12" r="4"/>
-        <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
-      </svg>
-    </a>
-    <a class="icon-btn" href="https://www.tiktok.com/@soleia.experience" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Soleia">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.94 2.94 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1Z" fill="currentColor"/>
-      </svg>
-    </a>
-    <a class="icon-btn" href="mailto:soleiaexperience@gmail.com" aria-label="Contacter Soleia par e-mail">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-        <rect x="3" y="5" width="18" height="14" rx="3"/>
-        <path d="m4 7 8 5.5L20 7" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-    <span class="social-rail__line" aria-hidden="true"></span>
-  </aside>
-
-  <!-- ===================== CALQUE DÉCOR PLEINE PAGE (fleurs + soleils déplaçables) ===================== -->
-  <div class="deco-layer" aria-hidden="true">
-    <!-- ░░ Zone titre (haut de page) ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-1"  style="top:5%;    left:8%;   --rot:-10deg; --s:0.74; --dur:8s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-2"  style="top:3.6%;  right:9%;  --rot:8deg;   --s:0.98; --dur:10s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float hide-small" data-deco-id="deco-3"  style="top:10%;   left:22%;  --rot:14deg;  --s:0.54; --dur:9s;  --delay:-2s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-
-    <!-- ░░ Le long des cartes (marges latérales) ░░ -->
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-4"  style="top:24%;   right:3%;  --rot:-6deg;  --s:0.62; --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-5"  style="top:38%;   left:2.5%; --rot:6deg;   --s:0.6;  --dur:10s; --delay:-2.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-6"  style="top:52%;   right:3%;  --rot:11deg;  --s:0.66; --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-7"  style="top:66%;   left:3%;   --rot:-9deg;  --s:0.6;  --dur:11s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float hide-mobile" data-deco-id="deco-8"  style="top:78%;   right:3.5%;--rot:7deg;   --s:0.62; --dur:8s;  --delay:-2s;   color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-
-    <!-- ░░ Bas de page ░░ -->
-    <span class="deco-item is-float" data-deco-id="deco-9"  style="top:92%;   left:10%;  --rot:10deg;  --s:0.66; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-    <span class="deco-item is-float" data-deco-id="deco-10" style="top:93%;   right:11%; --rot:-8deg;  --s:0.62; --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
-  </div>
-
-  <div class="shell">
-    <!-- ===================== NAV (identique à l'accueil) ===================== -->
+  <!-- ============ BARRE DU HAUT ============ -->
+  <!-- ============ BARRE DU HAUT : MENU STANDARD DU SITE ============ -->
+  <header class="bar">
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__col nav__col--left">
         <li><a class="nav__link is-active" href="/ateliers/" aria-current="page">Ateliers</a></li>
@@ -1146,425 +814,1855 @@
 
       <div class="nav__col nav__col--right">
         <a class="nav__link" href="/a-propos/">Concept</a>
-        <a class="nav__link" href="/galerie/">Galerie</a>
         <a class="nav__link" href="/faq/">FAQ</a>
-        <button class="nav__burger" aria-label="Ouvrir le menu">
+        <button class="nav__burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navDrawer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
           </svg>
         </button>
       </div>
     </nav>
+  </header>
 
-  <main class="experiences">
-    <header class="xp-head reveal">
-      <h1 class="xp-title">Nos <span class="grad">rendez-vous</span> créatifs</h1>
-      <p class="xp-sub">Sur toute l’île ☀️</p>
-    </header>
-
-    <div class="cards">
-      <!-- Les ateliers, par ordre de date -->
-      <a class="card reveal" href="/ateliers/customise-ton-miroir/" aria-label="Je customise mon miroir — découvrir">
-        <div class="card__mood">
-          <span class="card__tile"><img src="/ateliers/img/miroir-1.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/miroir-2.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/miroir-3.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/miroir-4.jpg" alt="" loading="lazy" decoding="async"></span>
-          </div>
-        <div class="card__body">
-          <h2 class="card__name">Je customise mon miroir</h2>
-          <div class="card__meta">
-            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>Dimanche 19 juillet</span>
-            <span class="card__chip card__chip--region"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg>Est</span>
-          </div>
-          <span class="card__cta">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </div>
-      </a>
-
-      <a class="card reveal" href="/ateliers/personnalise-ton-tote-bag/" aria-label="Je personnalise mon tote bag — découvrir">
-        <div class="card__mood">
-          <span class="card__bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-          <span class="card__tile"><img src="/ateliers/img/totebag-1.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/totebag-3.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/totebag-5.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/totebag-4.jpg" alt="" loading="lazy" decoding="async"></span>
-        </div>
-        <div class="card__body">
-          <h2 class="card__name">Je personnalise mon tote bag</h2>
-          <div class="card__meta">
-            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>Samedi 25 juillet</span>
-            <span class="card__chip card__chip--region"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg>Sud</span>
-          </div>
-          <span class="card__cta">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </div>
-      </a>
-
-      <a class="card reveal" href="/ateliers/peins-ton-eventail/" aria-label="Je peins mon éventail — découvrir">
-        <div class="card__mood">
-          <span class="card__tile"><img src="/ateliers/img/eventail-1.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/eventail-2.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/eventail-3.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/eventail-4.jpg" alt="" loading="lazy" decoding="async"></span>
-          </div>
-        <div class="card__body">
-          <h2 class="card__name">Je peins mon éventail</h2>
-          <div class="card__meta">
-            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>Dimanche 9 août</span>
-            <span class="card__chip card__chip--region"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg>Ouest</span>
-          </div>
-          <span class="card__cta">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </div>
-      </a>
-
-      <a class="card reveal" href="/ateliers/cree-ta-boite-a-souvenirs/" aria-label="Je crée ma boîte à souvenirs — découvrir">
-        <div class="card__mood">
-          <span class="card__tile"><img src="/ateliers/img/boite-1.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/boite-2.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/boite-3.jpg" alt="" loading="lazy" decoding="async"></span>
-          <span class="card__tile"><img src="/ateliers/img/boite-4.jpg" alt="" loading="lazy" decoding="async"></span>
-          </div>
-        <div class="card__body">
-          <h2 class="card__name">Je crée ma boîte à souvenirs</h2>
-          <div class="card__meta">
-            <span class="card__chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M3.5 9.5h17M8 3.5v3.4M16 3.5v3.4" stroke-linecap="round"/></svg>Dimanche 23 août</span>
-            <span class="card__chip card__chip--region"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-6.5-5.5-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.5 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="10.3" r="2.4"/></svg>Nord</span>
-          </div>
-          <span class="card__cta">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </div>
-      </a>
-    </div>
-  </main>
-
-  <footer class="foot reveal" aria-label="Informations légales">
-    <a href="/remboursement/">Politique de remboursement</a>
-    <a href="/confidentialite/">Confidentialité</a>
-    <a href="/cgv/">CGV</a>
-    <a href="/mentions-legales/">Mentions légales</a>
-  </footer>
+  <!-- ============ TIROIR MOBILE (ouvert par le burger) ============ -->
+  <div class="nav__drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+    <button class="nav__drawer__close" type="button" aria-label="Fermer le menu">×</button>
+    <ul>
+      <li><a class="is-active" href="/ateliers/" aria-current="page">Ateliers</a></li>
+      <li><a href="/boutique/">Boutique</a></li>
+      <li><a href="/a-propos/">Concept</a></li>
+      <li><a href="/faq/">FAQ</a></li>
+    </ul>
   </div>
 
-  <script>
-  (function () {
-    var brand = document.querySelector(".brand");
-    if (!brand) return;
-    var img = brand.querySelector("img");
-    if (!img) return;
-    function fail() { brand.classList.add("is-fallback"); }
-    if (img.complete && img.naturalWidth === 0) fail();
-    img.addEventListener("error", fail);
-  })();
-  </script>
+  <div class="fallback-msg">
+    Les deux petits trains s’affichent mieux avec les animations activées — voici tout de même nos ateliers et nos souvenirs, cliquez pour les découvrir.
+  </div>
 
-  <!-- ===================== APPARITION AU DÉFILEMENT (repli sûr : tout visible si indisponible) ===================== -->
-  <script>
-  (function () {
-    var els = document.querySelectorAll(".reveal");
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce || !("IntersectionObserver" in window)) {
-      els.forEach(function (el) { el.classList.add("is-in"); });
+  <!-- ============ FICHE ATELIER « FOUFOU » : ÉCLOSION PLEIN ÉCRAN ============ -->
+  <div class="bloom" id="bloom" role="dialog" aria-modal="true" aria-labelledby="bloomTitle">
+    <div class="bloom__bg" id="bloomBg"></div>
+    <div class="bloom__hero" id="bloomHero"><img id="bloomHeroImg" alt="" /><div class="bloom__heroShade"></div></div>
+    <svg class="bloom__petals" id="bloomPetals" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="bloom__panel" id="bloomPanel">
+      <div class="bloom__plate" aria-hidden="true"></div>
+      <h2 class="bloom__title" id="bloomTitle"></h2>
+      <p class="bloom__lead" id="bloomLead"></p>
+      <div class="bloom__meta" id="bloomMeta"></div>
+      <div class="bloom__actions" id="bloomActions"></div>
+    </div>
+    <div class="bloom__strip" id="bloomStrip"></div>
+    <button class="closeBtn" id="bloomClose" aria-label="Fermer la fiche">×</button>
+  </div>
+
+  <!-- ============ DIAPORAMA SOUVENIRS : UNE PHOTO PLEIN ÉCRAN ============ -->
+  <div class="dia" id="dia" role="dialog" aria-modal="true" aria-labelledby="diaTitle">
+    <div class="dia__blur" id="diaBlur" aria-hidden="true"></div>
+    <div class="dia__veil" id="diaVeil" aria-hidden="true"></div>
+    <div class="dia__progress" id="diaProgress" aria-hidden="true"></div>
+    <div class="dia__head" id="diaHead">
+      <p class="dia__kicker" id="diaKicker"></p>
+      <h2 class="dia__title" id="diaTitle"></h2>
+    </div>
+    <button class="dia__play" id="diaPlay" aria-label="Mettre en pause le défilement automatique">
+      <svg id="diaPlayIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <rect x="6" y="5" width="4" height="14" rx="1.4"/><rect x="14" y="5" width="4" height="14" rx="1.4"/></svg>
+      <span id="diaPlayLbl">Pause</span>
+    </button>
+    <div class="dia__stage" id="diaStage">
+      <div class="dia__frame" id="diaFrame">
+        <img class="dia__photo" id="diaPhoto" alt="" />
+      </div>
+    </div>
+    <div class="dia__foot" id="diaFoot">
+      <div class="dia__count">
+        <span class="dia__num" id="diaNum"></span>
+        <div class="dia__dots" id="diaDots"></div>
+      </div>
+      <p class="dia__caption" id="diaCaption"></p>
+    </div>
+    <button class="dia__arrow dia__arrow--prev" id="diaPrev" aria-label="Photo précédente">‹</button>
+    <button class="dia__arrow dia__arrow--next" id="diaNext" aria-label="Photo suivante">›</button>
+    <button class="closeBtn" id="diaClose" aria-label="Fermer le diaporama">×</button>
+  </div>
+
+<!-- ============ MENU DU SITE : repli logo + tiroir mobile (burger) ============ -->
+<script>
+(function(){
+  "use strict";
+  /* repli si /logo.svg indisponible : on bascule sur l'emblème soleil inline */
+  var brand = document.querySelector(".brand");
+  if (brand){
+    var img = brand.querySelector("img");
+    if (img){
+      var fail = function(){ brand.classList.add("is-fallback"); };
+      if (img.complete && img.naturalWidth === 0) fail();
+      img.addEventListener("error", fail);
+    }
+  }
+
+  /* tiroir mobile ouvert/fermé par le burger */
+  var burger = document.querySelector(".nav__burger");
+  var drawer = document.getElementById("navDrawer");
+  if (burger && drawer){
+    var closeBtn = drawer.querySelector(".nav__drawer__close");
+    var open = function(){
+      drawer.hidden = false;
+      requestAnimationFrame(function(){ drawer.classList.add("is-open"); });
+      burger.setAttribute("aria-expanded","true");
+    };
+    var close = function(){
+      drawer.classList.remove("is-open");
+      burger.setAttribute("aria-expanded","false");
+      window.setTimeout(function(){ if(!drawer.classList.contains("is-open")) drawer.hidden = true; }, 320);
+      burger.focus();
+    };
+    burger.addEventListener("click", open);
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    /* un lien cliqué = on referme le tiroir */
+    drawer.querySelectorAll("a").forEach(function(a){ a.addEventListener("click", close); });
+    /* Échap referme le tiroir */
+    document.addEventListener("keydown", function(e){
+      if (e.key === "Escape" && drawer.classList.contains("is-open")) close();
+    });
+  }
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+(function(){
+  "use strict";
+
+  var SVGNS = "http://www.w3.org/2000/svg";
+  var prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGSAP = (typeof gsap !== "undefined");
+
+  // ============================================================
+  //  DONNÉES — TRAIN DU HAUT : 4 ateliers À VENIR (réservables)
+  // ============================================================
+  var ATELIERS = [
+    {
+      id:"miroir", kind:"atelier",
+      title:"Je customise mon miroir", titleEm:"miroir",
+      date:"Dimanche 19 juillet",
+      lead:"On choisit son cadre, ses couleurs et ses petits détails, et chacune repart avec <strong>son miroir unique</strong>, décoré à la main. Une jolie touche de soleil pour la maison.",
+      meta:["📅 Dimanche 19 juillet","🎨 Tout le matériel fourni","🪞 Repart avec sa création"],
+      gallery:["/ateliers/img/miroir-1.jpg","/ateliers/img/miroir-2.jpg","/ateliers/img/miroir-3.jpg","/ateliers/img/miroir-4.jpg","/ateliers/img/miroir-5.jpg"],
+      photo:"/ateliers/img/miroir-1.jpg",
+      sign:"Miroir", date_short:"19 juil.",
+      cta:{label:"Réserver ma place", href:"/ateliers/customise-ton-miroir/"}
+    },
+    {
+      id:"tote", kind:"atelier",
+      title:"Je personnalise mon tote bag", titleEm:"tote bag",
+      date:"Samedi 25 juillet",
+      lead:"On tend la toile, on choisit ses motifs, et chacune repart avec <strong>son tote bag unique</strong>, peint à la main. Pinceaux, pochoirs et bonne humeur fournis.",
+      meta:["📅 Samedi 25 juillet","🎨 Tout le matériel fourni","👜 Repart avec sa création"],
+      gallery:["/ateliers/img/totebag-1.jpg","/ateliers/img/totebag-2.jpg","/ateliers/img/totebag-3.jpg","/ateliers/img/totebag-4.jpg","/ateliers/img/totebag-5.jpg"],
+      photo:"/ateliers/img/totebag-1.jpg",
+      sign:"Tote bag", date_short:"25 juil.",
+      cta:{label:"Réserver ma place", href:"/ateliers/personnalise-ton-tote-bag/"}
+    },
+    {
+      id:"eventail", kind:"atelier",
+      title:"Je peins mon éventail", titleEm:"éventail",
+      date:"Dimanche 9 août",
+      lead:"On déploie l’éventail, on pose ses fleurs et ses couleurs, et on repart avec <strong>un accessoire poétique</strong> tout à soi — parfait pour les douceurs de l’été.",
+      meta:["📅 Dimanche 9 août","🎨 Tout le matériel fourni","🪭 Repart avec sa création"],
+      gallery:["/ateliers/img/eventail-1.jpg","/ateliers/img/eventail-2.jpg","/ateliers/img/eventail-3.jpg","/ateliers/img/eventail-4.jpg","/ateliers/img/eventail-5.jpg"],
+      photo:"/ateliers/img/eventail-1.jpg",
+      sign:"Éventail", date_short:"9 août",
+      cta:{label:"Réserver ma place", href:"/ateliers/peins-ton-eventail/"}
+    },
+    {
+      id:"boite", kind:"atelier",
+      title:"Je crée ma boîte à souvenirs", titleEm:"souvenirs",
+      date:"Dimanche 23 août",
+      lead:"On assemble et on décore <strong>une jolie boîte</strong> pour y garder ses trésors et ses souvenirs. Un petit coffre tendre, rien qu’à soi, à remplir toute l’année.",
+      meta:["📅 Dimanche 23 août","🎨 Tout le matériel fourni","🎁 Repart avec sa création"],
+      gallery:["/ateliers/img/boite-1.jpg","/ateliers/img/boite-2.jpg","/ateliers/img/boite-3.jpg","/ateliers/img/boite-4.jpg","/ateliers/img/boite-5.jpg"],
+      photo:"/ateliers/img/boite-1.jpg",
+      sign:"Boîte", date_short:"23 août",
+      cta:{label:"Réserver ma place", href:"/ateliers/cree-ta-boite-a-souvenirs/"}
+    }
+  ];
+
+  // ============================================================
+  //  DONNÉES — TRAIN DU BAS : 3 ÉDITIONS PASSÉES (souvenirs)
+  // ============================================================
+  function gal(dir, n){
+    var a=[];
+    for(var i=1;i<=n;i++) a.push("/galerie/photos/"+dir+"/"+i+".jpg");
+    return a;
+  }
+  var SOUVENIRS = [
+    {
+      id:"ed3", kind:"souvenir",
+      title:"Troisième atelier", titleEm:"Troisième",
+      num:"n°03", editionName:"Troisième atelier",
+      eyebrow:"Édition n°03 · la plus récente",
+      cover:"/galerie/photos/ed3/cover.jpg",
+      gallery:gal("ed3",10),
+      sign:"Troisième atelier"
+    },
+    {
+      id:"ed2", kind:"souvenir",
+      title:"Deuxième atelier", titleEm:"Deuxième",
+      num:"n°02", editionName:"Deuxième atelier",
+      eyebrow:"Édition n°02",
+      cover:"/galerie/photos/ed2/cover.jpg",
+      gallery:gal("ed2",10),
+      sign:"Deuxième atelier"
+    },
+    {
+      id:"ed1", kind:"souvenir",
+      title:"Premier atelier", titleEm:"Premier",
+      num:"n°01", editionName:"Premier atelier",
+      eyebrow:"Édition n°01 · là où tout a commencé",
+      cover:"/galerie/photos/ed1/cover.jpg",
+      gallery:gal("ed1",4),
+      sign:"Premier atelier"
+    }
+  ];
+
+  // ============================================================
+  //  GÉOMÉTRIE DES DEUX VOIES
+  // ============================================================
+  function makeRail(baseY){
+    function railY(x){
+      return baseY
+        + 14 * Math.sin((x + 120) / 460)
+        + 7  * Math.sin((x + 300) / 170);
+    }
+    function railSlope(x){
+      var d = 2;
+      return Math.atan2(railY(x+d) - railY(x-d), 2*d) * 180 / Math.PI;
+    }
+    return {y:railY, slope:railSlope};
+  }
+  var RAIL_TOP = makeRail(478);
+  var RAIL_BOT = makeRail(824);
+
+  var scene = document.getElementById("scene");
+  var labelsEl = document.getElementById("labels");
+  var groundGlows = document.getElementById("groundGlows");
+
+  function el(tag, attrs){
+    var e = document.createElementNS(SVGNS, tag);
+    if(attrs) for(var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  var clipSeq = 0;
+
+  // ---------- CONSTRUCTION D'UNE VOIE ----------
+  function buildTrack(rail, suffix){
+    var sleepers = document.getElementById("sleepers_"+suffix);
+    for(var x=-40; x<1680; x+=46){
+      var y = rail.y(x);
+      var l = el("line",{x1:x,y1:y-10,x2:x,y2:y+14});
+      sleepers.appendChild(l);
+    }
+    var topD="", botD="", shD="";
+    for(var i=0,xx=-50; xx<=1700; xx+=20,i++){
+      var yy = rail.y(xx);
+      topD += (i?"L":"M") + xx + " " + (yy-6) + " ";
+      botD += (i?"L":"M") + xx + " " + (yy+6) + " ";
+      shD  += (i?"L":"M") + xx + " " + (yy+18) + " ";
+    }
+    document.getElementById("railTopA_"+suffix).setAttribute("d", topD);
+    document.getElementById("railTopB_"+suffix).setAttribute("d", botD);
+    document.getElementById("railShadow_"+suffix).setAttribute("d", shD);
+  }
+  buildTrack(RAIL_TOP, "top");
+  buildTrack(RAIL_BOT, "bot");
+
+  // ---------- COUTURE : ligne dorée + points de couture ----------
+  (function buildSeamWeave(){
+    var g = document.getElementById("seamWeave");
+    var d="", segs=[];
+    for(var i=0,x=-40; x<=1640; x+=30,i++){
+      var y = 521 + Math.sin((x+60)/120)*7;
+      d += (i?"L":"M")+x+" "+y.toFixed(1)+" ";
+      segs.push([x,y]);
+    }
+    g.appendChild(el("path",{d:d,fill:"none",stroke:"url(#seamLine)","stroke-width":3.4,
+      "stroke-linecap":"round",opacity:.9}));
+    segs.forEach(function(p,idx){
+      if(idx%2!==0) return;
+      var dot = el("circle",{cx:p[0],cy:p[1],r:2.4,fill:"#fff3d8",opacity:.85,"class":"seamDot"});
+      g.appendChild(dot);
+    });
+  })();
+
+  // ---------- ÉCLATS DE LUMIÈRE (ciel de jour) ----------
+  (function buildSparks(){
+    var g = document.getElementById("sparks");
+    for(var i=0;i<14;i++){
+      var c = el("circle",{});
+      var cx = 760 + Math.random()*760;
+      var cy = 110 + Math.random()*270;
+      c.setAttribute("cx",cx); c.setAttribute("cy",cy);
+      c.setAttribute("r", 1.4 + Math.random()*2.6);
+      c.setAttribute("fill", Math.random()>.5 ? "#fff3d8" : "#ffd9c0");
+      c.setAttribute("opacity", (0.3+Math.random()*0.5).toFixed(2));
+      c.dataset.baseY = cy;
+      g.appendChild(c);
+    }
+  })();
+
+  // ---------- ÉTOILES DORÉES DU CIEL DE NUIT (scintillantes) ----------
+  var STARS = [];
+  (function buildStars(){
+    var g = document.getElementById("stars");
+    for(var i=0;i<46;i++){
+      var cx = 60 + Math.random()*1500;
+      var cy = 540 + Math.random()*220;
+      var isCross = Math.random() > 0.45;
+      var node;
+      if(isCross){
+        node = el("g",{"class":"star", transform:"translate("+cx.toFixed(1)+" "+cy.toFixed(1)+")"});
+        var s = (0.7 + Math.random()*0.8);
+        var col = Math.random()>.5 ? "#ffe7a8" : "#fff3cf";
+        node.appendChild(el("path",{d:"M0 -7 L1.2 -1.2 L7 0 L1.2 1.2 L0 7 L-1.2 1.2 L-7 0 L-1.2 -1.2 Z",
+          fill:col, transform:"scale("+s.toFixed(2)+")"}));
+      } else {
+        node = el("circle",{cx:cx.toFixed(1),cy:cy.toFixed(1),r:(0.8+Math.random()*1.4).toFixed(2),
+          fill:Math.random()>.5?"#ffe7a8":"#fff3cf","class":"star"});
+      }
+      var baseOp = 0.35 + Math.random()*0.5;
+      node.setAttribute("opacity", baseOp.toFixed(2));
+      g.appendChild(node);
+      STARS.push({g:node, base:baseOp, sp:0.6+Math.random()*1.4, ph:Math.random()*6.28});
+    }
+  })();
+
+  // ---------- ÉTOILE FILANTE (subtile, occasionnelle) ----------
+  function spawnShootingStar(){
+    if(prefersReduced || GLOBAL_PAUSE) { scheduleShootingStar(); return; }
+    var host = document.getElementById("shootingStars");
+    var startX = 700 + Math.random()*820;
+    var startY = 540 + Math.random()*120;
+    var len = 150 + Math.random()*120;
+    var dx = -(len*0.92), dy = (len*0.42);
+    var g = el("g",{opacity:0});
+    var tail = el("line",{x1:0,y1:0,x2:-len,y2:len*0.46,stroke:"#fff3cf","stroke-width":2.2,
+      "stroke-linecap":"round",opacity:.7});
+    var head = el("circle",{cx:0,cy:0,r:2.6,fill:"#fff6e2"});
+    g.appendChild(tail); g.appendChild(head);
+    g.setAttribute("transform","translate("+startX+" "+startY+")");
+    host.appendChild(g);
+    if(hasGSAP){
+      var tl = gsap.timeline({onComplete:function(){ if(g.parentNode) g.parentNode.removeChild(g); scheduleShootingStar(); }});
+      tl.to(g,{opacity:1,duration:.18,ease:"power1.out"},0)
+        .to(g,{attr:{transform:"translate("+(startX+dx)+" "+(startY+dy)+")"},duration:1.0,ease:"power1.in"},0)
+        .to(g,{opacity:0,duration:.4,ease:"power1.in"},0.6);
+    } else {
+      if(g.parentNode) g.parentNode.removeChild(g);
+      scheduleShootingStar();
+    }
+  }
+  var shootTO = null;
+  function scheduleShootingStar(){
+    if(shootTO) clearTimeout(shootTO);
+    shootTO = setTimeout(spawnShootingStar, 6000 + Math.random()*8000);
+  }
+
+  // ============================================================
+  //  VIE DANS LE CIEL : papillons, oiseaux, soleils, pétales, lucioles
+  // ============================================================
+  function makeButterfly(col1, col2){
+    var g = el("g",{"class":"flier butterfly"});
+    var wL = el("g",{}), wR = el("g",{});
+    wL.appendChild(el("ellipse",{cx:-9,cy:-4,rx:9,ry:7,fill:col1,opacity:.92}));
+    wL.appendChild(el("ellipse",{cx:-7,cy:7,rx:6.5,ry:6,fill:col2,opacity:.9}));
+    wR.appendChild(el("ellipse",{cx:9,cy:-4,rx:9,ry:7,fill:col1,opacity:.92}));
+    wR.appendChild(el("ellipse",{cx:7,cy:7,rx:6.5,ry:6,fill:col2,opacity:.9}));
+    g.appendChild(el("ellipse",{cx:0,cy:1,rx:1.8,ry:9,fill:"#7a3a22"}));
+    g.appendChild(el("line",{x1:0,y1:-7,x2:-4,y2:-13,stroke:"#7a3a22","stroke-width":1.2,"stroke-linecap":"round"}));
+    g.appendChild(el("line",{x1:0,y1:-7,x2:4,y2:-13,stroke:"#7a3a22","stroke-width":1.2,"stroke-linecap":"round"}));
+    g.appendChild(wL); g.appendChild(wR);
+    g.__wL=wL; g.__wR=wR;
+    return g;
+  }
+  function makeBird(col){
+    var g = el("g",{"class":"flier bird"});
+    var wing = el("path",{d:"M-16 0 Q -8 -10 0 0 Q 8 -10 16 0",fill:"none",stroke:col,
+      "stroke-width":3.4,"stroke-linecap":"round"});
+    g.appendChild(wing);
+    g.__wing=wing;
+    return g;
+  }
+  function makeMiniSun(){
+    var g = el("g",{"class":"flier minisun"});
+    var rays = el("g",{});
+    for(var i=0;i<8;i++){
+      rays.appendChild(el("line",{x1:0,y1:-7,x2:0,y2:-12,stroke:"#f4b63e","stroke-width":2,
+        "stroke-linecap":"round",transform:"rotate("+(i*45)+")"}));
+    }
+    g.appendChild(rays);
+    g.appendChild(el("circle",{r:6,fill:"#ffd76a"}));
+    g.appendChild(el("circle",{r:6,fill:"none",stroke:"#f59a32","stroke-width":1.6}));
+    g.__rays=rays;
+    return g;
+  }
+  function makePetal(col){
+    var g = el("g",{"class":"flier petal"});
+    g.appendChild(el("path",{d:"M0 -8 C 6 -4 6 6 0 10 C -6 6 -6 -4 0 -8 Z",fill:col,opacity:.9}));
+    return g;
+  }
+
+  function buildSkyLife(){
+    var top = document.getElementById("skyLifeTop");
+    var bot = document.getElementById("skyLifeBot");
+    var fliers = [];
+
+    var bfCols = [["#fb6ba6","#fba6c6"],["#f8742f","#ffb27e"],["#f4b63e","#ffd76a"],["#fb7a72","#ffc3da"]];
+    for(var i=0;i<5;i++){
+      var c=bfCols[i%bfCols.length];
+      var b=makeButterfly(c[0],c[1]);
+      var x=180+Math.random()*1240, y=120+Math.random()*250;
+      b.setAttribute("transform","translate("+x+" "+y+")");
+      top.appendChild(b);
+      fliers.push({g:b, type:"butterfly", x:x, y:y, baseY:y, vx:(0.12+Math.random()*0.18),
+        amp:14+Math.random()*16, sp:0.6+Math.random()*0.5, ph:Math.random()*6.28, sc:0.8+Math.random()*0.5});
+    }
+    for(i=0;i<3;i++){
+      var bd=makeBird("#7a3a22");
+      var bx=200+Math.random()*1100, by=90+Math.random()*150;
+      bd.setAttribute("transform","translate("+bx+" "+by+")");
+      top.appendChild(bd);
+      fliers.push({g:bd, type:"bird", x:bx, y:by, baseY:by, vx:(0.22+Math.random()*0.2),
+        amp:10+Math.random()*10, sp:0.9+Math.random()*0.6, ph:Math.random()*6.28, sc:0.8+Math.random()*0.5});
+    }
+    for(i=0;i<2;i++){
+      var ms=makeMiniSun();
+      var mx=400+Math.random()*900, my=150+Math.random()*200;
+      ms.setAttribute("transform","translate("+mx+" "+my+")");
+      top.appendChild(ms);
+      fliers.push({g:ms, type:"minisun", x:mx, y:my, baseY:my, vx:(0.05+Math.random()*0.08),
+        amp:12+Math.random()*10, sp:0.5+Math.random()*0.4, ph:Math.random()*6.28, sc:0.9+Math.random()*0.5});
+    }
+    var ptCols=["#fba6c6","#ffb27e","#ffd76a","#fb6ba6"];
+    for(i=0;i<6;i++){
+      var p=makePetal(ptCols[i%ptCols.length]);
+      var px=120+Math.random()*1360, py=140+Math.random()*280;
+      p.setAttribute("transform","translate("+px+" "+py+")");
+      top.appendChild(p);
+      fliers.push({g:p, type:"petal", x:px, y:py, baseY:py, vx:(0.07+Math.random()*0.12),
+        amp:20+Math.random()*18, sp:0.7+Math.random()*0.6, ph:Math.random()*6.28, sc:0.8+Math.random()*0.6, spin:true});
+    }
+
+    // NUIT (bas) : LUCIOLES dorées + pétales du soir
+    for(i=0;i<16;i++){
+      var f=el("circle",{r:1.8+Math.random()*2.0,fill:Math.random()>.5?"#ffd76a":"#ffe7b0","class":"firefly"});
+      f.style.filter="drop-shadow(0 0 4px rgba(244,182,62,.9))";
+      var fx=120+Math.random()*1360, fy=560+Math.random()*210;
+      f.setAttribute("cx",fx); f.setAttribute("cy",fy);
+      bot.appendChild(f);
+      fliers.push({g:f, type:"firefly", x:fx, y:fy, baseY:fy, vx:-(0.03+Math.random()*0.08),
+        amp:14+Math.random()*16, sp:0.5+Math.random()*0.8, ph:Math.random()*6.28, isCircle:true, glow:true});
+    }
+    var ptColsB=["#f6cf8c","#ffd76a","#eeb964","#e8a14c"];
+    for(i=0;i<5;i++){
+      var p2=makePetal(ptColsB[i%ptColsB.length]);
+      var px2=120+Math.random()*1360, py2=580+Math.random()*200;
+      p2.setAttribute("transform","translate("+px2+" "+py2+")");
+      bot.appendChild(p2);
+      fliers.push({g:p2, type:"petal", x:px2, y:py2, baseY:py2, vx:-(0.05+Math.random()*0.09),
+        amp:16+Math.random()*14, sp:0.6+Math.random()*0.5, ph:Math.random()*6.28, sc:0.7+Math.random()*0.4, spin:true});
+    }
+    return fliers;
+  }
+  var SKY_FLIERS = buildSkyLife();
+
+  function stepSkyLife(t){
+    for(var i=0;i<SKY_FLIERS.length;i++){
+      var f=SKY_FLIERS[i];
+      f.x += f.vx;
+      if(f.vx>0 && f.x>1680){ f.x=-60; }
+      if(f.vx<0 && f.x<-60){ f.x=1680; }
+      var yy = f.baseY + Math.sin(t*f.sp + f.ph)*f.amp;
+      if(f.isCircle){
+        f.g.setAttribute("cx", f.x.toFixed(1));
+        f.g.setAttribute("cy", yy.toFixed(1));
+        f.g.setAttribute("opacity", (0.30 + 0.6*Math.abs(Math.sin(t*f.sp*1.6 + f.ph))).toFixed(2));
+        continue;
+      }
+      var rot = "";
+      if(f.spin){ rot = " rotate("+((t*30*f.sp + f.ph*20)%360).toFixed(1)+")"; }
+      var sc = f.sc || 1;
+      f.g.setAttribute("transform","translate("+f.x.toFixed(1)+" "+yy.toFixed(1)+") scale("+sc+")"+rot);
+      if(f.type==="butterfly"){
+        var flap = 0.35 + 0.65*Math.abs(Math.sin(t*7 + f.ph));
+        if(f.g.__wL) f.g.__wL.setAttribute("transform","scale("+flap.toFixed(2)+" 1)");
+        if(f.g.__wR) f.g.__wR.setAttribute("transform","scale("+flap.toFixed(2)+" 1)");
+      } else if(f.type==="bird"){
+        var fy2 = Math.sin(t*9 + f.ph)*4;
+        if(f.g.__wing) f.g.__wing.setAttribute("d","M-16 "+(0-fy2)+" Q -8 "+(-10-fy2)+" 0 0 Q 8 "+(-10-fy2)+" 16 "+(0-fy2));
+      } else if(f.type==="minisun"){
+        if(f.g.__rays) f.g.__rays.setAttribute("transform","rotate("+((t*18+f.ph*30)%360).toFixed(1)+")");
+      }
+    }
+    for(var s=0;s<STARS.length;s++){
+      var st=STARS[s];
+      var o = st.base * (0.45 + 0.55*Math.abs(Math.sin(t*st.sp + st.ph)));
+      st.g.setAttribute("opacity", o.toFixed(2));
+    }
+  }
+
+  // ---------- PREMIER PLAN : herbes & fleurs du soir ----------
+  (function buildNear(){
+    var g = document.getElementById("planNear");
+    function tuft(x, h, col){
+      var p = el("path",{});
+      var y = 1000;
+      p.setAttribute("d","M"+x+" "+y+" C "+(x-10)+" "+(y-h*0.7)+" "+(x-6)+" "+(y-h)+" "+(x)+" "+(y-h)+
+                          " C "+(x+6)+" "+(y-h)+" "+(x+10)+" "+(y-h*0.7)+" "+(x+14)+" "+y+" Z");
+      p.setAttribute("fill",col);
+      g.appendChild(p);
+    }
+    function flower(x, y, col){
+      var fg = el("g",{"class":"nearFlower",transform:"translate("+x+" "+y+")"});
+      for(var k=0;k<5;k++){
+        var a = k*72*Math.PI/180;
+        var pet = el("ellipse",{cx:Math.cos(a)*8,cy:Math.sin(a)*8,rx:6,ry:9,
+          transform:"rotate("+(k*72)+" "+(Math.cos(a)*8)+" "+(Math.sin(a)*8)+")",fill:col});
+        fg.appendChild(pet);
+      }
+      fg.appendChild(el("circle",{r:5,fill:"#e0a02a"}));
+      var stem = el("line",{x1:0,y1:6,x2:0,y2:60,stroke:"#5a2c1c","stroke-width":4,"stroke-linecap":"round"});
+      fg.insertBefore(stem, fg.firstChild);
+      g.appendChild(fg);
+      return fg;
+    }
+    var grassCols=["#6e3826","#7e4028","#5a2c1c"];
+    for(var x=-30; x<1660; x+=26){
+      tuft(x, 26+Math.random()*40, grassCols[(x|0)%3]);
+    }
+    var fcols=["#e8a14c","#f8742f","#fb6ba6","#f4b63e"];
+    window.__nearFlowers=[];
+    for(var i=0;i<9;i++){
+      var fx = 80 + i*180 + (Math.random()*40-20);
+      var f = flower(fx, 982, fcols[i%4]);
+      window.__nearFlowers.push(f);
+    }
+  })();
+
+  // ============================================================
+  //  ROUES « ÉPURÉES » (style repris de r9-vitrine-epuree)
+  //  Roue à RAYONS sobres et raffinés : pneu/bandage sombre, JANTE
+  //  dorée (laiton), RAYONS fins depuis un MOYEU central à boulons.
+  //  Le <g> des rayons (+ moyeu) tourne avec la roue.
+  //  opts conservés : {hub, spokeCol, rimCol, tireOut, spokes}
+  // ============================================================
+  function rimCol2(c){ return (c==="#5a3c18"||c==="#3a1c12"||c==="#3a1c10"||c==="#5a3c18") ? "#7a5a26" : "#7a3a22"; }
+  function makeWheels(g, xs, r, y, opts){
+    opts = opts || {};
+    var spk  = opts.spokeCol || "#f4b63e";    // rayons & jante dorés (laiton)
+    var tyre = opts.rimCol || "#5e2f1c";      // pneu/bandage extérieur sombre
+    var tyreIn = rimCol2(tyre);               // liseré intérieur du pneu
+    var spokes=[];
+    xs.forEach(function(wx){
+      // pneu extérieur (bandage sombre) + liseré intérieur
+      g.appendChild(el("circle",{cx:wx,cy:y,r:r+3.5,fill:tyre}));
+      g.appendChild(el("circle",{cx:wx,cy:y,r:r+1.2,fill:"none",stroke:tyreIn,"stroke-width":2}));
+      // JANTE dorée (anneau de roulement en laiton)
+      g.appendChild(el("circle",{cx:wx,cy:y,r:r,fill:"none",stroke:"url(#brassA)","stroke-width":r*0.18}));
+      // disque intérieur sombre (entre jante et moyeu) pour faire ressortir les rayons
+      g.appendChild(el("circle",{cx:wx,cy:y,r:r*0.82,fill:tyre,opacity:".55"}));
+      // groupe TOURNANT : rayons fins + moyeu (visible quand la roue roule)
+      var sp = el("g",{});
+      var nbSpokes = (r >= 22) ? 8 : 6;       // grandes roues = plus de rayons
+      for(var i=0;i<nbSpokes;i++){
+        sp.appendChild(el("line",{x1:0,y1:0,x2:0,y2:-r*0.82,stroke:spk,"stroke-width":r*0.085,
+          "stroke-linecap":"round",transform:"rotate("+(i*(360/nbSpokes))+")"}));
+      }
+      // moyeu central : disque doré + boulons + éclat
+      sp.appendChild(el("circle",{r:r*0.34,fill:"url(#brassA)",stroke:tyre,"stroke-width":1.4}));
+      for(var b=0;b<6;b++){
+        var ba=b*60*Math.PI/180;
+        sp.appendChild(el("circle",{cx:Math.cos(ba)*r*0.2,cy:Math.sin(ba)*r*0.2,r:r*0.05,fill:tyre,opacity:".8"}));
+      }
+      sp.appendChild(el("circle",{cx:-r*0.08,cy:-r*0.08,r:r*0.1,fill:"#fff6e2",opacity:".85"}));
+      sp.setAttribute("transform","translate("+wx+" "+y+")");
+      sp.dataset.wheel="1";
+      g.appendChild(sp);
+      spokes.push(sp);
+    });
+    return spokes;
+  }
+
+  // ============================================================
+  //  FAISCEAU DE PHARE + BRUME (récupéré de r7-loco-brume)
+  //  Renvoie un <g> : grand halo rond + cône de lumière + nuées de
+  //  brume floues qui se dissipent devant le phare (animées par stepBeams).
+  //  Le phare pointe vers l'AVANT (côté +x) ; la loco de nuit est
+  //  miroir, donc son faisceau partira naturellement vers la gauche.
+  // ============================================================
+  function buildBeam(beamGrad, glowGrad, mistTint){
+    var g = el("g",{"class":"beamFx","pointer-events":"none"});
+    // grand halo rond chaud autour du phare
+    g.appendChild(el("circle",{cx:130,cy:-21,r:48,fill:"url("+glowGrad+")","class":"beamHaloOuter"}));
+    g.appendChild(el("circle",{cx:130,cy:-21,r:26,fill:"url("+glowGrad+")","class":"beamHalo"}));
+    // CORRECTION 4 : UN SEUL faisceau, propre, qui part du phare (y≈-21)
+    // et s'étire vers l'avant en un cône net (plus de second lobe en haut).
+    var beam = el("path",{d:"M142 -21 L334 -50 L340 16 L142 -8 Z",fill:"url("+beamGrad+")",
+      opacity:.85,"class":"beamCone"});
+    g.appendChild(beam);
+    g.__beam = beam;
+    // BRUME / VAPEUR : volutes floues devant la loco, dans le faisceau
+    var mist = el("g",{filter:"url(#mistBlur)","class":"beamMist"});
+    var puffs=[];
+    for(var i=0;i<5;i++){
+      var mx = 190 + i*38 + Math.random()*20;
+      var my = -42 + Math.random()*46;
+      var c = el("ellipse",{cx:mx,cy:my,rx:24+Math.random()*16,ry:14+Math.random()*8,
+        fill:mistTint,opacity:(0.10+Math.random()*0.12).toFixed(2)});
+      mist.appendChild(c);
+      puffs.push({el:c, bx:mx, by:my, ph:Math.random()*6.28, sp:0.4+Math.random()*0.5,
+        amp:6+Math.random()*8});
+    }
+    g.appendChild(mist);
+    g.__mistPuffs = puffs;
+    return g;
+  }
+
+  // ============================================================
+  //  LOCOMOTIVE DE JOUR — avec PHARE qui projette un HALO dans la BRUME
+  //  (locomotive récupérée de r7-loco-brume, adaptée au style r8)
+  //  Roues motrices à rayons reliées par une BIELLE (correction B).
+  // ============================================================
+  function buildLoco(){
+    var g = el("g",{"class":"vehicle"});
+    g.appendChild(el("ellipse",{cx:0,cy:40,rx:148,ry:20,fill:"#6a2f1a",opacity:".28",filter:"url(#softer)"}));
+    // FAISCEAU + BRUME en tout premier (derrière le corps), pointe vers l'avant
+    var beam = buildBeam("#beamDay","#lampGlowDay","#fff3df");
+    g.appendChild(beam);
+    g.__beam = beam;
+
+    var body = el("g",{filter:"url(#dropWagon)"});
+    body.appendChild(el("rect",{x:-138,y:10,width:268,height:18,rx:6,fill:"#8a3f23"}));
+    body.appendChild(el("rect",{x:-30,y:-58,width:150,height:74,rx:37,fill:"url(#loco)"}));
+    [-6,40,86].forEach(function(bx){
+      body.appendChild(el("rect",{x:bx,y:-58,width:6,height:74,rx:3,fill:"url(#brassA)",opacity:".9"}));
+    });
+    // nez avant arrondi + PHARE doré qui éclaire
+    body.appendChild(el("ellipse",{cx:120,cy:-21,rx:13,ry:37,fill:"#ffd0e2"}));
+    body.appendChild(el("circle",{cx:130,cy:-21,r:30,fill:"url(#lampGlowDay)"}));
+    body.appendChild(el("circle",{cx:130,cy:-21,r:16,fill:"url(#brassA)"}));
+    body.appendChild(el("circle",{cx:130,cy:-21,r:16,fill:"none",stroke:"#e0613b","stroke-width":2.4}));
+    body.appendChild(el("circle",{cx:131,cy:-22,r:6.5,fill:"#fff6e2"}));
+    /* cheminée retirée (forme bizarre au-dessus de la loco) */
+    body.appendChild(el("path",{d:"M-138 -98 Q -86 -116 -34 -98 L-34 -98 L-34 16 L-138 16 Z",fill:"url(#loco)"}));
+    body.appendChild(el("path",{d:"M-142 -96 Q -86 -118 -30 -96 L-30 -88 Q -86 -108 -142 -88 Z",fill:"url(#locoRoof)"}));
+    body.appendChild(el("rect",{x:-120,y:-66,width:64,height:48,rx:11,fill:"url(#creamPanel)"}));
+    body.appendChild(el("rect",{x:-120,y:-66,width:64,height:48,rx:11,fill:"none",stroke:"#d98f28","stroke-width":3}));
+    body.appendChild(el("line",{x1:-88,y1:-66,x2:-88,y2:-18,stroke:"#d98f28","stroke-width":2,opacity:".6"}));
+    var deco = el("g",{transform:"translate(2 -38)"});
+    [[0,-9,"#fffaf6"],[7,4,"#ffd9c2"],[-7,4,"#ffd9c2"]].forEach(function(p){
+      deco.appendChild(el("circle",{cx:p[0],cy:p[1],r:4,fill:p[2]}));
+    });
+    deco.appendChild(el("circle",{r:3,fill:"#f8742f"}));
+    body.appendChild(deco);
+    body.appendChild(el("rect",{x:-150,y:-8,width:14,height:9,rx:3,fill:"#6a2f1a"}));
+    body.appendChild(el("path",{d:"M120 28 L156 28 L132 6 Z",fill:"#8a3f23"}));
+    body.appendChild(el("path",{d:"M126 26 L150 26 M130 20 L146 20",stroke:"#5e2f1c","stroke-width":2.4}));
+    g.appendChild(body);
+
+    // grandes roues motrices à rayons + petite roue avant
+    g.__wheels = makeWheels(g, [-98,-44], 27, 30, {hub:"#fb6ba6", spokeCol:"#f4b63e", rimCol:"#7a3a22", spokes:8});
+    g.__wheels = g.__wheels.concat(makeWheels(g, [96], 15, 38, {hub:"#f8742f", spokeCol:"#f4b63e", rimCol:"#7a3a22", spokes:7}));
+    // BIELLE qui relie les deux roues motrices (comme une vraie loco à vapeur)
+    var rod = el("g",{});
+    var bar = el("rect",{x:-98,y:30-9,width:54,height:6,rx:3,fill:"#caa05a",stroke:"#7a3a22","stroke-width":1.4});
+    rod.appendChild(bar);
+    rod.appendChild(el("circle",{cx:-98,cy:30,r:4,fill:"#7a3a22"}));
+    rod.appendChild(el("circle",{cx:-44,cy:30,r:4,fill:"#7a3a22"}));
+    g.appendChild(rod);
+    g.__coupling = {rod:rod, bar:bar, cr:9};
+
+    g.__smoke = {x:113, y:-100, grad:"url(#smoke)"};
+    g.__half = 158;
+    return g;
+  }
+
+  // ============================================================
+  //  LOCOMOTIVE DE NUIT — dorée, ILLUMINÉE, PHARE rayonnant dans la BRUME
+  //  (faisceau de nuit plus intense ; loco miroir → faisceau vers la gauche)
+  // ============================================================
+  function buildLocoMem(){
+    var g = el("g",{"class":"vehicle"});
+    g.appendChild(el("ellipse",{cx:0,cy:40,rx:148,ry:20,fill:"#100608",opacity:".5",filter:"url(#softer)"}));
+    // FAISCEAU DE NUIT (plus intense) + BRUME devant le phare
+    var beam = buildBeam("#beamNight","#lampGlow","#ffe6b0");
+    g.appendChild(beam);
+    g.__beam = beam;
+
+    var body = el("g",{filter:"url(#dropWagonNight)"});
+    body.appendChild(el("rect",{x:-138,y:10,width:268,height:18,rx:6,fill:"#5a3618"}));
+    body.appendChild(el("rect",{x:-30,y:-58,width:150,height:74,rx:37,fill:"url(#locoMem)"}));
+    [-6,40,86].forEach(function(bx){
+      body.appendChild(el("rect",{x:bx,y:-58,width:6,height:74,rx:3,fill:"url(#brassA)",opacity:".9"}));
+    });
+    // PHARE rayonnant
+    body.appendChild(el("ellipse",{cx:120,cy:-21,rx:13,ry:37,fill:"#f3dcad"}));
+    body.appendChild(el("circle",{cx:130,cy:-21,r:32,fill:"url(#lampGlow)","class":"locoLampGlow"}));
+    body.appendChild(el("circle",{cx:130,cy:-21,r:16,fill:"url(#windowFill)"}));
+    body.appendChild(el("circle",{cx:130,cy:-21,r:16,fill:"none",stroke:"#8a5a1e","stroke-width":2.4}));
+    body.appendChild(el("circle",{cx:131,cy:-22,r:6.5,fill:"#fff6e2"}));
+    /* cheminée retirée (forme bizarre au-dessus de la loco) */
+    body.appendChild(el("path",{d:"M-138 -98 Q -86 -116 -34 -98 L-34 -98 L-34 16 L-138 16 Z",fill:"url(#locoMem)"}));
+    body.appendChild(el("path",{d:"M-142 -96 Q -86 -118 -30 -96 L-30 -88 Q -86 -108 -142 -88 Z",fill:"url(#locoRoofMem)"}));
+    body.appendChild(el("ellipse",{cx:-88,cy:-42,rx:56,ry:42,fill:"url(#windowGlow)","class":"winHalo"}));
+    body.appendChild(el("rect",{x:-120,y:-66,width:64,height:48,rx:11,fill:"url(#windowFill)"}));
+    body.appendChild(el("rect",{x:-120,y:-66,width:64,height:48,rx:11,fill:"none",stroke:"#8a5a1e","stroke-width":3}));
+    body.appendChild(el("line",{x1:-88,y1:-66,x2:-88,y2:-18,stroke:"#8a5a1e","stroke-width":2,opacity:".7"}));
+    var deco = el("g",{transform:"translate(2 -38)"});
+    [[0,-9,"#fff6e0"],[7,4,"#f3cf8c"],[-7,4,"#f3cf8c"]].forEach(function(p){
+      deco.appendChild(el("circle",{cx:p[0],cy:p[1],r:4,fill:p[2]}));
+    });
+    deco.appendChild(el("circle",{r:3,fill:"#d99f48"}));
+    body.appendChild(deco);
+    body.appendChild(el("rect",{x:-150,y:-8,width:14,height:9,rx:3,fill:"#5a3618"}));
+    body.appendChild(el("path",{d:"M120 28 L156 28 L132 6 Z",fill:"#5a3618"}));
+    body.appendChild(el("path",{d:"M126 26 L150 26 M130 20 L146 20",stroke:"#3a1c10","stroke-width":2.4}));
+    g.appendChild(body);
+
+    // LANTERNE dorée suspendue à l'avant de la cabine
+    var lant = el("g",{transform:"translate(-30 -96)"});
+    lant.appendChild(el("circle",{cx:0,cy:6,r:18,fill:"url(#lanternGlow)","class":"lanternHalo"}));
+    lant.appendChild(el("path",{d:"M-7 -2 q7 -10 14 0",fill:"none",stroke:"#8a5a1e","stroke-width":2,"stroke-linecap":"round"}));
+    lant.appendChild(el("path",{d:"M-9 -2 L9 -2 L6 -6 L-6 -6 Z",fill:"#8a5a1e"}));
+    lant.appendChild(el("rect",{x:-8,y:-2,width:16,height:18,rx:3,fill:"url(#windowFill)",stroke:"#8a5a1e","stroke-width":1.4}));
+    lant.appendChild(el("ellipse",{cx:0,cy:8,rx:2.6,ry:5,fill:"#fff7df"}));
+    lant.appendChild(el("path",{d:"M-8 16 L8 16 L5 20 L-5 20 Z",fill:"#8a5a1e"}));
+    g.appendChild(lant);
+
+    // grandes roues motrices à rayons (dorées) + bielle
+    g.__wheels = makeWheels(g, [-98,-44], 27, 30, {hub:"#f8742f", spokeCol:"#f6cf8c", rimCol:"#5a3c18", tireOut:"#2a1408", spokes:8});
+    g.__wheels = g.__wheels.concat(makeWheels(g, [96], 15, 38, {hub:"#fb6ba6", spokeCol:"#f6cf8c", rimCol:"#5a3c18", tireOut:"#2a1408", spokes:7}));
+    var rod = el("g",{});
+    var bar = el("rect",{x:-98,y:30-9,width:54,height:6,rx:3,fill:"#e7b964",stroke:"#3a1c10","stroke-width":1.4});
+    rod.appendChild(bar);
+    rod.appendChild(el("circle",{cx:-98,cy:30,r:4,fill:"#3a1c10"}));
+    rod.appendChild(el("circle",{cx:-44,cy:30,r:4,fill:"#3a1c10"}));
+    g.appendChild(rod);
+    g.__coupling = {rod:rod, bar:bar, cr:9};
+
+    g.__smoke = {x:113, y:-100, grad:"url(#smokeMem)"};
+    g.__half = 158;
+    g.__mirror = true;
+    g.__lit = true;
+    return g;
+  }
+
+  // ============================================================
+  //  PHOTO ENCADRÉE (object-fit cover) pour la VITRE du wagon
+  // ============================================================
+  function framedPhoto(parent, x, y, w, h, src, alt, warm){
+    var id = "photoClip"+(clipSeq++);
+    var fr = el("g",{transform:"translate("+x+" "+y+")"});
+    var clip = el("clipPath",{id:id});
+    clip.appendChild(el("rect",{x:0,y:0,width:w,height:h,rx:6}));
+    fr.appendChild(clip);
+    var imgAttrs = {x:0,y:0,width:w,height:h,"clip-path":"url(#"+id+")","preserveAspectRatio":"xMidYMid slice"};
+    if(warm) imgAttrs.filter = "url(#warmMem)";
+    var img = el("image",imgAttrs);
+    img.setAttributeNS("http://www.w3.org/1999/xlink","href",src);
+    img.setAttribute("href",src);
+    if(alt) img.setAttribute("aria-label", alt);
+    fr.appendChild(img);
+    parent.appendChild(fr);
+    return fr;
+  }
+
+  // ============================================================
+  //  ★★★ TWIST : LE WAGON-VITRINE (devanture de boutique/galerie) ★★★
+  //  - store rayé (auvent) festonné en haut, rose/orange le jour,
+  //    doré la nuit ;
+  //  - grande vitre présentant la photo comme en devanture (cover),
+  //    liseré doré ;
+  //  - petit panneau-nom suspendu ;
+  //  - NUIT : vitrine illuminée de l'intérieur (lueur dorée + lanterne).
+  //  Largeur généreuse, photo bien lisible.
+  // ============================================================
+  function buildVitrine(opts){
+    // opts: {photo, alt, sign, dateShort, bodyGrad, awnA, awnB, night, warm}
+    var W = 286, H = 162;
+    var night = !!opts.night;
+    var g = el("g",{});
+
+    // ombre portée au sol
+    g.appendChild(el("ellipse",{cx:0,cy:34,rx:W*0.52,ry:18,
+      fill:night?"#100608":"#6a2f1a",opacity:night?".46":".26",filter:"url(#softer)"}));
+
+    var body = el("g",{filter:night?"url(#dropWagonNight)":"url(#dropWagon)"});
+
+    // ---- soubassement / châssis ----
+    body.appendChild(el("rect",{x:-W/2,y:8,width:W,height:18,rx:6,fill:night?"#5a3618":"#8a3f23"}));
+    body.appendChild(el("rect",{x:-W/2-14,y:6,width:16,height:7,rx:3,fill:night?"#3a1c10":"#6a2f1a"}));
+
+    // ---- corps de la boutique (boiserie crème le jour / bois sombre la nuit) ----
+    body.appendChild(el("rect",{x:-W/2,y:-H,width:W,height:H+12,rx:14,
+      fill:night?"url(#shopWoodNight)":"url(#shopWood)"}));
+    // plinthe colorée (rappel marque)
+    body.appendChild(el("rect",{x:-W/2,y:-2,width:W,height:9,fill:opts.bodyGrad}));
+    body.appendChild(el("rect",{x:-W/2,y:-2,width:W,height:9,fill:"url(#brassA)",opacity:".35"}));
+
+    // ---- montants latéraux (pilastres) + liseré doré du cadre vitrine ----
+    var INX = 22, GLT = -H+44, GLB = -8;       // zone vitre
+    var glW = W-2*INX, glH = (GLB-GLT);
+    body.appendChild(el("rect",{x:-W/2+8,y:GLT-6,width:14,height:glH+18,rx:5,
+      fill:night?"#6a4222":"#f3dcc0"}));
+    body.appendChild(el("rect",{x:W/2-22,y:GLT-6,width:14,height:glH+18,rx:5,
+      fill:night?"#6a4222":"#f3dcc0"}));
+
+    // ---- LA GRANDE VITRE : cadre + photo (cover) + liseré doré ----
+    var vit = el("g",{});
+    // fond de vitre (sombre pour la nuit, donne du contraste à la lueur)
+    vit.appendChild(el("rect",{x:-glW/2,y:GLT,width:glW,height:glH,rx:7,
+      fill:night?"#3a2414":"#fff7ec"}));
+    // CORRECTION 1 (nuit) : la lueur chaude est posée DERRIÈRE la photo,
+    // jamais par-dessus -> la photo souvenir s'affiche TELLE QUELLE.
+    if(night){
+      vit.appendChild(el("rect",{x:-glW/2,y:GLT,width:glW,height:glH,rx:7,
+        fill:"url(#vitrineGlow)","class":"vitrineLight"}));
+    }
+    // photo en devanture (cover, remplit la vitre)
+    framedPhoto(vit, -glW/2, GLT, glW, glH, opts.photo, opts.alt, opts.warm);
+    // reflet doux de la vitre (sheen diagonal) — UNIQUEMENT le jour.
+    // CORRECTION 1 (nuit) : AUCUN reflet de verre posé sur la photo souvenir.
+    if(!night){
+      vit.appendChild(el("rect",{x:-glW/2,y:GLT,width:glW,height:glH,rx:7,
+        fill:"url(#glassSheen)",opacity:.55}));
+    }
+    // meneau central (fine barre verticale qui fait « vitrine de boutique »)
+    vit.appendChild(el("rect",{x:-2,y:GLT,width:4,height:glH,
+      fill:night?"#7a4e28":"#f3dcc0",opacity:.9}));
+    // cadre/liseré DORÉ tout autour de la vitre
+    vit.appendChild(el("rect",{x:-glW/2,y:GLT,width:glW,height:glH,rx:7,
+      fill:"none",stroke:"url(#brassA)","stroke-width":5}));
+    vit.appendChild(el("rect",{x:-glW/2,y:GLT,width:glW,height:glH,rx:7,
+      fill:"none",stroke:night?"#8a5a1e":"#d98f28","stroke-width":1.6,opacity:.8}));
+    body.appendChild(vit);
+
+    // ---- STORE / AUVENT festonné rayé au-dessus de la vitre ----
+    var awn = el("g",{});
+    var aW = W-6, aTop = -H+6, aH = 30;
+    var ax0 = -aW/2;
+    // corniche du store
+    awn.appendChild(el("rect",{x:ax0-4,y:aTop-8,width:aW+8,height:12,rx:5,
+      fill:night?"#6a4222":"#f3dcc0"}));
+    // rayures du store (alternance A/B), inclinées comme un vrai auvent
+    var stripes = 9, sw = aW/stripes;
+    for(var i=0;i<stripes;i++){
+      var sx = ax0 + i*sw;
+      awn.appendChild(el("path",{
+        d:"M"+sx+" "+aTop+" L"+(sx+sw)+" "+aTop+" L"+(sx+sw)+" "+(aTop+aH)+
+          " L"+(sx+sw/2)+" "+(aTop+aH+12)+" L"+sx+" "+(aTop+aH)+" Z",
+        fill:(i%2===0)?opts.awnA:opts.awnB}));
+    }
+    // feston : petits triangles/arcs sous le store (bord ondulé)
+    var festoon="";
+    for(var f2=0; f2<=stripes; f2++){
+      var fx = ax0 + f2*sw;
+      festoon += (f2?"":"M"+ax0+" "+(aTop+aH))+" Q "+(fx-sw/2)+" "+(aTop+aH+14)+" "+fx+" "+(aTop+aH)+" ";
+    }
+    awn.appendChild(el("path",{d:festoon,fill:"none",stroke:"url(#brassA)","stroke-width":2.4,opacity:.85}));
+    // fine ligne dorée en haut du store
+    awn.appendChild(el("rect",{x:ax0-4,y:aTop-8,width:aW+8,height:3,rx:1.5,fill:"url(#brassA)",opacity:.9}));
+    body.appendChild(awn);
+
+    // ---- CORRECTION C : RUBAN-NOM festonné, RATTACHÉ EN BAS du wagon ----
+    //  Posé à cheval sur le BAS de la vitre/image (plus rien ne flotte au-dessus).
+    var ribbon = makeNameRibbon(opts.sign, opts.dateShort, night, glW, opts.awnA, opts.awnB);
+    ribbon.setAttribute("transform","translate(0 "+(GLB)+")");   // GLB = bas de la vitre
+    body.appendChild(ribbon);
+
+    // ---- NUIT : lanterne dorée au coin du store ----
+    if(night){
+      var lant = makeLantern(-W/2+30, aTop-2, 0.86);
+      body.appendChild(lant);
+      g.__lantern = lant;
+    } else {
+      // jour : deux petites jardinières fleuries en pied de vitrine (charme boutique)
+      [-W/2+34, W/2-34].forEach(function(bx){
+        body.appendChild(el("rect",{x:bx-16,y:-14,width:32,height:14,rx:4,fill:"#e0613b"}));
+        [["#fb6ba6",-9],["#f4b63e",0],["#f8742f",9]].forEach(function(fl){
+          body.appendChild(el("circle",{cx:bx+fl[1],cy:-18,r:4.4,fill:fl[0]}));
+          body.appendChild(el("circle",{cx:bx+fl[1],cy:-18,r:1.6,fill:"#fff6e2"}));
+        });
+      });
+    }
+
+    g.appendChild(body);
+    // roues de wagon à rayons, plus petites, alignées (correction B)
+    g.__wheels = makeWheels(g, [-W*0.32, W*0.32], 18, 26, night
+      ? {hub:"#f8742f", spokeCol:"#f6cf8c", rimCol:"#5a3c18", tireOut:"#2a1408", spokes:7}
+      : {hub:opts.hubCol||"#fb6ba6", spokeCol:"#f4b63e", rimCol:"#7a3a22", spokes:7});
+    g.__vitrine = vit;
+    return g;
+  }
+
+  // ============================================================
+  //  RUBAN-NOM festonné (correction C) — assorti au store rayé.
+  //  Bandeau posé À CHEVAL sur le BAS du wagon (origine y = bas de la vitre) :
+  //  - corps du ruban rayé comme l'auvent, liseré doré ;
+  //  - extrémités en queue d'aronde (chevrons) ;
+  //  - bord BAS festonné (petites arches) qui dépasse du wagon ;
+  //  - texte centré (nom · date), lisible, au féminin.
+  // ============================================================
+  function makeNameRibbon(name, dateShort, night, glW, awnA, awnB){
+    var g = el("g",{});
+    var txt = name + (dateShort ? "  ·  "+dateShort : "");
+    // largeur : assez pour le texte, jamais plus large que la vitre
+    var rw = Math.min(glW+8, Math.max(150, txt.length*8.6 + 40));
+    var rh = 32;
+    var halfTop = 6;        // dépasse un peu au-dessus du bas de la vitre
+    var top = -halfTop, bot = top + rh;     // origine = bas de la vitre (y=0)
+    var rx = -rw/2, rxr = rw/2;
+    var tail = 16;          // longueur des chevrons d'extrémité
+
+    // léger flou d'ombre sous le ruban (rattache visuellement au wagon)
+    g.appendChild(el("ellipse",{cx:0,cy:bot-2,rx:rw*0.5,ry:7,
+      fill:night?"#100608":"#6a2f1a",opacity:night?".4":".22",filter:"url(#soft)"}));
+
+    // queues d'aronde (chevrons) aux deux bouts, légèrement plus sombres
+    var endCol = night ? "#8a5a24" : "#c2456f";
+    g.appendChild(el("path",{d:"M"+rx+" "+top+" L"+(rx-tail)+" "+(top+rh/2)+" L"+rx+" "+bot+" Z",fill:endCol}));
+    g.appendChild(el("path",{d:"M"+rxr+" "+top+" L"+(rxr+tail)+" "+(top+rh/2)+" L"+rxr+" "+bot+" Z",fill:endCol}));
+
+    // corps du ruban : RAYURES assorties au store (clip rectangulaire)
+    var id = "ribbonClip"+(clipSeq++);
+    var clip = el("clipPath",{id:id});
+    clip.appendChild(el("rect",{x:rx,y:top,width:rw,height:rh,rx:8}));
+    g.appendChild(clip);
+    var stripesG = el("g",{"clip-path":"url(#"+id+")"});
+    var nS = Math.max(6, Math.round(rw/26)), sw = rw/nS;
+    for(var i=0;i<nS;i++){
+      stripesG.appendChild(el("rect",{x:rx+i*sw,y:top,width:sw+0.6,height:rh,
+        fill:(i%2===0)?awnA:awnB}));
+    }
+    // léger voile crème par-dessus pour que le texte reste lisible sur les rayures
+    stripesG.appendChild(el("rect",{x:rx,y:top,width:rw,height:rh,
+      fill:night?"rgba(30,16,10,.34)":"rgba(255,250,246,.42)"}));
+    g.appendChild(stripesG);
+
+    // liseré doré du bandeau
+    g.appendChild(el("rect",{x:rx,y:top,width:rw,height:rh,rx:8,
+      fill:"none",stroke:"url(#brassA)","stroke-width":3}));
+    g.appendChild(el("rect",{x:rx+2.4,y:top+2.4,width:rw-4.8,height:rh-4.8,rx:6,
+      fill:"none",stroke:night?"#8a5a1e":"#fff6e2","stroke-width":1.1,opacity:.7}));
+
+    // BORD BAS festonné (petites arches) — dépasse juste sous le bandeau
+    var scallop = "";
+    var nSc = Math.max(5, Math.round(rw/22)), scw = rw/nSc;
+    for(var s=0;s<nSc;s++){
+      var sx0 = rx + s*scw;
+      scallop += "M"+sx0+" "+bot+" Q "+(sx0+scw/2)+" "+(bot+9)+" "+(sx0+scw)+" "+bot+" ";
+    }
+    g.appendChild(el("path",{d:scallop,fill:"none",stroke:"url(#brassA)","stroke-width":2.2,opacity:.9}));
+
+    // TEXTE du nom (· date), au féminin, lisible
+    var t = el("text",{x:0,y:top+rh/2+0.5,"text-anchor":"middle","dominant-baseline":"middle",
+      "font-family":"Bricolage Grotesque, sans-serif","font-weight":700,"font-size":14.5,
+      fill:night?"#fff3d8":"#7a3320"});
+    t.textContent = txt;
+    g.appendChild(t);
+    return g;
+  }
+
+  // petite LANTERNE dorée suspendue (vitrines de nuit)
+  function makeLantern(x, y, scale){
+    scale = scale || 1;
+    var g = el("g",{"class":"lantern", transform:"translate("+x+" "+y+")"});
+    var halo = el("circle",{cx:0,cy:0,r:34*scale,fill:"url(#lanternGlow)","class":"lanternHalo"});
+    g.appendChild(halo);
+    var body = el("g",{transform:"scale("+scale+")"});
+    body.appendChild(el("path",{d:"M-8 -16 q8 -12 16 0",fill:"none",stroke:"#9a5d28","stroke-width":2.4,"stroke-linecap":"round"}));
+    body.appendChild(el("rect",{x:-2,y:-20,width:4,height:6,rx:1,fill:"#9a5d28"}));
+    body.appendChild(el("path",{d:"M-11 -14 L11 -14 L7 -19 L-7 -19 Z",fill:"#9a5d28"}));
+    body.appendChild(el("rect",{x:-9,y:-14,width:18,height:22,rx:4,fill:"url(#windowFill)",stroke:"#9a5d28","stroke-width":1.6}));
+    body.appendChild(el("ellipse",{cx:0,cy:-2,rx:3,ry:6,fill:"#fff7df"}));
+    body.appendChild(el("path",{d:"M-9 8 L9 8 L6 12 L-6 12 Z",fill:"#9a5d28"}));
+    g.appendChild(body);
+    g.__halo = halo;
+    return g;
+  }
+
+  // ---------- 4 vitrines de JOUR (ateliers) — palette variée mais cohérente ----------
+  //  hubCol = couleur du moyeu de roue (rose/orange) — petit détail qui varie d'un wagon à l'autre.
+  var DAY_SKINS = [
+    {bodyGrad:"#fb6ba6", awnA:"url(#awnRose)",   awnB:"url(#awnOrange)", hubCol:"#fb6ba6"},
+    {bodyGrad:"#f8742f", awnA:"url(#awnOrange)", awnB:"url(#awnRose)",   hubCol:"#f8742f"},
+    {bodyGrad:"#f4b63e", awnA:"url(#awnRose)",   awnB:"url(#awnOrange)", hubCol:"#fb6ba6"},
+    {bodyGrad:"#fb7a72", awnA:"url(#awnOrange)", awnB:"url(#awnRose)",   hubCol:"#f8742f"}
+  ];
+  function buildAtelierVitrine(at, i){
+    var sk = DAY_SKINS[i%DAY_SKINS.length];
+    return buildVitrine({
+      photo:at.photo, alt:at.title, sign:at.sign, dateShort:at.date_short,
+      bodyGrad:sk.bodyGrad, awnA:sk.awnA, awnB:sk.awnB, hubCol:sk.hubCol, night:false, warm:false
+    });
+  }
+  // ---------- 3 vitrines de NUIT (souvenirs) — illuminées ----------
+  // CORRECTION D : photos des souvenirs en COULEURS NATURELLES (warm:false → aucun filtre CSS posé sur l'image).
+  function buildSouvenirVitrine(sv){
+    return buildVitrine({
+      photo:sv.cover, alt:sv.title+" — souvenirs", sign:sv.editionName, dateShort:"",
+      bodyGrad:"#b07a32", awnA:"url(#awnNightA)", awnB:"url(#awnNightB)", night:true, warm:false
+    });
+  }
+
+  // ============================================================
+  //  USINE À TRAIN — autonome (glisser-qui-reste + clic)
+  // ============================================================
+  function createTrain(opts){
+    var convoy = document.getElementById(opts.convoyId);
+    var rail = opts.rail;
+    var DIR = opts.dir;
+    var data = opts.data;
+
+    var vehicles = [];
+    var order = [];
+    var GAP = 26;
+    opts.order.forEach(function(o){ order.push(o); });
+
+    var totalWidth = 0;
+    order.forEach(function(o){ totalWidth += o.half*2 + GAP; });
+    var cx = 0;
+    order.forEach(function(o){ cx += o.half; o.cx = cx; cx += o.half + GAP; });
+
+    order.forEach(function(o){
+      if(o.kind==="wagon"){
+        o.g.classList.add("wagon");
+        o.g.setAttribute("tabindex","0");
+        o.g.setAttribute("role","button");
+        var d = data[o.a];
+        var aria = d.kind==="souvenir"
+          ? (d.title + " — souvenirs. Cliquer pour ouvrir le diaporama des photos.")
+          : (d.title + " — " + d.date + ". Cliquer pour voir la fiche et réserver.");
+        o.g.setAttribute("aria-label", aria);
+        var hit = el("rect",{x:-o.half-10,y:-220,width:o.half*2+20,height:262,
+          fill:"transparent","pointer-events":"all"});
+        hit.dataset.hit="1";
+        o.g.appendChild(hit);
+        var foc = el("rect",{x:-o.half-6,y:-216,width:o.half*2+12,height:254,rx:18,
+          fill:"none",stroke:(opts.labelTone==="past"?"#f4b63e":"#e84e8c"),"stroke-width":4,
+          "stroke-dasharray":"10 8","class":"wfocus"});
+        o.g.appendChild(foc);
+      }
+      convoy.appendChild(o.g);
+      vehicles.push({g:o.g, kind:o.kind, dataIndex:o.a, half:o.half, offset:0});
+    });
+
+    var locoIndex = (DIR>0) ? (order.length-1) : 0;
+    var locoLocalCX = order[locoIndex].cx;
+    var WHEEL_R = 20;
+    var rollDist = 0;
+
+    function placeConvoy(headX, bobPhase){
+      vehicles.forEach(function(v, i){
+        var o = order[i];
+        var x;
+        if(DIR>0){ x = headX - (locoLocalCX - o.cx); }
+        else{ x = headX + (o.cx - locoLocalCX); }
+        var y = rail.y(x);
+        var slope = rail.slope(x);
+        var bob = prefersReduced ? 0 : Math.sin(bobPhase + i*0.7) * 2.0;
+        var lift = v.liftProxy ? v.liftProxy.v : 0;
+        var mir = v.g.__mirror ? " scale(-1 1)" : "";
+        v.g.setAttribute("transform",
+          "translate("+x.toFixed(2)+" "+(y - 26 + bob - lift).toFixed(2)+") rotate("+slope.toFixed(2)+")"+mir);
+        v.__x = x; v.__y = y - 26 + bob - lift;
+        if(v.__groundGlow){
+          v.__groundGlow.setAttribute("cx", x.toFixed(1));
+          v.__groundGlow.setAttribute("cy", (rail.y(x)+18).toFixed(1));
+        }
+      });
+      var deg = (rollDist / WHEEL_R) * 180 / Math.PI * (DIR>0?1:-1);
+      vehicles.forEach(function(v){
+        if(v.g.__wheels) v.g.__wheels.forEach(function(sp){
+          var base = sp.getAttribute("transform").replace(/ rotate\([^)]*\)/,"");
+          sp.setAttribute("transform", base + " rotate("+deg.toFixed(1)+")");
+        });
+        // bielle d'accouplement de la loco : suit la rotation des roues
+        if(v.g.__coupling){
+          var cpl = v.g.__coupling;
+          var ang = deg*Math.PI/180;
+          var dx = Math.cos(ang)*cpl.cr, dy = Math.sin(ang)*cpl.cr;
+          cpl.bar.setAttribute("transform","translate("+dx.toFixed(1)+" "+dy.toFixed(1)+")");
+          cpl.rod.childNodes[1].setAttribute("transform","translate("+dx.toFixed(1)+" "+dy.toFixed(1)+")");
+          cpl.rod.childNodes[2].setAttribute("transform","translate("+dx.toFixed(1)+" "+dy.toFixed(1)+")");
+        }
+      });
+      positionLabels();
+    }
+
+    // lueurs chaudes projetées au sol (train de nuit uniquement)
+    if(opts.labelTone==="past"){
+      vehicles.forEach(function(v){
+        var glow = el("ellipse",{rx:v.half*0.9,ry:24,fill:"url(#groundGlow)",opacity:.55});
+        groundGlows.appendChild(glow);
+        v.__groundGlow = glow;
+      });
+    }
+
+    // ----- ÉTIQUETTES HTML -----
+    vehicles.forEach(function(v){
+      if(v.kind!=="wagon") return;
+      var d = data[v.dataIndex];
+      var isPast = d.kind==="souvenir";
+      var dom = document.createElement("div");
+      dom.className="wlabel";
+      dom.style.cssText="position:absolute;left:0;top:0;transform:translate(-50%,-100%);"+
+        "pointer-events:none;opacity:0;transition:opacity .25s ease, transform .3s cubic-bezier(.2,.8,.2,1);"+
+        "transform-origin:bottom center;will-change:transform,opacity;z-index:20;";
+      var badgeGrad = isPast
+        ? "linear-gradient(95deg,#e1a14c,#c9883f)"
+        : "linear-gradient(95deg,var(--rose),var(--orange))";
+      var badgeTxt = isPast ? "Voir le diaporama" : "Cliquez pour réserver";
+      var cardBg = isPast ? "rgba(48,30,34,.82)" : "var(--glass-strong)";
+      var cardBorder = isPast ? "rgba(244,182,62,.34)" : "rgba(58,42,46,.10)";
+      var titleCol = isPast ? "var(--creme)" : "var(--ink)";
+      var subCol = isPast ? "rgba(255,250,246,.78)" : "var(--ink-soft)";
+      dom.innerHTML =
+        '<div style="background:'+cardBg+';border:1px solid '+cardBorder+';'+
+        'border-radius:16px;padding:10px 14px;min-width:170px;max-width:240px;text-align:center;'+
+        'box-shadow:0 16px 34px rgba(122,58,40,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);">'+
+          '<div style="font-family:Fraunces,serif;font-weight:500;font-size:1.04rem;line-height:1.15;color:'+titleCol+';">'+d.title+'</div>'+
+          '<div style="font-family:Space Grotesk,sans-serif;font-size:.78rem;color:'+subCol+';margin:3px 0 8px;">'+(isPast?d.eyebrow:d.date)+'</div>'+
+          '<span class="wbadge" style="display:inline-flex;align-items:center;gap:6px;font-family:Bricolage Grotesque,sans-serif;'+
+          'font-weight:700;font-size:.74rem;color:#fff;background:'+badgeGrad+';'+
+          'padding:5px 12px;border-radius:999px;">'+
+            '<span style="width:7px;height:7px;border-radius:999px;background:#fff;display:inline-block;"></span>'+badgeTxt+'</span>'+
+        '</div>'+
+        '<div style="width:14px;height:14px;background:'+cardBg+';transform:translateX(-50%) rotate(45deg);'+
+        'margin:-7px auto 0;border-right:1px solid '+cardBorder+';border-bottom:1px solid '+cardBorder+';"></div>';
+      labelsEl.appendChild(dom);
+      v.__label=dom;
+      var badge = dom.querySelector(".wbadge");
+      if(hasGSAP && !prefersReduced){
+        gsap.to(badge,{scale:1.05, duration:1, repeat:-1, yoyo:true, ease:"sine.inOut"});
+      }
+    });
+
+    function positionLabels(){
+      vehicles.forEach(function(v){
+        if(!v.__label) return;
+        if(v.__label.style.opacity==="0" && !v.__hover) return;
+        var topY = v.__y - 182;
+        var pt = svgToScreen(v.__x, topY);
+        v.__label.style.left = pt.x+"px";
+        v.__label.style.top  = pt.y+"px";
+      });
+    }
+
+    function setHover(v, on){
+      v.__hover = on;
+      if(!v.liftProxy) v.liftProxy = {v:0};
+      if(hasGSAP && !prefersReduced){
+        gsap.to(v.liftProxy, {v: on?22:0, duration:.45, ease:"power3.out"});
+        var sh = v.g.querySelector("ellipse");
+        if(sh) gsap.to(sh, {attr:{rx: on? (v.half*0.62):(v.half*0.52), opacity:on?.38:.26}, duration:.45, ease:"power3.out"});
+      } else {
+        v.liftProxy.v = on?18:0;
+      }
+      if(v.__label){
+        v.__label.style.opacity = on ? "1" : "0";
+        v.__label.style.transform = on ? "translate(-50%,-108%)" : "translate(-50%,-100%)";
+        if(on) positionLabels();
+      }
+    }
+    vehicles.forEach(function(v){
+      if(v.kind!=="wagon") return;
+      v.g.addEventListener("mouseenter", function(){ setHover(v,true); });
+      v.g.addEventListener("mouseleave", function(){ setHover(v,false); });
+      v.g.addEventListener("focus", function(){ setHover(v,true); });
+      v.g.addEventListener("blur", function(){ setHover(v,false); });
+      v.g.addEventListener("keydown", function(e){
+        if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openFor(data[v.dataIndex]); }
+      });
+    });
+
+    var REST_HEAD = opts.restHead;
+    var ENTER_OFFSET = -DIR * (totalWidth + 360);
+    var state = { head: REST_HEAD, bob: 0 };
+
+    var minHead, maxHead;
+    var BREATHE = 130;
+    if(DIR>0){
+      minHead = REST_HEAD - totalWidth - 80;
+      maxHead = REST_HEAD + BREATHE + 60;
+    }else{
+      minHead = REST_HEAD - BREATHE - 60;
+      maxHead = REST_HEAD + totalWidth + 80;
+    }
+    function clamp(v){ return Math.max(minHead, Math.min(maxHead, v)); }
+
+    var ambient = { dir: DIR, center: REST_HEAD, amp: BREATHE };
+    var ambientFrozen = false;
+    var ambientPausedByUser = false;
+    var resumeTO = null;
+
+    function ambientStep(){
+      if(ambientFrozen || ambientPausedByUser || prefersReduced || GLOBAL_PAUSE) return;
+      var rawTarget = ambient.center + ambient.dir*ambient.amp;
+      var target = Math.max(minHead+4, Math.min(maxHead-4, rawTarget));
+      var next = state.head + (target - state.head)*0.012;
+      if(Math.abs(target - next) < 4){ ambient.dir *= -1; }
+      state.head = clamp(next);
+    }
+    function pauseAmbient(frozen){ ambientFrozen = !!frozen; if(frozen) ambient.center = state.head; }
+    function recenterAmbient(){ ambient.center = state.head; }
+    function scheduleResume(){
+      if(resumeTO) clearTimeout(resumeTO);
+      if(ambientPausedByUser || prefersReduced) return;
+      resumeTO = setTimeout(function(){ recenterAmbient(); ambientFrozen=false; }, 4000);
+    }
+
+    function render(){ rollDist = state.head*DIR; placeConvoy(state.head, state.bob); }
+
+    var locoVeh = vehicles[locoIndex];
+    var smokeInfo = locoVeh.g.__smoke;
+
+    function buildSmoke(){
+      var puffs=[];
+      for(var i=0;i<8;i++){
+        var c = el("circle",{r:8,fill:smokeInfo.grad,opacity:0});
+        convoy.appendChild(c);
+        puffs.push({el:c, t:i/8});
+      }
+      return puffs;
+    }
+
+    var DRAG_THRESHOLD = 6, TAP_TIME = 350;
+    var pointer = { id:null, active:false, moved:false, startX:0, startY:0, lastX:0, startT:0, wagonV:null, captured:false };
+
+    function wagonFromTarget(t){
+      if(!t || !t.closest) return null;
+      var g = t.closest(".wagon");
+      if(!g) return null;
+      for(var i=0;i<vehicles.length;i++){ if(vehicles[i].g===g) return vehicles[i]; }
+      return null;
+    }
+
+    function onPointerDown(e){
+      if(modalOpen) return;
+      if(e.button!==undefined && e.button!==0 && e.pointerType==="mouse") return;
+      var wv = wagonFromTarget(e.target);
+      if(!wv){
+        var midY = window.innerHeight/2;
+        var inMyZone = (opts.labelTone==="past") ? (e.clientY > midY) : (e.clientY <= midY);
+        if(!inMyZone) return;
+      }
+      pointer.id = e.pointerId; pointer.active = true; pointer.moved = false;
+      pointer.startX = pointer.lastX = e.clientX; pointer.startY = e.clientY;
+      pointer.startT = (performance&&performance.now)?performance.now():Date.now();
+      pointer.wagonV = wv;
+      onManualInteract();
+      try{ scene.setPointerCapture(e.pointerId); pointer.captured=true; }catch(err){}
+    }
+    function onPointerMove(e){
+      if(!pointer.active || e.pointerId!==pointer.id) return;
+      var totalDx = e.clientX - pointer.startX, totalDy = e.clientY - pointer.startY;
+      if(!pointer.moved && Math.hypot(totalDx, totalDy) > DRAG_THRESHOLD) pointer.moved = true;
+      if(pointer.moved){
+        var dx = e.clientX - pointer.lastX; pointer.lastX = e.clientX;
+        state.head = clamp(state.head + dx*1.15);
+        if(!hasGSAP || prefersReduced) render();
+      }
+    }
+    function onPointerEnd(e){
+      if(!pointer.active || (e && e.pointerId!==pointer.id)) return;
+      var dt = ((performance&&performance.now)?performance.now():Date.now()) - pointer.startT;
+      var wasTap = !pointer.moved && dt <= TAP_TIME;
+      pointer.active = false;
+      if(pointer.captured){ try{ scene.releasePointerCapture(pointer.id); }catch(err){} pointer.captured=false; }
+      if(wasTap && pointer.wagonV){
+        openFor(data[pointer.wagonV.dataIndex]);
+      } else {
+        recenterAmbient(); scheduleResume();
+      }
+      pointer.wagonV = null;
+    }
+    function onPointerCancel(e){
+      if(!pointer.active) return;
+      pointer.active=false;
+      if(pointer.captured){ try{ scene.releasePointerCapture(pointer.id); }catch(err){} pointer.captured=false; }
+      recenterAmbient(); scheduleResume(); pointer.wagonV=null;
+    }
+
+    function onManualInteract(){ pauseAmbient(true); scheduleResume(); }
+
+    function nudge(dir){
+      onManualInteract();
+      state.head = clamp(state.head + dir*80);
+      if(!hasGSAP || prefersReduced) render();
+    }
+
+    return {
+      state:state, render:render, ambientStep:ambientStep,
+      onPointerDown:onPointerDown, onPointerMove:onPointerMove,
+      onPointerEnd:onPointerEnd, onPointerCancel:onPointerCancel,
+      nudge:nudge, vehicles:vehicles, locoVeh:locoVeh, buildSmoke:buildSmoke,
+      pauseAmbient:pauseAmbient, recenterAmbient:recenterAmbient, scheduleResume:scheduleResume,
+      setUserPaused:function(p){
+        ambientPausedByUser=p;
+        if(!p){ recenterAmbient(); ambientFrozen=false; if(resumeTO) clearTimeout(resumeTO); }
+      },
+      isPointerActive:function(){ return pointer.active; },
+      enterFrom:function(){
+        state.head = REST_HEAD + ENTER_OFFSET;
+        ambientFrozen = true;
+        if(hasGSAP && !prefersReduced){
+          gsap.to(state, { head: REST_HEAD, duration: 2.4, ease:"power3.out",
+            onComplete:function(){ ambient.center=REST_HEAD; ambient.dir=DIR; ambientFrozen=false; } });
+        }else{
+          state.head = REST_HEAD; ambient.center=REST_HEAD; ambientFrozen=false;
+        }
+      },
+      restAt:function(){ state.head = REST_HEAD; ambient.center=REST_HEAD; ambientFrozen=false; }
+    };
+  }
+
+  var svgPoint = scene.createSVGPoint();
+  function svgToScreen(x,y){
+    svgPoint.x=x; svgPoint.y=y;
+    var ctm = scene.getScreenCTM();
+    if(!ctm) return {x:0,y:0};
+    var p = svgPoint.matrixTransform(ctm);
+    return {x:p.x, y:p.y};
+  }
+
+  // ============================================================
+  //  ROUTAGE : atelier -> FICHE ; souvenir -> DIAPORAMA plein écran
+  // ============================================================
+  var modalOpen = false;
+  var lastFocus = null;
+  function openFor(d){
+    if(d.kind==="souvenir") openDia(d);
+    else openBloom(d);
+  }
+
+  // ------------------------------------------------------------
+  //  FICHE ATELIER (éclosion plein écran, inchangée)
+  // ------------------------------------------------------------
+  var bloom = document.getElementById("bloom");
+  var bloomBg = document.getElementById("bloomBg");
+  var bloomHero = document.getElementById("bloomHero");
+  var bloomHeroImg = document.getElementById("bloomHeroImg");
+  var bloomPetals = document.getElementById("bloomPetals");
+  var bloomPanel = document.getElementById("bloomPanel");
+  var bloomStrip = document.getElementById("bloomStrip");
+
+  function buildBloomPetals(){
+    bloomPetals.innerHTML="";
+    var cols=["#fb6ba6","#f8742f","#f4b63e","#fba6c6","#ffb27e","#ffd76a"];
+    var nodes=[];
+    for(var i=0;i<22;i++){
+      var x=420+Math.random()*560, y=Math.random()*700;
+      var col=cols[i%cols.length];
+      var g=el("g",{transform:"translate("+x+" "+y+") scale(0)",opacity:"0"});
+      var isSun = Math.random()>0.7;
+      if(isSun){
+        var rays=el("g",{});
+        for(var r=0;r<8;r++) rays.appendChild(el("line",{x1:0,y1:-12,x2:0,y2:-20,stroke:col,"stroke-width":3,"stroke-linecap":"round",transform:"rotate("+(r*45)+")"}));
+        g.appendChild(rays);
+        g.appendChild(el("circle",{r:10,fill:col}));
+      } else {
+        for(var k=0;k<5;k++){
+          var a=k*72;
+          g.appendChild(el("ellipse",{cx:0,cy:-12,rx:7,ry:13,fill:col,opacity:.92,transform:"rotate("+a+")"}));
+        }
+        g.appendChild(el("circle",{r:5,fill:"#fff6e2"}));
+      }
+      bloomPetals.appendChild(g);
+      nodes.push({g:g, x:x, y:y, sc:0.5+Math.random()*0.9, rot:Math.random()*360});
+    }
+    return nodes;
+  }
+
+  function openBloom(d){
+    modalOpen=true; lastFocus=document.activeElement;
+    var tEl=document.getElementById("bloomTitle");
+    if(d.titleEm && d.title.indexOf(d.titleEm)>-1) tEl.innerHTML=d.title.replace(d.titleEm,"<em>"+d.titleEm+"</em>");
+    else tEl.textContent=d.title;
+    document.getElementById("bloomLead").innerHTML=d.lead;
+    var meta=document.getElementById("bloomMeta"); meta.innerHTML="";
+    d.meta.forEach(function(m){ var c=document.createElement("span"); c.className="bloom__chip"; c.textContent=m; meta.appendChild(c); });
+    var act=document.getElementById("bloomActions"); act.innerHTML="";
+    var a=document.createElement("a"); a.className="btn btn--primary"; a.href=d.cta.href;
+    a.innerHTML="🎟️ "+d.cta.label; act.appendChild(a);
+    var bb=document.createElement("button"); bb.className="btn btn--ghost"; bb.type="button";
+    bb.textContent="Fermer"; bb.addEventListener("click",closeBloom); act.appendChild(bb);
+
+    bloomHeroImg.src = d.gallery[0]; bloomHeroImg.alt = d.title+" — photo principale";
+    bloomStrip.innerHTML="";
+    d.gallery.forEach(function(src,i){
+      var th=document.createElement("button"); th.type="button"; th.className="bloom__thumb"+(i===0?" is-active":"");
+      th.setAttribute("aria-label",d.title+" — photo "+(i+1));
+      var im=document.createElement("img"); im.src=src; im.alt=""; im.loading="lazy"; th.appendChild(im);
+      th.addEventListener("click",function(){
+        bloomHeroImg.src=src;
+        bloomStrip.querySelectorAll(".bloom__thumb").forEach(function(n){ n.classList.remove("is-active"); });
+        th.classList.add("is-active");
+        if(hasGSAP) gsap.fromTo(bloomHero,{opacity:.4,scale:1.06},{opacity:1,scale:1,duration:.6,ease:"power3.out"});
+      });
+      bloomStrip.appendChild(th);
+    });
+
+    var petals = buildBloomPetals();
+    bloom.classList.add("open");
+    document.getElementById("bloomClose").focus();
+
+    if(hasGSAP && !prefersReduced){
+      gsap.set(bloomHero,{opacity:0,scale:1.12});
+      gsap.set(bloomPanel,{opacity:0,x:-30});
+      gsap.set(bloomBg,{opacity:0});
+      var tl=gsap.timeline();
+      tl.to(bloomBg,{opacity:1,duration:.35,ease:"power2.out"},0)
+        .to(bloomHero,{opacity:1,scale:1,duration:.9,ease:"power3.out"},0.05)
+        .to(bloomPanel,{opacity:1,x:0,duration:.7,ease:"back.out(1.3)"},0.25);
+      petals.forEach(function(p,i){
+        gsap.fromTo(p.g,{attr:{transform:"translate("+p.x+" "+p.y+") scale(0) rotate(0)"}},
+          {duration:.7,delay:0.1+i*0.012,ease:"back.out(1.7)",
+           attr:{transform:"translate("+p.x+" "+p.y+") scale("+p.sc+") rotate("+p.rot+")"}});
+        gsap.to(p.g,{opacity:.95,duration:.4,delay:0.1+i*0.012,ease:"power1.out"});
+        gsap.to(p.g,{duration:3+Math.random()*2,delay:1+Math.random(),repeat:-1,yoyo:true,ease:"sine.inOut",
+          y:"+="+(8+Math.random()*14),x:"+="+((Math.random()*20-10))});
+      });
+      gsap.to(bloomStrip.querySelectorAll(".bloom__thumb"),
+        {opacity:1,y:0,scale:1,duration:.5,stagger:0.07,ease:"back.out(1.4)",delay:0.35});
+    } else {
+      bloomBg.style.opacity=1; bloomHero.style.opacity=1; bloomHero.style.transform="none";
+      bloomPanel.style.opacity=1;
+      petals.forEach(function(p){ p.g.setAttribute("opacity",".9"); p.g.setAttribute("transform","translate("+p.x+" "+p.y+") scale("+p.sc+") rotate("+p.rot+")"); });
+      bloomStrip.querySelectorAll(".bloom__thumb").forEach(function(n){ n.style.opacity=1; n.style.transform="none"; });
+    }
+    freezeAll(true);
+  }
+  function closeBloom(){
+    modalOpen=false;
+    if(hasGSAP && !prefersReduced){
+      gsap.to(bloom,{opacity:0,duration:.32,ease:"power2.in",onComplete:function(){
+        bloom.classList.remove("open"); bloom.style.opacity="";
+      }});
+    } else { bloom.classList.remove("open"); }
+    freezeAll(false);
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.getElementById("bloomClose").addEventListener("click", closeBloom);
+  bloomBg.addEventListener("click", closeBloom);
+
+  // ------------------------------------------------------------
+  //  DIAPORAMA SOUVENIR — UNE photo plein écran (nette + flou derrière)
+  // ------------------------------------------------------------
+  var dia = document.getElementById("dia");
+  var diaBlur = document.getElementById("diaBlur");
+  var diaVeil = document.getElementById("diaVeil");
+  var diaHead = document.getElementById("diaHead");
+  var diaFoot = document.getElementById("diaFoot");
+  var diaFrame = document.getElementById("diaFrame");
+  var diaPhoto = document.getElementById("diaPhoto");
+  var diaCaption = document.getElementById("diaCaption");
+  var diaNum = document.getElementById("diaNum");
+  var diaDots = document.getElementById("diaDots");
+  var diaProgress = document.getElementById("diaProgress");
+  var diaPlayBtn = document.getElementById("diaPlay");
+  var diaPlayIcon = document.getElementById("diaPlayIcon");
+  var diaPlayLbl = document.getElementById("diaPlayLbl");
+
+  var diaState = null, diaOpen = false, diaRaf = null;
+
+  function titleHTMLfor(d){
+    if(d.titleEm && d.title.indexOf(d.titleEm)>-1) return d.title.replace(d.titleEm,"<em>"+d.titleEm+"</em>");
+    return d.title;
+  }
+
+  function openDia(d){
+    modalOpen=true; diaOpen=true; lastFocus=document.activeElement;
+    var imgs = [d.cover].concat(d.gallery);
+    document.getElementById("diaKicker").textContent = d.eyebrow;
+    document.getElementById("diaTitle").innerHTML = titleHTMLfor(d);
+
+    // points (un par photo)
+    diaDots.innerHTML="";
+    imgs.forEach(function(src,i){
+      var b=document.createElement("button"); b.type="button"; b.className="dia__dot"+(i===0?" is-active":"");
+      b.setAttribute("aria-label","Aller à la photo "+(i+1));
+      b.addEventListener("click",function(){ diaUserAction(); diaGo(i); });
+      diaDots.appendChild(b);
+    });
+
+    diaState = { d:d, imgs:imgs, idx:0, n:imgs.length, playing:!prefersReduced,
+                 DURATION:4600, since:0 };
+
+    setDiaSlide(0, true);
+    setDiaPlaying(!prefersReduced);
+
+    dia.classList.add("open");
+    diaClose.focus();
+
+    if(hasGSAP && !prefersReduced){
+      gsap.set([diaVeil,diaBlur],{opacity:0});
+      gsap.set(diaHead,{opacity:0,y:-12});
+      gsap.set(diaFoot,{opacity:0,y:12});
+      gsap.set(diaFrame,{opacity:0,scale:.96});
+      var tl=gsap.timeline();
+      tl.to(diaVeil,{opacity:1,duration:.4,ease:"power2.out"},0)
+        .to(diaBlur,{opacity:1,duration:.6,ease:"power2.out"},0)
+        .to(diaHead,{opacity:1,y:0,duration:.5,ease:"power2.out"},.12)
+        .to(diaFrame,{opacity:1,scale:1,duration:.6,ease:"power3.out"},.18)
+        .to(diaFoot,{opacity:1,y:0,duration:.5,ease:"power2.out"},.24);
+    } else {
+      diaVeil.style.opacity=1; diaBlur.style.opacity=1;
+      diaHead.style.opacity=1; diaFrame.style.opacity=1; diaFoot.style.opacity=1;
+    }
+
+    // boucle de défilement auto (douce, via rAF — désactivée si reduced-motion)
+    var last = (performance&&performance.now)?performance.now():Date.now();
+    function tick(now){
+      if(!diaOpen || !diaState){ return; }
+      var dt = now - last; last = now;
+      if(diaState.playing && !prefersReduced){
+        diaState.since += dt;
+        var p = Math.min(1, diaState.since/diaState.DURATION);
+        diaProgress.style.width = (p*100).toFixed(1)+"%";
+        if(diaState.since >= diaState.DURATION){ diaState.since=0; diaGo(diaState.idx+1); }
+      } else {
+        diaProgress.style.width = "0%";
+      }
+      diaRaf = requestAnimationFrame(tick);
+    }
+    if(diaRaf) cancelAnimationFrame(diaRaf);
+    diaRaf = requestAnimationFrame(tick);
+
+    freezeAll(true);
+  }
+
+  function setDiaSlide(i, instant){
+    var st=diaState; if(!st) return;
+    st.idx = (i + st.n) % st.n;
+    var src = st.imgs[st.idx];
+    diaPhoto.src = src;
+    diaPhoto.alt = st.d.title+" — photo "+(st.idx+1)+" sur "+st.n;
+    diaBlur.style.backgroundImage = "url('"+src+"')";
+    // compteur sur sa ligne ; légende (titre de l'édition) sur la sienne -> aucune redite
+    diaCaption.textContent = st.d.title;
+    diaNum.textContent = (st.idx+1)+" / "+st.n;
+    var dots = diaDots.querySelectorAll(".dia__dot");
+    dots.forEach(function(dt,k){ dt.classList.toggle("is-active", k===st.idx); });
+    st.since = 0;
+  }
+
+  function diaGo(i){
+    var st=diaState; if(!st) return;
+    var to = (i + st.n) % st.n;
+    if(to===st.idx){ return; }
+    var dir = (to>st.idx) ? 1 : -1;
+    if(st.idx===st.n-1 && to===0) dir=1;
+    else if(st.idx===0 && to===st.n-1) dir=-1;
+    if(hasGSAP && !prefersReduced){
+      gsap.killTweensOf(diaFrame);
+      gsap.to(diaFrame,{opacity:0,x:-dir*36,duration:.26,ease:"power2.in",onComplete:function(){
+        setDiaSlide(to,true);
+        gsap.fromTo(diaFrame,{opacity:0,x:dir*36,scale:.98},{opacity:1,x:0,scale:1,duration:.5,ease:"power3.out"});
+      }});
+      gsap.fromTo(diaBlur,{opacity:.35},{opacity:1,duration:.7,ease:"power2.out"});
+    } else {
+      setDiaSlide(to,true);
+    }
+  }
+
+  function setDiaPlaying(on){
+    if(!diaState) return;
+    if(prefersReduced) on=false;
+    diaState.playing=on; diaState.since=0;
+    diaPlayBtn.setAttribute("aria-label", on?"Mettre en pause le défilement automatique":"Reprendre le défilement automatique");
+    diaPlayLbl.textContent = on?"Pause":"Lecture";
+    diaPlayIcon.innerHTML = on
+      ? '<rect x="6" y="5" width="4" height="14" rx="1.4"/><rect x="14" y="5" width="4" height="14" rx="1.4"/>'
+      : '<path d="M7 5 L19 12 L7 19 Z"/>';
+    if(!on) diaProgress.style.width="0%";
+  }
+  function diaUserAction(){ if(diaState && diaState.playing) setDiaPlaying(false); }
+
+  function closeDia(){
+    modalOpen=false; diaOpen=false;
+    if(diaRaf){ cancelAnimationFrame(diaRaf); diaRaf=null; }
+    if(hasGSAP && !prefersReduced){
+      gsap.to(dia,{opacity:0,duration:.32,ease:"power2.in",onComplete:function(){
+        dia.classList.remove("open"); dia.style.opacity=""; diaState=null;
+      }});
+    } else { dia.classList.remove("open"); diaState=null; }
+    freezeAll(false);
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  var diaClose = document.getElementById("diaClose");
+  diaClose.addEventListener("click", closeDia);
+  document.getElementById("diaPrev").addEventListener("click", function(){ diaUserAction(); diaGo(diaState.idx-1); });
+  document.getElementById("diaNext").addEventListener("click", function(){ diaUserAction(); diaGo(diaState.idx+1); });
+  diaPlayBtn.addEventListener("click", function(){ setDiaPlaying(!diaState.playing); });
+  // clic sur le fond (flou/voile) ferme le diaporama
+  diaBlur.addEventListener("click", closeDia);
+  diaVeil.addEventListener("click", closeDia);
+
+  // ------------------------------------------------------------
+  //  CLAVIER GLOBAL pour les modales (fiche + diaporama)
+  // ------------------------------------------------------------
+  document.addEventListener("keydown", function(e){
+    if(diaOpen){
+      if(e.key==="Escape"){ e.preventDefault(); closeDia(); return; }
+      if(e.key==="ArrowRight"){ e.preventDefault(); diaUserAction(); diaGo(diaState.idx+1); return; }
+      if(e.key==="ArrowLeft"){ e.preventDefault(); diaUserAction(); diaGo(diaState.idx-1); return; }
+      if(e.key==="Tab"){
+        var fd = Array.prototype.slice.call(dia.querySelectorAll('button:not([disabled])'))
+          .filter(function(n){ return n.offsetParent!==null; });
+        if(!fd.length) return;
+        var firstD=fd[0], lastD=fd[fd.length-1];
+        if(e.shiftKey && document.activeElement===firstD){ e.preventDefault(); lastD.focus(); }
+        else if(!e.shiftKey && document.activeElement===lastD){ e.preventDefault(); firstD.focus(); }
+        else if(!dia.contains(document.activeElement)){ e.preventDefault(); firstD.focus(); }
+      }
       return;
     }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+    if(!modalOpen) return;
+    if(e.key==="Escape"){
+      e.preventDefault();
+      if(bloom.classList.contains("open")) closeBloom();
+      return;
+    }
+    if(e.key==="Tab"){
+      var card = bloom;
+      var f = Array.prototype.slice.call(card.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])'))
+        .filter(function(n){ return n.offsetParent!==null; });
+      if(!f.length) return;
+      var first=f[0], last=f[f.length-1];
+      if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      else if(!card.contains(document.activeElement)){ e.preventDefault(); first.focus(); }
+    }
+  });
+
+  // ============================================================
+  //  CRÉATION DES DEUX TRAINS
+  // ============================================================
+  // -- HAUT (JOUR) : ateliers à venir, loco mène à DROITE (DIR=+1) --
+  var topLoco  = buildLoco();
+  var topMiroir= buildAtelierVitrine(ATELIERS[0],0);
+  var topTote  = buildAtelierVitrine(ATELIERS[1],1);
+  var topEvent = buildAtelierVitrine(ATELIERS[2],2);
+  var topBoite = buildAtelierVitrine(ATELIERS[3],3);
+  // ORDRE CHRONOLOGIQUE de GAUCHE à DROITE (récupéré de r7-ordre-chronologique) :
+  // miroir 19 juil. (gauche) → tote 25 juil. → éventail 9 août → boîte 23 août (droite, près de la loco)
+  var trainTop = createTrain({
+    convoyId:"convoyTop", rail:RAIL_TOP, data:ATELIERS, dir:1, suffix:"top",
+    labelTone:"future", restHead:1300,
+    order:[
+      {g:topMiroir, kind:"wagon", a:0, half:147},
+      {g:topTote,   kind:"wagon", a:1, half:147},
+      {g:topEvent,  kind:"wagon", a:2, half:147},
+      {g:topBoite,  kind:"wagon", a:3, half:147},
+      {g:topLoco,   kind:"loco",  a:-1, half:158}
+    ]
+  });
+
+  // -- BAS (NUIT) : souvenirs, loco mène à GAUCHE (DIR=-1) --
+  var botLoco = buildLocoMem();
+  var botEd1  = buildSouvenirVitrine(SOUVENIRS[2]); // n°01 -> proche loco gauche
+  var botEd2  = buildSouvenirVitrine(SOUVENIRS[1]); // n°02
+  var botEd3  = buildSouvenirVitrine(SOUVENIRS[0]); // n°03 -> à droite, près du présent
+  var trainBot = createTrain({
+    convoyId:"convoyBot", rail:RAIL_BOT, data:SOUVENIRS, dir:-1, suffix:"bot",
+    labelTone:"past", restHead:300,
+    order:[
+      {g:botLoco, kind:"loco",  a:-1, half:158},
+      {g:botEd1,  kind:"wagon", a:2,  half:147},
+      {g:botEd2,  kind:"wagon", a:1,  half:147},
+      {g:botEd3,  kind:"wagon", a:0,  half:147}
+    ]
+  });
+
+  var trains = [trainTop, trainBot];
+
+  // ============================================================
+  //  GEL GLOBAL (modale ouverte)
+  // ============================================================
+  var GLOBAL_PAUSE = false;
+  function freezeAll(frozen){
+    trains.forEach(function(tr){ tr.pauseAmbient(frozen); if(!frozen){ tr.recenterAmbient(); tr.scheduleResume(); } });
+  }
+
+  // ============================================================
+  //  ROUTAGE DES POINTEURS
+  // ============================================================
+  scene.addEventListener("pointerdown", function(e){ trainTop.onPointerDown(e); trainBot.onPointerDown(e); });
+  scene.addEventListener("pointermove", function(e){ trainTop.onPointerMove(e); trainBot.onPointerMove(e); });
+  scene.addEventListener("pointerup", function(e){ trainTop.onPointerEnd(e); trainBot.onPointerEnd(e); });
+  scene.addEventListener("pointercancel", function(e){ trainTop.onPointerCancel(e); trainBot.onPointerCancel(e); });
+
+  // ---- clavier flèches (déplace les trains hors modale) ----
+  document.addEventListener("keydown", function(e){
+    if(modalOpen) return;
+    if(e.key!=="ArrowRight" && e.key!=="ArrowLeft") return;
+    e.preventDefault();
+    var dir = e.key==="ArrowRight" ? 1 : -1;
+    var ae = document.activeElement;
+    var target = trainTop;
+    if(ae && ae.closest){
+      if(document.getElementById("convoyBot").contains(ae)) target = trainBot;
+      else if(document.getElementById("convoyTop").contains(ae)) target = trainTop;
+      else if(e.shiftKey) target = trainBot;
+    } else if(e.shiftKey){ target = trainBot; }
+    target.nudge(dir);
+  });
+
+  // ---- molette ----
+  scene.addEventListener("wheel", function(e){
+    if(modalOpen) return;
+    var d = Math.abs(e.deltaY)>Math.abs(e.deltaX)? e.deltaY : e.deltaX;
+    if(Math.abs(d)<1) return;
+    e.preventDefault();
+    var target = (e.clientY > window.innerHeight/2) ? trainBot : trainTop;
+    target.nudge(d>0 ? 1 : -1);
+  }, {passive:false});
+
+  // ============================================================
+  //  RESIZE
+  // ============================================================
+  window.addEventListener("resize", function(){ trains.forEach(function(tr){ tr.render(); }); });
+
+  // ============================================================
+  //  BRUME & LUMIÈRE — animation des faisceaux/brume des locos
+  //  (récupéré de r7-loco-brume : les volutes se dissipent dans le phare)
+  // ============================================================
+  function stepBeams(t){
+    trains.forEach(function(tr){
+      var lg = tr.locoVeh && tr.locoVeh.g.__beam;
+      if(!lg || !lg.__mistPuffs) return;
+      lg.__mistPuffs.forEach(function(p){
+        var dx = Math.sin(t*p.sp + p.ph)*p.amp;
+        var dy = Math.cos(t*p.sp*0.8 + p.ph)*p.amp*0.5;
+        p.el.setAttribute("cx",(p.bx+dx).toFixed(1));
+        p.el.setAttribute("cy",(p.by+dy).toFixed(1));
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
-    els.forEach(function (el) { io.observe(el); });
-    setTimeout(function () { els.forEach(function (el) { el.classList.add("is-in"); }); }, 2600);
-  })();
-  </script>
+    });
+  }
 
-  <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT (+ mémoire des positions) ===================== -->
-  <script>
-  (function () {
-    var STORE_KEY = "soleia-deco-pos-ateliers";
-    var items = Array.prototype.slice.call(document.querySelectorAll(".deco-item"));
-    if (!items.length) return;
+  // ============================================================
+  //  DÉMARRAGE
+  // ============================================================
+  var clock = 0;
+  function start(){
+    document.body.classList.remove("nojs");
 
-    var layer = document.querySelector(".deco-layer");
-    function sizeLayer() {
-      if (!layer) return;
-      layer.style.height = "0px";
-      layer.style.height = document.documentElement.scrollHeight + "px";
-    }
-    sizeLayer();
-    window.addEventListener("load", sizeLayer);
-    window.addEventListener("resize", sizeLayer);
-    setTimeout(sizeLayer, 600);
-    setTimeout(sizeLayer, 1600);
-    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(sizeLayer); }
-
-    function loadPos() {
-      try {
-        var raw = window.localStorage.getItem(STORE_KEY);
-        return raw ? (JSON.parse(raw) || {}) : {};
-      } catch (e) { return {}; }
-    }
-    function savePos(map) {
-      try { window.localStorage.setItem(STORE_KEY, JSON.stringify(map)); } catch (e) {}
+    if(prefersReduced || !hasGSAP){
+      trains.forEach(function(tr){ tr.restAt(); tr.render(); });
+      stepSkyLife(0);
+      stepBeams(0);
+      return;
     }
 
-    var positions = loadPos();
-
-    items.forEach(function (el) {
-      var id = el.getAttribute("data-deco-id");
-      var p = id && positions[id];
-      if (p && (p.dx || p.dy)) {
-        el.style.setProperty("--dx", p.dx + "px");
-        el.style.setProperty("--dy", p.dy + "px");
-        el.classList.add("is-moved");
-      }
+    gsap.ticker.add(function(){
+      clock += 0.016;
+      trainTop.ambientStep(); trainBot.ambientStep();
+      stepSkyLife(clock);
+      stepBeams(clock);
+      trainTop.render(); trainBot.render();
     });
 
-    var startX = 0, startY = 0;
-    var baseDx = 0, baseDy = 0;
-    var movedThisDrag = false;
-    var current = null;
+    gsap.to(trainTop.state, { bob: Math.PI*2, duration: 4.2, repeat:-1, ease:"none",
+      modifiers:{ bob:function(v){ return parseFloat(v); } } });
+    gsap.to(trainBot.state, { bob: Math.PI*2, duration: 4.8, repeat:-1, ease:"none",
+      modifiers:{ bob:function(v){ return parseFloat(v); } } });
 
-    function numVar(el, name) {
-      var n = parseFloat(el.style.getPropertyValue(name));
-      return isNaN(n) ? 0 : n;
+    trainTop.enterFrom();
+    gsap.delayedCall(0.25, function(){ trainBot.enterFrom(); });
+
+    gsap.to("#sunCore", { attr:{r:110}, duration:3.2, repeat:-1, yoyo:true, ease:"sine.inOut", transformOrigin:"center" });
+    gsap.to("#moonWrap circle:first-child", { attr:{r:210}, opacity:.9, duration:4.2, repeat:-1, yoyo:true, ease:"sine.inOut" });
+
+    gsap.utils.toArray("#sparks circle").forEach(function(s,i){
+      gsap.to(s,{ attr:{ cy: parseFloat(s.dataset.baseY)-26 }, opacity:0.1, duration:2+Math.random()*2,
+        repeat:-1, yoyo:true, delay:i*0.15, ease:"sine.inOut" });
+    });
+
+    gsap.utils.toArray(".seamDot").forEach(function(s,i){
+      gsap.to(s,{ opacity:0.2, attr:{r:1.2}, duration:1.4+Math.random(), repeat:-1, yoyo:true,
+        delay:i*0.05, ease:"sine.inOut" });
+    });
+
+    // vitrines illuminées qui respirent (train de nuit) : lanternes, halos, lumière intérieure
+    gsap.utils.toArray(".lanternHalo").forEach(function(h,i){
+      gsap.to(h,{ opacity:0.55, attr:{r:"+=6"}, duration:1.6+Math.random()*0.8, repeat:-1, yoyo:true,
+        delay:i*0.2, ease:"sine.inOut" });
+    });
+    gsap.utils.toArray(".winHalo").forEach(function(h,i){
+      gsap.to(h,{ opacity:0.7, duration:2+Math.random(), repeat:-1, yoyo:true, delay:i*0.25, ease:"sine.inOut" });
+    });
+    gsap.utils.toArray(".vitrineLight").forEach(function(h,i){
+      gsap.to(h,{ opacity:0.7, duration:2.4+Math.random()*0.8, repeat:-1, yoyo:true, delay:i*0.3, ease:"sine.inOut" });
+    });
+    gsap.utils.toArray(".locoLampGlow").forEach(function(h){
+      gsap.to(h,{ opacity:0.75, duration:2.4, repeat:-1, yoyo:true, ease:"sine.inOut" });
+    });
+
+    // PHARES qui palpitent doucement (halos) + FAISCEAUX qui ondulent dans la brume
+    gsap.utils.toArray(".beamHalo, .beamHaloOuter").forEach(function(h,i){
+      gsap.to(h,{ opacity:"+=0.18", duration:2+Math.random(), repeat:-1, yoyo:true,
+        ease:"sine.inOut", delay:i*0.2 });
+    });
+    gsap.utils.toArray(".beamCone").forEach(function(b,i){
+      gsap.to(b,{ opacity:"-=0.22", duration:2.6+Math.random()*1.2, repeat:-1, yoyo:true,
+        ease:"sine.inOut", delay:i*0.3 });
+    });
+
+    if(window.__nearFlowers){
+      window.__nearFlowers.forEach(function(f,i){
+        gsap.to(f,{ rotation:3, transformOrigin:"bottom center", duration:2.4+Math.random(),
+          repeat:-1, yoyo:true, ease:"sine.inOut", delay:i*0.2 });
+      });
     }
 
-    function onDown(e) {
-      var el = e.currentTarget;
-      current = el;
-      movedThisDrag = false;
-      baseDx = numVar(el, "--dx");
-      baseDy = numVar(el, "--dy");
-      startX = e.clientX;
-      startY = e.clientY;
-      el.classList.add("is-grabbing");
-      el.classList.add("is-moved");
-      try { el.setPointerCapture(e.pointerId); } catch (err) {}
-    }
+    scheduleShootingStar();
 
-    function onMove(e) {
-      var el = e.currentTarget;
-      if (current !== el) return;
-      var dx = baseDx + (e.clientX - startX);
-      var dy = baseDy + (e.clientY - startY);
-      if (Math.abs(e.clientX - startX) > 2 || Math.abs(e.clientY - startY) > 2) movedThisDrag = true;
-      el.style.setProperty("--dx", dx + "px");
-      el.style.setProperty("--dy", dy + "px");
-    }
-
-    function onUp(e) {
-      var el = e.currentTarget;
-      if (current !== el) return;
-      el.classList.remove("is-grabbing");
-      try { el.releasePointerCapture(e.pointerId); } catch (err) {}
-      if (movedThisDrag) {
-        var id = el.getAttribute("data-deco-id");
-        if (id) {
-          positions[id] = { dx: Math.round(numVar(el, "--dx")), dy: Math.round(numVar(el, "--dy")) };
-          savePos(positions);
+    // ---- FUMÉE des DEUX locos ----
+    trains.forEach(function(tr){
+      var puffs = tr.buildSmoke();
+      var loco = tr.locoVeh;
+      var smk = loco.g.__smoke;
+      puffs.forEach(function(p){
+        function cyclePuff(){
+          var lx = loco.__x || 0, ly = loco.__y || 0;
+          var sx = lx + (loco.g.__mirror ? -smk.x : smk.x);
+          var sy = ly + smk.y;
+          gsap.set(p.el,{ attr:{cx:sx, cy:sy, r:5}, opacity:0 });
+          var drift = (loco.g.__mirror?-1:1)*(18+Math.random()*40);
+          gsap.timeline({onComplete:cyclePuff})
+            .to(p.el,{opacity:.85, attr:{r:12}, duration:.5}, 0)
+            .to(p.el,{ attr:{ cy:"-=140", cx:"+="+drift, r:38 },
+              opacity:0, duration:2.8+Math.random()*1.0, ease:"power1.out" }, 0);
         }
-      }
-      current = null;
-    }
-
-    items.forEach(function (el) {
-      el.addEventListener("pointerdown", onDown);
-      el.addEventListener("pointermove", onMove);
-      el.addEventListener("pointerup", onUp);
-      el.addEventListener("pointercancel", onUp);
-      el.addEventListener("dragstart", function (ev) { ev.preventDefault(); });
+        gsap.delayedCall(p.t*1.8, cyclePuff);
+      });
     });
-  })();
-  </script>
+  }
 
-  <!-- ===================== WebGL — GRADIENT VIVANT QUI SE COURBE VERS LE CURSEUR (identique à l'accueil) ===================== -->
-  <script>
-  (function () {
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
+  // ============================================================
+  //  GO (repli gracieux)
+  // ============================================================
+  try{
+    start();
+    trainTop.render(); trainBot.render();
+  }catch(err){
+    try{ trains.forEach(function(tr){ tr.restAt(); tr.render(); }); }catch(e2){}
+    if(console && console.warn) console.warn("Le Mur de Souvenirs — wagons-vitrines : repli gracieux.", err);
+  }
 
-    var canvas = document.getElementById("gl");
-    if (!canvas) return;
-
-    var gl = canvas.getContext("webgl", { antialias: true, alpha: false, premultipliedAlpha: false })
-          || canvas.getContext("experimental-webgl");
-    if (!gl) return;
-
-    var vertSrc =
-      "attribute vec2 p;" +
-      "void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
-
-    var fragSrc = [
-      "precision highp float;",
-      "uniform vec2  u_res;",
-      "uniform float u_time;",
-      "uniform vec2  u_mouse;",
-      "uniform float u_pull;",
-      "",
-      "vec3 ROSE   = vec3(0.984, 0.420, 0.651);",
-      "vec3 ORANGE = vec3(0.973, 0.455, 0.184);",
-      "vec3 PEACH  = vec3(0.992, 0.659, 0.392);",
-      "vec3 ROSEL  = vec3(0.973, 0.902, 0.902);",
-      "vec3 CREAM  = vec3(1.000, 0.980, 0.965);",
-      "",
-      "float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }",
-      "float noise(vec2 p){",
-      "  vec2 i = floor(p); vec2 f = fract(p);",
-      "  vec2 u = f*f*(3.0-2.0*f);",
-      "  float a = hash(i);",
-      "  float b = hash(i + vec2(1.0, 0.0));",
-      "  float c = hash(i + vec2(0.0, 1.0));",
-      "  float d = hash(i + vec2(1.0, 1.0));",
-      "  return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);",
-      "}",
-      "float fbm(vec2 p){",
-      "  float v = 0.0; float a = 0.55;",
-      "  mat2 m = mat2(1.6, 1.2, -1.2, 1.6);",
-      "  for(int i=0;i<5;i++){ v += a*noise(p); p = m*p; a *= 0.5; }",
-      "  return v;",
-      "}",
-      "",
-      "void main(){",
-      "  vec2 uv = gl_FragCoord.xy / u_res.xy;",
-      "  float asp = u_res.x / u_res.y;",
-      "  vec2 p = vec2((uv.x - 0.5) * asp, uv.y - 0.5);",
-      "  vec2 m = vec2((u_mouse.x - 0.5) * asp, u_mouse.y - 0.5);",
-      "  float t = u_time * 0.06;",
-      "",
-      "  vec2 toM = m - p;",
-      "  float dM = length(toM);",
-      "  float lens = (0.16 + 0.20 * u_pull) / (dM * dM + 0.10);",
-      "  vec2 curved = p + toM * lens * 0.45;",
-      "",
-      "  vec2 q = vec2(fbm(curved*1.5 + vec2(0.0, t)), fbm(curved*1.5 + vec2(5.2, -t*0.8)));",
-      "  vec2 r = vec2(fbm(curved*1.5 + 3.2*q + vec2(1.7, 9.2) + t*0.5),",
-      "                fbm(curved*1.5 + 3.2*q + vec2(8.3, 2.8) - t*0.4));",
-      "  float n = fbm(curved*1.6 + 2.4*r + t*0.3);",
-      "",
-      "  vec3 col = mix(CREAM, ROSEL, 0.35);",
-      "  col = mix(col, PEACH,  smoothstep(0.22, 0.92, n) * 0.95);",
-      "  col = mix(col, ROSE,   smoothstep(0.38, 0.86, r.x) * 0.78);",
-      "  col = mix(col, ORANGE, smoothstep(0.34, 0.98, q.y) * 0.78);",
-      "  col = mix(col, ORANGE, smoothstep(0.50, 1.05, r.y) * 0.62);",
-      "  col = mix(col, ROSE,   smoothstep(0.62, 1.12, n * r.x) * 0.42);",
-      "",
-      "  float sheen = 0.5 + 0.5 * sin((q.x + r.y) * 6.2832 + u_time * 0.25);",
-      "  col += sheen * 0.045 * vec3(1.0, 0.9, 0.82);",
-      "",
-      "  float glowR = 0.58;",
-      "  float warm = exp(-dM*dM / (glowR*glowR)) * (0.20 + 0.46 * u_pull);",
-      "  vec3 warmCol = mix(PEACH, ORANGE, 0.58);",
-      "  col += warm * warmCol * 0.6;",
-      "  col += exp(-dM*dM / 0.02) * (0.10 + 0.26 * u_pull) * vec3(1.0, 0.82, 0.64);",
-      "",
-      "  col = mix(col, CREAM, smoothstep(0.55, 1.0, uv.y) * 0.34);",
-      "  col = mix(col, CREAM, 0.06);",
-      "  float vig = distance(uv, vec2(0.5, 0.5));",
-      "  col = mix(col, CREAM, smoothstep(0.55, 1.10, vig) * 0.22);",
-      "  col = clamp(col, 0.0, 1.0);",
-      "",
-      "  gl_FragColor = vec4(col, 1.0);",
-      "}"
-    ].join("\n");
-
-    function compile(type, src) {
-      var s = gl.createShader(type);
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
-      return s;
-    }
-
-    var vs = compile(gl.VERTEX_SHADER, vertSrc);
-    var fs = compile(gl.FRAGMENT_SHADER, fragSrc);
-    if (!vs || !fs) return;
-
-    var prog = gl.createProgram();
-    gl.attachShader(prog, vs);
-    gl.attachShader(prog, fs);
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
-    gl.useProgram(prog);
-
-    var buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
-    var loc = gl.getAttribLocation(prog, "p");
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-
-    var uRes   = gl.getUniformLocation(prog, "u_res");
-    var uTime  = gl.getUniformLocation(prog, "u_time");
-    var uMouse = gl.getUniformLocation(prog, "u_mouse");
-    var uPull  = gl.getUniformLocation(prog, "u_pull");
-
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    function resize() {
-      var w = Math.floor(canvas.clientWidth * dpr);
-      var h = Math.floor(canvas.clientHeight * dpr);
-      if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w; canvas.height = h;
-        gl.viewport(0, 0, w, h);
-      }
-    }
-    window.addEventListener("resize", resize);
-    resize();
-
-    var mx = 0.5, my = 0.5;
-    var smx = 0.5, smy = 0.5;
-    var pull = 0.0, pullTarget = 0.0;
-    var idleAngle = Math.random() * 6.28;
-
-    function setFromEvent(cx, cy) {
-      var rect = canvas.getBoundingClientRect();
-      mx = (cx - rect.left) / rect.width;
-      my = 1.0 - (cy - rect.top) / rect.height;
-      pullTarget = 1.0;
-    }
-    window.addEventListener("pointermove", function (e) {
-      setFromEvent(e.clientX, e.clientY);
-    }, { passive: true });
-    window.addEventListener("pointerdown", function (e) {
-      setFromEvent(e.clientX, e.clientY);
-      pullTarget = 1.0;
-    }, { passive: true });
-    window.addEventListener("pointerleave", function () { pullTarget = 0.0; });
-    document.addEventListener("mouseleave", function () { pullTarget = 0.0; });
-
-    document.querySelector(".living").classList.add("gl-ready");
-    document.body.classList.add("gl-ready");
-
-    var start = performance.now();
-    var running = true;
-    var elapsed = 0;
-    document.addEventListener("visibilitychange", function () {
-      running = !document.hidden;
-      if (running) { start = performance.now() - elapsed; requestAnimationFrame(loop); }
-    });
-
-    function loop(now) {
-      if (!running) return;
-      resize();
-      elapsed = now - start;
-      var ts = elapsed * 0.001;
-
-      pull += (pullTarget - pull) * 0.05;
-      if (pullTarget < 0.5) {
-        idleAngle += 0.0035;
-        var rx = 0.5 + Math.cos(idleAngle) * 0.18;
-        var ry = 0.5 + Math.sin(idleAngle * 0.8) * 0.14;
-        mx += (rx - mx) * 0.02;
-        my += (ry - my) * 0.02;
-      }
-      smx += (mx - smx) * 0.06;
-      smy += (my - smy) * 0.06;
-
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform1f(uTime, ts);
-      gl.uniform2f(uMouse, smx, smy);
-      gl.uniform1f(uPull, pull);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-      requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
-  })();
-  </script>
+})();
+</script>
 </body>
 </html>
