@@ -1,0 +1,302 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Soleia Expérience — La pause créative qui fait du BIEN"
+  description="Soleia Expérience — la pause créative qui fait du BIEN. Ateliers et événements créatifs et conviviaux."
+  active=""
+  footer={false}
+  bodyClass="home"
+>
+  <!-- ===================== HERO ===================== -->
+  <main class="hero">
+    <h1 class="title" id="title">
+      <span class="line" data-wave>La pause créative</span>
+      <span class="line" data-wave>qui fait <em>du</em> <span class="bien" data-wave-bien>BIEN.</span></span>
+    </h1>
+
+    <div class="actions">
+      <a class="pill pill--primary" href="/ateliers/"><span>Les prochains ateliers</span></a>
+      <a class="pill" href="/boutique/">La boutique</a>
+      <a class="pill" href="/a-propos/">Notre concept</a>
+      <a class="pill" href="/faq/">F.A.Q</a>
+    </div>
+  </main>
+
+  <!-- ===================== CITATION CENTRÉE ===================== -->
+  <footer class="foot">
+    <figure class="quote">
+      <p>«&#8239;Parce que prendre du temps pour soi, c’est important &amp; ça fait du bien.&#8239;»</p>
+      <cite>Gwennaëlle</cite>
+    </figure>
+  </footer>
+
+  <style is:global>
+  /* ===== ACCUEIL — vue unique plein écran (nav / héros / citation) ===== */
+  body.home {
+    height: 100svh;
+    min-height: 600px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;              /* une seule vue : on ne peut pas descendre */
+  }
+  body.home .shell {
+    height: auto;
+    min-height: 0;
+    display: block;
+    z-index: 4;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;                    /* au-dessus du fond vivant (fixe, z-index 0) */
+    padding: clamp(0.6rem, 2vh, 1.6rem) 0;
+  }
+
+  .title {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 360;
+    font-size: clamp(3rem, 10.4vw, 10.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin: 0 0 clamp(1.6rem, 4vh, 2.8rem);
+    color: var(--ink);
+    max-width: 14ch;
+    font-variation-settings: "opsz" 144;
+    cursor: default;
+  }
+  .title .line { display: block; }
+  .title em {
+    font-style: italic;
+    font-weight: 340;
+    font-variation-settings: "opsz" 144;
+  }
+  /* lettres animables (onde au survol) */
+  .title .ch {
+    display: inline-block;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .title .sp { display: inline-block; width: 0.28em; }
+
+  /* ===== « BIEN » — dégradé SATURÉ rose → orange + HALO, doit CLAQUER ===== */
+  .bien {
+    position: relative;
+    display: inline-block;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    padding-right: 0.06em;
+  }
+  .bien .ch {
+    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  /* halo lumineux saturé derrière BIEN */
+  .bien::after {
+    content: "BIEN.";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: blur(20px);
+    opacity: 0.85;
+    animation: glow 4.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes glow {
+    0%, 100% { opacity: 0.62; filter: blur(17px); }
+    50%      { opacity: 0.95; filter: blur(26px); }
+  }
+
+  /* ============ BOUTONS ============ */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.7rem, 1.4vw, 1rem);
+  }
+  .pill {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.04rem, 1.4vw, 1.18rem);
+    letter-spacing: 0.005em;
+    padding: clamp(1rem, 1.7vh, 1.28rem) clamp(1.75rem, 2.7vw, 2.5rem);
+    border-radius: 999px;
+    border: 1.5px solid rgba(58, 42, 46, 0.2);
+    background: var(--glass-strong);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.28s ease, border-color 0.28s ease, color 0.28s ease;
+    white-space: nowrap;
+  }
+  .pill:hover {
+    transform: translateY(-2px);
+    border-color: var(--rose);
+    color: var(--orange);
+    box-shadow: 0 10px 26px rgba(251, 107, 166, 0.24);
+  }
+  .pill--primary {
+    border: none;
+    color: var(--creme);
+    background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+    box-shadow: 0 12px 32px rgba(248, 116, 47, 0.38);
+    position: relative;
+    overflow: hidden;
+  }
+  .pill--primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(96deg, var(--orange) 0%, var(--rose) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .pill--primary span { position: relative; z-index: 1; }
+  .pill--primary:hover {
+    transform: translateY(-2px);
+    color: var(--creme);
+    box-shadow: 0 16px 40px rgba(248, 116, 47, 0.5);
+  }
+  .pill--primary:hover::before { opacity: 1; }
+
+  /* ============ CITATION — CENTRÉE ============ */
+  .foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    z-index: 2;                    /* au-dessus du fond vivant (fixe, z-index 0) */
+    padding-top: clamp(0.6rem, 1.4vh, 1.1rem);
+    padding-bottom: clamp(0.4rem, 1.6vh, 1.2rem); /* remonte légèrement la citation */
+  }
+  .quote {
+    margin: 0;
+    max-width: min(92vw, 74ch);
+    text-align: center;          /* CITATION CENTRÉE */
+  }
+  .quote p {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-weight: 330;
+    font-size: clamp(0.98rem, 1.7vw, 1.34rem);
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 0 0 0.4rem;
+    white-space: nowrap;
+  }
+  .quote cite {
+    display: block;
+    font-family: "Fraunces", Georgia, serif;   /* police de la V30 */
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1rem, 1.5vw, 1.28rem);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    color: var(--orange);
+  }
+
+  /* ============ RESPONSIVE (héros) ============ */
+  @media (max-width: 900px) {
+    .quote p { white-space: normal; }
+  }
+  @media (max-width: 760px) {
+    .title { font-size: clamp(2.8rem, 14vw, 5.2rem); max-width: 11ch; }
+    .actions .pill { font-size: 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .title .ch { transition: none !important; }
+    .bien::after { opacity: 0.78 !important; }
+  }
+  </style>
+
+  <!-- ===================== ONDE / DISTORSION DU TITRE AU SURVOL ===================== -->
+  <script is:inline>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+
+    function splitNode(node) {
+      var out = [];
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.nodeValue.split("").forEach(function (c) {
+            var s = document.createElement("span");
+            if (c === " ") { s.className = "sp"; s.setAttribute("aria-hidden", "true"); }
+            else { s.className = "ch"; s.textContent = c; out.push(s); }
+            frag.appendChild(s);
+          });
+          node.replaceChild(frag, n);
+        } else if (n.nodeType === 1) {
+          out = out.concat(splitNode(n));
+        }
+      });
+      return out;
+    }
+
+    var lines = document.querySelectorAll("[data-wave]");
+    var allCh = [];
+    lines.forEach(function (line) {
+      allCh = allCh.concat(splitNode(line));
+    });
+    var titleEl = document.getElementById("title");
+    if (titleEl) {
+      titleEl.setAttribute("aria-label", "La pause créative qui fait du BIEN.");
+      allCh.forEach(function (c) { c.setAttribute("aria-hidden", "true"); });
+    }
+
+    if (reduce || coarse || allCh.length === 0) return;
+
+    var raf = null;
+    var t0 = 0;
+    var amp = 0;
+    var targetAmp = 0;
+
+    function frame(now) {
+      if (!t0) t0 = now;
+      var t = (now - t0) * 0.004;
+      amp += (targetAmp - amp) * 0.08;
+      if (amp > 0.002 || targetAmp > 0) {
+        for (var i = 0; i < allCh.length; i++) {
+          var ph = i * 0.45;
+          var y = Math.sin(t + ph) * 9 * amp;
+          var rot = Math.cos(t * 0.9 + ph) * 3 * amp;
+          var sc = 1 + Math.sin(t * 1.2 + ph) * 0.04 * amp;
+          allCh[i].style.transform = "translateY(" + y.toFixed(2) + "px) rotate(" + rot.toFixed(2) + "deg) scale(" + sc.toFixed(3) + ")";
+        }
+        raf = requestAnimationFrame(frame);
+      } else {
+        for (var j = 0; j < allCh.length; j++) allCh[j].style.transform = "";
+        raf = null;
+      }
+    }
+
+    function start() { targetAmp = 1; if (!raf) { raf = requestAnimationFrame(frame); } }
+    function stop()  { targetAmp = 0; if (!raf) { raf = requestAnimationFrame(frame); } }
+
+    if (titleEl) {
+      titleEl.addEventListener("pointerenter", start);
+      titleEl.addEventListener("pointerleave", stop);
+    }
+  })();
+  </script>
+</Base>

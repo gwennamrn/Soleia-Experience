@@ -1,11 +1,41 @@
+# ── Dépendances & artefacts régénérés dans l'image (jamais copiés) ──
+node_modules/
+dist/
+.astro/
+
+# ── Git, hooks, docs, config locale ──
 .git
 .gitignore
 .dockerignore
+.githooks/
+.vscode/
+.idea/
 README.md
+CLAUDE.md
+PROMPT.md
+.memsearch/
+
+# ── Originaux médias (NON servis) & gros projets vidéo (hors site/) ──
+_src/
+**/_src/
+Vidéos/
+fonds-video/
+
+# ── Images & captures de travail à la racine (non publiées) ──
+# (ancré à la racine avec « / » → n'affecte JAMAIS les images sous site/)
+/*.png
+/*.jpg
+/*.jpeg
+/*.JPG
+/*.JPEG
+/IMG_*.*
 Soleia.png
 Soleia_*.png
 index-check.png
 shot-*.png
 proto/
+
+# ── Divers ──
 **/.playwright-mcp/
 .DS_Store
+*.log

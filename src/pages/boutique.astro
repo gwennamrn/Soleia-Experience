@@ -1,0 +1,691 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="La boutique · Soleia Expérience" active="boutique">
+  <!-- ===================== DÉCORS RÉUTILISABLES (définis une fois, réutilisés via <use>) ===================== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- ✺ SOLEIL DESSINÉ-MAIN : disque plein orangé + rayons ONDULÉS organiques (16 rayons). -->
+      <g id="soleiaSunDoodle">
+        <circle cx="50" cy="50" r="20" fill="#f8742f"/>
+        <circle cx="50" cy="50" r="20" fill="#f4b63e" opacity="0.18"/>
+        <g fill="none" stroke="#f8742f" stroke-width="4.4" stroke-linecap="round">
+          <path d="M50 28 q3 -6 -0.6 -13"/>
+          <path d="M58.6 29.4 q5 -4 5.4 -10.4"/>
+          <path d="M66.3 33.5 q6.4 -3.4 12.8 -5.2"/>
+          <path d="M70.9 40.2 q6.6 -1.4 13.6 -1.4"/>
+          <path d="M72.4 50 q7.4 0.6 13.6 -1.4"/>
+          <path d="M70.9 59.8 q7 1.6 12.4 6.2"/>
+          <path d="M66.3 66.5 q6.2 3.2 10.6 8.8"/>
+          <path d="M58.6 70.6 q4.8 5 5 12.2"/>
+          <path d="M50 72 q-2.8 6.4 0.6 13.4"/>
+          <path d="M41.4 70.6 q-5 4.6 -5.4 11.4"/>
+          <path d="M33.7 66.5 q-6.2 3.2 -12.4 4.4"/>
+          <path d="M29.1 59.8 q-6.8 1.6 -13.4 0.4"/>
+          <path d="M27.6 50 q-7.6 -0.6 -14.4 1.2"/>
+          <path d="M29.1 40.2 q-6.8 -1.6 -11.8 -6.6"/>
+          <path d="M33.7 33.5 q-6 -3.4 -9.4 -9"/>
+          <path d="M41.4 29.4 q-4.6 -4.6 -4.2 -11.2"/>
+        </g>
+      </g>
+
+      <!-- ✿ FLEUR RÉTRO/GROOVY : 5 pétales larges, cœur jaune doré arrondi. Couleur pilotée par currentColor. -->
+      <g id="soleiaFlowerRetro">
+        <g fill="currentColor">
+          <path d="M50 12
+                   c 9 0 15 7 14.5 15
+                   c -0.4 6 -4 9.5 -8 12
+                   c -2.5 1.6 -4.6 3 -6.5 3
+                   c -1.9 0 -4 -1.4 -6.5 -3
+                   c -4 -2.5 -7.6 -6 -8 -12
+                   c -0.5 -8 5 -15 14.5 -15 Z"/>
+          <path d="M86.1 38.2
+                   c 2.8 8.6 -1.1 16.3 -8.5 19.4
+                   c -5.6 2.3 -10.1 0.6 -13.9 -1.9
+                   c -2.4 -1.6 -4.5 -2.9 -5.4 -4.6
+                   c -0.9 -1.8 -0.7 -4.3 -0.1 -7.2
+                   c 0.9 -4.6 3 -9.3 8.6 -11.6
+                   c 7.6 -3.1 16 0 19.2 5.9 Z"/>
+          <path d="M72.3 80.9
+                   c -7.3 5.3 -15.9 4.2 -20.4 -2.3
+                   c -3.5 -4.9 -2.7 -9.6 -1.2 -13.9
+                   c 0.9 -2.7 1.6 -5.1 3.1 -6.2
+                   c 1.5 -1.1 4 -1.3 6.9 -1.3
+                   c 4.7 0 9.8 1.1 13.3 6
+                   c 4.5 6.5 5 15.1 -1.7 19.9
+                   l 0 -2.2 Z"/>
+          <path d="M27.7 80.9
+                   c -6.7 -4.8 -6.2 -13.4 -1.7 -19.9
+                   c 3.5 -4.9 8.6 -6 13.3 -6
+                   c 2.9 0 5.4 0.2 6.9 1.3
+                   c 1.5 1.1 2.2 3.5 3.1 6.2
+                   c 1.5 4.3 2.3 9 -1.2 13.9
+                   c -4.5 6.5 -13.1 7.6 -20.4 2.3 Z"/>
+          <path d="M13.9 38.2
+                   c 3.2 -5.9 11.6 -9 19.2 -5.9
+                   c 5.6 2.3 7.7 7 8.6 11.6
+                   c 0.6 2.9 0.8 5.4 -0.1 7.2
+                   c -0.9 1.7 -3 3 -5.4 4.6
+                   c -3.8 2.5 -8.3 4.2 -13.9 1.9
+                   c -7.4 -3.1 -11.3 -10.8 -8.5 -19.4 Z"/>
+        </g>
+        <rect x="42" y="42" width="16" height="16" rx="6.4" fill="#f4b63e"/>
+      </g>
+
+      <!-- ✺ petit soleil dessiné-main pour les TITRES -->
+      <g id="soleiaSunTitle">
+        <circle cx="50" cy="50" r="19" fill="#f8742f"/>
+        <circle cx="50" cy="50" r="19" fill="#f4b63e" opacity="0.18"/>
+        <g fill="none" stroke="#f8742f" stroke-width="5" stroke-linecap="round">
+          <path d="M50 29 q3 -6 -0.6 -13"/>
+          <path d="M59 31 q5 -4 5.6 -10.6"/>
+          <path d="M67.5 35.5 q6.4 -3.2 12.8 -4.6"/>
+          <path d="M71.5 43 q6.6 -1.2 13.4 -0.8"/>
+          <path d="M71.5 57 q7 1.4 12.6 6"/>
+          <path d="M67.5 64.5 q6.2 3.2 10.4 9"/>
+          <path d="M59 69 q4.8 5 5 12"/>
+          <path d="M50 71 q-3 6.4 0.6 13.4"/>
+          <path d="M41 69 q-5 4.6 -5.6 11.2"/>
+          <path d="M32.5 64.5 q-6.2 3.2 -12 4.2"/>
+          <path d="M28.5 57 q-6.8 1.4 -13.2 0.2"/>
+          <path d="M28.5 43 q-7 -1.4 -12.6 -6"/>
+          <path d="M32.5 35.5 q-6 -3.2 -9.2 -8.6"/>
+          <path d="M41 31 q-4.6 -4.6 -4.2 -11"/>
+        </g>
+      </g>
+
+      <!-- icône « image » pour le cadre photo vide -->
+      <g id="soleiaPhotoIcon">
+        <rect x="3" y="4.5" width="18" height="15" rx="3.5"/>
+        <circle cx="8.6" cy="9.6" r="1.7"/>
+        <path d="M3.5 17.5 9 12l4 3.6L16 13l4.5 4.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- ===================== CALQUE DÉCOR PLEINE PAGE (fleurs + soleils déplaçables) ===================== -->
+  <div class="deco-layer" aria-hidden="true">
+    <!-- ░░ Zone titre « Un p'tit truc en plus ! » (haut de page) ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-1"  style="top:5%;    left:8%;   --rot:-10deg; --s:0.74; --dur:8s;  --delay:-1s;  color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-2"  style="top:3.6%;  right:9%;  --rot:8deg;   --s:0.98; --dur:10s; --delay:-3s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-small" data-deco-id="deco-3"  style="top:10%;   left:22%;  --rot:14deg;  --s:0.54; --dur:9s;  --delay:-2s;  color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+
+    <!-- ░░ Le long des rangées produits (marges latérales) ░░ -->
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-4"  style="top:24%;   right:4%;  --rot:-6deg;  --s:0.62; --dur:11s; --delay:-4s;  color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-5"  style="top:36%;   left:3%;   --rot:6deg;   --s:0.6;  --dur:10s; --delay:-2.5s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-6"  style="top:48%;   right:3.5%; --rot:11deg; --s:0.66; --dur:9s;  --delay:-1.5s; color:var(--rose);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-7"  style="top:60%;   left:3.5%; --rot:-9deg;  --s:0.6;  --dur:11s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-8"  style="top:72%;   right:4%;  --rot:7deg;   --s:0.62; --dur:8s;  --delay:-2s;   color:var(--rose-doux);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float hide-mobile" data-deco-id="deco-9"  style="top:80%;   left:4%;   --rot:12deg;  --s:0.56; --dur:10s; --delay:-1s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+
+    <!-- ░░ Bas de page ░░ -->
+    <span class="deco-item is-float" data-deco-id="deco-10" style="top:92%;   left:10%;  --rot:10deg;  --s:0.66; --dur:10s; --delay:-3.5s; color:var(--orange);"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+    <span class="deco-item is-float" data-deco-id="deco-11" style="top:93%;   right:11%; --rot:-8deg;  --s:0.62; --dur:9s;  --delay:-2s;"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+  </div>
+
+  <!-- ===================== CONTENU « BOUTIQUE » ===================== -->
+  <main class="page">
+
+    <!-- ===== GRAND TITRE de la page (façon hero) ===== -->
+    <section class="hero reveal" aria-labelledby="boutique-title">
+      <h1 class="hero__title" id="boutique-title">Un p’tit truc <span class="grad">en plus</span>&#8239;!</h1>
+      <p class="hero__subtitle">Kits et cartes cadeaux&#8239;: un emplacement pour de jolies trouvailles à offrir ou se faire plaisir.</p>
+      <span class="hero__rule" aria-hidden="true"></span>
+    </section>
+
+    <!-- ===== ONGLETS DE TRI ===== -->
+    <div class="shop-tabs reveal" role="tablist" aria-label="Trier les produits">
+      <button class="shop-tab is-active" type="button" role="tab" aria-selected="true" data-cat="tout">Tout</button>
+      <button class="shop-tab" type="button" role="tab" aria-selected="false" data-cat="kit">Kits</button>
+      <button class="shop-tab" type="button" role="tab" aria-selected="false" data-cat="carte">Cartes cadeaux</button>
+    </div>
+
+    <!-- ===== LISTE DE 5 PRODUITS (placeholders) — carré à gauche, description à droite ===== -->
+    <section class="shop" aria-label="Nos produits">
+
+            <!-- Produit — Kit Soleia (le seul disponible) -->
+      <article class="product reveal" data-cat="kit">
+        <a class="product__square" href="/boutique/kit-soleia/" aria-label="Voir la fiche du Kit Soleia">
+          <span class="square-deco square-deco--flower" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
+          <span class="square-deco square-deco--sun" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaSunDoodle"/></svg></span>
+          <span class="product__stock">Plus que 4&#8239;!</span>
+          <div class="product__photo">
+            <img src="/boutique/img/kit-soleia.jpg" alt="Le Kit Soleia : un joli sachet transparent noué d'un ruban rose, avec ses carnets" loading="lazy" decoding="async" />
+          </div>
+        </a>
+        <div class="product__info">
+          <p class="product__kicker">Kit</p>
+          <h2 class="product__name">Kit Soleia</h2>
+          <p class="product__desc">Ta petite bulle de douceur à emporter partout&#8239;: un carnet de 10 défis, une liste de Solo Dates, la Roue de la Vie à compléter… et 2 petits cadeaux.</p>
+          <p class="product__price">10<span class="cur"> €</span></p>
+          <a class="btn" href="/boutique/kit-soleia/">Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <style is:global>
+    /* ============================================================
+       CONTENU « BOUTIQUE » — grand titre hero + liste de produits
+       (carré à gauche, description à droite), fond CONTINU et coloré
+       ============================================================ */
+    .page {
+      position: relative;
+      z-index: 2;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: clamp(1.4rem, 4vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
+    }
+
+    /* petit accent : un vrai petit SOLEIL DESSINÉ-MAIN à côté des titres */
+    .sun {
+      display: inline-block;
+      width: 1.18em;
+      height: 1.18em;
+      vertical-align: -0.18em;
+      margin-right: 0.5em;
+      filter: drop-shadow(0 2px 6px rgba(248, 116, 47, 0.16));
+    }
+    .sun svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+    /* ---- GRAND TITRE de la page (façon hero) ---- */
+    .hero {
+      text-align: center;
+      padding: clamp(3rem, 9vh, 6.5rem) 0 clamp(2.2rem, 6vh, 4rem);
+    }
+    .hero__title {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 440;
+      font-size: clamp(3rem, 8vw, 6.2rem);
+      line-height: 1;
+      letter-spacing: -0.028em;
+      margin: 0;
+      color: var(--ink);
+      font-variation-settings: "opsz" 144;
+    }
+    /* « en plus » subtilement mis en valeur en dégradé rose → orange */
+    .hero__title .grad {
+      background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero__subtitle {
+      font-family: "Fraunces", Georgia, serif;
+      font-style: italic;
+      font-weight: 350;
+      font-size: clamp(1.05rem, 2vw, 1.4rem);
+      line-height: 1.5;
+      color: var(--ink-soft);
+      margin: clamp(1rem, 2.6vh, 1.6rem) auto 0;
+      max-width: 44ch;
+      font-variation-settings: "opsz" 90;
+    }
+    .hero__rule {
+      display: block;
+      width: clamp(56px, 8vw, 96px);
+      height: 4px;
+      margin: clamp(1.4rem, 3vh, 2.1rem) auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--rose), var(--orange));
+      opacity: 0.9;
+    }
+
+    /* ---- LISTE DE PRODUITS : rangées (carré à gauche, description à droite) ---- */
+    .shop {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(2.8rem, 7vh, 5rem);
+      margin-top: clamp(1rem, 3vh, 2rem);
+    }
+
+    /* ===== ONGLETS DE TRI (Tout · Coffrets · Cartes cadeaux) ===== */
+    .shop-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: clamp(0.5rem, 1.2vw, 0.9rem);
+      margin: clamp(1.4rem, 3.5vh, 2.6rem) auto clamp(0.6rem, 2vh, 1.2rem);
+    }
+    .shop-tab {
+      font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+      color: var(--ink);
+      background: var(--glass-strong);
+      border: 1.5px solid rgba(58, 42, 46, 0.16);
+      border-radius: 999px;
+      padding: 0.6rem 1.45rem;
+      cursor: pointer;
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+    .shop-tab:hover { transform: translateY(-2px); color: var(--orange); border-color: var(--rose); }
+    .shop-tab.is-active {
+      color: var(--creme);
+      border-color: transparent;
+      background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+      box-shadow: 0 12px 26px rgba(248, 116, 47, 0.28);
+    }
+
+    .product {
+      display: grid;
+      grid-template-columns: clamp(250px, 28vw, 350px) 1fr;
+      align-items: center;
+      gap: clamp(2rem, 5vw, 4.5rem);
+    }
+    /* ALTERNANCE zigzag (classe .is-right posée par le script, recalculée au tri) :
+       le carré passe à DROITE et la description à GAUCHE */
+    .product.is-right { grid-template-columns: 1fr clamp(250px, 28vw, 350px); }
+    .product.is-right .product__square { order: 2; }
+    .product.is-right .product__info  { order: 1; text-align: right; }
+    .product.is-right .product__desc  { margin-left: auto; }
+
+    /* ===== LE CARRÉ PRODUIT — direction « Contour marqué » =====
+       fond doux (crème / rose clair translucide) + CONTOUR ÉPAIS et TRÈS VISIBLE
+       en dégradé rose→orange (le contour est la vedette). */
+    .product__square {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      border-radius: 30px;
+      padding: clamp(12px, 1.4vw, 16px);              /* épaisseur du contour dégradé */
+      background: linear-gradient(135deg, var(--rose) 0%, var(--orange) 100%);
+      box-shadow: 0 24px 58px rgba(248, 116, 47, 0.20), 0 8px 22px rgba(251, 107, 166, 0.16);
+      transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.34s ease;
+    }
+    /* SURVOL PLUS VIVANT : tout le produit réagit */
+    .product:hover .product__square {
+      transform: translateY(-8px) rotate(-1.2deg);
+      box-shadow: 0 36px 80px rgba(248, 116, 47, 0.30), 0 14px 32px rgba(251, 107, 166, 0.22);
+    }
+    .product.is-right:hover .product__square { transform: translateY(-8px) rotate(1.2deg); }
+    .product__photo-inner { transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+    .product:hover .product__photo-inner { transform: scale(1.08); }
+    .product__name { transition: color 0.28s ease; }
+    .product:hover .product__name { color: var(--orange); }
+    .product:hover .btn {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(248, 116, 47, 0.36), 0 6px 16px rgba(251, 107, 166, 0.24);
+    }
+    .product:hover .btn svg { transform: translateX(3px); }
+
+    /* petite fleur + petit soleil posés au BORD de chaque cadre produit */
+    /* la photo (carré) est cliquable → fiche produit */
+    .product__square { text-decoration: none; color: inherit; cursor: pointer; }
+
+    /* petite fleur + petit soleil au bord du cadre — bien VISIBLES */
+    .square-deco {
+      position: absolute;
+      width: clamp(46px, 5.4vw, 64px);
+      height: clamp(46px, 5.4vw, 64px);
+      pointer-events: none;
+      z-index: 4;
+      filter: drop-shadow(0 5px 13px rgba(248, 116, 47, 0.26));
+    }
+    .square-deco svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .square-deco--flower { top: -20px; left: -20px; color: var(--rose); transform: rotate(-12deg); }
+    .square-deco--sun { right: -17px; bottom: -17px; }
+    /* le « cadre photo » intérieur : fond crème / rose clair translucide, cadre vide */
+    .product__photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background:
+        radial-gradient(120% 100% at 50% 14%, rgba(248, 230, 230, 0.92), rgba(255, 250, 246, 0.78));
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    /* fin liseré clair pour bien détacher la photo du contour coloré */
+    .product__photo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255, 250, 246, 0.8);
+      pointer-events: none;
+    }
+    .product__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* pastille de stock « Plus que 4 ! » */
+    .product__stock {
+      position: absolute;
+      top: clamp(20px, 2.4vw, 28px);
+      left: clamp(20px, 2.4vw, 28px);
+      z-index: 4;
+      font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: clamp(0.72rem, 1vw, 0.84rem);
+      letter-spacing: 0.01em;
+      color: var(--orange);                       /* texte orange */
+      background: var(--creme);                    /* fond crème : ressort sur le bord rose/orange */
+      border: 1.5px solid var(--rose);
+      padding: 0.36rem 0.78rem;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(248, 116, 47, 0.22);
+    }
+    .product__photo-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+      color: rgba(58, 42, 46, 0.42);
+    }
+    .product__photo-icon {
+      width: clamp(46px, 6vw, 62px);
+      height: clamp(46px, 6vw, 62px);
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(251, 107, 166, 0.16), rgba(248, 116, 47, 0.16));
+    }
+    .product__photo-icon svg { width: 56%; height: 56%; color: var(--orange); }
+    .product__photo-label {
+      font-family: "League Spartan", sans-serif;
+      font-weight: 700;
+      font-size: 0.74rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+    }
+
+    /* ===== DESCRIPTION (droite) : nom + 1 ligne atténuée + prix + bouton ===== */
+    .product__info { text-align: left; }
+    .product__kicker {
+      font-family: "League Spartan", sans-serif;
+      font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin: 0 0 clamp(0.5rem, 1.2vh, 0.8rem);
+    }
+    .product__name {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+      line-height: 1.06;
+      letter-spacing: -0.018em;
+      color: var(--ink);
+      margin: 0 0 clamp(0.6rem, 1.4vh, 0.9rem);
+      font-variation-settings: "opsz" 120;
+    }
+    .product__desc {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1rem, 1.4vw, 1.1rem);
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 clamp(1rem, 2.4vh, 1.5rem);
+      max-width: 42ch;
+    }
+    .product__price {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(1.3rem, 2vw, 1.6rem);
+      line-height: 1;
+      color: var(--ink);
+      margin: 0 0 clamp(1.1rem, 2.6vh, 1.6rem);
+      font-variation-settings: "opsz" 110;
+    }
+    .product__price .cur { color: var(--ink); }
+
+    /* petit bouton « Découvrir » — dégradé rose → orange */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+      letter-spacing: 0.01em;
+      color: var(--creme);
+      text-decoration: none;
+      padding: 0.72rem 1.5rem;
+      border-radius: 999px;
+      background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+      box-shadow: 0 12px 26px rgba(248, 116, 47, 0.26), 0 4px 12px rgba(251, 107, 166, 0.18);
+      transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.26s ease;
+    }
+    .btn svg { width: 16px; height: 16px; transition: transform 0.26s ease; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(248, 116, 47, 0.34), 0 6px 16px rgba(251, 107, 166, 0.22); }
+    .btn:hover svg { transform: translateX(3px); }
+
+    /* ---- PIED DE PAGE sobre ---- */
+    .pied {
+      text-align: center;
+      margin-top: clamp(3.4rem, 9vh, 6rem);
+    }
+    .pied p {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 400;
+      font-size: clamp(0.84rem, 1.2vw, 0.95rem);
+      letter-spacing: 0.04em;
+      color: rgba(58, 42, 46, 0.5);
+      margin: 0;
+    }
+
+    /* ============ APPARITION AU DÉFILEMENT (avec repli : tout visible si pas de JS) ============ */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.is-in { opacity: 1; transform: none; }
+
+    /* ============================================================
+       ✿ CALQUE DÉCOR PLEINE PAGE — fleurs rétro + soleils dessinés-main ✿
+       ============================================================ */
+    .deco-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+      overflow: hidden;
+    }
+    .deco-item {
+      position: absolute;
+      pointer-events: auto;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: grab;
+      will-change: transform;
+      filter: drop-shadow(0 6px 14px rgba(248, 116, 47, 0.12));
+      transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg)) scale(var(--s, 1));
+    }
+    .deco-item.is-grabbing { cursor: grabbing; z-index: 99; filter: drop-shadow(0 10px 22px rgba(248, 116, 47, 0.22)); }
+    .deco-item svg { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .deco-item { width: 74px; height: 74px; }
+
+    @keyframes decoFloat {
+      0%   { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
+      50%  { transform: translate(var(--dx,0px), calc(var(--dy,0px) - 8px)) rotate(calc(var(--rot,0deg) + 2.5deg)) scale(var(--s,1)); }
+      100% { transform: translate(var(--dx,0px), var(--dy,0px)) rotate(var(--rot,0deg)) scale(var(--s,1)); }
+    }
+    .deco-item.is-float { animation: decoFloat var(--dur, 8s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
+    .deco-item.is-grabbing, .deco-item.is-moved { animation: none; }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 760px) {
+      /* chaque produit s'empile : carré au-dessus, description dessous, le tout centré */
+      .product {
+        grid-template-columns: 1fr;
+        gap: clamp(1.4rem, 6vw, 2rem);
+        justify-items: center;
+        text-align: center;
+      }
+      .product__square { max-width: 380px; width: 100%; }
+      .product__info { text-align: center; }
+      .product__desc { margin-left: auto; margin-right: auto; }
+      /* sur mobile, on annule l'alternance : tout empilé et centré */
+      .product.is-right { grid-template-columns: 1fr; }
+      .product.is-right .product__square { order: 0; }
+      .product.is-right .product__info  { order: 0; text-align: center; }
+      .product.is-right .product__desc  { margin-left: auto; margin-right: auto; }
+
+      .page { padding-bottom: clamp(4.5rem, 12vw, 6rem); }
+
+      .deco-item { width: 58px; height: 58px; filter: drop-shadow(0 4px 9px rgba(248, 116, 47, 0.12)); }
+      .deco-item.hide-mobile { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .deco-item { width: 50px; height: 50px; }
+      .deco-item.hide-small { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .deco-item.is-float { animation: none !important; }
+    }
+  </style>
+
+  <!-- ===================== ONGLETS DE TRI + ALTERNANCE (zigzag recalculé) ===================== -->
+  <script is:inline>
+  (function () {
+    var products = Array.prototype.slice.call(document.querySelectorAll(".product"));
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".shop-tab"));
+    if (!products.length) return;
+
+    function catOf(p) {
+      var k = p.querySelector(".product__kicker");
+      var t = (k && k.textContent || "").toLowerCase();
+      return /carte/.test(t) ? "carte" : "kit";
+    }
+
+    // (re)pose l'alternance gauche/droite sur les seuls produits VISIBLES
+    function applyZigzag() {
+      var i = 0;
+      products.forEach(function (p) {
+        if (p.style.display === "none") return;
+        p.classList.toggle("is-right", i % 2 === 1);
+        i++;
+      });
+    }
+
+    function filter(cat) {
+      products.forEach(function (p) {
+        var show = (cat === "tout") || (catOf(p) === cat);
+        p.style.display = show ? "" : "none";
+      });
+      applyZigzag();
+    }
+
+    tabs.forEach(function (t) {
+      t.addEventListener("click", function () {
+        tabs.forEach(function (x) { x.classList.remove("is-active"); x.setAttribute("aria-selected", "false"); });
+        t.classList.add("is-active");
+        t.setAttribute("aria-selected", "true");
+        filter(t.getAttribute("data-cat"));
+      });
+    });
+
+    applyZigzag();
+  })();
+  </script>
+
+  <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT (+ mémoire des positions) ===================== -->
+  <script is:inline>
+  (function () {
+    var STORE_KEY = "soleia-deco-pos-boutique";
+    var items = Array.prototype.slice.call(document.querySelectorAll(".deco-item"));
+    if (!items.length) return;
+
+    var layer = document.querySelector(".deco-layer");
+    function sizeLayer() {
+      if (!layer) return;
+      layer.style.height = "0px";
+      layer.style.height = document.documentElement.scrollHeight + "px";
+    }
+    sizeLayer();
+    window.addEventListener("load", sizeLayer);
+    window.addEventListener("resize", sizeLayer);
+    setTimeout(sizeLayer, 600);
+    setTimeout(sizeLayer, 1600);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(sizeLayer); }
+
+    function loadPos() {
+      try {
+        var raw = window.localStorage.getItem(STORE_KEY);
+        return raw ? (JSON.parse(raw) || {}) : {};
+      } catch (e) { return {}; }
+    }
+    function savePos(map) {
+      try { window.localStorage.setItem(STORE_KEY, JSON.stringify(map)); } catch (e) {}
+    }
+
+    var positions = loadPos();
+
+    items.forEach(function (el) {
+      var id = el.getAttribute("data-deco-id");
+      var p = id && positions[id];
+      if (p && (p.dx || p.dy)) {
+        el.style.setProperty("--dx", p.dx + "px");
+        el.style.setProperty("--dy", p.dy + "px");
+        el.classList.add("is-moved");
+      }
+    });
+
+    var startX = 0, startY = 0;
+    var baseDx = 0, baseDy = 0;
+    var movedThisDrag = false;
+    var current = null;
+
+    function numVar(el, name) {
+      var n = parseFloat(el.style.getPropertyValue(name));
+      return isNaN(n) ? 0 : n;
+    }
+
+    function onDown(e) {
+      var el = e.currentTarget;
+      current = el;
+      movedThisDrag = false;
+      baseDx = numVar(el, "--dx");
+      baseDy = numVar(el, "--dy");
+      startX = e.clientX;
+      startY = e.clientY;
+      el.classList.add("is-grabbing");
+      el.classList.add("is-moved");
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+
+    function onMove(e) {
+      var el = e.currentTarget;
+      if (current !== el) return;
+      var dx = baseDx + (e.clientX - startX);
+      var dy = baseDy + (e.clientY - startY);
+      if (Math.abs(e.clientX - startX) > 2 || Math.abs(e.clientY - startY) > 2) movedThisDrag = true;
+      el.style.setProperty("--dx", dx + "px");
+      el.style.setProperty("--dy", dy + "px");
+    }
+
+    function onUp(e) {
+      var el = e.currentTarget;
+      if (current !== el) return;
+      el.classList.remove("is-grabbing");
+      try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+      if (movedThisDrag) {
+        var id = el.getAttribute("data-deco-id");
+        if (id) {
+          positions[id] = { dx: Math.round(numVar(el, "--dx")), dy: Math.round(numVar(el, "--dy")) };
+          savePos(positions);
+        }
+      }
+      current = null;
+    }
+
+    items.forEach(function (el) {
+      el.addEventListener("pointerdown", onDown);
+      el.addEventListener("pointermove", onMove);
+      el.addEventListener("pointerup", onUp);
+      el.addEventListener("pointercancel", onUp);
+      el.addEventListener("dragstart", function (ev) { ev.preventDefault(); });
+    });
+  })();
+  </script>
+</Base>

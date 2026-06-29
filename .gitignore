@@ -31,3 +31,20 @@ soleia-hero.html
 direction-*.html
 soleia-*.html
 /index-check.*
+
+# Outillage local (mémoire de session, non versionné)
+.memsearch/
+
+# Artefacts de build Astro (régénérés à chaque build, jamais versionnés)
+dist/
+.astro/
+
+# Captures de vérification Astro (travail local)
+astro-*.png
+
+# Gros médias de travail, hors site/ (non versionnés)
+Vidéos/
+fonds-video/
+melange-*.png
+sentier-*.png
+train-fresh.*

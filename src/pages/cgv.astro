@@ -1,0 +1,186 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="CGV — Soleia Expérience" active="">
+  <main class="page">
+      <section class="hero reveal" aria-labelledby="page-title">
+        <h1 class="hero__title" id="page-title">Conditions générales <span class="grad">de vente</span></h1>
+        <span class="hero__rule" aria-hidden="true"></span>
+      </section>
+
+      <section class="prose reveal" aria-label="Conditions générales de vente">
+        <h2>1.&#8239;Présentation</h2>
+        <p>Les présentes Conditions Générales de Vente (CGV) régissent les ventes réalisées sur le site Soleia Expérience, activité en cours de création, portée par Gwennaëlle Mariamon. Soleia Expérience propose des ateliers créatifs, des expériences bien-être et des bons cadeaux.</p>
+
+        <h2>2.&#8239;Objet</h2>
+        <p>Les présentes CGV définissent les droits et obligations entre Soleia Expérience et toute personne effectuant une réservation ou un achat via le site. Toute commande implique l’acceptation pleine et entière des présentes CGV.</p>
+
+        <h2>3.&#8239;Prestations proposées</h2>
+        <p>Soleia Expérience propose&#8239;:</p>
+        <ul>
+          <li>des ateliers créatifs et expériences collectives&#8239;;</li>
+          <li>des bons cadeaux&#8239;;</li>
+          <li>et, à terme, d’autres formats créatifs (kits ou contenus).</li>
+        </ul>
+        <p>Les caractéristiques de chaque atelier (date, lieu, contenu, tarif) sont précisées sur le site.</p>
+
+        <h2>4.&#8239;Prix</h2>
+        <p>Les prix sont indiqués en euros (€), toutes taxes comprises. Soleia Expérience se réserve le droit de modifier ses tarifs à tout moment, les prestations étant facturées sur la base des tarifs en vigueur au moment de la réservation.</p>
+
+        <h2>5.&#8239;Réservation et paiement</h2>
+        <p>Les réservations se font directement en ligne via le site. Le paiement est exigé au moment de la réservation. Les paiements sont effectués via une solution de paiement sécurisée (type Stripe ou équivalent). La réservation est considérée comme confirmée après validation du paiement.</p>
+
+        <h2>6.&#8239;Bons cadeaux</h2>
+        <p>Les bons cadeaux sont disponibles à l’achat sur le site. Ils sont envoyés au format digital sous 1 à 3 jours après validation de la commande. Ils sont valables 1 an à compter de la date d’achat et peuvent être imprimés. Les bons cadeaux peuvent être utilisés pour réserver un atelier Soleia.</p>
+
+        <h2>7.&#8239;Annulation et modification</h2>
+        <p>Toute réservation peut être annulée par le client, mais n’est pas remboursable. En cas d’empêchement, la place peut être cédée à une autre personne, sous réserve d’en informer Soleia Expérience par email. Dans le cas où un atelier serait annulé par Soleia Expérience, le client pourra choisir entre un remboursement intégral ou un avoir valable sur un prochain atelier.</p>
+
+        <h2>8.&#8239;Accès aux ateliers</h2>
+        <p>Les ateliers sont accessibles uniquement aux personnes majeures (18 ans et plus). Le nombre de places est limité afin de garantir une expérience qualitative et conviviale.</p>
+
+        <h2>9.&#8239;Responsabilité</h2>
+        <p>Soleia Expérience ne saurait être tenue responsable des dommages indirects liés à la participation aux ateliers ou à l’utilisation du site. Chaque participant est responsable de sa participation et de son comportement durant les ateliers.</p>
+
+        <h2>10.&#8239;Données personnelles</h2>
+        <p>Les informations collectées lors des réservations sont utilisées uniquement dans le cadre de la gestion des commandes et de la relation client. Elles ne sont ni vendues ni transmises à des tiers.</p>
+
+        <h2>11.&#8239;Droit applicable</h2>
+        <p>Les présentes CGV sont soumises au droit français. En cas de litige, une solution amiable sera privilégiée avant toute action judiciaire.</p>
+      </section>
+  </main>
+
+  <style is:global>
+    /* ============================================================
+       CONTENU PAGE LÉGALE — grand titre + colonne de lecture aérée
+       ============================================================ */
+    .page {
+      position: relative;
+      z-index: 2;
+      flex: 1 0 auto;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: clamp(1.4rem, 4vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
+    }
+
+    /* ---- GRAND TITRE de la page (façon hero) ---- */
+    .hero {
+      text-align: center;
+      padding: clamp(3rem, 9vh, 6.5rem) 0 clamp(2.2rem, 6vh, 4rem);
+    }
+    .hero__title {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 440;
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.026em;
+      margin: 0;
+      color: var(--ink);
+      font-variation-settings: "opsz" 144;
+    }
+    .hero__title .grad {
+      background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero__rule {
+      display: block;
+      width: clamp(56px, 8vw, 96px);
+      height: 4px;
+      margin: clamp(1.4rem, 3vh, 2.1rem) auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--rose), var(--orange));
+      opacity: 0.9;
+    }
+
+    /* ---- COLONNE DE LECTURE confortable, très aérée ---- */
+    .prose {
+      max-width: 62ch;
+      margin: 0 auto;
+      padding: clamp(1.8rem, 4vw, 2.8rem) clamp(1.4rem, 4vw, 2.6rem);
+      border-radius: 30px;
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(7px);
+      backdrop-filter: blur(7px);
+      border: 1.5px solid rgba(255, 250, 246, 0.7);
+      box-shadow: 0 18px 44px rgba(248, 116, 47, 0.10), 0 8px 22px rgba(251, 107, 166, 0.08);
+    }
+    .prose p {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.04rem, 1.5vw, 1.18rem);
+      line-height: 1.78;
+      letter-spacing: 0.004em;
+      color: var(--ink);
+      margin: 0 0 clamp(1.2rem, 2.6vh, 1.7rem);
+    }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose ul {
+      list-style: none;
+      margin: 0 0 clamp(1.2rem, 2.6vh, 1.7rem);
+      padding: 0;
+    }
+    .prose ul li {
+      position: relative;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.04rem, 1.5vw, 1.18rem);
+      line-height: 1.7;
+      color: var(--ink);
+      padding-left: 1.6rem;
+      margin-bottom: clamp(0.5rem, 1.4vh, 0.7rem);
+    }
+    .prose ul li:last-child { margin-bottom: 0; }
+    .prose ul li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: linear-gradient(120deg, var(--rose), var(--orange));
+    }
+    .prose a {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1.5px solid rgba(248, 116, 47, 0.32);
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+    .prose a:hover { color: var(--rose); border-color: var(--rose); }
+
+    /* ---- sous-sections d’un document légal (placeholder) ---- */
+    .prose h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+      line-height: 1.2;
+      letter-spacing: -0.012em;
+      color: var(--ink);
+      margin: clamp(1.8rem, 4vh, 2.6rem) 0 clamp(0.5rem, 1.4vh, 0.8rem);
+      font-variation-settings: "opsz" 90;
+    }
+    .prose h2:first-child { margin-top: 0; }
+    .prose .muted {
+      color: rgba(58, 42, 46, 0.55);
+      font-style: italic;
+      font-size: clamp(0.98rem, 1.4vw, 1.1rem);
+    }
+    .prose .note {
+      margin-top: clamp(1.8rem, 4vh, 2.6rem);
+      padding-top: clamp(1.2rem, 3vh, 1.6rem);
+      border-top: 1px solid rgba(58, 42, 46, 0.12);
+      font-size: 0.92rem;
+      color: rgba(58, 42, 46, 0.5);
+      text-align: center;
+    }
+
+    /* ============ APPARITION AU DÉFILEMENT ============ */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.is-in { opacity: 1; transform: none; }
+  </style>
+</Base>

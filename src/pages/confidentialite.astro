@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Politique de confidentialité — Soleia Expérience" active="">
+  <main class="page">
+      <section class="hero reveal" aria-labelledby="page-title">
+        <h1 class="hero__title" id="page-title">Politique de <span class="grad">confidentialité</span></h1>
+        <span class="hero__rule" aria-hidden="true"></span>
+      </section>
+
+      <section class="prose reveal" aria-label="Politique de confidentialité">
+        <p>Chez Soleia Expérience, on respecte ta vie privée ✨</p>
+        <p>Les infos que tu nous donnes (nom, prénom, e-mail) servent uniquement à gérer ton inscription à l’événement. Elles ne seront jamais partagées ou revendues à qui que ce soit.</p>
+        <p>Tu peux à tout moment nous écrire à <a href="mailto:soleiaexperience@gmail.com">soleiaexperience@gmail.com</a> pour demander la suppression de tes données.</p>
+        <p>Bref, tes infos sont en sécurité avec nous 💖</p>
+      </section>
+  </main>
+
+  <style is:global>
+    /* ============================================================
+       CONTENU PAGE LÉGALE — grand titre + colonne de lecture aérée
+       ============================================================ */
+    .page {
+      position: relative;
+      z-index: 2;
+      flex: 1 0 auto;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: clamp(1.4rem, 4vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(3rem, 7vw, 6rem);
+    }
+
+    /* ---- GRAND TITRE de la page (façon hero) ---- */
+    .hero {
+      text-align: center;
+      padding: clamp(3rem, 9vh, 6.5rem) 0 clamp(2.2rem, 6vh, 4rem);
+    }
+    .hero__title {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 440;
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.026em;
+      margin: 0;
+      color: var(--ink);
+      font-variation-settings: "opsz" 144;
+    }
+    .hero__title .grad {
+      background: linear-gradient(96deg, var(--rose) 0%, var(--orange) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero__rule {
+      display: block;
+      width: clamp(56px, 8vw, 96px);
+      height: 4px;
+      margin: clamp(1.4rem, 3vh, 2.1rem) auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--rose), var(--orange));
+      opacity: 0.9;
+    }
+
+    /* ---- COLONNE DE LECTURE confortable, très aérée ---- */
+    .prose {
+      max-width: 62ch;
+      margin: 0 auto;
+      padding: clamp(1.8rem, 4vw, 2.8rem) clamp(1.4rem, 4vw, 2.6rem);
+      border-radius: 30px;
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(7px);
+      backdrop-filter: blur(7px);
+      border: 1.5px solid rgba(255, 250, 246, 0.7);
+      box-shadow: 0 18px 44px rgba(248, 116, 47, 0.10), 0 8px 22px rgba(251, 107, 166, 0.08);
+    }
+    .prose p {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.04rem, 1.5vw, 1.18rem);
+      line-height: 1.78;
+      letter-spacing: 0.004em;
+      color: var(--ink);
+      margin: 0 0 clamp(1.2rem, 2.6vh, 1.7rem);
+    }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose a {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1.5px solid rgba(248, 116, 47, 0.32);
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+    .prose a:hover { color: var(--rose); border-color: var(--rose); }
+
+    /* ============ APPARITION AU DÉFILEMENT ============ */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.is-in { opacity: 1; transform: none; }
+  </style>
+</Base>
