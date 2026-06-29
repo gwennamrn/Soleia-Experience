@@ -1,0 +1,23 @@
+#!/bin/sh
+# ─────────────────────────────────────────────────────────────────────────────
+# Soleia — vérification des médias avant chaque commit (filet local).
+# Le vrai filet de sécurité reste la garde au build ; ceci est un bonus pratique.
+# ─────────────────────────────────────────────────────────────────────────────
+
+node tools/verifier-medias.mjs
+status=$?
+
+if [ "$status" -ne 0 ]; then
+  echo ""
+  echo "⛔ Commit bloqué : une ou plusieurs images/vidéos citées dans le site sont introuvables."
+  echo ""
+  echo "   Pour corriger :"
+  echo "     1. Dépose l'original dans le dossier _src/ (il copie l'arborescence de site/)."
+  echo "        Exemple : _src/ateliers/img/mon-image.jpg"
+  echo "     2. Lance :  npm run media        (ou  npm run media:thumbs  pour des vignettes)"
+  echo "     3. Refais ton commit."
+  echo ""
+  exit 1
+fi
+
+exit 0

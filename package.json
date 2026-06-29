@@ -1,0 +1,16 @@
+{
+  "name": "soleia-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "media": "node tools/optimiser-medias.mjs",
+    "media:thumbs": "node tools/optimiser-medias.mjs --thumb",
+    "check:media": "node tools/verifier-medias.mjs",
+    "setup": "node tools/setup-hooks.mjs",
+    "postinstall": "node tools/setup-hooks.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.0",
+    "ffmpeg-static": "^5.2.0"
+  }
+}
