@@ -455,17 +455,19 @@
   /* pastille de stock « Plus que 4 ! » */
   .product__stock {
     position: absolute;
-    top: 12px; left: 12px;
-    z-index: 3;
+    top: clamp(20px, 2.4vw, 28px);
+    left: clamp(20px, 2.4vw, 28px);
+    z-index: 4;
     font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
     font-weight: 700;
-    font-size: clamp(0.7rem, 1vw, 0.82rem);
+    font-size: clamp(0.72rem, 1vw, 0.84rem);
     letter-spacing: 0.01em;
-    color: var(--creme);
-    background: linear-gradient(96deg, var(--rose), var(--orange));
-    padding: 0.34rem 0.72rem;
+    color: var(--orange);                       /* texte orange */
+    background: var(--creme);                    /* fond crème : ressort sur le bord rose/orange */
+    border: 1.5px solid var(--rose);
+    padding: 0.36rem 0.78rem;
     border-radius: 999px;
-    box-shadow: 0 8px 20px rgba(248, 116, 47, 0.28);
+    box-shadow: 0 8px 20px rgba(248, 116, 47, 0.22);
   }
   .product__photo-inner {
     display: flex;
@@ -934,7 +936,7 @@
         <div class="product__info">
           <p class="product__kicker">Kit</p>
           <h2 class="product__name">Kit Soleia</h2>
-          <p class="product__desc">Ta petite bulle de douceur à emporter partout&#8239;: un carnet de 10 défis, une liste de Solo Dates, la Roue de la Vie à compléter… et 2 petits cadeaux surprises.</p>
+          <p class="product__desc">Ta petite bulle de douceur à emporter partout&#8239;: un carnet de 10 défis, une liste de Solo Dates, la Roue de la Vie à compléter… et 2 petits cadeaux.</p>
           <p class="product__price">10<span class="cur"> €</span></p>
           <a class="btn" href="/boutique/kit-soleia/">Découvrir
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
