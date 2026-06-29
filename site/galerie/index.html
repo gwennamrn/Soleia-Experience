@@ -333,10 +333,10 @@
   }
   .clothesline__rope path {
     fill: none;
-    stroke: var(--ink);
-    stroke-width: 2;
+    stroke: url(#ropeGrad);
+    stroke-width: 3;
     stroke-linecap: round;
-    opacity: 0.5;
+    opacity: 0.95;
     stroke-dasharray: 1400;
     stroke-dashoffset: 1400;
     animation: drawRope 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -612,26 +612,31 @@
   }
 
   /* retour aux éditions */
+  /* petit retour discret (flèche) en haut à gauche */
   .back-link {
     position: absolute;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-    font-weight: 600;
-    font-size: clamp(0.74rem, 1.1vw, 0.84rem);
-    letter-spacing: 0.06em;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(58, 42, 46, 0.16);
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     color: var(--ink-soft);
-    background: none;
-    border: none;
     cursor: pointer;
-    padding: 0.3rem 0.2rem;
-    transition: color 0.25s ease;
+    transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .back-link:hover { color: var(--orange); }
+  .back-link svg { width: 18px; height: 18px; }
+  .back-link:hover {
+    color: var(--orange);
+    border-color: var(--rose);
+    transform: translateX(-2px);
+    box-shadow: 0 8px 20px rgba(251, 107, 166, 0.22);
+  }
 
   /* ============ FOOT (citation discrète) ============ */
   .foot {
@@ -909,6 +914,13 @@
           <div class="clothesline">
             <!-- la ficelle douce, presque tendue -->
             <svg class="clothesline__rope" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="ropeGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1000" y2="0">
+                  <stop offset="0" stop-color="#fb6ba6"/>
+                  <stop offset="0.5" stop-color="#fa7d5e"/>
+                  <stop offset="1" stop-color="#f8742f"/>
+                </linearGradient>
+              </defs>
               <path d="M0 12 L 1000 12" />
             </svg>
 
@@ -958,7 +970,9 @@
 
       <!-- ===== ÉTAT B — LA GALERIE D'UNE ÉDITION ===== -->
       <section class="panel" id="panelAlbum" aria-label="Galerie de l’édition" aria-hidden="true">
-        <button class="back-link" id="backLink" type="button">↩ Retour aux éditions</button>
+        <button class="back-link" id="backLink" type="button" aria-label="Retour à toutes les éditions" title="Retour aux éditions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
 
         <div class="album">
           <div class="album__head">
