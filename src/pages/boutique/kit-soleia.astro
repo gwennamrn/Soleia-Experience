@@ -336,6 +336,8 @@ import Base from '../../layouts/Base.astro';
       border: 1.5px solid rgba(255, 250, 246, 0.8);
       pointer-events: none;
     }
+    /* La grande photo reste souple : elle ne dépasse jamais son cadre (corrige le débordement mobile). */
+    .photo-frame img { max-width: 100%; height: auto; display: block; }
     .photo-inner {
       display: flex;
       flex-direction: column;

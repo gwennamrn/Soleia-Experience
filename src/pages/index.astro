@@ -29,6 +29,24 @@ import Base from '../layouts/Base.astro';
       <p>«&#8239;Parce que prendre du temps pour soi, c’est important &amp; ça fait du bien.&#8239;»</p>
       <cite>Gwennaëlle</cite>
     </figure>
+    <!-- Réseaux : visibles sous la citation sur téléphone (le rail flottant est masqué) -->
+    <div class="home-social" aria-label="Réseaux sociaux de Soleia">
+      <a class="icon-btn" href="https://www.instagram.com/soleia.experience" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Soleia">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a class="icon-btn" href="https://www.tiktok.com/@soleia.experience" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Soleia">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.94 2.94 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1Z" fill="currentColor"/>
+        </svg>
+      </a>
+      <a class="icon-btn" href="mailto:soleiaexperience@gmail.com" aria-label="Contacter Soleia par e-mail">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 5.5L20 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
   </footer>
 
   <style is:global>
@@ -214,13 +232,27 @@ import Base from '../layouts/Base.astro';
     color: var(--orange);
   }
 
+  /* réseaux sous la citation (téléphone uniquement) */
+  .home-social { display: none; justify-content: center; gap: 0.85rem; }
+  .home-social .icon-btn { width: 44px; height: 44px; }
+
   /* ============ RESPONSIVE (héros) ============ */
   @media (max-width: 900px) {
     .quote p { white-space: normal; }
   }
   @media (max-width: 760px) {
+    /* Sur téléphone, on n'enferme plus l'accueil dans un seul écran :
+       il peut grandir et défiler si besoin, pour ne jamais couper le bas. */
+    body.home { height: auto; min-height: 100svh; overflow: visible; }
     .title { font-size: clamp(2.8rem, 14vw, 5.2rem); max-width: 11ch; }
     .actions .pill { font-size: 1rem; }
+    .foot {
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(0.8rem, 3vh, 1.3rem);
+      padding-bottom: clamp(1.4rem, 5vh, 2.2rem);
+    }
+    .home-social { display: flex; }
   }
   @media (prefers-reduced-motion: reduce) {
     .title .ch { transition: none !important; }

@@ -728,7 +728,9 @@ import Base from '../layouts/Base.astro';
     /* ============ RESPONSIVE ============ */
     /* sur tout petit écran (téléphone), on autorise le retour à la ligne plutôt que de rogner */
     @media (max-width: 600px) {
-      .tabs { flex-wrap: wrap; }
+      /* Onglets de catégories : ils passent à la ligne, plus grands et plus lisibles au doigt */
+      .tabs { flex-wrap: wrap; gap: 0.5rem; }
+      .tab { font-size: clamp(0.82rem, 3.4vw, 0.94rem); padding: 0.66em 1.05em; }
     }
 
     @media (max-width: 760px) {
