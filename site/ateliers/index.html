@@ -2038,13 +2038,16 @@
 
     var minHead, maxHead;
     var BREATHE = 130;
-    if(DIR>0){
-      minHead = REST_HEAD - totalWidth - 80;
-      maxHead = REST_HEAD + BREATHE + 60;
-    }else{
-      minHead = REST_HEAD - BREATHE - 60;
-      maxHead = REST_HEAD + totalWidth + 80;
-    }
+    // Plage de glissement calculée d'après la GÉOMÉTRIE réelle : on peut amener n'importe quel
+    // wagon — de la loco au tout dernier wagon — jusqu'au CENTRE de l'écran, sans jamais tomber
+    // dans le vide. VC = centre horizontal du décor (viewBox 0 0 1600 1000) ; span = distance
+    // loco → wagon le plus éloigné. (Avant : marge ~190 px d'un côté → blocage avant la fin.)
+    var VC = 800, HEAD_MARGIN = 150;
+    var span = (DIR>0) ? (locoLocalCX - order[0].cx) : (order[order.length-1].cx - locoLocalCX);
+    if(DIR>0){ minHead = VC - HEAD_MARGIN;        maxHead = VC + span + HEAD_MARGIN; }
+    else      { minHead = VC - span - HEAD_MARGIN; maxHead = VC + HEAD_MARGIN; }
+    minHead = Math.min(minHead, REST_HEAD);   // toujours inclure la position de repos
+    maxHead = Math.max(maxHead, REST_HEAD);
     function clamp(v){ return Math.max(minHead, Math.min(maxHead, v)); }
 
     var ambient = { dir: DIR, center: REST_HEAD, amp: BREATHE };
