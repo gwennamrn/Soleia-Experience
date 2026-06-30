@@ -377,7 +377,7 @@
   }
   /* PHOTO NETTE : taille native plafonnée, jamais agrandie ; laisse l'air au titre & au bas */
   .dia__photo{
-    display:block; width:auto; max-width:min(92vw,620px); max-height:68vh;
+    display:block; width:auto; max-width:min(92vw,620px); max-height:68svh;
     object-fit:contain; border-radius:18px; background:#2a1a14;
     box-shadow:0 40px 100px rgba(0,0,0,.55), 0 0 0 6px rgba(255,250,246,.92);
   }
@@ -428,9 +428,9 @@
   .dia__play:hover{ transform:translateY(-1px); background:var(--orange); color:#fff; }
   .dia__play svg{ width:12px; height:12px; }
   .dia__progress{
-    position:absolute; left:0; top:0; height:3px; z-index:9; width:0%;
+    position:absolute; left:0; top:0; height:3px; z-index:9; width:100%;
+    transform:scaleX(0); transform-origin:left; will-change:transform;
     background:linear-gradient(90deg,var(--or),var(--orange),var(--rose));
-    transition:width .12s linear;
   }
   /* la croix Fermer du diaporama passe au-dessus de tout */
   .dia .closeBtn{ z-index:10; }
@@ -438,12 +438,12 @@
     .dia__head{ padding-left:clamp(60px,16vw,90px); padding-right:clamp(60px,16vw,90px); }
     .dia__stage{ padding-left:64px; padding-right:64px; }
     .dia__foot{ padding-left:18px; padding-right:18px; }
-    .dia__photo{ max-width:90vw; max-height:62vh; }
+    .dia__photo{ max-width:90vw; max-height:62svh; }
     .dia__arrow{ width:46px; height:46px; font-size:1.4rem; }
   }
   @media (max-width:430px){
     .dia__title{ font-size:clamp(1.25rem,6.4vw,1.7rem); }
-    .dia__photo{ max-height:56vh; }
+    .dia__photo{ max-height:56svh; }
     .dia__caption{ font-size:.92rem; }
   }
 
@@ -953,6 +953,8 @@
   var SVGNS = "http://www.w3.org/2000/svg";
   var prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasGSAP = (typeof gsap !== "undefined");
+  // Téléphone / appareil modeste : on allège la scène (flous + décorations) pour des trains fluides.
+  var lowPower = !!(window.matchMedia && (window.matchMedia("(max-width: 760px)").matches || window.matchMedia("(pointer: coarse)").matches));
 
   // ============================================================
   //  DONNÉES — TRAIN DU HAUT : 4 ateliers À VENIR (réservables)
@@ -2345,10 +2347,10 @@
       if(diaState.playing && !prefersReduced){
         diaState.since += dt;
         var p = Math.min(1, diaState.since/diaState.DURATION);
-        diaProgress.style.width = (p*100).toFixed(1)+"%";
+        diaProgress.style.transform = "scaleX(" + p.toFixed(4) + ")";  /* fluide (GPU) au lieu d'animer la largeur */
         if(diaState.since >= diaState.DURATION){ diaState.since=0; diaGo(diaState.idx+1); }
       } else {
-        diaProgress.style.width = "0%";
+        diaProgress.style.transform = "scaleX(0)";
       }
       diaRaf = requestAnimationFrame(tick);
     }
@@ -2365,6 +2367,11 @@
     diaPhoto.src = src;
     diaPhoto.alt = st.d.title+" — photo "+(st.idx+1)+" sur "+st.n;
     diaBlur.style.backgroundImage = "url('"+src+"')";
+    // précharge la photo suivante et la précédente -> changement instantané, pas de blanc
+    if(st.n>1){
+      var nx=new Image(); nx.src=st.imgs[(st.idx+1)%st.n];
+      var pv=new Image(); pv.src=st.imgs[(st.idx-1+st.n)%st.n];
+    }
     // compteur sur sa ligne ; légende (titre de l'édition) sur la sienne -> aucune redite
     diaCaption.textContent = st.d.title;
     diaNum.textContent = (st.idx+1)+" / "+st.n;
@@ -2401,7 +2408,7 @@
     diaPlayIcon.innerHTML = on
       ? '<rect x="6" y="5" width="4" height="14" rx="1.4"/><rect x="14" y="5" width="4" height="14" rx="1.4"/>'
       : '<path d="M7 5 L19 12 L7 19 Z"/>';
-    if(!on) diaProgress.style.width="0%";
+    if(!on) diaProgress.style.transform="scaleX(0)";
   }
   function diaUserAction(){ if(diaState && diaState.playing) setDiaPlaying(false); }
 
@@ -2422,9 +2429,27 @@
   document.getElementById("diaPrev").addEventListener("click", function(){ diaUserAction(); diaGo(diaState.idx-1); });
   document.getElementById("diaNext").addEventListener("click", function(){ diaUserAction(); diaGo(diaState.idx+1); });
   diaPlayBtn.addEventListener("click", function(){ setDiaPlaying(!diaState.playing); });
-  // clic sur le fond (flou/voile) ferme le diaporama
-  diaBlur.addEventListener("click", closeDia);
-  diaVeil.addEventListener("click", closeDia);
+  // clic sur le fond (flou/voile) ferme le diaporama — SAUF si on vient de faire glisser
+  var diaSwiped = false;
+  function veilClose(){ if(diaSwiped){ diaSwiped = false; return; } closeDia(); }
+  diaBlur.addEventListener("click", veilClose);
+  diaVeil.addEventListener("click", veilClose);
+
+  // glisser le doigt gauche/droite pour changer de photo (téléphone)
+  (function(){
+    var sx=0, sy=0, tracking=false;
+    dia.addEventListener("pointerdown", function(e){ sx=e.clientX; sy=e.clientY; tracking=true; }, {passive:true});
+    dia.addEventListener("pointerup", function(e){
+      if(!tracking || !diaState){ return; }
+      tracking=false;
+      var dx=e.clientX-sx, dy=e.clientY-sy;
+      if(Math.abs(dx)>45 && Math.abs(dx) > Math.abs(dy)*1.3){
+        diaSwiped = true;
+        diaUserAction(); diaGo(diaState.idx + (dx<0 ? 1 : -1));
+        setTimeout(function(){ diaSwiped = false; }, 400);
+      }
+    }, {passive:true});
+  })();
 
   // ------------------------------------------------------------
   //  CLAVIER GLOBAL pour les modales (fiche + diaporama)
@@ -2575,10 +2600,43 @@
   function start(){
     document.body.classList.remove("nojs");
 
+    // Téléphone : on adoucit les flous/ombres coûteux (re-dessinés à chaque image quand les trains roulent).
+    if(lowPower){
+      var lighten = function(id, attrs){
+        var f = document.getElementById(id); if(!f) return;
+        var prim = f.firstElementChild; if(!prim) return;
+        for(var k in attrs){ prim.setAttribute(k, attrs[k]); }
+      };
+      lighten("soft",{stdDeviation:4});
+      lighten("softer",{stdDeviation:5});
+      lighten("mistBlur",{stdDeviation:6});
+      lighten("blurFar",{stdDeviation:4});
+      lighten("dropWagon",{stdDeviation:5, dy:6});
+      lighten("dropWagonNight",{stdDeviation:5, dy:6});
+    }
+
     if(prefersReduced || !hasGSAP){
       trains.forEach(function(tr){ tr.restAt(); tr.render(); });
       stepSkyLife(0);
       stepBeams(0);
+      return;
+    }
+
+    // TÉLÉPHONE / appareil modeste : entrée douce des trains, puis on FIGE tout (aucune
+    // animation continue -> fluide à coup sûr). Le roulement permanent + décorations animées
+    // restent réservés à l'ordinateur, plus puissant.
+    if(lowPower){
+      stepSkyLife(0); stepBeams(0);
+      trains.forEach(function(tr){ tr.render(); });
+      var lpTick = function(){ trainTop.render(); trainBot.render(); };
+      gsap.ticker.add(lpTick);
+      trainTop.enterFrom();
+      gsap.delayedCall(0.25, function(){ trainBot.enterFrom(); });
+      gsap.delayedCall(3.4, function(){
+        gsap.ticker.remove(lpTick);
+        trainTop.restAt(); trainBot.restAt();
+        trainTop.render(); trainBot.render();
+      });
       return;
     }
 
@@ -2601,6 +2659,7 @@
     gsap.to("#sunCore", { attr:{r:110}, duration:3.2, repeat:-1, yoyo:true, ease:"sine.inOut", transformOrigin:"center" });
     gsap.to("#moonWrap circle:first-child", { attr:{r:210}, opacity:.9, duration:4.2, repeat:-1, yoyo:true, ease:"sine.inOut" });
 
+    if(!lowPower){
     gsap.utils.toArray("#sparks circle").forEach(function(s,i){
       gsap.to(s,{ attr:{ cy: parseFloat(s.dataset.baseY)-26 }, opacity:0.1, duration:2+Math.random()*2,
         repeat:-1, yoyo:true, delay:i*0.15, ease:"sine.inOut" });
@@ -2665,6 +2724,7 @@
         gsap.delayedCall(p.t*1.8, cyclePuff);
       });
     });
+    } /* fin if(!lowPower) : décorations animées (étincelles, halos, fumée…) en pause sur téléphone */
   }
 
   // ============================================================
