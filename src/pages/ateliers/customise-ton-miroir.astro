@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { STRIPE } from '../../data/stripe.js';
 ---
 <Base title="Je customise mon miroir · Soleia Expérience" active="ateliers">
 
@@ -273,7 +274,7 @@ import Base from '../../layouts/Base.astro';
       </p>
       <span class="reserve__wrap">
         <span class="reserve__accent reserve__accent--bloom" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#soleiaFlowerRetro"/></svg></span>
-        <a class="reserve__btn" href="https://book.stripe.com/dRm4gBccl3656b3dqheZ202" target="_blank" rel="noopener noreferrer">
+        <a class="reserve__btn" href={STRIPE.miroir} target="_blank" rel="noopener noreferrer">
           Je réserve ma place
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>

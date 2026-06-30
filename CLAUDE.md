@@ -6,8 +6,8 @@ Il décrit le projet **et la façon de travailler**. Respecte-le en permanence.
 ## Le projet en deux mots
 **Soleia** (« Soleia Expérience ») est une marque d'ateliers et d'événements créatifs et
 conviviaux — « la pause créative qui fait du BIEN ». Ce dépôt contient son **site web**.
-Aujourd'hui, le site = **une seule page d'accueil** (le « hero »). Il va grandir :
-on ajoutera des pages (Ateliers, Boutique, Histoire, Galerie, F.A.Q, À propos…).
+Aujourd'hui, le site compte **plusieurs pages** (accueil, Ateliers, Boutique, F.A.Q,
+À propos…) et continue de grandir.
 
 ## ⚠️ Avec qui tu travailles — LE PLUS IMPORTANT
 La personne qui utilise ce projet (**Gwennaëlle**, la fondatrice) **ne code pas du tout**
@@ -45,31 +45,31 @@ Un texte prêt à coller (`PROMPT.md`) reprend ces consignes ; elle peut le coll
 - **Typographie française** : guillemets « … », apostrophe ’, espace fine avant : ; ! ?.
 
 ## Comment le site est fait (pour toi, Claude)
-- Site **statique** : chaque page est **un seul fichier HTML autonome** (le style et les
-  animations sont écrits **à l'intérieur** du fichier). **Pas d'étape de "build", rien à installer.**
-  C'est volontaire : simple, robuste, facile à reprendre.
-- `site/index.html` = la page d'accueil (le hero actuel, validé).
-- `site/logo.svg` = le logo (emblème soleil) · `site/favicon.svg` = l'icône d'onglet.
-- `Dockerfile` = sert le dossier `site/` une fois en ligne. **N'y touche pas** sans raison.
+- Le site est construit avec **Astro** : les pages s'écrivent dans `src/pages/` (une page = un
+  fichier `.astro`), et l'habillage commun (en-tête + pied de page) vit dans `src/layouts/Base.astro`.
+  Le style et les animations restent **à l'intérieur de chaque page**. Une étape de **build**
+  (`npm run build`) fabrique le site final ; en local, l'aperçu se lance avec `npm run dev`.
+- Le dossier **`site/`** réunit les fichiers servis tels quels (images optimisées, polices,
+  `logo.svg`, `favicon.svg`, et quelques pages historiques comme `site/ateliers/index.html`).
+- `Dockerfile` = construit puis sert le site (build Astro → nginx). **N'y touche pas** sans raison.
 - **Garde cette simplicité par défaut.** N'ajoute pas de gros outils techniques sans nécessité.
   Le propriétaire technique (**Cyprien**) repassera plus tard pour optimiser (images,
   performances…) — laisse les choses simples et faciles à reprendre.
 
 ## Voir le résultat (à faire systématiquement)
-Avant de montrer un rendu, lance un petit serveur local et ouvre la page, puis **fais une capture** :
+Avant de montrer un rendu, lance l'aperçu local et ouvre la page, puis **fais une capture** :
 ```
-cd site && python3 -m http.server 8000
+npm run dev
 ```
-→ ouvrir http://localhost:8000 . Montre toujours l'image, pas une description.
+→ ouvrir l'adresse affichée (par défaut http://localhost:4321). Montre toujours l'image, pas une description.
 
 ## Ajouter une nouvelle page
-- Crée un dossier dans `site/` (ex. `site/ateliers/index.html`) pour avoir une jolie adresse
-  (`…/ateliers/`).
-- Réutilise la **même barre du haut** (logo + menu) et les **mêmes couleurs/polices** que
-  `site/index.html`, pour rester cohérent.
-- Garde la page **autonome** (style à l'intérieur du fichier).
-- Les liens du menu de la page d'accueil sont des emplacements (à relier aux vraies pages quand
-  elles existent).
+- Crée un fichier `.astro` dans `src/pages/` (ex. `src/pages/ateliers/mon-atelier.astro`
+  → adresse `…/ateliers/mon-atelier/`).
+- Enveloppe la page dans le layout commun (`<Base title="…" active="…">…</Base>`) pour réutiliser
+  automatiquement la **même barre du haut** et le **même pied de page**.
+- Réutilise les **mêmes couleurs/polices** ; garde le style **à l'intérieur de la page**.
+- Les liens du menu pointent vers les vraies pages au fur et à mesure qu'elles existent.
 
 ## Enregistrer le travail
 - Quand Gwennaëlle est **contente d'un changement**, **enregistre-le** (commit) avec un message

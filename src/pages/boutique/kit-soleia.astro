@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { STRIPE } from '../../data/stripe.js';
 ---
 <Base title="Kit Soleia · Soleia Expérience" active="boutique">
 
@@ -160,7 +161,7 @@ import Base from '../../layouts/Base.astro';
         <p class="info__desc">Ta petite bulle de douceur à emporter partout. Le Kit Soleia t’invite à prendre du temps pour toi, à oser de nouvelles choses et à te (re)découvrir — tout en douceur, à ton rythme. Une jolie attention à s’offrir ou à offrir.</p>
 
         <div class="buy">
-          <a class="btn-cart" href="https://buy.stripe.com/aFa14p7W57ml6b33PHeZ204" target="_blank" rel="noopener noreferrer">
+          <a class="btn-cart" href={STRIPE.kit} target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
               <path d="M3 4h2l2.4 12.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 8H6.2" stroke-linecap="round" stroke-linejoin="round"/>
               <circle cx="9.5" cy="20.5" r="1.4" fill="currentColor" stroke="none"/>
@@ -508,12 +509,6 @@ import Base from '../../layouts/Base.astro';
     .btn-cart svg { width: 19px; height: 19px; transition: transform 0.26s ease; }
     .btn-cart:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(248, 116, 47, 0.36), 0 6px 16px rgba(251, 107, 166, 0.24); }
     .btn-cart:hover svg { transform: scale(1.1) rotate(-6deg); }
-    .btn-cart.is-added { animation: cartPop 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
-    @keyframes cartPop {
-      0% { transform: scale(1); }
-      45% { transform: scale(1.04) translateY(-2px); }
-      100% { transform: scale(1); }
-    }
 
     /* ============ SECTIONS empilées (aérées) ============ */
     .section { margin-top: clamp(3rem, 8vh, 5.5rem); }
@@ -737,55 +732,6 @@ import Base from '../../layouts/Base.astro';
       .deco-item.is-float { animation: none !important; }
     }
   </style>
-
-  <!-- ===================== MINI-GALERIE : mise en évidence + SÉLECTEUR DE QUANTITÉ ===================== -->
-  <script is:inline>
-  (function () {
-    // --- mini-galerie : une vignette sélectionnée à la fois ---
-    var thumbs = Array.prototype.slice.call(document.querySelectorAll(".thumb"));
-    thumbs.forEach(function (t) {
-      t.addEventListener("click", function () {
-        thumbs.forEach(function (x) { x.classList.remove("is-selected"); x.setAttribute("aria-pressed", "false"); });
-        t.classList.add("is-selected");
-        t.setAttribute("aria-pressed", "true");
-      });
-    });
-
-    // --- sélecteur de quantité (− 1 +) ---
-    var minus = document.getElementById("qty-minus");
-    var plus = document.getElementById("qty-plus");
-    var value = document.getElementById("qty-value");
-    var MIN = 1, MAX = 20;
-    function get() { return parseInt(value.textContent, 10) || MIN; }
-    function set(n) {
-      n = Math.max(MIN, Math.min(MAX, n));
-      value.textContent = n;
-      minus.disabled = (n <= MIN);
-      plus.disabled = (n >= MAX);
-    }
-    if (minus && plus && value) {
-      minus.addEventListener("click", function () { set(get() - 1); });
-      plus.addEventListener("click", function () { set(get() + 1); });
-      set(get());
-    }
-
-    // --- bouton « Ajouter au panier » : petit retour visuel (placeholder, sans vrai panier) ---
-    var add = document.getElementById("add-cart");
-    var label = document.getElementById("add-cart-label");
-    if (add && label) {
-      var original = label.textContent;
-      var timer = null;
-      add.addEventListener("click", function () {
-        add.classList.remove("is-added");
-        void add.offsetWidth;       /* relance l'animation */
-        add.classList.add("is-added");
-        label.textContent = "Ajouté ✿";
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(function () { label.textContent = original; }, 1600);
-      });
-    }
-  })();
-  </script>
 
   <!-- ===================== DÉCORS DÉPLAÇABLES À LA SOURIS / AU DOIGT (+ mémoire des positions) ===================== -->
   <script is:inline>
