@@ -453,6 +453,9 @@
     .dia__arrow:hover{ transform:scale(1.06); }
     .dia__arrow--prev{ left:14px; }
     .dia__arrow--next{ right:14px; }
+    /* bouton Lecture/Pause : icône seule sur téléphone (le libellé chevauchait le titre) */
+    .dia__play{ padding:9px 11px; }
+    .dia__play #diaPlayLbl{ display:none; }
   }
   @media (max-width:430px){
     .dia__title{ font-size:clamp(1.25rem,6.4vw,1.7rem); }
@@ -717,6 +720,18 @@
                                                 0    0    0.84 0 0
                                                 0    0    0    1 0"/>
         </filter>
+        <!-- Ombres DOUCES sans filtre (dégradé radial) : aspect flou MAIS sans re-rastérisation
+             à chaque image — remplace feDropShadow/feGaussianBlur sur les wagons/locos qui bougent. -->
+        <radialGradient id="wagonShadow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#6a2f1a" stop-opacity="1"/>
+          <stop offset="58%" stop-color="#6a2f1a" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#6a2f1a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="wagonShadowNight" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#100608" stop-opacity="1"/>
+          <stop offset="58%" stop-color="#100608" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#100608" stop-opacity="0"/>
+        </radialGradient>
       </defs>
 
       <!-- ===== MONDE DU HAUT : CIEL PLEIN JOUR + GRAND SOLEIL ===== -->
@@ -1416,7 +1431,8 @@
         sp.appendChild(el("circle",{cx:Math.cos(ba)*r*0.2,cy:Math.sin(ba)*r*0.2,r:r*0.05,fill:tyre,opacity:".8"}));
       }
       sp.appendChild(el("circle",{cx:-r*0.08,cy:-r*0.08,r:r*0.1,fill:"#fff6e2",opacity:".85"}));
-      sp.setAttribute("transform","translate("+wx+" "+y+")");
+      sp.dataset.base = "translate("+wx+" "+y+")";
+      sp.setAttribute("transform", sp.dataset.base);
       sp.dataset.wheel="1";
       g.appendChild(sp);
       spokes.push(sp);
@@ -1443,7 +1459,7 @@
     g.appendChild(beam);
     g.__beam = beam;
     // BRUME / VAPEUR : volutes floues devant la loco, dans le faisceau
-    var mist = el("g",{filter:"url(#mistBlur)","class":"beamMist"});
+    var mist = el("g",{"class":"beamMist"});
     var puffs=[];
     for(var i=0;i<5;i++){
       var mx = 190 + i*38 + Math.random()*20;
@@ -1466,13 +1482,13 @@
   // ============================================================
   function buildLoco(){
     var g = el("g",{"class":"vehicle"});
-    g.appendChild(el("ellipse",{cx:0,cy:40,rx:148,ry:20,fill:"#6a2f1a",opacity:".28",filter:"url(#softer)"}));
+    g.appendChild(el("ellipse",{cx:0,cy:40,rx:160,ry:22,fill:"url(#wagonShadow)",opacity:".44"}));
     // FAISCEAU + BRUME en tout premier (derrière le corps), pointe vers l'avant
     var beam = buildBeam("#beamDay","#lampGlowDay","#fff3df");
     g.appendChild(beam);
     g.__beam = beam;
 
-    var body = el("g",{filter:"url(#dropWagon)"});
+    var body = el("g",{});
     body.appendChild(el("rect",{x:-138,y:10,width:268,height:18,rx:6,fill:"#8a3f23"}));
     body.appendChild(el("rect",{x:-30,y:-58,width:150,height:74,rx:37,fill:"url(#loco)"}));
     [-6,40,86].forEach(function(bx){
@@ -1524,13 +1540,13 @@
   // ============================================================
   function buildLocoMem(){
     var g = el("g",{"class":"vehicle"});
-    g.appendChild(el("ellipse",{cx:0,cy:40,rx:148,ry:20,fill:"#100608",opacity:".5",filter:"url(#softer)"}));
+    g.appendChild(el("ellipse",{cx:0,cy:40,rx:160,ry:22,fill:"url(#wagonShadowNight)",opacity:".55"}));
     // FAISCEAU DE NUIT (plus intense) + BRUME devant le phare
     var beam = buildBeam("#beamNight","#lampGlow","#ffe6b0");
     g.appendChild(beam);
     g.__beam = beam;
 
-    var body = el("g",{filter:"url(#dropWagonNight)"});
+    var body = el("g",{});
     body.appendChild(el("rect",{x:-138,y:10,width:268,height:18,rx:6,fill:"#5a3618"}));
     body.appendChild(el("rect",{x:-30,y:-58,width:150,height:74,rx:37,fill:"url(#locoMem)"}));
     [-6,40,86].forEach(function(bx){
@@ -1625,10 +1641,10 @@
     var g = el("g",{});
 
     // ombre portée au sol
-    g.appendChild(el("ellipse",{cx:0,cy:34,rx:W*0.52,ry:18,
-      fill:night?"#100608":"#6a2f1a",opacity:night?".46":".26",filter:"url(#softer)"}));
+    g.appendChild(el("ellipse",{cx:0,cy:34,rx:W*0.6,ry:21,
+      fill:night?"url(#wagonShadowNight)":"url(#wagonShadow)",opacity:night?".55":".42"}));
 
-    var body = el("g",{filter:night?"url(#dropWagonNight)":"url(#dropWagon)"});
+    var body = el("g",{});
 
     // ---- soubassement / châssis ----
     body.appendChild(el("rect",{x:-W/2,y:8,width:W,height:18,rx:6,fill:night?"#5a3618":"#8a3f23"}));
@@ -1915,8 +1931,7 @@
       var deg = (rollDist / WHEEL_R) * 180 / Math.PI * (DIR>0?1:-1);
       vehicles.forEach(function(v){
         if(v.g.__wheels) v.g.__wheels.forEach(function(sp){
-          var base = sp.getAttribute("transform").replace(/ rotate\([^)]*\)/,"");
-          sp.setAttribute("transform", base + " rotate("+deg.toFixed(1)+")");
+          sp.setAttribute("transform", sp.dataset.base + " rotate("+deg.toFixed(1)+")");
         });
         // bielle d'accouplement de la loco : suit la rotation des roues
         if(v.g.__coupling){
@@ -1996,7 +2011,7 @@
       if(hasGSAP && !prefersReduced){
         gsap.to(v.liftProxy, {v: on?22:0, duration:.45, ease:"power3.out"});
         var sh = v.g.querySelector("ellipse");
-        if(sh) gsap.to(sh, {attr:{rx: on? (v.half*0.62):(v.half*0.52), opacity:on?.38:.26}, duration:.45, ease:"power3.out"});
+        if(sh) gsap.to(sh, {attr:{rx: on? (v.half*0.62):(v.half*0.52), opacity:on?.55:.42}, duration:.45, ease:"power3.out"});
       } else {
         v.liftProxy.v = on?18:0;
       }
@@ -2102,7 +2117,7 @@
       if(pointer.moved){
         var dx = e.clientX - pointer.lastX; pointer.lastX = e.clientX;
         state.head = clamp(state.head + dx*1.15);
-        if(!hasGSAP || prefersReduced || lowPower) render();
+        if(!hasGSAP || prefersReduced) render();
       }
     }
     function onPointerEnd(e){
@@ -2613,26 +2628,8 @@
   function start(){
     document.body.classList.remove("nojs");
 
-    // Téléphone : on adoucit les flous/ombres coûteux (re-dessinés à chaque image quand les trains roulent).
-    if(lowPower){
-      var lighten = function(id, attrs){
-        var f = document.getElementById(id); if(!f) return;
-        var prim = f.firstElementChild; if(!prim) return;
-        for(var k in attrs){ prim.setAttribute(k, attrs[k]); }
-      };
-      lighten("soft",{stdDeviation:4});
-      lighten("softer",{stdDeviation:5});
-      lighten("mistBlur",{stdDeviation:6});
-      lighten("blurFar",{stdDeviation:4});
-      lighten("dropWagon",{stdDeviation:5, dy:6});
-      lighten("dropWagonNight",{stdDeviation:5, dy:6});
-    }
-
-    // TÉLÉPHONE / appareil modeste OU mouvement réduit : aucune animation continue ni entrée
-    // animée (l'entrée saccadait sur téléphone). Les trains se posent directement en place, et
-    // restent FAISABLES À FAIRE GLISSER au doigt — le rendu se fait alors à chaque mouvement
-    // (voir onPointerMove / nudge). Le roulement permanent + décorations animées : ordinateur.
-    if(prefersReduced || !hasGSAP || lowPower){
+    // Mouvement réduit ou pas de GSAP : scène figée (aucune animation).
+    if(prefersReduced || !hasGSAP){
       trains.forEach(function(tr){ tr.restAt(); tr.render(); });
       stepSkyLife(0);
       stepBeams(0);
@@ -2642,8 +2639,7 @@
     gsap.ticker.add(function(){
       clock += 0.016;
       trainTop.ambientStep(); trainBot.ambientStep();
-      stepSkyLife(clock);
-      stepBeams(clock);
+      if(!lowPower){ stepSkyLife(clock); stepBeams(clock); }   // ciel/faisceaux animés : ordinateur seulement
       trainTop.render(); trainBot.render();
     });
 
@@ -2655,10 +2651,13 @@
     trainTop.enterFrom();
     gsap.delayedCall(0.25, function(){ trainBot.enterFrom(); });
 
+    // Décorations animées (soleil/lune qui respirent, étincelles, halos, fumée…) : ORDINATEUR
+    // uniquement. Sur téléphone on garde les trains (entrée + roulement + glissement au doigt),
+    // mais on coupe ces extras pour économiser le dessin et rester fluide.
+    if(!lowPower){
     gsap.to("#sunCore", { attr:{r:110}, duration:3.2, repeat:-1, yoyo:true, ease:"sine.inOut", transformOrigin:"center" });
     gsap.to("#moonWrap circle:first-child", { attr:{r:210}, opacity:.9, duration:4.2, repeat:-1, yoyo:true, ease:"sine.inOut" });
 
-    if(!lowPower){
     gsap.utils.toArray("#sparks circle").forEach(function(s,i){
       gsap.to(s,{ attr:{ cy: parseFloat(s.dataset.baseY)-26 }, opacity:0.1, duration:2+Math.random()*2,
         repeat:-1, yoyo:true, delay:i*0.15, ease:"sine.inOut" });
