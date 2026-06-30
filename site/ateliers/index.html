@@ -985,6 +985,55 @@
   var lowPower = !!(window.matchMedia && (window.matchMedia("(max-width: 760px)").matches || window.matchMedia("(pointer: coarse)").matches));
 
   // ============================================================
+  //  FORMAT D'IMAGE LE PLUS LÉGER (avif > webp > jpg)
+  //  Chaque photo existe en .avif / .webp / .jpg : on sert au navigateur
+  //  la version la plus légère qu'il sait lire. Repli .jpg garanti
+  //  (si une détection n'a pas abouti, l'image .jpg d'origine s'affiche).
+  // ============================================================
+  var IMG_EXT = ".jpg";
+  function S(u){ return (typeof u === "string") ? u.replace(/\.jpe?g(\?.*)?$/i, IMG_EXT + "$1") : u; }
+
+  // Les vitrines du train (images SVG) sont construites en synchrone, AVANT que la
+  // détection de format (asynchrone) n'aboutisse. Pour leur servir directement la
+  // version la plus légère — sans double téléchargement — on diffère la pose de leur
+  // source jusqu'à ce que la détection soit réglée (avec un repli de sécurité).
+  var FMT_READY = false;
+  var _deferredHrefs = [];
+  function _applyHref(image, jpgSrc){
+    var s = S(jpgSrc);
+    image.setAttributeNS("http://www.w3.org/1999/xlink", "href", s);
+    image.setAttribute("href", s);
+  }
+  function setVitrineHref(image, jpgSrc){
+    if(FMT_READY) _applyHref(image, jpgSrc);
+    else _deferredHrefs.push([image, jpgSrc]);
+  }
+  function _flushHrefs(){
+    if(FMT_READY) return;
+    FMT_READY = true;
+    for(var i = 0; i < _deferredHrefs.length; i++) _applyHref(_deferredHrefs[i][0], _deferredHrefs[i][1]);
+    _deferredHrefs.length = 0;
+  }
+  (function detectImgFormat(){
+    var pending = 2;
+    function settle(){ if(--pending <= 0) _flushHrefs(); }
+    function probe(dataURI, onYes){
+      var im = new Image();
+      im.onload = function(){ if(im.width > 0 && im.height > 0) onYes(); settle(); };
+      im.onerror = settle;
+      im.src = dataURI;
+    }
+    // AVIF (le plus léger) — prioritaire.
+    probe("data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEDQgMgkQAAAAB8dSLfI=",
+      function(){ IMG_EXT = ".avif"; });
+    // WebP — repli si pas d'AVIF.
+    probe("data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==",
+      function(){ if(IMG_EXT === ".jpg") IMG_EXT = ".webp"; });
+    // Repli de sécurité : si une sonde ne répond pas, on pose quand même les images.
+    setTimeout(_flushHrefs, 300);
+  })();
+
+  // ============================================================
   //  DONNÉES — TRAIN DU HAUT : 4 ateliers À VENIR (réservables)
   // ============================================================
   var ATELIERS = [
@@ -1616,8 +1665,7 @@
     var imgAttrs = {x:0,y:0,width:w,height:h,"clip-path":"url(#"+id+")","preserveAspectRatio":"xMidYMid slice"};
     if(warm) imgAttrs.filter = "url(#warmMem)";
     var img = el("image",imgAttrs);
-    img.setAttributeNS("http://www.w3.org/1999/xlink","href",src);
-    img.setAttribute("href",src);
+    setVitrineHref(img, src);
     if(alt) img.setAttribute("aria-label", alt);
     fr.appendChild(img);
     parent.appendChild(fr);
@@ -2247,14 +2295,14 @@
     var bb=document.createElement("button"); bb.className="btn btn--ghost"; bb.type="button";
     bb.textContent="Fermer"; bb.addEventListener("click",closeBloom); act.appendChild(bb);
 
-    bloomHeroImg.src = d.gallery[0]; bloomHeroImg.alt = d.title+" — photo principale";
+    bloomHeroImg.src = S(d.gallery[0]); bloomHeroImg.alt = d.title+" — photo principale";
     bloomStrip.innerHTML="";
     d.gallery.forEach(function(src,i){
       var th=document.createElement("button"); th.type="button"; th.className="bloom__thumb"+(i===0?" is-active":"");
       th.setAttribute("aria-label",d.title+" — photo "+(i+1));
-      var im=document.createElement("img"); im.src=src; im.alt=""; im.loading="lazy"; th.appendChild(im);
+      var im=document.createElement("img"); im.src=S(src); im.alt=""; im.loading="lazy"; th.appendChild(im);
       th.addEventListener("click",function(){
-        bloomHeroImg.src=src;
+        bloomHeroImg.src=S(src);
         bloomStrip.querySelectorAll(".bloom__thumb").forEach(function(n){ n.classList.remove("is-active"); });
         th.classList.add("is-active");
         if(hasGSAP) gsap.fromTo(bloomHero,{opacity:.4,scale:1.06},{opacity:1,scale:1,duration:.6,ease:"power3.out"});
@@ -2394,14 +2442,14 @@
   function setDiaSlide(i, instant){
     var st=diaState; if(!st) return;
     st.idx = (i + st.n) % st.n;
-    var src = st.imgs[st.idx];
+    var src = S(st.imgs[st.idx]);
     diaPhoto.src = src;
     diaPhoto.alt = st.d.title+" — photo "+(st.idx+1)+" sur "+st.n;
     diaBlur.style.backgroundImage = "url('"+src+"')";
     // précharge la photo suivante et la précédente -> changement instantané, pas de blanc
     if(st.n>1){
-      var nx=new Image(); nx.src=st.imgs[(st.idx+1)%st.n];
-      var pv=new Image(); pv.src=st.imgs[(st.idx-1+st.n)%st.n];
+      var nx=new Image(); nx.src=S(st.imgs[(st.idx+1)%st.n]);
+      var pv=new Image(); pv.src=S(st.imgs[(st.idx-1+st.n)%st.n]);
     }
     // compteur sur sa ligne ; légende (titre de l'édition) sur la sienne -> aucune redite
     diaCaption.textContent = st.d.title;

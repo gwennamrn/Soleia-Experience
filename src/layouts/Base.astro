@@ -48,6 +48,9 @@ const { title, description = '', active = '', footer = true, bodyClass = '' } = 
     }
 
     *, *::before, *::after { box-sizing: border-box; }
+    /* <picture> n'est qu'un emballage de formats (avif/webp/jpg) : il ne doit pas
+       influencer la mise en page — l'image se comporte exactement comme un <img> seul. */
+    picture { display: contents; }
     html, body { margin: 0; padding: 0; }
     html { scroll-behavior: smooth; overflow-x: hidden; }
 
